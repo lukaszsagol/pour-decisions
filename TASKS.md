@@ -1,0 +1,157 @@
+# Tasks
+
+The ordered backlog. Agents take the first task whose status is `todo` and whose dependencies are `done` (or `in-review` on the branch they are working on). See `docs/NIGHTLY.md`.
+
+**Statuses**: `todo` · `in-progress` · `in-review` (finished, in an open PR) · `done` (merged to main) · `blocked` (reason written under the task) · `needs-human` (an agent can prepare it, but a person must finish it).
+
+**Sizes** are rough: S ≈ under 1 hour of agent time, M ≈ 1–3 hours, L ≈ more.
+
+---
+
+## Phase 1: foundations
+
+### T00 · Seed rules engine and solver · `done` · M
+Pure TypeScript engine (`packages/engine`): bottles, pour rule, hidden units, only and locked bottles, win and dead-end detection, state key, validation, breadth-first solver with node budget, golden tests including Tokyo level 327 (best 16).
+
+### T01 · CI and code style · `todo` · S
+Depends on: T00
+- [ ] `.github/workflows/ci.yml` runs `npm ci` and `npm run check` on every push and pull request (Node 22). (A starter file exists; make sure it passes.)
+- [ ] ESLint (typescript-eslint, recommended) and Prettier configured; `npm run lint` added to `npm run check`.
+- [ ] Whole repo formatted; check passes.
+
+### T02 · Game session API · `todo` · M
+Depends on: T00
+A `Game` class in `packages/engine/src/game.ts` that the client drives.
+- [ ] Holds the current bottles, move count, history, booster stock and the level's `best`.
+- [ ] `select`/`tap(index)` semantics as in `docs/spec/rules.md`: first tap selects, second tap pours or re-selects; returns an event (`selected`, `poured`, `rejected`, `deselected`).
+- [ ] `undo()` restores the previous position; the move count is **not** reduced; consumes one undo.
+- [ ] `addGlass()` adds an empty bottle once per level; consumes one extra glass; caps stars at 2.
+- [ ] `hint()` returns a useful pour from the current position using the solver (falls back to any legal pour); consumes one hint.
+- [ ] `status`: `playing`, `won`, `deadEnd`. `stars()` and `perfect` per the rules in `docs/spec/rules.md`.
+- [ ] Serialisable to and from JSON (to resume a level).
+- [ ] Tests cover every bullet, including playing Tokyo 327's solver solution to a 3-star "perfect" win.
+
+### T03 · Seeded random numbers and the dealer · `todo` · S
+Depends on: T00
+- [ ] Seeded RNG (for example mulberry32) in `packages/engine/src/random.ts`; same seed gives the same sequence.
+- [ ] `deal({ drinks, capacity, empties, seed, constraints })` returns bottles per `docs/spec/levels.md` step 1 (no complete bottle at start, capped same-drink runs).
+- [ ] Tests: determinism, every drink appears `capacity` times, constraints hold over 1 000 seeds.
+
+### T04 · Solver metrics and larger levels · `todo` · M
+Depends on: T00
+- [ ] `analyse(bottles)` returns `best`, branching factor, share of first moves that lead to a dead end, number of winning first moves.
+- [ ] A faster search for big levels (A* or iterative deepening with a heuristic such as colour breaks) used when breadth-first exceeds its budget; still returns verified solutions.
+- [ ] A 10-drink, 12-bottle level solves in under 3 seconds on CI. Add it as a golden test.
+
+### T05 · Bot player and difficulty score · `todo` · M
+Depends on: T02, T04
+- [ ] Bot that plays like a casual human: prefers same-drink pours, sometimes makes random legal pours (mistake rate parameter), uses no boosters.
+- [ ] `difficulty(level)` combines bot win rate over N runs with the solver metrics into a 0–100 score and a band (`easy`, `normal`, `hard`, `superHard`).
+- [ ] Tests: easy golden levels score lower than Tokyo 327; results are deterministic for a given seed.
+
+### T06 · Level generator CLI and first packs · `todo` · L
+Depends on: T03, T04, T05
+- [ ] `tools/levelgen` workspace with `npm run levels -- --city tokyo --bar 2` writing `levels/<city>/<bar>.json` in the format in `docs/spec/levels.md`.
+- [ ] Each bar: 20 levels following the curve in `docs/spec/progression.md` (sawtooth, Hard every 5–10, one Super Hard, relief after each).
+- [ ] Generates Amsterdam bars 1–2 and Tokyo bar 2. Tokyo level 327 must be the designed golden level (it is hand-made; insert it at its number).
+- [ ] Every generated level is solver-verified; a test re-verifies all committed packs.
+- [ ] Re-running with the same seeds reproduces identical files.
+
+### T07 · Theme loading and drink palettes · `todo` · M
+Depends on: T00
+- [ ] Typed loader and validator for `themes/*.json` (no new dependency needed; a small hand-written validator is fine).
+- [ ] Extend each city to at least 10 drinks with real names, keeping the existing first five.
+- [ ] Test: every pair of drinks within a city differs enough to tell apart (CIEDE2000 ΔE ≥ 20, and at least 8 points of L* between neighbours in the list). Adjust colours until it passes.
+
+## Phase 2: the game client
+
+### T08 · Web app scaffold and static level screen · `todo` · L
+Depends on: T02, T07
+- [ ] `apps/web` with Vite + TypeScript + PixiJS. `npm run dev -w apps/web` serves it; `npm run build -w apps/web` builds it.
+- [ ] Renders the Tokyo level screen for golden level 327 matching `docs/design/screens/TokyoLevel.png`: noren header, top bar, back-bar shelf, glasses in rows of 4, counter with three boosters. Theme values come from `themes/tokyo.json`.
+- [ ] Scales to fit any phone width from 360 px; centred with a max width on larger screens.
+- [ ] Playwright set up (`npm run e2e -w apps/web`); a test loads the level and saves a screenshot to `agent-logs/assets/` for the PR.
+
+### T09 · Level interaction · `todo` · L
+Depends on: T08
+- [ ] Tap to select (glass lifts 16 px), tap to pour, illegal tap flashes the target red and shakes, no error text.
+- [ ] Undo, extra glass and hint buttons work with counts, using the `Game` API.
+- [ ] Dead-end panel (Undo, Add glass, Restart) and win overlay (stars, verdict, moves vs best).
+- [ ] Playwright e2e test plays the solver's solution for level 327 by tapping and reaches a 3-star win.
+
+### T10 · Pour animation and feel · `todo` · M
+Depends on: T09
+- [ ] Pour animation per `docs/spec/screens.md` (tilt, arcing stream, fill, settle, about 450 ms); taps during animation are queued.
+- [ ] Completed-glass celebration; subtle idle wobble of liquid surfaces.
+- [ ] Respects `prefers-reduced-motion` (instant pours).
+
+### T11 · Blocker rendering · `todo` · M
+Depends on: T09
+- [ ] Generic skin interface: each theme maps `hidden`, `only` and `locked` to a renderer.
+- [ ] Tokyo skins: "?" units, bottle-keep badge with dashed slots, shutter with a release badge. Badge colour = the releasing drink. No text labels.
+- [ ] Locked bottles visibly unlock when their drink is completed (short animation).
+
+### T12 · Level complete screen · `todo` · M
+Depends on: T09
+- [ ] Matches `docs/design/screens/TokyoComplete.png`: stars, verdict, moves vs best, rewards row, recipe card when a bar is finished (recipes come from a `recipes` file per city; add Tokyo's five).
+- [ ] Next level and Share (copies a text result to the clipboard) buttons.
+
+### T13 · City map screen · `todo` · L
+Depends on: T06, T12
+- [ ] Tokyo map matching `docs/design/screens/TokyoMap.png`, driven by the level packs and saved progress: path, nodes with stars, Hard ring, Super Hard flag, current node with ring, bottom panel with Play.
+- [ ] Scrolls through all 100 levels of the city; bars separated by a landmark (gate).
+
+### T14 · Passport screen and navigation · `todo` · M
+Depends on: T13
+- [ ] Passport matching `docs/design/screens/Main.png`; city cards from themes and progress; locked cities shown greyed.
+- [ ] Navigation Passport → Map → Level → Complete → Map, tab bar on Passport and Map.
+
+### T15 · Saved progress and economy · `todo` · M
+Depends on: T09
+- [ ] Versioned local save (localStorage with a migration hook): per-level stars and best moves, coins, booster stock, streak, current level.
+- [ ] Rewards and prices from `docs/spec/progression.md`, all in one config file.
+- [ ] Win streak rewards at 3, 5 and 10; fail resets.
+
+### T16 · Amsterdam, London and New York skins · `todo` · L
+Depends on: T11, T13
+- [ ] Level and map screens for each city matching their design references, including glass shapes and blocker skins in `docs/spec/cities.md`.
+- [ ] One test per city loads a level and saves a screenshot.
+
+### T17 · Installable web app and deploy · `todo` · M
+Depends on: T14
+- [ ] Web app manifest, icons (generated simple placeholder art is fine), service worker for offline play.
+- [ ] GitHub Actions workflow deploying `apps/web` to GitHub Pages on pushes to main. **needs-human**: the owner enables Pages in repo settings; note this in the PR.
+
+### T18 · Daily pour · `todo` · M
+Depends on: T06, T15
+- [ ] Level of the day generated on the device from the date as seed (same for everyone), medium difficulty.
+- [ ] Share text like "Pour Decisions · 3 Nov · ★★★ 14 moves (best 13)".
+
+### T19 · Play log · `todo` · S
+Depends on: T15
+- [ ] Local event log (level start, pour, undo, booster use, dead end, win, quit) with an export button in a hidden debug menu.
+- [ ] Documented format in `docs/spec/levels.md` so a later task can tune difficulty from it.
+
+## Phase 3: needs a person
+
+### T20 · Family backend · `needs-human` · L
+Depends on: T15
+Supabase project for family groups (invite codes), synced progress, daily results and leaderboards. An agent can build the client side behind a feature flag with a fake backend; the owner creates the project and adds keys.
+
+### T21 · iOS and Android apps · `needs-human` · L
+Depends on: T17
+Capacitor wrapper, app icons, splash screens; TestFlight and Google Play closed testing. Needs a Mac with Xcode, an Apple Developer account and a Google Play developer account.
+
+### T22 · Sound · `todo` · S
+Depends on: T10
+Pour, clink, completion and win sounds synthesised with Web Audio (no audio files needed yet); per-city ambience hooks; mute setting.
+
+### T23 · Brain-training modes · `todo` · L
+Depends on: T15
+Planning score, plan-ahead mode, memory mode, adaptive difficulty and progress charts, per `docs/spec/progression.md`.
+
+---
+
+## Found while working
+
+Agents add bugs and ideas here instead of fixing things outside their task.

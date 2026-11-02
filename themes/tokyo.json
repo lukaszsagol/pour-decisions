@@ -1,0 +1,93 @@
+{
+  "id": "tokyo",
+  "name": "Tokyo",
+  "setting": "Neon back-alley bars",
+  "order": 4,
+  "levels": [
+    301,
+    400
+  ],
+  "fonts": {
+    "ui": "Outfit",
+    "display": "Outfit",
+    "extra": [
+      "Zen Kaku Gothic New"
+    ]
+  },
+  "colors": {
+    "ground": "#070B1F",
+    "surface": "#121836",
+    "surfaceAlt": "#0B1030",
+    "line": "#2B3466",
+    "text": "#F4ECDD",
+    "muted": "#A9B0DA",
+    "accent": "#FF5C8A",
+    "accentText": "#1A0710",
+    "starDone": "#F4B860",
+    "starEmpty": "#3A4170",
+    "hard": "#FF5C8A",
+    "glassFill": "#0F1538",
+    "glassRim": "#5B66A6",
+    "selected": "#FF5C8A",
+    "hint": "#5EC3F0",
+    "reject": "#E0453A",
+    "counterTop": "#D9B98A",
+    "counterFront": "#2E2118",
+    "boosterFace": "#121836",
+    "boosterRim": "#F4B860"
+  },
+  "glass": {
+    "shape": "highball",
+    "radius": [
+      8,
+      8,
+      16,
+      16
+    ]
+  },
+  "drinks": [
+    {
+      "id": "umeshu",
+      "name": "Umeshu",
+      "color": "#C7772E"
+    },
+    {
+      "id": "sakura",
+      "name": "Sakura",
+      "color": "#F49AC1"
+    },
+    {
+      "id": "melon",
+      "name": "Melon soda",
+      "color": "#3ECF7A"
+    },
+    {
+      "id": "yuzu",
+      "name": "Yuzu",
+      "color": "#F5D547"
+    },
+    {
+      "id": "ramune",
+      "name": "Ramune",
+      "color": "#5EC3F0"
+    }
+  ],
+  "blockers": {
+    "hidden": "unlabelled-bottle",
+    "only": "bottle-keep",
+    "locked": "shutter",
+    "frozen": "ice-ball"
+  },
+  "bars": [
+    "Neon gate",
+    "Golden alley",
+    "Ginza highball",
+    "Jazz kissa",
+    "Rooftop Shibuya"
+  ],
+  "design": [
+    "TokyoMap",
+    "TokyoLevel",
+    "TokyoComplete"
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "id": "newyork",
+  "name": "New York",
+  "setting": "Art Deco speakeasy",
+  "order": 3,
+  "levels": [
+    201,
+    300
+  ],
+  "fonts": {
+    "ui": "Outfit",
+    "display": "Limelight"
+  },
+  "colors": {
+    "ground": "#111111",
+    "surface": "#1A1A1A",
+    "surfaceAlt": "#0B0B0B",
+    "line": "#3A3220",
+    "text": "#F1E3C2",
+    "muted": "#CBBF9F",
+    "accent": "#D4AF37",
+    "accentText": "#111111",
+    "starDone": "#D4AF37",
+    "starEmpty": "#3A3220",
+    "hard": "#E8578A",
+    "glassFill": "#0B0B0B",
+    "glassRim": "#8C7A4E",
+    "selected": "#D4AF37",
+    "hint": "#A79BE0",
+    "reject": "#E0453A",
+    "counterTop": "#2A2A2A",
+    "counterFront": "#0B0B0B",
+    "boosterFace": "#111111",
+    "boosterRim": "#D4AF37"
+  },
+  "glass": {
+    "shape": "deco-tall",
+    "radius": [
+      6,
+      6,
+      14,
+      14
+    ]
+  },
+  "drinks": [
+    {
+      "id": "manhattan",
+      "name": "Manhattan",
+      "color": "#8E2A1E"
+    },
+    {
+      "id": "cosmopolitan",
+      "name": "Cosmopolitan",
+      "color": "#E8578A"
+    },
+    {
+      "id": "aviation",
+      "name": "Aviation",
+      "color": "#A79BE0"
+    },
+    {
+      "id": "whiskey-sour",
+      "name": "Whiskey sour",
+      "color": "#E9C46A"
+    },
+    {
+      "id": "grasshopper",
+      "name": "Grasshopper",
+      "color": "#5FB86A"
+    }
+  ],
+  "blockers": {
+    "hidden": "frosted-deco-glass",
+    "only": "velvet-rope",
+    "locked": "deco-door"
+  },
+  "bars": [
+    "The Brass Rail",
+    "Club Midnight",
+    "The Gilded Door",
+    "The Starlight Room",
+    "The Penthouse"
+  ],
+  "design": [
+    "NewYorkMap",
+    "NewYorkLevel"
+  ]
+}

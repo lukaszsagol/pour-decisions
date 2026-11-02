@@ -1,0 +1,91 @@
+{
+  "id": "london",
+  "name": "London",
+  "setting": "Traditional pub",
+  "order": 2,
+  "levels": [
+    101,
+    200
+  ],
+  "fonts": {
+    "ui": "Outfit",
+    "display": "Playfair Display"
+  },
+  "colors": {
+    "ground": "#2B1A12",
+    "surface": "#3B2416",
+    "surfaceAlt": "#4A1418",
+    "line": "#5A3A24",
+    "text": "#EFE6D2",
+    "muted": "#D8C3A0",
+    "accent": "#C9A24A",
+    "accentText": "#1B140A",
+    "starDone": "#C9A24A",
+    "starEmpty": "#2C4A3C",
+    "hard": "#E37A93",
+    "glassFill": "#1A1210",
+    "glassRim": "#B9B2A2",
+    "selected": "#C9A24A",
+    "hint": "#A9DCE6",
+    "reject": "#E0453A",
+    "counterTop": "#5A3A24",
+    "counterFront": "#3B2416",
+    "boosterFace": "#EFE6D2",
+    "boosterRim": "#1F5C44",
+    "wall": "#4A1418",
+    "fascia": "#16382B"
+  },
+  "glass": {
+    "shape": "nonic-pint",
+    "radius": [
+      4,
+      4,
+      8,
+      8
+    ]
+  },
+  "drinks": [
+    {
+      "id": "lager",
+      "name": "Lager",
+      "color": "#F1C84B"
+    },
+    {
+      "id": "bitter",
+      "name": "Bitter",
+      "color": "#B5651D"
+    },
+    {
+      "id": "stout",
+      "name": "Stout",
+      "color": "#2B1D16",
+      "foam": "#E8DCC2"
+    },
+    {
+      "id": "gin-tonic",
+      "name": "Gin and tonic",
+      "color": "#A9DCE6"
+    },
+    {
+      "id": "blackcurrant",
+      "name": "Blackcurrant",
+      "color": "#8E2A5E"
+    }
+  ],
+  "blockers": {
+    "hidden": "pewter-tankard",
+    "only": "reserved-beer-mat",
+    "locked": "locked-tap"
+  },
+  "bars": [
+    "The Red Lion",
+    "The Rose and Crown",
+    "The Fox and Fiddle",
+    "The Crown and Anchor",
+    "The Lamb and Flag"
+  ],
+  "design": [
+    "LondonMap",
+    "LondonLevel"
+  ]
+}

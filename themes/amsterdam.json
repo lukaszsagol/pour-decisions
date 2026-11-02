@@ -1,0 +1,90 @@
+{
+  "id": "amsterdam",
+  "name": "Amsterdam",
+  "setting": "Brown café on a canal",
+  "order": 1,
+  "levels": [
+    1,
+    100
+  ],
+  "fonts": {
+    "ui": "Outfit",
+    "display": "DM Serif Display"
+  },
+  "colors": {
+    "ground": "#2A1A10",
+    "surface": "#3B2416",
+    "surfaceAlt": "#2E1D12",
+    "line": "#5A3A24",
+    "text": "#F3E6CC",
+    "muted": "#D8C3A0",
+    "accent": "#F28C28",
+    "accentText": "#2A1A10",
+    "starDone": "#E8A33D",
+    "starEmpty": "#5A3A24",
+    "hard": "#A8213A",
+    "glassFill": "#1E120A",
+    "glassRim": "#A88B6A",
+    "selected": "#E8A33D",
+    "hint": "#3E6FC4",
+    "reject": "#E0453A",
+    "counterTop": "#6B4226",
+    "counterFront": "#3B2416",
+    "boosterFace": "#F3E6CC",
+    "boosterRim": "#2A5BA8",
+    "tile": "#2A5BA8",
+    "canal": "#23476E"
+  },
+  "glass": {
+    "shape": "tulip-stemmed",
+    "radius": [
+      10,
+      10,
+      26,
+      26
+    ]
+  },
+  "drinks": [
+    {
+      "id": "jenever",
+      "name": "Oude jenever",
+      "color": "#8C5A22"
+    },
+    {
+      "id": "advocaat",
+      "name": "Advocaat",
+      "color": "#F3D34A"
+    },
+    {
+      "id": "cherry",
+      "name": "Cherry brandy",
+      "color": "#A8213A"
+    },
+    {
+      "id": "oranjebitter",
+      "name": "Oranjebitter",
+      "color": "#F28C28"
+    },
+    {
+      "id": "curacao",
+      "name": "Blue curaçao",
+      "color": "#3E6FC4"
+    }
+  ],
+  "blockers": {
+    "hidden": "stoneware-jug",
+    "only": "kruik-tag",
+    "locked": "chains-padlock"
+  },
+  "bars": [
+    "Café 't Hoekje",
+    "De Druif",
+    "Het Bruine Paard",
+    "Café de Gracht",
+    "Proeflokaal Het Anker"
+  ],
+  "design": [
+    "AmsterdamMap",
+    "AmsterdamLevel"
+  ]
+}

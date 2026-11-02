@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tokyo – level 327</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&amp;family=Zen+Kaku+Gothic+New:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#F4ECDD;text-decoration:none}a:hover{color:#FFFFFF}
+button{font-family:'Outfit',system-ui,sans-serif}
+@keyframes pd-shake{0%,100%{translate:0 0}20%{translate:-6px 0}40%{translate:6px 0}60%{translate:-4px 0}80%{translate:4px 0}}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; position: relative; overflow: hidden; background: #070B1F; color: #F4ECDD; font-family: 'Outfit', system-ui, sans-serif;">
+
+  <div aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 390px; height: 58px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; padding: 0 6px; box-sizing: border-box;">
+    <div style="background: #23306E; border-radius: 0 0 4px 4px;"></div>
+    <div style="background: #23306E; border-radius: 0 0 4px 4px; display: flex; align-items: center; justify-content: center;"><div style="width: 30px; height: 30px; box-sizing: border-box; border-radius: 15px; border: 2px solid #F4ECDD; display: flex; align-items: center; justify-content: center; font-family: 'Zen Kaku Gothic New', sans-serif; font-weight: 700; font-size: 14px; color: #F4ECDD;">酒</div></div>
+    <div style="background: #23306E; border-radius: 0 0 4px 4px;"></div>
+  </div>
+
+  <div style="position: absolute; left: 0; top: 64px; width: 390px; height: 52px; box-sizing: border-box; padding: 0 12px 0 6px; display: flex; align-items: center; justify-content: space-between;">
+    <div style="display: flex; align-items: center; gap: 4px;">
+      <a href="TokyoMap.dc.html" aria-label="Back to map" style="width: 44px; height: 44px; border-radius: 22px; display: flex; align-items: center; justify-content: center;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="#F4ECDD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <div>
+        <div style="font-size: 19px; font-weight: 600;">Level 327</div>
+        <div style="font-size: 12px; color: #A9B0DA;">Golden alley</div>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <div style="height: 34px; padding: 0 12px; border-radius: 17px; background: #121836; border: 1px solid #2B3466; display: flex; align-items: center; gap: 6px; font-size: 13px;"><span style="font-weight: 700; font-size: 15px;">{{moves}}</span><span style="color: #A9B0DA;">moves · best 16</span></div>
+      <button onClick="{{restart}}" aria-label="Restart level" style="width: 44px; height: 44px; border-radius: 22px; background: transparent; border: none; padding: 0; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7" stroke="#A9B0DA" stroke-width="2" stroke-linecap="round"/><path d="M4 4v4.5h4.5" stroke="#A9B0DA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div style="position: absolute; left: 20px; right: 20px; top: 120px; height: 22px; display: flex; justify-content: center; align-items: center; font-size: 13px; color: #FF8FB0;">{{msg}}</div>
+
+  <div aria-hidden="true" style="position: absolute; left: 24px; right: 24px; top: 150px; height: 48px; display: flex; align-items: flex-end; justify-content: space-between;">
+    <div style="display: flex; gap: 8px; align-items: flex-end;">
+      <div style="width: 16px; height: 34px; border-radius: 4px 4px 3px 3px; background: #1A2148; display: flex; align-items: center; justify-content: center;"><div style="width: 12px; height: 8px; background: #F4ECDD; opacity: 0.85;"></div></div>
+      <div style="width: 16px; height: 28px; border-radius: 4px 4px 3px 3px; background: #1A2148; display: flex; align-items: center; justify-content: center;"><div style="width: 12px; height: 8px; background: #F4ECDD; opacity: 0.85;"></div></div>
+      <div style="width: 16px; height: 40px; border-radius: 4px 4px 3px 3px; background: #1A2148; display: flex; align-items: center; justify-content: center;"><div style="width: 12px; height: 8px; background: #F4ECDD; opacity: 0.85;"></div></div>
+      <div style="width: 16px; height: 30px; border-radius: 4px 4px 3px 3px; background: #1A2148; display: flex; align-items: center; justify-content: center;"><div style="width: 12px; height: 8px; background: #F4ECDD; opacity: 0.85;"></div></div>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 8px;"><div style="width: 2px; height: 6px; background: #3A2A2A;"></div><div style="width: 20px; height: 26px; border-radius: 10px; background: #E0453A;"></div></div>
+    <div style="display: flex; gap: 8px; align-items: flex-end;">
+      <div style="width: 16px; height: 30px; border-radius: 4px 4px 3px 3px; background: #1A2148; display: flex; align-items: center; justify-content: center;"><div style="width: 12px; height: 8px; background: #F4ECDD; opacity: 0.85;"></div></div>
+      <div style="width: 16px; height: 40px; border-radius: 4px 4px 3px 3px; background: #1A2148; display: flex; align-items: center; justify-content: center;"><div style="width: 12px; height: 8px; background: #F4ECDD; opacity: 0.85;"></div></div>
+      <div style="width: 16px; height: 26px; border-radius: 4px 4px 3px 3px; background: #1A2148; display: flex; align-items: center; justify-content: center;"><div style="width: 12px; height: 8px; background: #F4ECDD; opacity: 0.85;"></div></div>
+      <div style="width: 16px; height: 34px; border-radius: 4px 4px 3px 3px; background: #1A2148; display: flex; align-items: center; justify-content: center;"><div style="width: 12px; height: 8px; background: #F4ECDD; opacity: 0.85;"></div></div>
+    </div>
+  </div>
+  <div aria-hidden="true" style="position: absolute; left: 16px; right: 16px; top: 198px; height: 4px; border-radius: 2px; background: #2B3466;"></div>
+
+  <div style="position: absolute; left: 25px; top: 222px; width: 340px; display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 20px;">
+    <sc-for list="{{tubes}}" as="t" hint-placeholder-count="7">
+      <button onClick="{{t.tap}}" aria-label="{{t.label}}" style="position: relative; width: 60px; height: 200px; padding: 0; border: none; background: transparent; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; transform: translateY({{t.lift}}px); transition: transform 160ms ease-out; animation: {{t.anim}};">
+        <sc-if value="{{t.isKeep}}" hint-placeholder-val="{{ false }}">
+          <div aria-hidden="true" style="position: absolute; left: 50%; top: 4px; translate: -50% 0; width: 34px; height: 34px; box-sizing: border-box; border-radius: 17px; background: #0F1538; border: 2px solid #F5D547; display: flex; align-items: center; justify-content: center;">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="12.5" r="7" fill="#F5D547"/><path d="M11 5.5c0-2 1.2-3 3.4-3.2-.2 2.1-1.3 3.2-3.4 3.2z" fill="#3ECF7A"/><circle cx="8.5" cy="10.5" r="1.1" fill="#FFF4B8"/></svg>
+          </div>
+          <div aria-hidden="true" style="position: absolute; left: 50%; top: 38px; translate: -50% 0; width: 2px; height: 6px; background: #F5D547;"></div>
+        </sc-if>
+        <div style="width: 54px; height: 156px; box-sizing: border-box; padding: 5px; border-radius: 8px 8px 16px 16px; background: {{t.glassBg}}; border: 2px solid {{t.ring}}; display: flex; flex-direction: column-reverse; gap: 3px;">
+          <sc-for list="{{t.units}}" as="u" hint-placeholder-count="4">
+            <div style="height: 33px; flex-shrink: 0; box-sizing: border-box; border-radius: 4px; background: {{u.bg}}; border: {{u.border}}; display: flex; align-items: center; justify-content: center;">
+              <sc-if value="{{u.hidden}}" hint-placeholder-val="{{ false }}"><span style="color: #8A93C8; font-size: 15px; font-weight: 700;">?</span></sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </button>
+    </sc-for>
+  </div>
+
+  <div aria-hidden="true" style="position: absolute; left: 0; top: 668px; width: 390px; height: 14px; background: #D9B98A;"></div>
+  <div style="position: absolute; left: 0; top: 682px; width: 390px; height: 162px; background: #2E2118; box-sizing: border-box; padding: 16px 24px 0 24px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;">
+    <button onClick="{{undo}}" aria-label="Undo, {{undos}} left" style="background: transparent; border: none; padding: 0; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; color: #F4ECDD;">
+      <div style="position: relative; width: 64px; height: 64px; box-sizing: border-box; border-radius: 32px; background: #121836; border: 2px solid #F4B860; display: flex; align-items: center; justify-content: center;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 14 4 9l5-5" stroke="#5EC3F0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 9h10a6 6 0 0 1 0 12h-3" stroke="#5EC3F0" stroke-width="2" stroke-linecap="round"/></svg>
+        <div style="position: absolute; right: -4px; top: -4px; min-width: 22px; height: 22px; box-sizing: border-box; padding: 0 6px; border-radius: 11px; background: #F4B860; color: #3A2508; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center;">{{undos}}</div>
+      </div>
+      <span style="font-size: 13px; font-weight: 500;">Undo</span>
+    </button>
+    <button onClick="{{addGlass}}" aria-label="Add an empty glass, {{glasses}} left" style="background: transparent; border: none; padding: 0; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; color: #F4ECDD;">
+      <div style="position: relative; width: 64px; height: 64px; box-sizing: border-box; border-radius: 32px; background: #121836; border: 2px solid #F4B860; display: flex; align-items: center; justify-content: center;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 4h10l-1.4 16.5a1.6 1.6 0 0 1-1.6 1.5h-4a1.6 1.6 0 0 1-1.6-1.5L7 4z" stroke="#FF8FB0" stroke-width="2" stroke-linejoin="round"/><path d="M12 9v6M9 12h6" stroke="#FF8FB0" stroke-width="2" stroke-linecap="round"/></svg>
+        <div style="position: absolute; right: -4px; top: -4px; min-width: 22px; height: 22px; box-sizing: border-box; padding: 0 6px; border-radius: 11px; background: #F4B860; color: #3A2508; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center;">{{glasses}}</div>
+      </div>
+      <span style="font-size: 13px; font-weight: 500;">Extra glass</span>
+    </button>
+    <button onClick="{{useHint}}" aria-label="Hint, {{hints}} left" style="background: transparent; border: none; padding: 0; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; color: #F4ECDD;">
+      <div style="position: relative; width: 64px; height: 64px; box-sizing: border-box; border-radius: 32px; background: #121836; border: 2px solid #F4B860; display: flex; align-items: center; justify-content: center;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z" stroke="#F4B860" stroke-width="2" stroke-linejoin="round"/></svg>
+        <div style="position: absolute; right: -4px; top: -4px; min-width: 22px; height: 22px; box-sizing: border-box; padding: 0 6px; border-radius: 11px; background: #F4B860; color: #3A2508; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center;">{{hints}}</div>
+      </div>
+      <span style="font-size: 13px; font-weight: 500;">Hint</span>
+    </button>
+  </div>
+
+  <sc-if value="{{stuck}}" hint-placeholder-val="{{ false }}">
+    <div style="position: absolute; left: 16px; right: 16px; top: 690px; box-sizing: border-box; padding: 16px; border-radius: 20px; background: #121836; border: 1.5px solid #FF5C8A; display: flex; flex-direction: column; gap: 12px;">
+      <div>
+        <div style="font-size: 17px; font-weight: 600;">No pours left</div>
+        <div style="font-size: 13px; color: #A9B0DA; margin-top: 2px;">Undo a move, add a glass, or start the round again.</div>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <button onClick="{{undo}}" style="flex: 1; height: 44px; border-radius: 22px; background: transparent; border: 1.5px solid #5EC3F0; color: #5EC3F0; font-size: 14px; font-weight: 600; cursor: pointer;">Undo</button>
+        <button onClick="{{addGlass}}" style="flex: 1; height: 44px; border-radius: 22px; background: #FF5C8A; border: none; color: #1A0710; font-size: 14px; font-weight: 700; cursor: pointer;">Add glass</button>
+        <button onClick="{{restart}}" style="flex: 1; height: 44px; border-radius: 22px; background: transparent; border: 1.5px solid #5B66A6; color: #F4ECDD; font-size: 14px; font-weight: 600; cursor: pointer;">Restart</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{won}}" hint-placeholder-val="{{ false }}">
+    <div style="position: absolute; left: 0; top: 0; width: 390px; height: 844px; background: rgba(7, 11, 31, 0.9); display: flex; align-items: center; justify-content: center;">
+      <div style="width: 320px; box-sizing: border-box; padding: 28px 24px 24px 24px; border-radius: 28px; background: #10163A; border: 1.5px solid #FF5C8A; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center;">
+        <div style="font-size: 13px; font-weight: 600; letter-spacing: 0.06em; color: #FF8FB0;">LEVEL 327 CLEARED</div>
+        <div style="display: flex; gap: 6px; font-size: 44px; line-height: 1;"><span style="color: {{star1}};">★</span><span style="color: {{star2}};">★</span><span style="color: {{star3}};">★</span></div>
+        <div style="font-size: 24px; font-weight: 700;">{{verdict}}</div>
+        <div style="font-size: 14px; color: #A9B0DA;">{{moves}} moves · best 16</div>
+        <a href="TokyoComplete.dc.html" style="margin-top: 8px; width: 100%; height: 52px; border-radius: 26px; background: #FF5C8A; color: #1A0710; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center;">Collect rewards</a>
+        <button onClick="{{restart}}" style="width: 100%; height: 44px; border-radius: 22px; background: transparent; border: 1.5px solid #5B66A6; color: #F4ECDD; font-size: 15px; font-weight: 600; cursor: pointer;">Play again</button>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = this.fresh();
+  }
+
+  fresh() {
+    var u = function (c, h) { return { c: c, h: !!h }; };
+    return {
+      tubes: [
+        { u: [u('umeshu'), u('sakura'), u('melon'), u('ramune')], keep: null },
+        { u: [u('sakura'), u('ramune'), u('umeshu'), u('yuzu')], keep: null },
+        { u: [u('melon', true), u('yuzu', true), u('sakura'), u('umeshu')], keep: null },
+        { u: [u('ramune'), u('melon'), u('yuzu'), u('yuzu')], keep: null },
+        { u: [u('umeshu'), u('sakura'), u('melon'), u('ramune')], keep: null },
+        { u: [], keep: 'yuzu' },
+        { u: [], keep: null }
+      ],
+      selected: null,
+      moves: 0,
+      history: [],
+      undos: 5,
+      glasses: 2,
+      hints: 3,
+      extra: false,
+      won: false,
+      stuck: false,
+      hint: null,
+      reject: null,
+      msg: 'Tap a glass, then tap where to pour it'
+    };
+  }
+
+  get DRINKS() {
+    return {
+      umeshu: { bg: '#C7772E', name: 'Umeshu' },
+      sakura: { bg: '#F49AC1', name: 'Sakura' },
+      melon: { bg: '#3ECF7A', name: 'Melon soda' },
+      yuzu: { bg: '#F5D547', name: 'Yuzu' },
+      ramune: { bg: '#5EC3F0', name: 'Ramune' }
+    };
+  }
+
+  clone(tubes) { return JSON.parse(JSON.stringify(tubes)); }
+  top(t) { return t.u.length ? t.u[t.u.length - 1] : null; }
+  run(t) {
+    var n = 0, c = this.top(t) ? this.top(t).c : null;
+    for (var i = t.u.length - 1; i >= 0; i--) { if (t.u[i].c === c && !t.u[i].h) { n++; } else { break; } }
+    return n;
+  }
+  complete(t) {
+    if (t.u.length !== 4) { return false; }
+    for (var i = 0; i < 4; i++) { if (t.u[i].h || t.u[i].c !== t.u[0].c) { return false; } }
+    return true;
+  }
+  legal(tubes, a, b) {
+    if (a === b) { return false; }
+    var A = tubes[a], B = tubes[b];
+    if (!A.u.length || B.u.length >= 4) { return false; }
+    var c = this.top(A).c;
+    if (B.keep && B.keep !== c) { return false; }
+    if (B.u.length && this.top(B).c !== c) { return false; }
+    return true;
+  }
+  anyMove(tubes) {
+    for (var a = 0; a < tubes.length; a++) {
+      for (var b = 0; b < tubes.length; b++) {
+        if (this.legal(tubes, a, b) && !this.complete(tubes[a])) { return true; }
+      }
+    }
+    return false;
+  }
+  reveal(tubes) {
+    tubes.forEach(function (t) { if (t.u.length) { t.u[t.u.length - 1].h = false; } });
+  }
+  isWon(tubes) {
+    var self = this;
+    return tubes.every(function (t) { return t.u.length === 0 || self.complete(t); });
+  }
+
+  pour(a, b) {
+    var s = this.state;
+    var tubes = this.clone(s.tubes);
+    var n = Math.min(this.run(tubes[a]), 4 - tubes[b].u.length);
+    for (var k = 0; k < n; k++) { tubes[b].u.push(tubes[a].u.pop()); }
+    this.reveal(tubes);
+    var won = this.isWon(tubes);
+    this.setState({
+      tubes: tubes,
+      history: s.history.concat([s.tubes]),
+      moves: s.moves + 1,
+      selected: null,
+      hint: null,
+      won: won,
+      stuck: !won && !this.anyMove(tubes),
+      msg: ''
+    });
+  }
+
+  tap(i) {
+    var s = this.state;
+    if (s.won) { return; }
+    if (s.selected === null) {
+      if (s.tubes[i].u.length) { this.setState({ selected: i, msg: '' }); }
+      return;
+    }
+    if (s.selected === i) { this.setState({ selected: null }); return; }
+    if (this.legal(s.tubes, s.selected, i)) { this.pour(s.selected, i); return; }
+    var self = this;
+    var from = s.selected;
+    this.setState({ reject: i, selected: from, msg: '' });
+    clearTimeout(this.rejectTimer);
+    this.rejectTimer = setTimeout(function () { self.setState({ reject: null }); }, 420);
+  }
+
+  componentWillUnmount() { clearTimeout(this.rejectTimer); }
+
+  undo() {
+    var s = this.state;
+    if (!s.history.length) { this.setState({ msg: 'Nothing to undo yet' }); return; }
+    if (s.undos <= 0) { this.setState({ msg: 'No undos left' }); return; }
+    var prev = s.history[s.history.length - 1];
+    this.setState({ tubes: prev, history: s.history.slice(0, -1), undos: s.undos - 1, selected: null, hint: null, stuck: false, msg: 'Undone. Moves still count.' });
+  }
+
+  addGlass() {
+    var s = this.state;
+    if (s.extra) { this.setState({ msg: 'One extra glass per level' }); return; }
+    if (s.glasses <= 0) { this.setState({ msg: 'No extra glasses left' }); return; }
+    var tubes = this.clone(s.tubes);
+    tubes.push({ u: [], keep: null });
+    this.setState({ tubes: tubes, glasses: s.glasses - 1, extra: true, stuck: false, selected: null, msg: 'Extra glass added. Best score is now 2 stars.' });
+  }
+
+  useHint() {
+    var s = this.state;
+    if (s.won) { return; }
+    if (s.hints <= 0) { this.setState({ msg: 'No hints left' }); return; }
+    var t = s.tubes, best = null, fallback = null;
+    for (var a = 0; a < t.length; a++) {
+      if (this.complete(t[a])) { continue; }
+      for (var b = 0; b < t.length; b++) {
+        if (!this.legal(t, a, b)) { continue; }
+        if (t[b].u.length) { if (!best) { best = { a: a, b: b }; } }
+        else if (this.run(t[a]) < t[a].u.length && !fallback) { fallback = { a: a, b: b }; }
+      }
+    }
+    var h = best || fallback;
+    if (!h) { this.setState({ msg: 'No useful pour. Try undo.' }); return; }
+    this.setState({ hint: h, hints: s.hints - 1, selected: null, msg: 'Pour glass ' + (h.a + 1) + ' into glass ' + (h.b + 1) });
+  }
+
+  restart() { this.setState(this.fresh()); }
+
+  renderVals() {
+    var s = this.state, self = this, DRINKS = this.DRINKS, BEST = 16;
+    var tubes = s.tubes.map(function (t, i) {
+      var hinted = s.hint && (s.hint.a === i || s.hint.b === i);
+      var rejected = s.reject === i;
+      var ring = rejected ? '#E0453A' : (s.selected === i ? '#FF5C8A' : (hinted ? '#5EC3F0' : (t.keep ? '#F5D547' : '#5B66A6')));
+      var units = t.u.map(function (x) {
+        return { bg: x.h ? '#1E2652' : DRINKS[x.c].bg, border: 'none', hidden: x.h };
+      });
+      if (t.keep) {
+        for (var g = t.u.length; g < 4; g++) {
+          units.push({ bg: 'rgba(245, 213, 71, 0.08)', border: '2px dashed rgba(245, 213, 71, 0.55)', hidden: false });
+        }
+      }
+      var desc = t.u.length ? t.u.map(function (x) { return x.h ? 'hidden' : DRINKS[x.c].name; }).reverse().join(', ') : 'empty';
+      return {
+        tap: function () { self.tap(i); },
+        label: 'Glass ' + (i + 1) + ', top to bottom: ' + desc + (t.keep ? ', ' + DRINKS[t.keep].name + ' only' : ''),
+        lift: s.selected === i ? -16 : 0,
+        anim: rejected ? 'pd-shake 360ms ease-in-out' : 'none',
+        ring: ring,
+        glassBg: rejected ? '#2A1020' : '#0F1538',
+        isKeep: !!t.keep,
+        units: units
+      };
+    });
+    var stars = 1;
+    if (s.moves <= Math.floor(BEST * 1.1)) { stars = 3; } else if (s.moves <= Math.floor(BEST * 1.35)) { stars = 2; }
+    if (s.extra && stars > 2) { stars = 2; }
+    var verdicts = { 1: 'Cleared', 2: 'Nicely poured', 3: s.moves <= BEST ? 'Perfect pour' : 'Superb pour' };
+    if (s.moves < BEST) { verdicts[3] = 'You beat the computer'; }
+    return {
+      tubes: tubes,
+      moves: s.moves,
+      msg: s.msg,
+      undos: s.undos,
+      glasses: s.glasses,
+      hints: s.hints,
+      stuck: s.stuck,
+      won: s.won,
+      verdict: verdicts[stars],
+      star1: '#F4B860',
+      star2: stars >= 2 ? '#F4B860' : '#2B3466',
+      star3: stars >= 3 ? '#F4B860' : '#2B3466',
+      undo: function () { self.undo(); },
+      addGlass: function () { self.addGlass(); },
+      useHint: function () { self.useHint(); },
+      restart: function () { self.restart(); }
+    };
+  }
+}
+</script>
+</body>
+</html>
