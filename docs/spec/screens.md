@@ -6,7 +6,7 @@ Every screen is designed for a 390×844 logical-pixel phone and must also work f
 | --- | --- | --- |
 | Passport | `Main` | Home. City cards (current city highlighted, finished cities stamped), tonight's daily pour, bottom tab bar (Map, Daily, Passport, Family). |
 | City map | `TokyoMap`, `AmsterdamMap`, `LondonMap`, `NewYorkMap` | Winding path of level nodes through the city. Finished levels show stars, Hard levels have a ring, the next Super Hard is flagged, family avatars sit on their levels. Bottom panel: current level, booster counts, Play button, levels left to the next bar. |
-| Level | `TokyoLevel`, `AmsterdamLevel`, `LondonLevel`, `NewYorkLevel` | The puzzle. Header (back, bar name, move counter with best, restart), back-bar decoration, glasses in rows of up to 4, counter with three booster buttons (undo, extra glass, hint) showing counts. |
+| Level | `AmsterdamLevel`, `LondonLevel`, `NewYorkLevel`, `TokyoLevel` | The puzzle. Header (back, bar name, move counter with best, restart), back-bar decoration, glasses in rows of up to 4, counter with three booster buttons (undo, extra glass, hint) showing counts. |
 | Level complete | `TokyoComplete` | Stars, verdict ("Perfect pour"), moves vs best, rewards, family comparison, recipe card when a bar is finished, Next level and Share. |
 
 ## Level screen details

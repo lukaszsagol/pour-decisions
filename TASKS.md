@@ -53,7 +53,8 @@ Depends on: T02, T04
 Depends on: T03, T04, T05
 - [ ] `tools/levelgen` workspace with `npm run levels -- --city tokyo --bar 2` writing `levels/<city>/<bar>.json` in the format in `docs/spec/levels.md`.
 - [ ] Each bar: 20 levels following the curve in `docs/spec/progression.md` (sawtooth, Hard every 5–10, one Super Hard, relief after each).
-- [ ] Generates Amsterdam bars 1–2 and Tokyo bar 2. Tokyo level 327 must be the designed golden level (it is hand-made; insert it at its number).
+- [ ] Generates Amsterdam bars 1–2 first (levels 1–40, the start of the game), then Tokyo bar 2. Tokyo level 327 must be the designed golden level (it is hand-made; insert it at its number).
+- [ ] The first levels teach the game: level 1 has 2 drinks and an obvious solution, drinks are added gradually, no blockers before Amsterdam bar 2, and the locked glass (Amsterdam's blocker) is introduced with an easy teaching level.
 - [ ] Every generated level is solver-verified; a test re-verifies all committed packs.
 - [ ] Re-running with the same seeds reproduces identical files.
 
@@ -67,8 +68,10 @@ Depends on: T00
 
 ### T08 · Web app scaffold and static level screen · `todo` · L
 Depends on: T02, T07
+The game starts in Amsterdam (levels 1–100), so the first city built is Amsterdam. Build the screen theme-driven from the start, so other cities are a theme swap plus skins.
 - [ ] `apps/web` with Vite + TypeScript + PixiJS. `npm run dev -w apps/web` serves it; `npm run build -w apps/web` builds it.
-- [ ] Renders the Tokyo level screen for golden level 327 matching `docs/design/screens/TokyoLevel.png`: noren header, top bar, back-bar shelf, glasses in rows of 4, counter with three boosters. Theme values come from `themes/tokyo.json`.
+- [ ] Renders the Amsterdam level screen matching `docs/design/screens/AmsterdamLevel.png`: Delft tile band, header with bar name and moves, back-bar shelf with stoneware bottles and lamp, tulip glasses in rows of 4, counter with three beer-mat boosters. Theme values come from `themes/amsterdam.json`.
+- [ ] Until T06 exists, use a small hand-made starter pack for Amsterdam levels 1–5 (2–3 drinks), committed in `levels/amsterdam/starter.json` and solver-verified by a test.
 - [ ] Scales to fit any phone width from 360 px; centred with a max width on larger screens.
 - [ ] Playwright set up (`npm run e2e -w apps/web`); a test loads the level and saves a screenshot to `agent-logs/assets/` for the PR.
 
@@ -77,7 +80,8 @@ Depends on: T08
 - [ ] Tap to select (glass lifts 16 px), tap to pour, illegal tap flashes the target red and shakes, no error text.
 - [ ] Undo, extra glass and hint buttons work with counts, using the `Game` API.
 - [ ] Dead-end panel (Undo, Add glass, Restart) and win overlay (stars, verdict, moves vs best).
-- [ ] Playwright e2e test plays the solver's solution for level 327 by tapping and reaches a 3-star win.
+- [ ] First-level guidance for a new player: on level 1, a pointer shows "tap this glass, then that one" for the first pour (no text walls).
+- [ ] Playwright e2e test plays the solver's solution for Amsterdam level 1 by tapping and reaches a 3-star win. A second test loads golden Tokyo level 327 with the Tokyo theme and wins it the same way.
 
 ### T10 · Pour animation and feel · `todo` · M
 Depends on: T09
@@ -88,22 +92,22 @@ Depends on: T09
 ### T11 · Blocker rendering · `todo` · M
 Depends on: T09
 - [ ] Generic skin interface: each theme maps `hidden`, `only` and `locked` to a renderer.
-- [ ] Tokyo skins: "?" units, bottle-keep badge with dashed slots, shutter with a release badge. Badge colour = the releasing drink. No text labels.
+- [ ] Amsterdam skins first (see `AmsterdamLevel.png`): locked glass with brass chains, padlock and a release badge; stoneware-jug cover for hidden units; kruik tag for only-glasses. Badge colour = the releasing drink. No text labels.
 - [ ] Locked bottles visibly unlock when their drink is completed (short animation).
 
 ### T12 · Level complete screen · `todo` · M
 Depends on: T09
-- [ ] Matches `docs/design/screens/TokyoComplete.png`: stars, verdict, moves vs best, rewards row, recipe card when a bar is finished (recipes come from a `recipes` file per city; add Tokyo's five).
+- [ ] Layout matches `docs/design/screens/TokyoComplete.png`, drawn with the current city's theme (Amsterdam first): stars, verdict, moves vs best, rewards row, recipe card when a bar is finished (recipes come from a `recipes` file per city; add Amsterdam's five, real recipes).
 - [ ] Next level and Share (copies a text result to the clipboard) buttons.
 
 ### T13 · City map screen · `todo` · L
 Depends on: T06, T12
-- [ ] Tokyo map matching `docs/design/screens/TokyoMap.png`, driven by the level packs and saved progress: path, nodes with stars, Hard ring, Super Hard flag, current node with ring, bottom panel with Play.
+- [ ] Amsterdam canal map matching `docs/design/screens/AmsterdamMap.png` (layout shared with `TokyoMap.png`), driven by the level packs and saved progress: path, nodes with stars, Hard ring, Super Hard flag, current node with ring, bottom panel with Play. A new player starts at level 1.
 - [ ] Scrolls through all 100 levels of the city; bars separated by a landmark (gate).
 
 ### T14 · Passport screen and navigation · `todo` · M
 Depends on: T13
-- [ ] Passport matching `docs/design/screens/Main.png`; city cards from themes and progress; locked cities shown greyed.
+- [ ] Passport matching `docs/design/screens/Main.png`; city cards from themes and progress; locked cities shown greyed. A new player sees Amsterdam as the current city and the other three locked (the design shows a late-game player).
 - [ ] Navigation Passport → Map → Level → Complete → Map, tab bar on Passport and Map.
 
 ### T15 · Saved progress and economy · `todo` · M
@@ -112,7 +116,7 @@ Depends on: T09
 - [ ] Rewards and prices from `docs/spec/progression.md`, all in one config file.
 - [ ] Win streak rewards at 3, 5 and 10; fail resets.
 
-### T16 · Amsterdam, London and New York skins · `todo` · L
+### T16 · London, New York and Tokyo skins · `todo` · L
 Depends on: T11, T13
 - [ ] Level and map screens for each city matching their design references, including glass shapes and blocker skins in `docs/spec/cities.md`.
 - [ ] One test per city loads a level and saves a screenshot.

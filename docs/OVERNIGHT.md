@@ -2,7 +2,7 @@
 
 How an agent builds the game in one unattended run. The owner is asleep and reviews in the morning. Follow every step; do not ask questions, because nobody is there to answer. Make reasonable decisions and write them down.
 
-**The goal of the run: by morning the owner can play the game.** Build as much of `TASKS.md` as you can, in order, and keep the game runnable after every task.
+**The goal of the run: by morning the owner can play the game from the start, as a new player: Amsterdam, level 1 onwards.** Build as much of `TASKS.md` as you can, in order, and keep the game runnable after every task.
 
 ## 1. Start
 
@@ -23,7 +23,7 @@ Repeat until a stop condition is met:
 
 Use sub-agents if you have them: for example a reviewer that checks a finished task against its acceptance criteria and the design reference before you mark it `in-review`. Do not run two tasks that touch the same files in parallel.
 
-**Priority if time runs short**: a playable Tokyo level (T02, T08, T09) matters more than anything after it. If T08–T09 are not done by 04:00 Europe/Amsterdam, skip ahead to them once their dependencies are met.
+**Priority if time runs short**: playable Amsterdam levels from level 1 (T02, T08, T09) matter more than anything after it. If T08–T09 are not done by 04:00 Europe/Amsterdam, skip ahead to them once their dependencies are met.
 
 Stop starting new tasks when:
 
