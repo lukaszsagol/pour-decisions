@@ -1,1 +1,1 @@
-Read `AGENTS.md` first: it has all the instructions for working in this repository. For unattended runs, also follow `docs/NIGHTLY.md`.
+Read `AGENTS.md` first: it has all the instructions for working in this repository. For the unattended overnight build, also follow `docs/OVERNIGHT.md`.

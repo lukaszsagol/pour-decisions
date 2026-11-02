@@ -13,14 +13,14 @@ It ships as a web app (PWA) first, then as iOS and Android apps wrapped with Cap
 | Path | What it is |
 | --- | --- |
 | `TASKS.md` | The ordered backlog. **Your work comes from here.** |
-| `docs/NIGHTLY.md` | The protocol for unattended (overnight) runs. Follow it exactly when running unattended. |
+| `docs/OVERNIGHT.md` | The protocol for the unattended overnight build. Follow it exactly when running unattended. |
 | `docs/spec/` | Specs: game rules, progression and economy, screens, cities and themes, levels. **The source of truth.** |
 | `docs/design/screens/*.png` | Reference screenshots of every designed screen (390×844 logical px, rendered at 2×). Match these. |
 | `docs/design/screens/*.html` | The same screens as standalone HTML. Open them in a browser for exact colours, sizes and fonts. |
 | `docs/design/source/` | Original design-canvas sources. `TokyoLevel.dc.html` contains a working prototype of the level logic. |
 | `themes/*.json` | Design tokens per city: colours, fonts, drinks, blocker skins. Code reads these; never hard-code city styling. |
 | `packages/engine` | The rules engine and solver. Pure TypeScript, no DOM, fully tested. |
-| `agent-logs/` | One log file per unattended run. |
+| `agent-logs/` | Run logs and screenshots from unattended runs. |
 
 Planned (created by tasks): `tools/levelgen` (level generator CLI), `apps/web` (the game client), `levels/` (generated level packs).
 

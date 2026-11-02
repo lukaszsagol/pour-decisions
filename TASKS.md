@@ -1,8 +1,8 @@
 # Tasks
 
-The ordered backlog. Agents take the first task whose status is `todo` and whose dependencies are `done` (or `in-review` on the branch they are working on). See `docs/NIGHTLY.md`.
+The ordered backlog. Agents take the first task whose status is `todo` and whose dependencies are `done` (or `in-review` on the branch they are working on). See `docs/OVERNIGHT.md`.
 
-**Statuses**: `todo` · `in-progress` · `in-review` (finished, in an open PR) · `done` (merged to main) · `blocked` (reason written under the task) · `needs-human` (an agent can prepare it, but a person must finish it).
+**Statuses**: `todo` · `in-progress` · `in-review` (finished, in the open pull request) · `done` (merged to main) · `blocked` (reason written under the task) · `needs-human` (an agent can prepare it, but a person must finish it).
 
 **Sizes** are rough: S ≈ under 1 hour of agent time, M ≈ 1–3 hours, L ≈ more.
 
