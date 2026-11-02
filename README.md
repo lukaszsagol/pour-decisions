@@ -2,7 +2,7 @@
 
 A water-sort puzzle game for friends and family: pour drinks between glasses until each glass holds one drink, on a night out across Amsterdam, London, New York and Tokyo. No ads, no purchases, properly hard.
 
-The code is written by coding agents. Instructions for them are in `AGENTS.md`; the backlog is `TASKS.md`; the unattended overnight build follows `docs/OVERNIGHT.md`.
+The code is written by coding agents. Instructions for them are in `AGENTS.md`; the backlog is `TASKS.md`; unattended builds follow `docs/OVERNIGHT.md`.
 
 ## Run it
 
@@ -21,9 +21,9 @@ Once the web client exists (task T08): `npm run dev -w apps/web`.
 
 ## For the owner
 
-After the overnight build:
+During and after the unattended build:
 
-1. Open the pull request `Overnight build …`. Read the summary and run log, look at the screenshots.
+1. Open the pull request `Unattended build` (label `overnight`). Its description lists every finished task; the run logs are in `agent-logs/`.
 2. Play it: check out the branch, `npm install`, `npm run dev -w apps/web`.
 3. Leave review comments or merge. For more work, add tasks to `TASKS.md` and start another run.
 
