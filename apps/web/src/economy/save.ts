@@ -1,6 +1,7 @@
 import type { BoosterStock, Difficulty } from '@pour/engine';
 import { economy, type BoosterKind } from './config.js';
 import { rewardsFor, winCoins, type Rewards } from './rewards.js';
+import type { TrainingSession } from '../training/logic.js';
 
 export const SAVE_KEY = 'pour-decisions:save';
 export const SAVE_VERSION = 1;
@@ -24,6 +25,8 @@ export interface SaveData {
   settings: { muted: boolean };
   /** Daily pour results by date (YYYY-MM-DD). The first finish of the day counts. */
   daily: Record<string, { stars: number; moves: number; best: number }>;
+  /** Brain-training: adaptive rating and past sessions (newest last, 200 kept). */
+  training: { rating: number; sessions: TrainingSession[] };
 }
 
 /** Minimal storage interface so tests can use memory instead of localStorage. */
@@ -44,6 +47,7 @@ export function freshSave(): SaveData {
     current: 1,
     settings: { muted: false },
     daily: {},
+    training: { rating: 2, sessions: [] },
   };
 }
 
@@ -171,6 +175,14 @@ export class Progress {
     }
     this.commit();
     return { coins: first ? winCoins(stars, 'normal') : 0, stars: 0, streak: this.data.streak };
+  }
+
+  recordTraining(session: TrainingSession): void {
+    const t = this.data.training;
+    t.sessions.push(session);
+    if (t.sessions.length > 200) t.sessions.splice(0, t.sessions.length - 200);
+    t.rating = session.rating;
+    this.commit();
   }
 
   /** A restart or leaving a level unfinished breaks the first-try streak. */

@@ -33,6 +33,10 @@ export interface LevelScreenOptions {
   stock: BoosterStock;
   /** Where the back button goes. */
   backHref: string;
+  /** Boosters allowed in this level (training: plan ahead turns them off). Default true. */
+  boosters?: boolean;
+  /** Memory training: show every hidden unit for this long, then cover them. */
+  peekMs?: number;
   /** Line under the title; defaults to "City · Level N". */
   subtitle?: string;
   /** Show the "tap this glass, then that one" pointer for the first pour. */
@@ -111,6 +115,7 @@ export class LevelScreen {
     this.layout();
     this.render();
     this.opts.onEvent?.({ type: 'start', level: this.opts.number });
+    if (this.opts.peekMs) this.startPeek(this.opts.peekMs);
     this.el.dataset.ready = 'true';
   }
 
@@ -153,6 +158,7 @@ export class LevelScreen {
   }
 
   protected onGlass(index: number): void {
+    if (this.peeking) return;
     if (this.pouring) {
       this.queue.push(index);
       return;
@@ -420,7 +426,8 @@ export class LevelScreen {
       btn.setAttribute('aria-label', this.glassLabel(i, bottle));
       btn.setAttribute('aria-pressed', String(g.selected === i));
       if (this.pouring && (this.pouring.from === i || this.pouring.to === i)) return;
-      this.views[i]!.draw({ bottle, mark: this.markFor(i) });
+      const shown = this.peeking ? { ...bottle, units: bottle.units.map((u) => ({ ...u, hidden: false })) } : bottle;
+      this.views[i]!.draw({ bottle: shown, mark: this.markFor(i) });
       this.animateLift(i, g.selected === i ? LIFT : 0);
       this.place(i);
     });
@@ -445,7 +452,7 @@ export class LevelScreen {
       parts.push(
         `top to bottom: ${[...b.units]
           .reverse()
-          .map((u) => (u.hidden ? 'hidden' : name(u.drink)))
+          .map((u) => (u.hidden && !this.peeking ? 'hidden' : name(u.drink)))
           .join(', ')}`,
       );
     return parts.join(', ');
@@ -456,11 +463,38 @@ export class LevelScreen {
     if (n) n.textContent = value;
   }
 
+  private peeking = false;
+
+  /** Memory training: everything visible for a while, with a countdown, then covered. */
+  private startPeek(ms: number): void {
+    this.peeking = true;
+    const banner = document.createElement('div');
+    banner.className = 'lv-peek';
+    banner.setAttribute('role', 'status');
+    this.el.appendChild(banner);
+    const end = Date.now() + ms;
+    const tick = () => {
+      if (this.destroyed) return;
+      const left = Math.ceil((end - Date.now()) / 1000);
+      if (left <= 0) {
+        this.peeking = false;
+        banner.remove();
+        this.render();
+        return;
+      }
+      banner.textContent = `Remember the glasses · ${left}`;
+      setTimeout(tick, 200);
+    };
+    tick();
+    this.render();
+  }
+
   private booster(kind: 'undo' | 'glass' | 'hint', count: number, usable: boolean): void {
     const b = this.el.querySelector<HTMLButtonElement>(`.booster-${kind}`);
     if (!b) return;
     b.querySelector('.booster-count')!.textContent = String(count);
-    b.disabled = !usable;
+    b.disabled = !usable || this.opts.boosters === false;
+    b.hidden = this.opts.boosters === false;
     const label = { undo: 'Undo', glass: 'Add an empty glass', hint: 'Hint' }[kind];
     b.setAttribute('aria-label', `${label}, ${count} left`);
   }
@@ -470,13 +504,13 @@ export class LevelScreen {
     const show = this.game.status === 'deadEnd';
     panel.hidden = !show;
     if (!show) return;
-    panel.querySelector<HTMLButtonElement>('.de-undo')!.disabled = !this.game.canUndo();
+    panel.querySelector<HTMLButtonElement>('.de-undo')!.disabled = !this.game.canUndo() || this.opts.boosters === false;
     const glass = panel.querySelector<HTMLButtonElement>('.de-glass')!;
     const offer = this.opts.continueOffer;
     const canBuy = !this.game.extraGlassUsed && this.game.stock.extraGlass === 0 && !!offer?.canBuy();
     glass.textContent = canBuy ? `Add glass · ${offer!.price}` : 'Add glass';
     glass.dataset.buy = String(canBuy);
-    glass.disabled = !this.game.canAddGlass() && !canBuy;
+    glass.disabled = (!this.game.canAddGlass() && !canBuy) || this.opts.boosters === false;
   }
 
   /** Level 1 pointer: points at the source glass, then at the target, until the first pour. */

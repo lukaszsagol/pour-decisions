@@ -13,13 +13,16 @@ export interface CompleteData {
   theme: Theme;
   result: LevelResult;
   difficulty: Difficulty;
-  rewards: Rewards;
+  /** Hidden for modes that pay nothing (training). */
+  rewards?: Rewards;
   /** Shown when this win finished a bar. */
   recipe?: { recipe: Recipe; index: number; total: number };
   nextHref: string;
   nextLabel: string;
-  /** Overrides for the daily pour. */
+  /** Overrides for the daily pour and training. */
   kicker?: string;
+  verdict?: string;
+  subline?: string;
   share?: string;
 }
 
@@ -112,23 +115,27 @@ export class CompleteScreen {
       : r.moves < r.best
         ? `${r.moves} moves · ${r.best - r.moves} fewer than the computer`
         : `${r.moves} moves · best ${r.best}`;
-    const third = rewards.streakBooster
+    const third = rewards?.streakBooster
       ? { icon: this.boosterIcon(rewards.streakBooster), value: '+1', label: boosterNames[rewards.streakBooster] }
-      : { icon: icons.star(k.accent, 18), value: String(rewards.streak), label: 'Win streak' };
+      : { icon: icons.star(k.accent, 18), value: String(rewards?.streak ?? 0), label: 'Win streak' };
     const card = (icon: string, value: string, label: string) =>
       `<div class="cp-card"><div class="cp-card-value">${icon}<span>${esc(value)}</span></div><div class="cp-card-label">${esc(label)}</div></div>`;
     return `
       <div class="cp-head">
         <div class="cp-kicker">${esc(this.data.kicker ?? `Level ${r.number} cleared`)}</div>
         <div class="cp-stars" role="img" aria-label="${r.stars} of 3 stars"><span>${star(1)}</span><span>${star(2)}</span><span>${star(3)}</span></div>
-        <h1 class="cp-verdict">${esc(verdictFor(r))}</h1>
-        <div class="cp-sub">${esc(sub)}</div>
+        <h1 class="cp-verdict">${esc(this.data.verdict ?? verdictFor(r))}</h1>
+        <div class="cp-sub">${esc(this.data.subline ?? sub)}</div>
       </div>
-      <div class="cp-rewards">
+      ${
+        rewards
+          ? `<div class="cp-rewards">
         ${card(icons.coin(k.starDone).replace('width="22" height="22"', 'width="18" height="18"'), `+${rewards.coins}`, 'Coins')}
         ${card(icons.star(k.starDone, 18), `+${rewards.stars}`, 'Stars')}
         ${card(third.icon, third.value, third.label)}
-      </div>
+      </div>`
+          : ''
+      }
       ${recipe ? this.recipeHtml(recipe.recipe, recipe.index, recipe.total) : ''}
       <div class="cp-actions">
         <button class="cp-share" aria-label="Share result">${icons.share(k.text)}</button>

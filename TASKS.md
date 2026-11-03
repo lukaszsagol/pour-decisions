@@ -151,7 +151,7 @@ Capacitor wrapper, app icons, splash screens; TestFlight and Google Play closed 
 Depends on: T10
 Pour, clink, completion and win sounds synthesised with Web Audio (no audio files needed yet); per-city ambience hooks; mute setting.
 
-### T23 · Brain-training modes · `todo` · L
+### T23 · Brain-training modes · `in-review` · L
 Depends on: T15
 Planning score, plan-ahead mode, memory mode, adaptive difficulty and progress charts, per `docs/spec/progression.md`.
 

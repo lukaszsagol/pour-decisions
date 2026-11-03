@@ -84,6 +84,7 @@ export class PassportScreen {
           <div><div class="pp-daily-title">Tonight's pour</div><div class="pp-daily-line">${esc(this.opts.dailyLine)}</div></div>
           <span class="pp-daily-play">Play</span>
         </a>
+        <a class="pp-training" href="#/training">Training <span>Planning, plan ahead, memory</span></a>
       </div>
       ${tabBar('passport', this.opts.tabs)}`;
   }

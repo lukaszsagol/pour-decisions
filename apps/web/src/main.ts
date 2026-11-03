@@ -9,6 +9,8 @@ import { FamilyPlaceholder } from './family/placeholder.js';
 import { PassportScreen } from './passport/screen.js';
 import { tabBar, type Tab } from './tabbar.js';
 import { dailyLevel, dailyShareText, dateKey } from './daily/generate.js';
+import { TrainingScreen } from './training/screen.js';
+import { modes, nextRating, planningScore, trainingLevel, type TrainingMode } from './training/logic.js';
 import { session } from './session.js';
 import { createStage } from './stage.js';
 import { playLog, progress } from './state.js';
@@ -110,6 +112,64 @@ function dailyScreen(): Screen {
   });
 }
 
+function trainingScreen(mode: TrainingMode): Screen {
+  const theme = themeForLevel(progress.data.current);
+  const rating = progress.data.training.rating;
+  const t0 = Date.now();
+  const level = trainingLevel(
+    mode,
+    theme,
+    rating,
+    `training-${mode}-${progress.data.training.sessions.length}-${dateKey()}`,
+  );
+  const m = modes[mode];
+  let startedAt = t0 + (m.peekMs ?? 0);
+  let recorded = false;
+  const record = (won: boolean, moves: number) => {
+    if (recorded) return null;
+    recorded = true;
+    const score = planningScore(won, moves, level.best);
+    const msPerPour = moves ? Math.round((Date.now() - startedAt) / moves) : 0;
+    const next = nextRating(rating, won, score);
+    progress.recordTraining({ mode, t: Date.now(), won, score, moves, best: level.best, msPerPour, rating: next });
+    return { score, msPerPour, next };
+  };
+  return new LevelScreen(stage, {
+    theme,
+    number: 0,
+    barName: m.title,
+    subtitle: `Training · level ${rating} of 6`,
+    bottles: level.bottles,
+    best: level.best,
+    stock: { ...progress.data.stock },
+    boosters: m.boosters,
+    ...(m.peekMs ? { peekMs: m.peekMs } : {}),
+    backHref: '#/training',
+    nextHref: '#/complete',
+    nextLabel: 'See your score',
+    onStock: (stock) => progress.setStock(stock),
+    onEvent: (e) => {
+      playLog.add(`training-${mode}`, e);
+      if (e.type === 'restart') startedAt = Date.now();
+      if (e.type === 'quit' && typeof e.moves === 'number') record(false, e.moves);
+    },
+    onWin: (result) => {
+      const r = record(true, result.moves)!;
+      session.complete = {
+        theme,
+        result,
+        difficulty: 'normal',
+        kicker: `${m.title} training`,
+        verdict: `Planning score ${r.score}`,
+        subline: `${result.moves} moves · best ${level.best} · ${(r.msPerPour / 1000).toFixed(1)} s per pour`,
+        share: `Pour Decisions · ${m.title} training · planning score ${r.score}`,
+        nextHref: '#/training',
+        nextLabel: r.next > rating ? 'Next: a harder one' : 'Back to training',
+      };
+    },
+  });
+}
+
 function route(): Screen {
   const hash = location.hash.replace(/^#\/?/, '');
   const [name, arg] = hash.split('/');
@@ -141,6 +201,8 @@ function route(): Screen {
     });
   }
   if (name === 'daily') return dailyScreen();
+  if (name === 'training') return new TrainingScreen(stage, themeForLevel(progress.data.current), progress);
+  if (name === 'train' && arg && arg in modes) return trainingScreen(arg as TrainingMode);
   if (name === 'family') return new FamilyPlaceholder(stage, themeForLevel(progress.data.current), tabs);
   if (name === '' || name === 'passport') {
     const today = progress.data.daily[dateKey()];
