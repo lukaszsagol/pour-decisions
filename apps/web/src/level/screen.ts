@@ -1,7 +1,7 @@
 import { Game, type Bottle, type BoosterStock, type Move } from '@pour/engine';
 import type { Theme } from '@pour/themes';
 import { Container, Graphics } from 'pixi.js';
-import { easeInOut, linear, reducedMotion, tween, wait } from '../anim.js';
+import { easeInOut, easeOutBack, linear, reducedMotion, tween, wait } from '../anim.js';
 import { esc, icons } from '../icons.js';
 import { sfx } from '../sound.js';
 import { createPixi, invalidate } from '../pixi-util.js';
@@ -199,6 +199,7 @@ export class LevelScreen {
             );
           this.afterChange();
           this.render();
+          if (!reducedMotion()) this.dip(event.to);
           const next = this.queue.shift();
           if (next !== undefined) this.onGlass(next);
         });
@@ -253,7 +254,7 @@ export class LevelScreen {
       };
       this.opts.onEvent?.({ type: 'win', moves: g.moves, stars: result.stars });
       this.opts.onWin?.(result);
-      void wait(350).then(() => !this.destroyed && this.showWin(result));
+      void wait(reducedMotion() ? 0 : 900).then(() => !this.destroyed && this.showWin(result));
     }
   }
 
@@ -409,9 +410,23 @@ export class LevelScreen {
     this.liftAnims[i]?.cancel();
     const from = this.lifts[i]!;
     this.liftAnims[i] = tween({
-      duration: LIFT_MS,
+      duration: LIFT_MS + (target > from ? 60 : 0),
+      ease: target > from ? easeOutBack : undefined,
       onUpdate: (t) => {
         this.lifts[i] = from + (target - from) * t;
+        this.place(i);
+      },
+    });
+  }
+
+  /** The target glass dips slightly as the pour lands in it. */
+  private dip(i: number): void {
+    this.liftAnims[i]?.cancel();
+    this.liftAnims[i] = tween({
+      duration: 240,
+      ease: linear,
+      onUpdate: (t) => {
+        this.lifts[i] = -3.5 * Math.sin(Math.PI * t) * (1 - t * 0.3);
         this.place(i);
       },
     });
