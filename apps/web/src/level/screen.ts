@@ -1,13 +1,14 @@
 import { Game, type Bottle, type BoosterStock, type Move } from '@pour/engine';
 import type { Theme } from '@pour/themes';
-import { Container } from 'pixi.js';
-import { tween, wait } from '../anim.js';
+import { Container, Graphics } from 'pixi.js';
+import { easeInOut, linear, reducedMotion, tween, wait } from '../anim.js';
 import { esc, icons } from '../icons.js';
 import { createPixi } from '../pixi-util.js';
 import type { Stage } from '../stage.js';
 import { applyTheme, color } from '../theme-css.js';
 import { drawLevelDecor } from './decor.js';
-import { GlassView, type GlassMark } from './glass-view.js';
+import { bodyOrigin, GlassView, type GlassMark } from './glass-view.js';
+import { unitRects } from './geometry.js';
 import { layoutGlasses, type Slot } from './layout.js';
 
 export interface LevelResult {
@@ -68,6 +69,10 @@ export class LevelScreen {
   private liftAnims: ({ cancel: () => void } | null)[] = [];
   private shakes: number[] = [];
   private disposePixi: (() => void) | null = null;
+  /** The pour being animated; its two glasses are drawn by the animation, not by render(). */
+  private pouring: { from: number; to: number } | null = null;
+  /** Taps that arrive during a pour animation run after it, in order. */
+  private queue: number[] = [];
   private destroyed = false;
   private hint: Move | null = null;
   private restarts = 0;
@@ -95,6 +100,7 @@ export class LevelScreen {
     this.disposePixi = dispose;
     this.el.prepend(app.canvas);
     app.stage.addChild(drawLevelDecor(this.theme), this.glassLayer);
+    if (!reducedMotion()) app.ticker.add(() => this.views.forEach((v) => v.wobble(performance.now())));
     this.el.insertAdjacentHTML('beforeend', this.chromeHtml());
     this.bindChrome();
     this.layout();
@@ -142,8 +148,13 @@ export class LevelScreen {
   }
 
   protected onGlass(index: number): void {
+    if (this.pouring) {
+      this.queue.push(index);
+      return;
+    }
     if (this.game.status === 'won') return;
     const before = this.game.selected;
+    const bottlesBefore = this.game.bottles;
     const event = this.game.tap(index);
     this.hint = null;
     this.marks.clear();
@@ -153,8 +164,20 @@ export class LevelScreen {
         break;
       case 'poured':
         this.opts.onEvent?.({ type: 'pour', from: event.from, to: event.to, moves: this.game.moves });
-        this.afterChange();
-        break;
+        void this.animatePour(event.from, event.to, event.amount, bottlesBefore).then(() => {
+          if (this.destroyed) return;
+          if (event.completed)
+            void this.views[event.to]!.celebrate(
+              600,
+              (step) => tween({ duration: 600, ease: linear, onUpdate: step }).done,
+            );
+          this.afterChange();
+          this.render();
+          const next = this.queue.shift();
+          if (next !== undefined) this.onGlass(next);
+        });
+        this.render();
+        return;
       default:
         break;
     }
@@ -209,17 +232,20 @@ export class LevelScreen {
   }
 
   undo(): void {
+    if (this.pouring) return;
     if (!this.game.undo()) return;
     this.afterBooster('undo');
   }
 
   addGlass(): void {
+    if (this.pouring) return;
     if (!this.game.addGlass()) return;
     this.layout();
     this.afterBooster('extraGlass');
   }
 
   useHint(): void {
+    if (this.pouring) return;
     const move = this.game.hint();
     if (!move) return;
     this.hint = move;
@@ -232,6 +258,7 @@ export class LevelScreen {
   }
 
   restart(): void {
+    if (this.pouring) return;
     this.game.restart();
     this.restarts++;
     this.hint = null;
@@ -259,12 +286,90 @@ export class LevelScreen {
   }
 
   /** Positions one glass view and its button from slot, lift and shake. */
+  /**
+   * Pour animation (about 450 ms): the source tilts over the target, a stream
+   * arcs across while the target fills, then the source settles back.
+   */
+  private async animatePour(from: number, to: number, amount: number, before: readonly Bottle[]): Promise<void> {
+    if (reducedMotion()) return;
+    this.pouring = { from, to };
+    const src = this.views[from]!;
+    const dst = this.views[to]!;
+    const ss = this.slots[from]!;
+    const ds = this.slots[to]!;
+    const scale = ss.scale;
+    const geo = dst.geometry;
+    const srcBottle = before[from]!;
+    const dstBottle = this.game.bottles[to]!;
+    const srcStart = srcBottle.units.length;
+    const dstStart = before[to]!.units.length;
+    const drink = this.theme.drinks.find((d) => d.id === srcBottle.units[srcStart - 1]!.drink)!.color;
+    const dir = ds.x >= ss.x ? 1 : -1;
+    const home = { x: src.position.x, y: src.position.y };
+    const tm = { x: ds.x + dst.mouth.x * ds.scale, y: ds.y + dst.mouth.y * ds.scale };
+    // Tilt past horizontal so the mouth points down, with the lower lip just above the target's mouth.
+    const angle = dir * 2.05;
+    const half = (src.geometry.bodyW / 2) * scale;
+    const lip = { x: Math.cos(angle) * dir * half, y: Math.sin(angle) * dir * half };
+    const over = { x: tm.x - dir * 6 * scale - lip.x, y: tm.y - 12 * scale - lip.y };
+    const rest = { x: ss.x + src.mouth.x * scale, y: ss.y + src.mouth.y * scale };
+    const stream = new Graphics();
+    this.glassLayer.addChild(src, stream);
+    const inset = geo.border + geo.padding;
+    const surfaceAt = (level: number) => {
+      const rects = unitRects(geo, dstBottle.capacity);
+      const o = bodyOrigin(geo);
+      const i = Math.min(Math.floor(level), dstBottle.capacity - 1);
+      const r = rects[i]!;
+      const y = level >= dstBottle.capacity ? o.y + inset : r.y + r.h * (1 - (level - Math.floor(level)));
+      return ds.y + y * ds.scale;
+    };
+    const lerp = (a: number, b: number, k: number) => a + (b - a) * k;
+    await tween({
+      duration: 450,
+      ease: linear,
+      onUpdate: (t) => {
+        stream.clear();
+        if (t <= 0.33) {
+          const k = easeInOut(t / 0.33);
+          src.position.set(lerp(home.x, over.x, k), lerp(home.y, over.y, k));
+          src.rotation = angle * k;
+        } else if (t <= 0.78) {
+          const k = (t - 0.33) / 0.45;
+          src.position.set(over.x, over.y);
+          src.rotation = angle;
+          src.draw({ bottle: srcBottle, mark: 'none', level: srcStart - amount * k });
+          const level = dstStart + amount * k;
+          dst.draw({ bottle: dstBottle, mark: 'none', level });
+          const lipX = over.x + lip.x;
+          const lipY = over.y + lip.y;
+          const width = 5 * scale * Math.min(1, Math.sin(Math.PI * k) * 3);
+          stream
+            .moveTo(lipX, lipY)
+            .quadraticCurveTo(lerp(lipX, tm.x, 0.7), lipY - 4 * scale, tm.x, surfaceAt(level))
+            .stroke({ width, color: drink, cap: 'round' });
+        } else {
+          const k = easeInOut((t - 0.78) / 0.22);
+          src.draw({ bottle: this.game.bottles[from]!, mark: 'none' });
+          dst.draw({ bottle: dstBottle, mark: 'none' });
+          src.position.set(lerp(over.x, rest.x, k), lerp(over.y, rest.y, k));
+          src.rotation = angle * (1 - k);
+        }
+      },
+    }).done;
+    stream.destroy();
+    src.rotation = 0;
+    this.lifts[from] = 0;
+    this.liftAnims[from]?.cancel();
+    this.pouring = null;
+  }
+
   protected place(i: number): void {
     const slot = this.slots[i]!;
     const view = this.views[i]!;
     const lift = this.lifts[i]! * slot.scale;
     const x = slot.x + this.shakes[i]!;
-    view.position.set(x, slot.y - lift);
+    view.position.set(x + view.mouth.x * slot.scale, slot.y + view.mouth.y * slot.scale - lift);
     view.scale.set(slot.scale);
     const btn = this.glassButtons[i]!;
     btn.style.left = `${x}px`;
@@ -289,12 +394,13 @@ export class LevelScreen {
   render(): void {
     const g = this.game;
     g.bottles.forEach((bottle, i) => {
-      this.views[i]!.draw({ bottle, mark: this.markFor(i) });
-      this.animateLift(i, g.selected === i ? LIFT : 0);
-      this.place(i);
       const btn = this.glassButtons[i]!;
       btn.setAttribute('aria-label', this.glassLabel(i, bottle));
       btn.setAttribute('aria-pressed', String(g.selected === i));
+      if (this.pouring && (this.pouring.from === i || this.pouring.to === i)) return;
+      this.views[i]!.draw({ bottle, mark: this.markFor(i) });
+      this.animateLift(i, g.selected === i ? LIFT : 0);
+      this.place(i);
     });
     this.text('.lv-move-count', String(g.moves));
     this.booster('undo', g.stock.undo, g.canUndo());

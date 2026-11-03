@@ -83,11 +83,11 @@ Depends on: T08
 - [x] First-level guidance for a new player: on level 1, a pointer shows "tap this glass, then that one" for the first pour (no text walls).
 - [x] Playwright e2e test plays the solver's solution for Amsterdam level 1 by tapping and reaches a 3-star win. A second test loads golden Tokyo level 327 with the Tokyo theme and wins it the same way.
 
-### T10 · Pour animation and feel · `todo` · M
+### T10 · Pour animation and feel · `in-review` · M
 Depends on: T09
-- [ ] Pour animation per `docs/spec/screens.md` (tilt, arcing stream, fill, settle, about 450 ms); taps during animation are queued.
-- [ ] Completed-glass celebration; subtle idle wobble of liquid surfaces.
-- [ ] Respects `prefers-reduced-motion` (instant pours).
+- [x] Pour animation per `docs/spec/screens.md` (tilt, arcing stream, fill, settle, about 450 ms); taps during animation are queued.
+- [x] Completed-glass celebration; subtle idle wobble of liquid surfaces.
+- [x] Respects `prefers-reduced-motion` (instant pours).
 
 ### T11 · Blocker rendering · `todo` · M
 Depends on: T09
