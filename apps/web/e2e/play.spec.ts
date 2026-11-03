@@ -22,6 +22,8 @@ test('plays Amsterdam level 1 by tapping to a 3-star win', async ({ page }) => {
   await expect(page.getByLabel('3 of 3 stars')).toBeVisible();
   await expect(page.getByText('Perfect pour')).toBeVisible();
   await shot(page, 'T09-amsterdam-level-1-won');
+  await page.getByRole('link', { name: 'Collect rewards' }).click();
+  await expect(page.getByRole('heading', { name: 'Perfect pour' })).toBeVisible();
   await page.getByRole('link', { name: 'Next level' }).click();
   await expect(page.getByText('Amsterdam · Level 2')).toBeVisible();
 });

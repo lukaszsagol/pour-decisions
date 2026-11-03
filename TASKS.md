@@ -95,10 +95,10 @@ Depends on: T09
 - [x] Amsterdam skins first (see `AmsterdamLevel.png`): locked glass with brass chains, padlock and a release badge; stoneware-jug cover for hidden units; kruik tag for only-glasses. Badge colour = the releasing drink. No text labels.
 - [x] Locked bottles visibly unlock when their drink is completed (short animation).
 
-### T12 · Level complete screen · `todo` · M
+### T12 · Level complete screen · `in-review` · M
 Depends on: T09
-- [ ] Layout matches `docs/design/screens/TokyoComplete.png`, drawn with the current city's theme (Amsterdam first): stars, verdict, moves vs best, rewards row, recipe card when a bar is finished (recipes come from a `recipes` file per city; add Amsterdam's five, real recipes).
-- [ ] Next level and Share (copies a text result to the clipboard) buttons.
+- [x] Layout matches `docs/design/screens/TokyoComplete.png`, drawn with the current city's theme (Amsterdam first): stars, verdict, moves vs best, rewards row, recipe card when a bar is finished (recipes come from a `recipes` file per city; add Amsterdam's five, real recipes).
+- [x] Next level and Share (copies a text result to the clipboard) buttons.
 
 ### T13 · City map screen · `todo` · L
 Depends on: T06, T12

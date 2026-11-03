@@ -384,3 +384,204 @@ p {
 .win-card .btn-ghost {
   font-size: 15px;
 }
+
+/* Level complete */
+.cp-head {
+  position: absolute;
+  left: 0;
+  top: 78px;
+  width: 390px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.cp-kicker {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-accent);
+}
+.cp-stars {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+.cp-stars span {
+  display: flex;
+}
+.cp-stars span:first-child {
+  transform: rotate(-10deg) translateY(6px);
+}
+.cp-stars span:last-child {
+  transform: rotate(10deg) translateY(6px);
+}
+.cp-verdict {
+  margin-top: 12px;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.cp-sub {
+  font-size: 14px;
+  color: var(--c-muted);
+  margin-top: 4px;
+}
+.cp-rewards {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 262px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.cp-card {
+  height: 72px;
+  border-radius: 16px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+.cp-card-value {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 20px;
+  font-weight: 700;
+}
+.cp-card-label {
+  font-size: 12px;
+  color: var(--c-muted);
+}
+.cp-recipe {
+  position: absolute;
+  left: 20px;
+  top: 398px;
+  width: 350px;
+  padding: 18px 20px;
+  border-radius: 20px;
+  background: #f4ecdd;
+  color: #1b1a2e;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transform: rotate(-1.2deg);
+}
+.cp-recipe-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cp-pill {
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 12px;
+  background: #1b1a2e;
+  color: #f4ecdd;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+.cp-count {
+  font-size: 12px;
+  color: #5c5466;
+}
+.cp-recipe-body {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.cp-recipe-text {
+  flex: 1;
+  min-width: 0;
+}
+.cp-recipe-name {
+  font-family: var(--f-display);
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+.cp-recipe-local {
+  font-size: 14px;
+  color: #8a3a52;
+  margin-top: 4px;
+}
+.cp-ingredients {
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 14px;
+}
+.cp-ingredients li {
+  display: flex;
+  gap: 8px;
+}
+.cp-amount {
+  width: 60px;
+  flex-shrink: 0;
+  color: #5c5466;
+}
+.cp-recipe-glass {
+  width: 70px;
+  flex-shrink: 0;
+}
+.cp-method {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #3a3546;
+}
+.cp-actions {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 736px;
+  display: flex;
+  gap: 10px;
+}
+.cp-share {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  border-radius: 28px;
+  background: var(--c-surface);
+  border: 1.5px solid var(--c-line);
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cp-next {
+  flex: 1;
+  height: 56px;
+  border-radius: 28px;
+  font-size: 17px;
+}
+.toast {
+  position: absolute;
+  left: 50%;
+  bottom: 120px;
+  translate: -50% 0;
+  padding: 10px 16px;
+  border-radius: 20px;
+  background: var(--c-text);
+  color: var(--c-ground);
+  font-size: 14px;
+  font-weight: 600;
+  max-width: 340px;
+  text-align: center;
+}
+.toast[hidden] {
+  display: none;
+}

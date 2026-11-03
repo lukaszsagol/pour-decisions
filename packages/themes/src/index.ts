@@ -40,3 +40,4 @@ export function drinksFor(theme: Theme, n: number): Drink[] {
   if (n > theme.drinks.length) throw new Error(`${theme.name} has only ${theme.drinks.length} drinks`);
   return theme.drinks.slice(0, n);
 }
+export * from './recipes.js';
