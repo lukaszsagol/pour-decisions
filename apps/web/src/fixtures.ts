@@ -79,7 +79,14 @@ export const designFixtures: Record<string, DesignFixture> = {
     number: 21,
     barName: 'De Druif',
     bottles: parseBottles(
-      ['?cherry ?jenever advocaat cherry', 'advocaat cherry jenever jenever', 'jenever advocaat advocaat cherry', '', '', ''],
+      [
+        '?cherry ?jenever advocaat cherry',
+        'advocaat cherry jenever jenever',
+        'jenever advocaat advocaat cherry',
+        '',
+        '',
+        '',
+      ],
       4,
       { 3: { lockedUntil: 'cherry' }, 4: { only: 'advocaat' } },
     ),
