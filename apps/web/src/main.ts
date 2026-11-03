@@ -28,6 +28,7 @@ function route(): Screen {
       best: f.best,
       stock: f.stock,
       backHref: '#/',
+      nextHref: '#/',
     });
     screen.game.moves = f.moves;
     screen.game.selected = f.selected;
@@ -44,6 +45,8 @@ function route(): Screen {
     best: entry.level.best,
     stock: defaultStock(),
     backHref: '#/',
+    guide: entry.level.number === 1,
+    nextHref: getLevel(entry.level.number + 1) ? `#/level/${entry.level.number + 1}` : '#/',
   });
 }
 

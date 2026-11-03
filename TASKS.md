@@ -75,13 +75,13 @@ The game starts in Amsterdam (levels 1–100), so the first city built is Amster
 - [x] Scales to fit any phone width from 360 px; centred with a max width on larger screens.
 - [x] Playwright set up (`npm run e2e -w apps/web`); a test loads the level and saves a screenshot to `agent-logs/assets/` for the PR.
 
-### T09 · Level interaction · `todo` · L
+### T09 · Level interaction · `in-review` · L
 Depends on: T08
-- [ ] Tap to select (glass lifts 16 px), tap to pour, illegal tap flashes the target red and shakes, no error text.
-- [ ] Undo, extra glass and hint buttons work with counts, using the `Game` API.
-- [ ] Dead-end panel (Undo, Add glass, Restart) and win overlay (stars, verdict, moves vs best).
-- [ ] First-level guidance for a new player: on level 1, a pointer shows "tap this glass, then that one" for the first pour (no text walls).
-- [ ] Playwright e2e test plays the solver's solution for Amsterdam level 1 by tapping and reaches a 3-star win. A second test loads golden Tokyo level 327 with the Tokyo theme and wins it the same way.
+- [x] Tap to select (glass lifts 16 px), tap to pour, illegal tap flashes the target red and shakes, no error text.
+- [x] Undo, extra glass and hint buttons work with counts, using the `Game` API.
+- [x] Dead-end panel (Undo, Add glass, Restart) and win overlay (stars, verdict, moves vs best).
+- [x] First-level guidance for a new player: on level 1, a pointer shows "tap this glass, then that one" for the first pour (no text walls).
+- [x] Playwright e2e test plays the solver's solution for Amsterdam level 1 by tapping and reaches a 3-star win. A second test loads golden Tokyo level 327 with the Tokyo theme and wins it the same way.
 
 ### T10 · Pour animation and feel · `todo` · M
 Depends on: T09

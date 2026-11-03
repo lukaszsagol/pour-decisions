@@ -1,6 +1,7 @@
-import { Game, type Bottle, type BoosterStock } from '@pour/engine';
+import { Game, type Bottle, type BoosterStock, type Move } from '@pour/engine';
 import type { Theme } from '@pour/themes';
 import { Container } from 'pixi.js';
+import { tween, wait } from '../anim.js';
 import { esc, icons } from '../icons.js';
 import { createPixi } from '../pixi-util.js';
 import type { Stage } from '../stage.js';
@@ -8,6 +9,18 @@ import { applyTheme, color } from '../theme-css.js';
 import { drawLevelDecor } from './decor.js';
 import { GlassView, type GlassMark } from './glass-view.js';
 import { layoutGlasses, type Slot } from './layout.js';
+
+export interface LevelResult {
+  number: number;
+  moves: number;
+  best: number;
+  stars: number;
+  perfect: boolean;
+  extraGlassUsed: boolean;
+  usedBoosters: number;
+  /** Attempts before this one in this visit (0 = first try). */
+  restarts: number;
+}
 
 export interface LevelScreenOptions {
   theme: Theme;
@@ -18,14 +31,29 @@ export interface LevelScreenOptions {
   stock: BoosterStock;
   /** Where the back button goes. */
   backHref: string;
+  /** Show the "tap this glass, then that one" pointer for the first pour. */
+  guide?: boolean;
+  /** Called once when the level is won, before the win overlay shows. */
+  onWin?: (result: LevelResult) => void;
+  /** Called whenever booster stock changes, so the economy can save it. */
+  onStock?: (stock: BoosterStock) => void;
+  /** Called when the player hits a dead end (for streaks and the play log). */
+  onDeadEnd?: () => void;
+  /** Called after every pour, undo, booster use or restart (for the play log). */
+  onEvent?: (event: { type: string; [key: string]: unknown }) => void;
+  /** "Next" on the win overlay. */
+  nextHref: string;
+  nextLabel?: string;
 }
 
 /** Lift of a selected glass, in logical px. */
 export const LIFT = 16;
+const LIFT_MS = 160;
+const REJECT_MS = 420;
 
 /**
  * The puzzle screen: Pixi draws the backdrop and glasses, DOM provides the
- * header, the booster counter and a real button over every glass.
+ * header, the booster counter, overlays and a real button over every glass.
  */
 export class LevelScreen {
   readonly game: Game;
@@ -36,8 +64,15 @@ export class LevelScreen {
   protected glassButtons: HTMLButtonElement[] = [];
   protected marks = new Map<number, GlassMark>();
   protected glassLayer = new Container();
+  private lifts: number[] = [];
+  private liftAnims: ({ cancel: () => void } | null)[] = [];
+  private shakes: number[] = [];
   private disposePixi: (() => void) | null = null;
   private destroyed = false;
+  private hint: Move | null = null;
+  private restarts = 0;
+  private wonReported = false;
+  private deadEndReported = false;
 
   constructor(
     protected readonly stage: Stage,
@@ -61,13 +96,17 @@ export class LevelScreen {
     this.el.prepend(app.canvas);
     app.stage.addChild(drawLevelDecor(this.theme), this.glassLayer);
     this.el.insertAdjacentHTML('beforeend', this.chromeHtml());
+    this.bindChrome();
     this.layout();
     this.render();
+    this.opts.onEvent?.({ type: 'start', level: this.opts.number });
     this.el.dataset.ready = 'true';
   }
 
   destroy(): void {
+    if (!this.destroyed && !this.wonReported && this.game.moves > 0) this.opts.onEvent?.({ type: 'quit', moves: this.game.moves });
     this.destroyed = true;
+    this.liftAnims.forEach((a) => a?.cancel());
     this.disposePixi?.();
     this.el.remove();
   }
@@ -76,21 +115,141 @@ export class LevelScreen {
   protected layout(): void {
     const n = this.game.bottles.length;
     this.slots = layoutGlasses(n);
+    const holder = this.el.querySelector('.lv-glasses')!;
     while (this.views.length < n) {
       const v = new GlassView(this.theme);
       this.views.push(v);
       this.glassLayer.addChild(v);
+      const index = this.glassButtons.length;
       const b = document.createElement('button');
       b.className = 'lv-glass';
-      const index = this.glassButtons.length;
+      b.dataset.index = String(index);
       b.addEventListener('click', () => this.onGlass(index));
       this.glassButtons.push(b);
-      this.el.querySelector('.lv-glasses')!.appendChild(b);
+      this.lifts.push(0);
+      this.liftAnims.push(null);
+      this.shakes.push(0);
+      holder.appendChild(b);
+    }
+    while (this.views.length > n) {
+      this.views.pop()!.destroy();
+      this.glassButtons.pop()!.remove();
+      this.lifts.pop();
+      this.liftAnims.pop()?.cancel();
+      this.shakes.pop();
     }
   }
 
-  protected onGlass(_index: number): void {
-    // Interaction arrives with the level interaction task.
+  protected onGlass(index: number): void {
+    if (this.game.status === 'won') return;
+    const before = this.game.selected;
+    const event = this.game.tap(index);
+    this.hint = null;
+    this.marks.clear();
+    switch (event.type) {
+      case 'rejected':
+        this.reject(index);
+        break;
+      case 'poured':
+        this.opts.onEvent?.({ type: 'pour', from: event.from, to: event.to, moves: this.game.moves });
+        this.afterChange();
+        break;
+      default:
+        break;
+    }
+    if (before !== this.game.selected || event.type !== 'rejected') this.render();
+  }
+
+  /** Flashes a glass red and shakes it. No error text. */
+  protected reject(index: number): void {
+    this.marks.set(index, 'reject');
+    this.render();
+    const slot = this.slots[index]!;
+    tween({
+      duration: REJECT_MS,
+      onUpdate: (t) => {
+        this.shakes[index] = Math.sin(t * Math.PI * 5) * 6 * (1 - t) * slot.scale;
+        this.place(index);
+      },
+    }).done.then(() => {
+      if (this.destroyed) return;
+      this.shakes[index] = 0;
+      if (this.marks.get(index) === 'reject') this.marks.delete(index);
+      this.render();
+    });
+  }
+
+  /** Checks for win and dead end after the position changes. */
+  protected afterChange(): void {
+    const status = this.game.status;
+    if (status === 'deadEnd' && !this.deadEndReported) {
+      this.deadEndReported = true;
+      this.opts.onDeadEnd?.();
+      this.opts.onEvent?.({ type: 'deadEnd', moves: this.game.moves });
+    }
+    if (status !== 'deadEnd') this.deadEndReported = false;
+    if (status === 'won' && !this.wonReported) {
+      this.wonReported = true;
+      const g = this.game;
+      const result: LevelResult = {
+        number: this.opts.number,
+        moves: g.moves,
+        best: g.best,
+        stars: g.stars(),
+        perfect: g.perfect,
+        extraGlassUsed: g.extraGlassUsed,
+        usedBoosters: g.usedBoosters,
+        restarts: this.restarts,
+      };
+      this.opts.onEvent?.({ type: 'win', moves: g.moves, stars: result.stars });
+      this.opts.onWin?.(result);
+      void wait(350).then(() => !this.destroyed && this.showWin(result));
+    }
+  }
+
+  undo(): void {
+    if (!this.game.undo()) return;
+    this.afterBooster('undo');
+  }
+
+  addGlass(): void {
+    if (!this.game.addGlass()) return;
+    this.layout();
+    this.afterBooster('extraGlass');
+  }
+
+  useHint(): void {
+    const move = this.game.hint();
+    if (!move) return;
+    this.hint = move;
+    this.marks.clear();
+    this.marks.set(move.from, 'hint');
+    this.marks.set(move.to, 'hint');
+    this.opts.onStock?.({ ...this.game.stock });
+    this.opts.onEvent?.({ type: 'booster', booster: 'hint' });
+    this.render();
+  }
+
+  restart(): void {
+    this.game.restart();
+    this.restarts++;
+    this.hint = null;
+    this.marks.clear();
+    this.wonReported = false;
+    this.deadEndReported = false;
+    this.layout();
+    this.hideOverlay();
+    this.opts.onEvent?.({ type: 'restart' });
+    this.render();
+  }
+
+  private afterBooster(kind: string): void {
+    this.hint = null;
+    this.marks.clear();
+    this.opts.onStock?.({ ...this.game.stock });
+    this.opts.onEvent?.({ type: 'booster', booster: kind });
+    this.afterChange();
+    this.render();
   }
 
   protected markFor(i: number): GlassMark {
@@ -98,21 +257,41 @@ export class LevelScreen {
     return this.game.selected === i ? 'selected' : 'none';
   }
 
-  /** Redraws glasses, counters and labels from the game state. */
+  /** Positions one glass view and its button from slot, lift and shake. */
+  protected place(i: number): void {
+    const slot = this.slots[i]!;
+    const view = this.views[i]!;
+    const lift = this.lifts[i]! * slot.scale;
+    const x = slot.x + this.shakes[i]!;
+    view.position.set(x, slot.y - lift);
+    view.scale.set(slot.scale);
+    const btn = this.glassButtons[i]!;
+    btn.style.left = `${x}px`;
+    btn.style.top = `${slot.y - lift}px`;
+    btn.style.transform = `scale(${slot.scale})`;
+  }
+
+  private animateLift(i: number, target: number): void {
+    if (this.lifts[i] === target) return;
+    this.liftAnims[i]?.cancel();
+    const from = this.lifts[i]!;
+    this.liftAnims[i] = tween({
+      duration: LIFT_MS,
+      onUpdate: (t) => {
+        this.lifts[i] = from + (target - from) * t;
+        this.place(i);
+      },
+    });
+  }
+
+  /** Redraws glasses, counters, overlays and labels from the game state. */
   render(): void {
     const g = this.game;
     g.bottles.forEach((bottle, i) => {
-      const view = this.views[i]!;
-      const slot = this.slots[i]!;
-      const mark = this.markFor(i);
-      view.draw({ bottle, mark });
-      const lift = g.selected === i ? LIFT * slot.scale : 0;
-      view.position.set(slot.x, slot.y - lift);
-      view.scale.set(slot.scale);
+      this.views[i]!.draw({ bottle, mark: this.markFor(i) });
+      this.animateLift(i, g.selected === i ? LIFT : 0);
+      this.place(i);
       const btn = this.glassButtons[i]!;
-      btn.style.left = `${slot.x}px`;
-      btn.style.top = `${slot.y - lift}px`;
-      btn.style.transform = `scale(${slot.scale})`;
       btn.setAttribute('aria-label', this.glassLabel(i, bottle));
       btn.setAttribute('aria-pressed', String(g.selected === i));
     });
@@ -120,12 +299,15 @@ export class LevelScreen {
     this.booster('undo', g.stock.undo, g.canUndo());
     this.booster('glass', g.stock.extraGlass, g.canAddGlass());
     this.booster('hint', g.stock.hint, g.canHint());
+    this.renderDeadEnd();
+    this.renderGuide();
   }
 
   protected glassLabel(i: number, b: Bottle): string {
     const name = (id: string) => this.theme.drinks.find((d) => d.id === id)?.name.toLowerCase() ?? id;
     const parts = [`Glass ${i + 1}`];
     if (this.game.selected === i) parts.push('selected');
+    if (this.hint && (this.hint.from === i || this.hint.to === i)) parts.push(this.hint.from === i ? 'hint: pour from here' : 'hint: pour here');
     if (b.lockedUntil) parts.push(`chained shut until the ${name(b.lockedUntil)} is complete`);
     if (b.only) parts.push(`only takes ${name(b.only)}`);
     if (b.units.length === 0) parts.push('empty');
@@ -153,6 +335,70 @@ export class LevelScreen {
     b.setAttribute('aria-label', `${label}, ${count} left`);
   }
 
+  private renderDeadEnd(): void {
+    const panel = this.el.querySelector<HTMLElement>('.lv-deadend')!;
+    const show = this.game.status === 'deadEnd';
+    panel.hidden = !show;
+    if (!show) return;
+    panel.querySelector<HTMLButtonElement>('.de-undo')!.disabled = !this.game.canUndo();
+    panel.querySelector<HTMLButtonElement>('.de-glass')!.disabled = !this.game.canAddGlass();
+  }
+
+  /** Level 1 pointer: points at the source glass, then at the target, until the first pour. */
+  private renderGuide(): void {
+    const pointer = this.el.querySelector<HTMLElement>('.lv-guide');
+    if (!pointer) return;
+    if (!this.opts.guide || this.game.moves > 0 || this.game.status !== 'playing') {
+      pointer.hidden = true;
+      return;
+    }
+    const move = this.guideMove ?? (this.guideMove = this.game.suggest());
+    if (!move) return;
+    const target = this.game.selected === move.from ? move.to : move.from;
+    const slot = this.slots[target]!;
+    pointer.hidden = false;
+    pointer.style.left = `${slot.x + 30 * slot.scale - 22}px`;
+    pointer.style.top = `${slot.y - 52}px`;
+    pointer.dataset.target = String(target);
+  }
+  private guideMove: Move | null = null;
+
+  private showWin(r: LevelResult): void {
+    const k = this.theme.colors;
+    const verdict = r.perfect ? 'Perfect pour' : r.stars === 3 ? 'Great pour' : r.stars === 2 ? 'Nice pour' : 'Cleared';
+    const stars = [1, 2, 3].map((i) => icons.star(i <= r.stars ? k.starDone : k.starEmpty, 44)).join('');
+    const overlay = this.el.querySelector<HTMLElement>('.lv-overlay')!;
+    overlay.innerHTML = `
+      <div class="win-card" role="dialog" aria-modal="true" aria-labelledby="win-verdict">
+        <div class="win-kicker">Level ${r.number} cleared</div>
+        <div class="win-stars" aria-label="${r.stars} of 3 stars">${stars}</div>
+        <div class="win-verdict" id="win-verdict">${verdict}</div>
+        <div class="win-moves">${r.moves} moves · best ${r.best}</div>
+        <a class="btn btn-primary win-next" href="${esc(this.opts.nextHref)}">${esc(this.opts.nextLabel ?? 'Next level')}</a>
+        <button class="btn btn-ghost win-again">Play again</button>
+      </div>`;
+    overlay.hidden = false;
+    overlay.querySelector('.win-again')!.addEventListener('click', () => this.restart());
+    overlay.querySelector<HTMLElement>('.win-next')!.focus();
+  }
+
+  private hideOverlay(): void {
+    const overlay = this.el.querySelector<HTMLElement>('.lv-overlay')!;
+    overlay.hidden = true;
+    overlay.innerHTML = '';
+  }
+
+  private bindChrome(): void {
+    const on = (sel: string, fn: () => void) => this.el.querySelector(sel)!.addEventListener('click', fn);
+    on('.booster-undo', () => this.undo());
+    on('.booster-glass', () => this.addGlass());
+    on('.booster-hint', () => this.useHint());
+    on('.lv-restart', () => this.restart());
+    on('.de-undo', () => this.undo());
+    on('.de-glass', () => this.addGlass());
+    on('.de-restart', () => this.restart());
+  }
+
   private chromeHtml(): string {
     const t = this.theme;
     const k = t.colors;
@@ -169,7 +415,7 @@ export class LevelScreen {
         <div class="lv-title">
           <a class="icon-btn lv-back" href="${esc(this.opts.backHref)}" aria-label="Back to map">${icons.back(k.text)}</a>
           <div>
-            <div class="lv-bar">${esc(this.opts.barName)}</div>
+            <h1 class="lv-bar">${esc(this.opts.barName)}</h1>
             <div class="lv-sub">${esc(t.name)} · Level ${this.opts.number}</div>
           </div>
         </div>
@@ -179,10 +425,23 @@ export class LevelScreen {
         </div>
       </header>
       <div class="lv-glasses"></div>
+      <div class="lv-guide" hidden aria-hidden="true"><span class="lv-guide-dot"></span></div>
       <div class="lv-counter">
         ${booster('undo', 'Undo', rim('boosterUndo'), icons.undo(icon('boosterUndoIcon', rim('boosterUndo'))))}
         ${booster('glass', 'Extra glass', rim('boosterGlass'), icons.glass(icon('boosterGlassIcon', rim('boosterGlass'))))}
         ${booster('hint', 'Hint', rim('boosterHint'), icons.hint(icon('boosterHintIcon', rim('boosterHint'))))}
-      </div>`;
+      </div>
+      <section class="lv-deadend" hidden aria-labelledby="de-title" role="alertdialog">
+        <div>
+          <h2 class="de-title" id="de-title">No pours left</h2>
+          <p class="de-sub">Undo a move, add a glass, or start the round again.</p>
+        </div>
+        <div class="de-actions">
+          <button class="btn btn-outline de-undo">Undo</button>
+          <button class="btn btn-primary de-glass">Add glass</button>
+          <button class="btn btn-ghost de-restart">Restart</button>
+        </div>
+      </section>
+      <div class="lv-overlay" hidden></div>`;
   }
 }
