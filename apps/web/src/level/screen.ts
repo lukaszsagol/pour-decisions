@@ -1,16 +1,16 @@
 import { Game, type Bottle, type BoosterStock, type Move } from '@pour/engine';
 import type { Theme } from '@pour/themes';
-import { Container, Graphics } from 'pixi.js';
-import { easeInOut, easeOutBack, linear, reducedMotion, tween, wait } from '../anim.js';
+import { easeInOut, easeOut, linear, reducedMotion, tween, wait } from '../anim.js';
 import { esc, icons } from '../icons.js';
+import { cityArt, type CityLevelArt } from '../pixel/level/art.js';
+import { GLASS_H, SLOT_W } from '../pixel/level/layout.js';
+import { PixelLevelRenderer, TILTS, type GlassFrame, type Mark, type PourFrame } from '../pixel/level/renderer.js';
+import { UNIT } from '../pixel/level/glass.js';
+import { PixelLayer } from '../pixel/layer.js';
+import { createPixi } from '../pixi-util.js';
 import { sfx } from '../sound.js';
-import { createPixi, invalidate } from '../pixi-util.js';
-import type { Stage } from '../stage.js';
-import { applyTheme, color } from '../theme-css.js';
-import { drawLevelDecor } from './decor.js';
-import { bodyOrigin, GlassView, type GlassMark } from './glass-view.js';
-import { unitRects } from './geometry.js';
-import { layoutGlasses, type Slot } from './layout.js';
+import { ART, type Stage } from '../stage.js';
+import { applyTheme } from '../theme-css.js';
 
 export interface LevelResult {
   number: number;
@@ -54,29 +54,41 @@ export interface LevelScreenOptions {
   nextLabel?: string;
 }
 
-/** Lift of a selected glass, in logical px. */
-export const LIFT = 16;
-const LIFT_MS = 160;
-const REJECT_MS = 420;
+/** Lift of a selected glass, in art px (the style guide's 7). */
+export const LIFT = 7;
+const LIFT_MS = 120;
+/** Rejection shake, one art-pixel offset per step. */
+const SHAKE = [0, -2, 2, -2, 2, -1, 1, 0];
+const POUR_MS = 520;
+/** Art px above a glass taken by a release badge. */
+const BADGE_SPACE = 28;
 
 /**
- * The puzzle screen: Pixi draws the backdrop and glasses, DOM provides the
- * header, the booster counter, overlays and a real button over every glass.
+ * The puzzle screen in pixel art. The renderer composes one 195×422 art
+ * buffer per frame; HTML on top holds the header text, a real button over
+ * every glass and booster, the dead-end panel and the win overlay.
  */
 export class LevelScreen {
   readonly game: Game;
   readonly el: HTMLElement;
   protected readonly theme: Theme;
-  protected views: GlassView[] = [];
-  protected slots: Slot[] = [];
+  protected readonly art: CityLevelArt;
+  protected readonly renderer: PixelLevelRenderer;
   protected glassButtons: HTMLButtonElement[] = [];
-  protected marks = new Map<number, GlassMark>();
-  protected glassLayer = new Container();
+  protected marks = new Map<number, Mark>();
+  private layer: PixelLayer | null = null;
   private lifts: number[] = [];
   private liftAnims: ({ cancel: () => void } | null)[] = [];
   private shakes: number[] = [];
+  private sparkles = new Map<number, number>();
+  private unlocks = new Map<number, number>();
+  private pourFrame: PourFrame | null = null;
+  /** Rows shown in the target glass while a pour fills it. */
+  private targetRows: { index: number; rows: number } | null = null;
+  private phase = 0;
   private disposePixi: (() => void) | null = null;
-  /** The pour being animated; its two glasses are drawn by the animation, not by render(). */
+  private frameRequested = false;
+  /** The pour being animated. */
   private pouring: { from: number; to: number } | null = null;
   /** Taps that arrive during a pour animation run after it, in order. */
   private queue: number[] = [];
@@ -85,15 +97,19 @@ export class LevelScreen {
   private restarts = 0;
   private wonReported = false;
   private deadEndReported = false;
+  private peeking = false;
+  private guideMove: Move | null = null;
 
   constructor(
     protected readonly stage: Stage,
     protected readonly opts: LevelScreenOptions,
   ) {
     this.theme = opts.theme;
+    this.art = cityArt(opts.theme);
+    this.renderer = new PixelLevelRenderer(opts.theme, this.art);
     this.game = new Game(opts.bottles, { best: opts.best, stock: opts.stock });
     this.el = document.createElement('div');
-    this.el.className = 'screen level-screen';
+    this.el.className = 'screen level-screen px-level';
   }
 
   async mount(): Promise<void> {
@@ -106,11 +122,19 @@ export class LevelScreen {
     }
     this.disposePixi = dispose;
     this.el.prepend(app.canvas);
-    // The backdrop never changes: render it once into a texture.
-    const decor = drawLevelDecor(this.theme);
-    decor.cacheAsTexture(true);
-    app.stage.addChild(decor, this.glassLayer);
-    if (!reducedMotion()) onFrame((ms) => this.views.forEach((v) => v.wobble(ms)));
+    this.layer = new PixelLayer(195, 422);
+    this.layer.sprite.scale.set(ART);
+    app.stage.addChild(this.layer.sprite);
+    // The lamp light flickers between two dither patterns (off with reduced motion).
+    if (!reducedMotion()) {
+      let last = 0;
+      onFrame((ms) => {
+        if (ms - last < 1600) return;
+        last = ms;
+        this.phase = 1 - this.phase;
+        this.draw();
+      });
+    }
     this.el.insertAdjacentHTML('beforeend', this.chromeHtml());
     this.bindChrome();
     this.layout();
@@ -125,19 +149,17 @@ export class LevelScreen {
       this.opts.onEvent?.({ type: 'quit', moves: this.game.moves });
     this.destroyed = true;
     this.liftAnims.forEach((a) => a?.cancel());
+    this.layer?.destroy();
     this.disposePixi?.();
     this.el.remove();
   }
 
-  /** Builds glass views and buttons for the current number of bottles. */
+  /** Builds buttons for the current number of bottles and lays the glasses out. */
   protected layout(): void {
     const n = this.game.bottles.length;
-    this.slots = layoutGlasses(n);
+    this.renderer.setCount(n);
     const holder = this.el.querySelector('.lv-glasses')!;
-    while (this.views.length < n) {
-      const v = new GlassView(this.theme);
-      this.views.push(v);
-      this.glassLayer.addChild(v);
+    while (this.glassButtons.length < n) {
       const index = this.glassButtons.length;
       const b = document.createElement('button');
       b.className = 'lv-glass';
@@ -149,8 +171,7 @@ export class LevelScreen {
       this.shakes.push(0);
       holder.appendChild(b);
     }
-    while (this.views.length > n) {
-      this.views.pop()!.destroy();
+    while (this.glassButtons.length > n) {
       this.glassButtons.pop()!.remove();
       this.lifts.pop();
       this.liftAnims.pop()?.cancel();
@@ -186,18 +207,8 @@ export class LevelScreen {
           if (event.completed) sfx.play(this.game.status === 'won' ? 'win' : 'complete');
           else sfx.play('clink');
           if (this.destroyed) return;
-          for (const i of event.unlocked) {
-            const drink = bottlesBefore[i]!.lockedUntil!;
-            void this.views[i]!.playUnlock(
-              drink,
-              (step) => tween({ duration: 500, ease: linear, onUpdate: step }).done,
-            );
-          }
-          if (event.completed)
-            void this.views[event.to]!.celebrate(
-              600,
-              (step) => tween({ duration: 600, ease: linear, onUpdate: step }).done,
-            );
+          for (const i of event.unlocked) this.playUnlock(i);
+          if (event.completed) this.playSparkle(event.to);
           this.afterChange();
           this.render();
           if (!reducedMotion()) this.dip(event.to);
@@ -212,16 +223,16 @@ export class LevelScreen {
     if (before !== this.game.selected || event.type !== 'rejected') this.render();
   }
 
-  /** Flashes a glass red and shakes it. No error text. */
+  /** Flashes a glass red and shakes it in whole art pixels. No error text. */
   protected reject(index: number): void {
     this.marks.set(index, 'reject');
     this.render();
-    const slot = this.slots[index]!;
     tween({
-      duration: REJECT_MS,
+      duration: 320,
+      ease: linear,
       onUpdate: (t) => {
-        this.shakes[index] = Math.sin(t * Math.PI * 5) * 6 * (1 - t) * slot.scale;
-        this.place(index);
+        this.shakes[index] = SHAKE[Math.min(SHAKE.length - 1, Math.floor(t * SHAKE.length))]!;
+        this.draw();
       },
     }).done.then(() => {
       if (this.destroyed) return;
@@ -308,102 +319,80 @@ export class LevelScreen {
     this.render();
   }
 
-  protected markFor(i: number): GlassMark {
+  protected markFor(i: number): Mark {
     if (this.marks.has(i)) return this.marks.get(i)!;
     return this.game.selected === i ? 'selected' : 'none';
   }
 
-  /** Positions one glass view and its button from slot, lift and shake. */
   /**
-   * Pour animation (about 450 ms): the source tilts over the target, a stream
-   * arcs across while the target fills, then the source settles back.
+   * Pour: the source glass rises to its first tilt frame, swings through
+   * three pre-drawn frames until its mouth points into the target, a 2 px
+   * stream runs while both glasses change one row at a time, then it swings
+   * back. Everything lands on whole art pixels.
    */
   private async animatePour(from: number, to: number, amount: number, before: readonly Bottle[]): Promise<void> {
     if (reducedMotion()) return;
     this.pouring = { from, to };
-    const src = this.views[from]!;
-    const dst = this.views[to]!;
-    const ss = this.slots[from]!;
-    const ds = this.slots[to]!;
-    const scale = ss.scale;
-    const geo = dst.geometry;
+    const src = this.renderer.layout.slots[from]!;
+    const dst = this.renderer.layout.slots[to]!;
     const srcBottle = before[from]!;
-    const dstBottle = this.game.bottles[to]!;
-    const srcStart = srcBottle.units.length;
-    const dstStart = before[to]!.units.length;
-    const drink = this.theme.drinks.find((d) => d.id === srcBottle.units[srcStart - 1]!.drink)!.color;
-    const dir = ds.x >= ss.x ? 1 : -1;
-    const home = { x: src.position.x, y: src.position.y };
-    const tm = { x: ds.x + dst.mouth.x * ds.scale, y: ds.y + dst.mouth.y * ds.scale };
-    // Tilt past horizontal so the mouth points down, with the lower lip just above the target's mouth.
-    const angle = dir * 2.05;
-    const half = (src.geometry.bodyW / 2) * scale;
-    const lip = { x: Math.cos(angle) * dir * half, y: Math.sin(angle) * dir * half };
-    const over = { x: tm.x - dir * 6 * scale - lip.x, y: tm.y - 12 * scale - lip.y };
-    const rest = { x: ss.x + src.mouth.x * scale, y: ss.y + src.mouth.y * scale };
-    const stream = new Graphics();
-    this.glassLayer.addChild(src, stream);
-    const inset = geo.border + geo.padding;
-    const surfaceAt = (level: number) => {
-      const rects = unitRects(geo, dstBottle.capacity);
-      const o = bodyOrigin(geo);
-      const i = Math.min(Math.floor(level), dstBottle.capacity - 1);
-      const r = rects[i]!;
-      const y = level >= dstBottle.capacity ? o.y + inset : r.y + r.h * (1 - (level - Math.floor(level)));
-      return ds.y + y * ds.scale;
-    };
-    const lerp = (a: number, b: number, k: number) => a + (b - a) * k;
+    const startRows = srcBottle.units.length * UNIT;
+    const pourRows = amount * UNIT;
+    const dstStart = before[to]!.units.length * UNIT;
+    const drink = this.theme.drinks.find((d) => d.id === srcBottle.units[srcBottle.units.length - 1]!.drink)!.color;
+    const dir: 1 | -1 = dst.x >= src.x ? 1 : -1;
+    const home = { x: src.x + 13, y: src.y - this.lifts[from]! };
+    // At full tilt the lower lip sits just above the target's rim.
+    const angle = (TILTS[2] * Math.PI) / 180;
+    const lip = { x: Math.round(Math.cos(angle) * 13) * dir, y: Math.round(Math.sin(angle) * 13) };
+    const tcx = dst.x + 13;
+    const over = { x: tcx - dir * 3 - lip.x, y: dst.y - 9 - lip.y };
+    const dstRows = this.renderer.rowsAt(to);
+    const lerp = (a: number, b: number, k: number) => Math.round(a + (b - a) * k);
+    const frame = (tilt: number, k: number, srcRows: number, stream?: PourFrame['stream']): PourFrame => ({
+      bottle: srcBottle,
+      filledRows: srcRows,
+      tilt,
+      dir,
+      pivot: { x: lerp(home.x, over.x, k), y: lerp(home.y, over.y, k) },
+      ...(stream ? { stream } : {}),
+    });
     await tween({
-      duration: 450,
+      duration: POUR_MS,
       ease: linear,
       onUpdate: (t) => {
-        stream.clear();
-        if (t <= 0.33) {
-          const k = easeInOut(t / 0.33);
-          src.position.set(lerp(home.x, over.x, k), lerp(home.y, over.y, k));
-          src.rotation = angle * k;
-        } else if (t <= 0.78) {
-          const k = (t - 0.33) / 0.45;
-          src.position.set(over.x, over.y);
-          src.rotation = angle;
-          src.draw({ bottle: srcBottle, mark: 'none', level: srcStart - amount * k });
-          const level = dstStart + amount * k;
-          dst.draw({ bottle: dstBottle, mark: 'none', level });
+        if (t <= 0.3) {
+          const k = easeInOut(t / 0.3);
+          this.pourFrame = frame(k < 0.34 ? 0 : k < 0.67 ? 1 : 2, k, startRows);
+          this.targetRows = { index: to, rows: dstStart };
+        } else if (t <= 0.75) {
+          const k = (t - 0.3) / 0.45;
+          const moved = Math.round(pourRows * k);
+          const level = dstStart + moved;
+          const surface = dstRows[Math.max(0, dstRows.length - 1 - level)]!.y;
           const lipX = over.x + lip.x;
           const lipY = over.y + lip.y;
-          const width = 5 * scale * Math.min(1, Math.sin(Math.PI * k) * 3);
-          stream
-            .moveTo(lipX, lipY)
-            .quadraticCurveTo(lerp(lipX, tm.x, 0.7), lipY - 4 * scale, tm.x, surfaceAt(level))
-            .stroke({ width, color: drink, cap: 'round' });
+          this.pourFrame = frame(2, 1, startRows - moved, {
+            x0: lipX,
+            y0: lipY,
+            x1: tcx - 1,
+            y1: surface,
+            color: drink,
+          });
+          this.targetRows = { index: to, rows: level };
         } else {
-          const k = easeInOut((t - 0.78) / 0.22);
-          src.draw({ bottle: this.game.bottles[from]!, mark: 'none' });
-          dst.draw({ bottle: dstBottle, mark: 'none' });
-          src.position.set(lerp(over.x, rest.x, k), lerp(over.y, rest.y, k));
-          src.rotation = angle * (1 - k);
+          const k = easeOut((t - 0.75) / 0.25);
+          this.pourFrame = frame(k < 0.34 ? 2 : k < 0.67 ? 1 : 0, 1 - k, startRows - pourRows);
+          this.targetRows = null;
         }
+        this.draw();
       },
     }).done;
-    stream.destroy();
-    src.rotation = 0;
+    this.pourFrame = null;
+    this.targetRows = null;
     this.lifts[from] = 0;
     this.liftAnims[from]?.cancel();
     this.pouring = null;
-  }
-
-  protected place(i: number): void {
-    invalidate();
-    const slot = this.slots[i]!;
-    const view = this.views[i]!;
-    const lift = this.lifts[i]! * slot.scale;
-    const x = slot.x + this.shakes[i]!;
-    view.position.set(x + view.mouth.x * slot.scale, slot.y + view.mouth.y * slot.scale - lift);
-    view.scale.set(slot.scale);
-    const btn = this.glassButtons[i]!;
-    btn.style.left = `${x}px`;
-    btn.style.top = `${slot.y - lift}px`;
-    btn.style.transform = `scale(${slot.scale})`;
   }
 
   private animateLift(i: number, target: number): void {
@@ -411,41 +400,117 @@ export class LevelScreen {
     this.liftAnims[i]?.cancel();
     const from = this.lifts[i]!;
     this.liftAnims[i] = tween({
-      duration: LIFT_MS + (target > from ? 60 : 0),
-      ease: target > from ? easeOutBack : undefined,
+      duration: LIFT_MS,
+      ease: easeOut,
       onUpdate: (t) => {
-        this.lifts[i] = from + (target - from) * t;
-        this.place(i);
+        this.lifts[i] = Math.round(from + (target - from) * t);
+        this.placeButton(i);
+        this.draw();
       },
     });
   }
 
-  /** The target glass dips slightly as the pour lands in it. */
+  /** The target glass dips a pixel or two as the pour lands in it. */
   private dip(i: number): void {
     this.liftAnims[i]?.cancel();
     this.liftAnims[i] = tween({
-      duration: 240,
+      duration: 180,
       ease: linear,
       onUpdate: (t) => {
-        this.lifts[i] = -3.5 * Math.sin(Math.PI * t) * (1 - t * 0.3);
-        this.place(i);
+        this.lifts[i] = t < 0.33 ? -1 : t < 0.66 ? -2 : t < 1 ? -1 : 0;
+        this.draw();
       },
     });
   }
 
-  /** Redraws glasses, counters, overlays and labels from the game state. */
+  /** Three sparkle frames over a completed glass, with its rim lit. */
+  private playSparkle(i: number): void {
+    tween({
+      duration: reducedMotion() ? 0 : 420,
+      ease: linear,
+      onUpdate: (t) => {
+        if (t >= 1) this.sparkles.delete(i);
+        else this.sparkles.set(i, Math.min(2, Math.floor(t * 3)));
+        this.draw();
+      },
+    });
+  }
+
+  /** The chains and padlock drop and dither away. */
+  private playUnlock(i: number): void {
+    tween({
+      duration: reducedMotion() ? 0 : 520,
+      ease: linear,
+      onUpdate: (t) => {
+        if (t >= 1) this.unlocks.delete(i);
+        else this.unlocks.set(i, t);
+        this.draw();
+      },
+    });
+  }
+
+  /** Asks for one composed frame on the next animation frame. */
+  private draw(): void {
+    if (this.frameRequested || !this.layer) return;
+    this.frameRequested = true;
+    requestAnimationFrame(() => {
+      this.frameRequested = false;
+      if (this.destroyed || !this.layer) return;
+      this.layer.put(this.renderer.render(this.frame()));
+    });
+  }
+
+  private frame() {
+    const g = this.game;
+    const glasses: GlassFrame[] = g.bottles.map((bottle, i) => ({
+      bottle: this.pouring?.to === i || this.pouring?.from === i ? this.pourBottle(i) : bottle,
+      mark: this.markFor(i),
+      lift: this.lifts[i] ?? 0,
+      dx: this.shakes[i] ?? 0,
+      ...(this.targetRows?.index === i ? { filledRows: this.targetRows.rows } : {}),
+      ...(this.pourFrame && this.pouring?.from === i ? { skip: true } : {}),
+      ...(this.sparkles.has(i) ? { sparkle: this.sparkles.get(i)! } : {}),
+      ...(this.unlocks.has(i) ? { unlock: this.unlocks.get(i)! } : {}),
+      ...(this.peeking ? { peek: true } : {}),
+    }));
+    return {
+      glasses,
+      ...(this.pourFrame ? { pour: this.pourFrame } : {}),
+      counts: [g.stock.undo, g.stock.extraGlass, g.stock.hint] as [number, number, number],
+      usable: [g.canUndo(), g.canAddGlass(), g.canHint()] as [boolean, boolean, boolean],
+      boosters: this.opts.boosters !== false,
+      phase: this.phase,
+    };
+  }
+
+  /** During a pour the target shows its new contents (filled row by row). */
+  private pourBottle(i: number): Bottle {
+    return this.game.bottles[i]!;
+  }
+
+  /** Puts glass i's button over the glass (and its badge, if any). */
+  private placeButton(i: number): void {
+    const slot = this.renderer.layout.slots[i]!;
+    const b = this.game.bottles[i]!;
+    const badge = b.lockedUntil || b.only ? BADGE_SPACE : 0;
+    const btn = this.glassButtons[i]!;
+    const w = Math.min(this.renderer.layout.spacing, 34);
+    btn.style.left = `${(slot.x + SLOT_W / 2 - w / 2) * ART}px`;
+    btn.style.top = `${(slot.y - (this.lifts[i] ?? 0) - badge) * ART}px`;
+    btn.style.width = `${w * ART}px`;
+    btn.style.height = `${(GLASS_H + badge) * ART}px`;
+  }
+
+  /** Redraws the art and updates every label, button and panel from the game state. */
   render(): void {
-    invalidate();
     const g = this.game;
     g.bottles.forEach((bottle, i) => {
       const btn = this.glassButtons[i]!;
       btn.setAttribute('aria-label', this.glassLabel(i, bottle));
       btn.setAttribute('aria-pressed', String(g.selected === i));
-      if (this.pouring && (this.pouring.from === i || this.pouring.to === i)) return;
-      const shown = this.peeking ? { ...bottle, units: bottle.units.map((u) => ({ ...u, hidden: false })) } : bottle;
-      this.views[i]!.draw({ bottle: shown, mark: this.markFor(i) });
-      this.animateLift(i, g.selected === i ? LIFT : 0);
-      this.place(i);
+      if (!this.pouring || (this.pouring.from !== i && this.pouring.to !== i))
+        this.animateLift(i, g.selected === i ? LIFT : 0);
+      this.placeButton(i);
     });
     this.text('.lv-move-count', String(g.moves));
     this.booster('undo', g.stock.undo, g.canUndo());
@@ -453,6 +518,7 @@ export class LevelScreen {
     this.booster('hint', g.stock.hint, g.canHint());
     this.renderDeadEnd();
     this.renderGuide();
+    this.draw();
   }
 
   protected glassLabel(i: number, b: Bottle): string {
@@ -479,13 +545,11 @@ export class LevelScreen {
     if (n) n.textContent = value;
   }
 
-  private peeking = false;
-
   /** Memory training: everything visible for a while, with a countdown, then covered. */
   private startPeek(ms: number): void {
     this.peeking = true;
     const banner = document.createElement('div');
-    banner.className = 'lv-peek';
+    banner.className = 'lv-peek px-panel';
     banner.setAttribute('role', 'status');
     this.el.appendChild(banner);
     const end = Date.now() + ms;
@@ -508,7 +572,6 @@ export class LevelScreen {
   private booster(kind: 'undo' | 'glass' | 'hint', count: number, usable: boolean): void {
     const b = this.el.querySelector<HTMLButtonElement>(`.booster-${kind}`);
     if (!b) return;
-    b.querySelector('.booster-count')!.textContent = String(count);
     b.disabled = !usable || this.opts.boosters === false;
     b.hidden = this.opts.boosters === false;
     const label = { undo: 'Undo', glass: 'Add an empty glass', hint: 'Hint' }[kind];
@@ -536,13 +599,12 @@ export class LevelScreen {
     const move = this.guideMove ?? (this.guideMove = this.game.suggest());
     if (!move) return;
     const target = this.game.selected === move.from ? move.to : move.from;
-    const slot = this.slots[target]!;
+    const slot = this.renderer.layout.slots[target]!;
     pointer.hidden = false;
-    pointer.style.left = `${slot.x + 30 * slot.scale - 22}px`;
-    pointer.style.top = `${slot.y - 52}px`;
+    pointer.style.left = `${(slot.x + SLOT_W / 2) * ART - 22}px`;
+    pointer.style.top = `${(slot.y - (this.lifts[target] ?? 0)) * ART - 56}px`;
     pointer.dataset.target = String(target);
   }
-  private guideMove: Move | null = null;
 
   private showWin(r: LevelResult): void {
     const k = this.theme.colors;
@@ -550,7 +612,7 @@ export class LevelScreen {
     const stars = [1, 2, 3].map((i) => icons.star(i <= r.stars ? k.starDone : k.starEmpty, 44)).join('');
     const overlay = this.el.querySelector<HTMLElement>('.lv-overlay')!;
     overlay.innerHTML = `
-      <div class="win-card" role="dialog" aria-modal="true" aria-labelledby="win-verdict">
+      <div class="win-card px-panel" role="dialog" aria-modal="true" aria-labelledby="win-verdict">
         <div class="win-kicker">${esc(this.opts.subtitle ? "Tonight's pour cleared" : `Level ${r.number} cleared`)}</div>
         <div class="win-stars" aria-label="${r.stars} of 3 stars">${stars}</div>
         <div class="win-verdict" id="win-verdict">${verdict}</div>
@@ -580,39 +642,33 @@ export class LevelScreen {
     on('.de-restart', () => this.restart());
   }
 
+  /** HTML over the art. Positions are art pixels × 2 (logical px). */
   private chromeHtml(): string {
     const t = this.theme;
-    const k = t.colors;
-    const rim = (key: string) => color(t, key, k.boosterRim);
-    const icon = (key: string, fallback: string) => color(t, key, fallback);
-    const border = t.booster?.border ?? 2;
-    const booster = (kind: string, label: string, rimColor: string, svg: string) => `
-      <button class="booster booster-${kind}" style="--rim:${rimColor}">
-        <span class="booster-face${t.booster?.shape === 'card' ? ' is-card' : ''}" style="border-width:${border}px">${svg}<span class="booster-count"></span></span>
+    const { sign, restart, mats, text } = this.art;
+    const a = (v: number) => v * ART;
+    const booster = (kind: string, label: string, i: number) => `
+      <button class="booster booster-${kind}" style="left:${a(mats.centres[i]! - 22)}px;top:${a(mats.y - 8)}px;width:${a(44)}px">
         <span class="booster-label">${label}</span>
       </button>`;
     return `
-      <header class="lv-header">
-        <div class="lv-title">
-          <a class="icon-btn lv-back" href="${esc(this.opts.backHref)}" aria-label="Back to map">${icons.back(k.text)}</a>
-          <div>
-            <h1 class="lv-bar">${esc(this.opts.barName)}</h1>
-            <div class="lv-sub">${esc(this.opts.subtitle ?? `${t.name} · Level ${this.opts.number}`)}</div>
-          </div>
-        </div>
-        <div class="lv-right">
-          <div class="lv-moves" role="status" aria-live="polite"><b class="lv-move-count">0</b><span>moves · best ${this.opts.best}</span></div>
-          <button class="icon-btn lv-restart" aria-label="Restart level">${icons.restart(k.muted)}</button>
-        </div>
-      </header>
+      <a class="lv-back" href="${esc(this.opts.backHref)}" aria-label="Back to map"></a>
+      <div class="lv-title" style="color:${text.title}">
+        <h1 class="lv-bar">${esc(this.opts.barName)}</h1>
+        <div class="lv-sub" style="color:${text.sub}">${esc(this.opts.subtitle ?? `${t.name} · Level ${this.opts.number}`)}</div>
+      </div>
+      <div class="lv-moves" role="status" aria-live="polite" style="left:${a(sign.x)}px;top:${a(sign.y)}px;width:${a(sign.w)}px;height:${a(sign.h)}px;color:${text.title}">
+        <b class="lv-move-count">0</b><span style="color:${text.sub}">moves · best ${this.opts.best}</span>
+      </div>
+      <button class="lv-restart" aria-label="Restart level" style="left:${a(restart.x + 6) - 22}px;top:${a(restart.y + 6) - 22}px"></button>
       <div class="lv-glasses"></div>
       <div class="lv-guide" hidden aria-hidden="true"><span class="lv-guide-dot"></span></div>
-      <div class="lv-counter">
-        ${booster('undo', 'Undo', rim('boosterUndo'), icons.undo(icon('boosterUndoIcon', rim('boosterUndo'))))}
-        ${booster('glass', 'Extra glass', rim('boosterGlass'), icons.glass(icon('boosterGlassIcon', rim('boosterGlass'))))}
-        ${booster('hint', 'Hint', rim('boosterHint'), icons.hint(icon('boosterHintIcon', rim('boosterHint'))))}
+      <div class="lv-counter" style="color:${text.title}">
+        ${booster('undo', 'Undo', 0)}
+        ${booster('glass', 'Extra glass', 1)}
+        ${booster('hint', 'Hint', 2)}
       </div>
-      <section class="lv-deadend" hidden aria-labelledby="de-title" role="alertdialog">
+      <section class="lv-deadend px-panel" hidden aria-labelledby="de-title" role="alertdialog">
         <div>
           <h2 class="de-title" id="de-title">No pours left</h2>
           <p class="de-sub">Undo a move, add a glass, or start the round again.</p>

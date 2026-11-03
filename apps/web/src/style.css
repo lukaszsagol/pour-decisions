@@ -1473,3 +1473,103 @@ p {
   color: var(--c-text);
   font-weight: 700;
 }
+
+/* ---------- Pixel art level screen ---------- */
+.stage-canvas {
+  image-rendering: pixelated;
+}
+.px-level .lv-back {
+  position: absolute;
+  left: 0;
+  top: 64px;
+  width: 48px;
+  height: 48px;
+}
+.px-level .lv-title {
+  position: absolute;
+  left: 40px;
+  top: 64px;
+  width: 200px;
+}
+.px-level .lv-bar {
+  font-family: var(--f-ui);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.05;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.px-level .lv-sub {
+  font-size: 14px;
+  margin-top: 3px;
+}
+.px-level .lv-moves {
+  position: absolute;
+  padding: 0;
+  border: none;
+  background: none;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.px-level .lv-moves b {
+  font-size: 17px;
+  font-weight: 600;
+}
+.px-level .lv-restart {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.px-level .lv-glass {
+  width: auto;
+  height: auto;
+  transform: none;
+}
+.px-level .lv-counter {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  display: block;
+  pointer-events: none;
+}
+.px-level .booster {
+  position: absolute;
+  height: 116px;
+  pointer-events: auto;
+  padding: 0 0 18px;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  color: inherit;
+}
+.px-level .booster:disabled {
+  cursor: default;
+}
+.px-level .booster-label {
+  font-size: 15px;
+  white-space: nowrap;
+}
+.px-level .booster[hidden] {
+  display: none;
+}
+.px-level .lv-title {
+  display: block;
+}
+.px-level .booster {
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0;
+}

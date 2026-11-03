@@ -177,12 +177,12 @@ Depends on: T24
 - [x] The stage scales the 195×422 art grid by the largest whole number of device pixels that fits, centred, with the city ground colour around it. Text overlays stay aligned.
 - [x] Pixelify Sans loaded and used as the game font; offline fallback via the service worker cache.
 
-### T26 · Amsterdam level in pixel art · `todo` · L
+### T26 · Amsterdam level in pixel art · `in-review` · L
 Depends on: T25
-- [ ] The Amsterdam level screen matches `docs/design/pixel/amsterdam-level-screen.png`: backdrop, tulip glasses, liquids with full shading, reflection strip, locked glass with chain rings, padlock and cherry badge, counter and beer mats with counts.
-- [ ] A test renders the static backdrop buffer and compares it with `docs/design/pixel/amsterdam-level-1x.png` (allow small differences where the layout had to change, and list them in the pull request).
-- [ ] Selection lift, rejection shake, pour (tilt frames, 2 px stream, row-by-row fill), completion sparkle and unlock animations all move in whole art pixels.
-- [ ] Glass sizes and positions still fit 7–9 glasses; layouts with more glasses use a second row the same way.
+- [x] The Amsterdam level screen matches `docs/design/pixel/amsterdam-level-screen.png`: backdrop, tulip glasses, liquids with full shading, reflection strip, locked glass with chain rings, padlock and cherry badge, counter and beer mats with counts.
+- [x] A test renders the static backdrop buffer and compares it with `docs/design/pixel/amsterdam-level-1x.png` (allow small differences where the layout had to change, and list them in the pull request).
+- [x] Selection lift, rejection shake, pour (tilt frames, 2 px stream, row-by-row fill), completion sparkle and unlock animations all move in whole art pixels.
+- [x] Glass sizes and positions still fit 7–9 glasses; layouts with more glasses use a second row the same way.
 
 ### T27 · London, New York and Tokyo levels in pixel art · `todo` · L
 Depends on: T26

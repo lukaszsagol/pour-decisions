@@ -26,11 +26,6 @@ export function unpack(p: Packed): string | null {
   return `#${(p & 0xffffff).toString(16).toUpperCase().padStart(6, '0')}`;
 }
 
-const rgb = (hex: string): [number, number, number] => {
-  const p = pack(hex);
-  return [(p >> 16) & 255, (p >> 8) & 255, p & 255];
-};
-
 /** Python's round(): halves go to the even neighbour, so colours match the reference exactly. */
 export function pyRound(v: number): number {
   const f = Math.floor(v);
@@ -39,12 +34,24 @@ export function pyRound(v: number): number {
   return Math.round(v);
 }
 
+/** Mixes packed colours (numeric, for per-pixel work). */
+export function mixPacked(a: Packed, b: Packed, t: number): Packed {
+  const ch = (p: number, s: number) => (p >> s) & 255;
+  const c = (s: number) => pyRound(ch(a, s) + (ch(b, s) - ch(a, s)) * t);
+  return OPAQUE | (c(16) << 16) | (c(8) << 8) | c(0);
+}
+
+const mixed = new Map<string, string>();
+
 /** Mixes two colours like the reference `mix()`: t = 0 gives a, t = 1 gives b. */
 export function mix(a: string, b: string, t: number): string {
-  const A = rgb(a);
-  const B = rgb(b);
-  const c = (i: number) => pyRound(A[i]! + (B[i]! - A[i]!) * t);
-  return `#${[c(0), c(1), c(2)].map((v) => v.toString(16).toUpperCase().padStart(2, '0')).join('')}`;
+  const key = `${a}${b}${t}`;
+  let out = mixed.get(key);
+  if (out === undefined) {
+    out = unpack(mixPacked(pack(a), pack(b), t))!;
+    mixed.set(key, out);
+  }
+  return out;
 }
 
 /** 4×4 ordered (Bayer) dither matrix, as in the reference. */
@@ -135,8 +142,15 @@ export class PixelCanvas {
 
   /** Moves an existing pixel's colour towards another (no-op on transparent pixels). */
   tint(x: number, y: number, toward: string, t: number): void {
-    const c = this.get(x, y);
-    if (c) this.px(x, y, mix(c, toward, t));
+    if (x < 0 || y < 0 || x >= this.w || y >= this.h) return;
+    const i = y * this.w + x;
+    const p = this.data[i]!;
+    if (p) this.data[i] = mixPacked(p, pack(toward), t);
+  }
+
+  /** Copies this canvas's pixels (same size) from another. */
+  copyFrom(src: PixelCanvas): void {
+    this.data.set(src.data);
   }
 
   /** Dithered darkening, as the reference `shadow_box`. */
