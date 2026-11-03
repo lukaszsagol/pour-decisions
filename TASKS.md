@@ -19,17 +19,17 @@ Depends on: T00
 - [ ] ESLint (typescript-eslint, recommended) and Prettier configured; `npm run lint` added to `npm run check`.
 - [ ] Whole repo formatted; check passes.
 
-### T02 · Game session API · `todo` · M
+### T02 · Game session API · `in-review` · M
 Depends on: T00
 A `Game` class in `packages/engine/src/game.ts` that the client drives.
-- [ ] Holds the current bottles, move count, history, booster stock and the level's `best`.
-- [ ] `select`/`tap(index)` semantics as in `docs/spec/rules.md`: first tap selects, second tap pours or re-selects; returns an event (`selected`, `poured`, `rejected`, `deselected`).
-- [ ] `undo()` restores the previous position; the move count is **not** reduced; consumes one undo.
-- [ ] `addGlass()` adds an empty bottle once per level; consumes one extra glass; caps stars at 2.
-- [ ] `hint()` returns a useful pour from the current position using the solver (falls back to any legal pour); consumes one hint.
-- [ ] `status`: `playing`, `won`, `deadEnd`. `stars()` and `perfect` per the rules in `docs/spec/rules.md`.
-- [ ] Serialisable to and from JSON (to resume a level).
-- [ ] Tests cover every bullet, including playing Tokyo 327's solver solution to a 3-star "perfect" win.
+- [x] Holds the current bottles, move count, history, booster stock and the level's `best`.
+- [x] `select`/`tap(index)` semantics as in `docs/spec/rules.md`: first tap selects, second tap pours or re-selects; returns an event (`selected`, `poured`, `rejected`, `deselected`).
+- [x] `undo()` restores the previous position; the move count is **not** reduced; consumes one undo.
+- [x] `addGlass()` adds an empty bottle once per level; consumes one extra glass; caps stars at 2.
+- [x] `hint()` returns a useful pour from the current position using the solver (falls back to any legal pour); consumes one hint.
+- [x] `status`: `playing`, `won`, `deadEnd`. `stars()` and `perfect` per the rules in `docs/spec/rules.md`.
+- [x] Serialisable to and from JSON (to resume a level).
+- [x] Tests cover every bullet, including playing Tokyo 327's solver solution to a 3-star "perfect" win.
 
 ### T03 · Seeded random numbers and the dealer · `todo` · S
 Depends on: T00
