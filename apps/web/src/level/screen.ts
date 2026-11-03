@@ -3,7 +3,7 @@ import type { Theme } from '@pour/themes';
 import { Container, Graphics } from 'pixi.js';
 import { easeInOut, linear, reducedMotion, tween, wait } from '../anim.js';
 import { esc, icons } from '../icons.js';
-import { createPixi } from '../pixi-util.js';
+import { createPixi, invalidate } from '../pixi-util.js';
 import type { Stage } from '../stage.js';
 import { applyTheme, color } from '../theme-css.js';
 import { drawLevelDecor } from './decor.js';
@@ -94,7 +94,7 @@ export class LevelScreen {
   async mount(): Promise<void> {
     applyTheme(this.stage.el, this.theme);
     this.stage.el.replaceChildren(this.el);
-    const { app, dispose } = await createPixi(this.stage);
+    const { app, dispose, onFrame } = await createPixi(this.stage);
     if (this.destroyed) {
       dispose();
       return;
@@ -102,7 +102,7 @@ export class LevelScreen {
     this.disposePixi = dispose;
     this.el.prepend(app.canvas);
     app.stage.addChild(drawLevelDecor(this.theme), this.glassLayer);
-    if (!reducedMotion()) app.ticker.add(() => this.views.forEach((v) => v.wobble(performance.now())));
+    if (!reducedMotion()) onFrame((ms) => this.views.forEach((v) => v.wobble(ms)));
     this.el.insertAdjacentHTML('beforeend', this.chromeHtml());
     this.bindChrome();
     this.layout();
@@ -374,6 +374,7 @@ export class LevelScreen {
   }
 
   protected place(i: number): void {
+    invalidate();
     const slot = this.slots[i]!;
     const view = this.views[i]!;
     const lift = this.lifts[i]! * slot.scale;
@@ -401,6 +402,7 @@ export class LevelScreen {
 
   /** Redraws glasses, counters, overlays and labels from the game state. */
   render(): void {
+    invalidate();
     const g = this.game;
     g.bottles.forEach((bottle, i) => {
       const btn = this.glassButtons[i]!;

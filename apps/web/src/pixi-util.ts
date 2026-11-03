@@ -1,8 +1,26 @@
 import { Application, Graphics } from 'pixi.js';
 import { STAGE_H, STAGE_W, type Stage } from './stage.js';
 
-/** Creates a Pixi app covering the stage, rendered at device resolution. */
-export async function createPixi(stage: Stage, height = STAGE_H): Promise<{ app: Application; dispose: () => void }> {
+let dirty = true;
+
+/** Asks for one redraw on the next frame. Pixi only renders when something changed. */
+export function invalidate(): void {
+  dirty = true;
+}
+
+export interface PixiHandle {
+  app: Application;
+  dispose: () => void;
+  /** Runs `fn` every frame and keeps rendering while it is registered (idle animations). */
+  onFrame: (fn: (ms: number) => void) => () => void;
+}
+
+/**
+ * Creates a Pixi app covering the stage, rendered at device resolution.
+ * It renders on demand rather than every frame: slow devices (and CI's
+ * software WebGL) stay responsive while nothing moves.
+ */
+export async function createPixi(stage: Stage, height = STAGE_H): Promise<PixiHandle> {
   const app = new Application();
   const resolution = () => Math.min(4, (window.devicePixelRatio || 1) * stage.scale);
   await app.init({
@@ -13,16 +31,39 @@ export async function createPixi(stage: Stage, height = STAGE_H): Promise<{ app:
     resolution: resolution(),
     autoDensity: true,
     preference: 'webgl',
+    autoStart: false,
   });
+  app.ticker.stop();
   app.canvas.classList.add('stage-canvas');
   app.canvas.setAttribute('aria-hidden', 'true');
+  const continuous = new Set<(ms: number) => void>();
+  let raf = 0;
+  let alive = true;
+  dirty = true;
+  const loop = (ms: number) => {
+    if (!alive) return;
+    continuous.forEach((fn) => fn(ms));
+    if (dirty || continuous.size > 0) {
+      dirty = false;
+      app.render();
+    }
+    raf = requestAnimationFrame(loop);
+  };
+  raf = requestAnimationFrame(loop);
   const off = stage.onResize(() => {
     app.renderer.resolution = resolution();
     app.renderer.resize(STAGE_W, height);
+    invalidate();
   });
   return {
     app,
+    onFrame: (fn) => {
+      continuous.add(fn);
+      return () => continuous.delete(fn);
+    },
     dispose: () => {
+      alive = false;
+      cancelAnimationFrame(raf);
       off();
       app.destroy(true, { children: true });
     },

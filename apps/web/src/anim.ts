@@ -1,5 +1,7 @@
 /** Small animation helpers. Everything respects `prefers-reduced-motion`. */
 
+import { invalidate } from './pixi-util.js';
+
 export const reducedMotion = (): boolean =>
   typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -14,12 +16,16 @@ export interface TweenOptions {
 }
 
 /** Runs `onUpdate` with eased progress 0→1 on animation frames. Resolves when done. With reduced motion it jumps to the end. */
-export function tween({ duration, ease = easeOut, onUpdate }: TweenOptions): {
+export function tween({ duration, ease = easeOut, onUpdate: update }: TweenOptions): {
   done: Promise<void>;
   cancel: () => void;
 } {
   let raf = 0;
   let cancelled = false;
+  const onUpdate = (t: number) => {
+    update(t);
+    invalidate();
+  };
   const done = new Promise<void>((resolve) => {
     if (duration <= 0 || reducedMotion()) {
       onUpdate(1);

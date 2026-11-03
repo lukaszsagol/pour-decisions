@@ -3,7 +3,7 @@ import type { Theme } from '@pour/themes';
 import type { Progress } from '../economy/save.js';
 import { esc, icons } from '../icons.js';
 import type { LevelEntry } from '../levels.js';
-import { createPixi } from '../pixi-util.js';
+import { createPixi, invalidate } from '../pixi-util.js';
 import { STAGE_H, type Stage } from '../stage.js';
 import { applyTheme, color } from '../theme-css.js';
 import { mapLayout, scrollFor, type MapLayout } from './path.js';
@@ -64,7 +64,10 @@ export class MapScreen {
     app.stage.addChild(world);
     this.el.prepend(app.canvas);
     const scroller = this.el.querySelector<HTMLElement>('.map-scroll')!;
-    const sync = () => (world.y = -scroller.scrollTop);
+    const sync = () => {
+      world.y = -scroller.scrollTop;
+      invalidate();
+    };
     scroller.addEventListener('scroll', sync, { passive: true });
     this.el.querySelectorAll<HTMLButtonElement>('.map-node').forEach((b) =>
       b.addEventListener('click', () => {
