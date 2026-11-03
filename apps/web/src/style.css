@@ -1072,3 +1072,27 @@ p {
 .lv-bar {
   color: var(--c-headerTitle, var(--c-text));
 }
+.set-version {
+  background: none;
+  border: none;
+  color: var(--c-muted);
+  font-size: 12px;
+  min-height: 44px;
+  width: 100%;
+  cursor: default;
+}
+.debug {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px dashed var(--c-line);
+}
+.debug-title {
+  font-weight: 600;
+}
+.debug-count {
+  font-size: 13px;
+  color: var(--c-muted);
+}

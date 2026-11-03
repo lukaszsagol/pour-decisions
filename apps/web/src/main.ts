@@ -11,7 +11,8 @@ import { tabBar, type Tab } from './tabbar.js';
 import { dailyLevel, dailyShareText, dateKey } from './daily/generate.js';
 import { session } from './session.js';
 import { createStage } from './stage.js';
-import { progress } from './state.js';
+import { playLog, progress } from './state.js';
+import './debug.js';
 import { economy } from './economy/config.js';
 
 interface Screen {
@@ -42,6 +43,7 @@ function levelScreen(number: number): Screen {
     nextLabel: 'Collect rewards',
     onStock: (stock) => progress.setStock(stock),
     onEvent: (e) => {
+      playLog.add(level.number, e);
       if (e.type === 'restart' || e.type === 'quit') progress.recordFail();
     },
     continueOffer: {
@@ -87,6 +89,7 @@ function dailyScreen(): Screen {
     nextHref: '#/complete',
     nextLabel: 'Collect rewards',
     onStock: (stock) => progress.setStock(stock),
+    onEvent: (e) => playLog.add(`daily-${date}`, e),
     onWin: (result) => {
       const rewards = progress.recordDaily(date, result.stars, result.moves, d.best);
       session.complete = {

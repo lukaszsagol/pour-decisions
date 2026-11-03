@@ -132,10 +132,10 @@ Depends on: T06, T15
 - [x] Level of the day generated on the device from the date as seed (same for everyone), medium difficulty.
 - [x] Share text like "Pour Decisions · 3 Nov · ★★★ 14 moves (best 13)".
 
-### T19 · Play log · `todo` · S
+### T19 · Play log · `in-review` · S
 Depends on: T15
-- [ ] Local event log (level start, pour, undo, booster use, dead end, win, quit) with an export button in a hidden debug menu.
-- [ ] Documented format in `docs/spec/levels.md` so a later task can tune difficulty from it.
+- [x] Local event log (level start, pour, undo, booster use, dead end, win, quit) with an export button in a hidden debug menu.
+- [x] Documented format in `docs/spec/levels.md` so a later task can tune difficulty from it.
 
 ## Phase 3: needs a person
 
