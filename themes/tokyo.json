@@ -47,14 +47,14 @@
   },
   "drinks": [
     {
-      "id": "umeshu",
-      "name": "Umeshu",
-      "color": "#C7772E"
-    },
-    {
       "id": "sakura",
       "name": "Sakura",
       "color": "#F49AC1"
+    },
+    {
+      "id": "umeshu",
+      "name": "Umeshu",
+      "color": "#C7772E"
     },
     {
       "id": "melon",
@@ -70,6 +70,31 @@
       "id": "ramune",
       "name": "Ramune",
       "color": "#5EC3F0"
+    },
+    {
+      "id": "matcha",
+      "name": "Matcha highball",
+      "color": "#3F6B2A"
+    },
+    {
+      "id": "kyoho",
+      "name": "Kyoho sour",
+      "color": "#5E2B8A"
+    },
+    {
+      "id": "akadama",
+      "name": "Akadama",
+      "color": "#B4243B"
+    },
+    {
+      "id": "calpis",
+      "name": "Calpis soda",
+      "color": "#F3F1E8"
+    },
+    {
+      "id": "hojicha",
+      "name": "Hojicha",
+      "color": "#734926"
     }
   ],
   "blockers": {

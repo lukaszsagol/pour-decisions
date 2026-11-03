@@ -58,11 +58,11 @@ Depends on: T03, T04, T05
 - [ ] Every generated level is solver-verified; a test re-verifies all committed packs.
 - [ ] Re-running with the same seeds reproduces identical files.
 
-### T07 · Theme loading and drink palettes · `todo` · M
+### T07 · Theme loading and drink palettes · `in-review` · M
 Depends on: T00
-- [ ] Typed loader and validator for `themes/*.json` (no new dependency needed; a small hand-written validator is fine).
-- [ ] Extend each city to at least 10 drinks with real names, keeping the existing first five.
-- [ ] Test: every pair of drinks within a city differs enough to tell apart (CIEDE2000 ΔE ≥ 20, and at least 8 points of L* between neighbours in the list). Adjust colours until it passes.
+- [x] Typed loader and validator for `themes/*.json` (no new dependency needed; a small hand-written validator is fine).
+- [x] Extend each city to at least 10 drinks with real names, keeping the existing first five.
+- [x] Test: every pair of drinks within a city differs enough to tell apart (CIEDE2000 ΔE ≥ 20, and at least 8 points of L* between neighbours in the list). Adjust colours until it passes.
 
 ## Phase 2: the game client
 

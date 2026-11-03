@@ -70,6 +70,31 @@
       "id": "blackcurrant",
       "name": "Blackcurrant",
       "color": "#8E2A5E"
+    },
+    {
+      "id": "elderflower",
+      "name": "Elderflower fizz",
+      "color": "#FFF1E1"
+    },
+    {
+      "id": "sloe-gin",
+      "name": "Sloe gin",
+      "color": "#BB001C"
+    },
+    {
+      "id": "rhubarb-gin",
+      "name": "Rhubarb gin",
+      "color": "#F4A6B8"
+    },
+    {
+      "id": "bramble",
+      "name": "Bramble",
+      "color": "#37267D"
+    },
+    {
+      "id": "lime-cordial",
+      "name": "Gin and lime",
+      "color": "#8FCB3A"
     }
   ],
   "blockers": {

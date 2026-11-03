@@ -69,6 +69,31 @@
       "id": "curacao",
       "name": "Blue curaçao",
       "color": "#3E6FC4"
+    },
+    {
+      "id": "pisang-ambon",
+      "name": "Pisang ambon",
+      "color": "#4DB848"
+    },
+    {
+      "id": "bessenjenever",
+      "name": "Bessenjenever",
+      "color": "#5B1F51"
+    },
+    {
+      "id": "parfait-amour",
+      "name": "Parfait d’amour",
+      "color": "#AB6AD6"
+    },
+    {
+      "id": "jonge-jenever",
+      "name": "Jonge jenever",
+      "color": "#EEE8DA"
+    },
+    {
+      "id": "framboos",
+      "name": "Frambozenlikeur",
+      "color": "#F07A9C"
     }
   ],
   "blockers": {
