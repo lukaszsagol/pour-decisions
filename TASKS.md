@@ -37,11 +37,11 @@ Depends on: T00
 - [x] `deal({ drinks, capacity, empties, seed, constraints })` returns bottles per `docs/spec/levels.md` step 1 (no complete bottle at start, capped same-drink runs).
 - [x] Tests: determinism, every drink appears `capacity` times, constraints hold over 1 000 seeds.
 
-### T04 · Solver metrics and larger levels · `todo` · M
+### T04 · Solver metrics and larger levels · `in-review` · M
 Depends on: T00
-- [ ] `analyse(bottles)` returns `best`, branching factor, share of first moves that lead to a dead end, number of winning first moves.
-- [ ] A faster search for big levels (A* or iterative deepening with a heuristic such as colour breaks) used when breadth-first exceeds its budget; still returns verified solutions.
-- [ ] A 10-drink, 12-bottle level solves in under 3 seconds on CI. Add it as a golden test.
+- [x] `analyse(bottles)` returns `best`, branching factor, share of first moves that lead to a dead end, number of winning first moves.
+- [x] A faster search for big levels (A* or iterative deepening with a heuristic such as colour breaks) used when breadth-first exceeds its budget; still returns verified solutions.
+- [x] A 10-drink, 12-bottle level solves in under 3 seconds on CI. Add it as a golden test.
 
 ### T05 · Bot player and difficulty score · `todo` · M
 Depends on: T02, T04

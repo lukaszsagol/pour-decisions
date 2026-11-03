@@ -6,3 +6,4 @@ export * from './game.js';
 export * from './pack.js';
 export * from './random.js';
 export * from './deal.js';
+export * from './search.js';

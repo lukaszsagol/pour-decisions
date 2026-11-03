@@ -33,3 +33,20 @@ export const solved = () => parseBottles(['red red red red', 'blue blue blue blu
 /** A bottle chained shut until cherry is complete (Amsterdam blocker). */
 export const chained = () =>
   parseBottles(['cherry cherry gin cherry', 'gin gin cherry gin', '', ''], 4, { 3: { lockedUntil: 'cherry' } });
+
+/** Ten drinks in twelve bottles (dealt once with seed "big-1", stored literally). Best: 31. */
+export const tenDrinks = () =>
+  parseBottles([
+    'c c a b',
+    'h g a d',
+    'c j j a',
+    'b f j b',
+    'd g h g',
+    'd e i i',
+    'h e d f',
+    'g f i b',
+    'j e a h',
+    'e i c f',
+    '',
+    '',
+  ]);

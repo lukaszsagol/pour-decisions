@@ -10,7 +10,7 @@ import {
   settle,
   top,
 } from './rules.js';
-import { solve } from './solver.js';
+import { solveAuto } from './search.js';
 import type { Bottle, Move } from './types.js';
 
 /** Boosters the player owns. The game spends them; the economy refills them. */
@@ -160,7 +160,7 @@ export class Game {
   /** A useful pour from the current position, without spending anything. */
   suggest(): Move | null {
     if (this.status !== 'playing') return null;
-    const r = solve(this.bottles, { maxNodes: this.hintBudget });
+    const r = solveAuto(this.bottles, { bfsNodes: this.hintBudget, fallbackNodes: this.hintBudget });
     if (r.solvable && r.moves && r.moves.length > 0) return r.moves[0]!;
     return legalMoves(this.bottles)[0] ?? null;
   }
