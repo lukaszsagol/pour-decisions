@@ -115,3 +115,8 @@ async function show(): Promise<void> {
 
 window.addEventListener('hashchange', () => void show());
 void show();
+
+// Offline play: the service worker exists only in production builds.
+if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+  window.addEventListener('load', () => void navigator.serviceWorker.register('./sw.js').catch(() => undefined));
+}

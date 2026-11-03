@@ -17,9 +17,9 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'], viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 },
     },
   ],
-  webServer: {
-    command: 'npx vite --port 4317 --strictPort',
-    port: 4317,
-    reuseExistingServer: !process.env.CI,
-  },
+  webServer: [
+    { command: 'npx vite --port 4317 --strictPort', port: 4317, reuseExistingServer: !process.env.CI },
+    // The production build, for the service worker (run `vite build` first; `npm run e2e` does).
+    { command: 'npx vite preview --port 4318 --strictPort', port: 4318, reuseExistingServer: !process.env.CI },
+  ],
 });

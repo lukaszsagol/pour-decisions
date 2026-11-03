@@ -121,10 +121,11 @@ Depends on: T11, T13
 - [x] Level and map screens for each city matching their design references, including glass shapes and blocker skins in `docs/spec/cities.md`.
 - [x] One test per city loads a level and saves a screenshot.
 
-### T17 · Installable web app and deploy · `todo` · M
+### T17 · Installable web app and deploy · `in-review` · M
 Depends on: T14
-- [ ] Web app manifest, icons (generated simple placeholder art is fine), service worker for offline play.
-- [ ] GitHub Actions workflow deploying `apps/web` to GitHub Pages on pushes to main. **needs-human**: the owner enables Pages in repo settings; note this in the PR.
+- [x] Web app manifest, icons (generated simple placeholder art is fine), service worker for offline play.
+- [x] GitHub Actions workflow deploying `apps/web` to GitHub Pages on pushes to main. **needs-human**: the owner enables Pages in repo settings; note this in the PR.
+  Workflow added (`.github/workflows/pages.yml`). Owner: Settings → Pages → Source: GitHub Actions, then merge to main or run the workflow by hand.
 
 ### T18 · Daily pour · `todo` · M
 Depends on: T06, T15
