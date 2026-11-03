@@ -72,12 +72,19 @@ export function createStage(root: HTMLElement): Stage {
       return () => listeners.delete(fn);
     },
   };
+  // The safe area at the bottom of the screen (an iPhone's home indicator), read from CSS.
+  const safe = document.createElement('div');
+  safe.style.cssText = 'position:fixed;visibility:hidden;pointer-events:none;padding-bottom:env(safe-area-inset-bottom)';
+  root.appendChild(safe);
   const fit = () => {
     const f = artFit(window.innerWidth, window.innerHeight, window.devicePixelRatio || 1);
     stage.scale = f.scale;
     stage.artScale = f.k;
     stage.bleed = f.bleed;
     el.style.transform = `translate(${f.left}px, ${f.top}px) scale(${f.scale})`;
+    // Bars that stick to the screen's bottom move down by this much (stage px, whole art pixels).
+    const below = window.innerHeight - f.top - STAGE_H * f.scale - (parseFloat(getComputedStyle(safe).paddingBottom) || 0);
+    el.style.setProperty('--stick-b', `${Math.max(0, Math.floor(below / f.scale / ART)) * ART}px`);
     listeners.forEach((fn) => fn());
   };
   window.addEventListener('resize', fit);

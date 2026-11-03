@@ -1990,3 +1990,17 @@ input {
 .tabbar::before {
   inset: 0 -2048px -2048px;
 }
+/* The tab bar (and the map's panel above it) sits at the bottom of the screen, not of the stage. */
+.tabbar,
+.map-panel {
+  bottom: calc(-1 * var(--stick-b, 0px));
+}
+.map-panel .tabbar {
+  bottom: auto;
+}
+.sheet-backdrop {
+  bottom: calc(-1 * var(--stick-b, 0px));
+}
+.fam-body {
+  bottom: calc(84px - var(--stick-b, 0px));
+}

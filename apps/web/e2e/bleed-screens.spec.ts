@@ -71,6 +71,13 @@ for (const vp of viewports) {
       await seed(page, 108);
       await open(page, '#/passport');
       await shot(page, `${dir}/passport`);
+      // The tab bar sits on the screen's bottom edge (within one art pixel), not the stage's.
+      const bar = (await page.locator('.tabbar').boundingBox())!;
+      const artPx = (await page.evaluate(() => getComputedStyle(document.querySelector('.stage')!).transform)).match(
+        /matrix\(([\d.]+)/,
+      )![1]!;
+      expect(vp.height - (bar.y + bar.height)).toBeLessThanOrEqual(2 * Number(artPx) + 0.01);
+      expect(bar.y + bar.height).toBeLessThanOrEqual(vp.height + 0.5);
       await page.getByRole('button', { name: 'Settings' }).click();
       await shot(page, `${dir}/settings`);
       for (const name of ['daily', 'training', 'family']) {
