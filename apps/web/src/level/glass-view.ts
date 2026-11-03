@@ -70,7 +70,12 @@ export class GlassView extends Container {
         box(g, o.x + r.x, o.y + r.y, r.w, r.h, radii, color(theme, 'hiddenUnit', theme.colors.surface));
         const q = new Text({
           text: '?',
-          style: { fontFamily: theme.fonts.ui, fontSize: 15, fontWeight: '700', fill: color(theme, 'hiddenMark', theme.colors.muted) },
+          style: {
+            fontFamily: theme.fonts.ui,
+            fontSize: 15,
+            fontWeight: '700',
+            fill: color(theme, 'hiddenMark', theme.colors.muted),
+          },
         });
         q.anchor.set(0.5);
         q.position.set(o.x + r.x + r.w / 2, o.y + r.y + r.h / 2);
@@ -81,7 +86,8 @@ export class GlassView extends Container {
       box(g, o.x + r.x, o.y + r.y, r.w, r.h, radii, drink.color);
       // Stout gets its head on the top unit of a run.
       const above = bottle.units[i + 1];
-      if (drink.foam && (!above || above.drink !== unit.drink)) box(g, o.x + r.x, o.y + r.y, r.w, 5, [4, 4, 0, 0], drink.foam);
+      if (drink.foam && (!above || above.drink !== unit.drink))
+        box(g, o.x + r.x, o.y + r.y, r.w, 5, [4, 4, 0, 0], drink.foam);
     });
     if (only) {
       for (let i = bottle.units.length; i < bottle.capacity; i++) {
@@ -116,8 +122,12 @@ export class GlassView extends Container {
   private drawBadge(drinkColor: string, bodyTop: number): void {
     const b = new Graphics();
     const cy = Math.max(15, bodyTop - 9);
-    b.moveTo(SLOT_W / 2, cy).lineTo(SLOT_W / 2, bodyTop + 2).stroke({ width: 2, color: drinkColor });
-    b.circle(SLOT_W / 2, cy, 14).fill({ color: drinkColor }).stroke({ width: 2.5, color: this.theme.colors.text });
+    b.moveTo(SLOT_W / 2, cy)
+      .lineTo(SLOT_W / 2, bodyTop + 2)
+      .stroke({ width: 2, color: drinkColor });
+    b.circle(SLOT_W / 2, cy, 14)
+      .fill({ color: drinkColor })
+      .stroke({ width: 2.5, color: this.theme.colors.text });
     this.overlay.addChild(b);
   }
 }

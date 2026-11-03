@@ -44,6 +44,8 @@ npm install                 # once
 npm run check               # typecheck + all tests. Must pass before every commit.
 npm test                    # tests only
 npm run typecheck           # tsc -b
+npm run lint                # ESLint + Prettier check (part of check)
+npm run format              # Prettier write + ESLint fix
 npm run dev -w apps/web     # play the game at http://localhost:5173
 npm run build -w apps/web   # production build into apps/web/dist
 npm run e2e -w apps/web     # Playwright tests; saves screenshots to agent-logs/assets/

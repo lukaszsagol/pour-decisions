@@ -1,4 +1,15 @@
-import { canPour, cloneBottles, isComplete, isDeadEnd, isLocked, isWon, legalMoves, pour, settle, top } from './rules.js';
+import {
+  canPour,
+  cloneBottles,
+  isComplete,
+  isDeadEnd,
+  isLocked,
+  isWon,
+  legalMoves,
+  pour,
+  settle,
+  top,
+} from './rules.js';
 import { solve } from './solver.js';
 import type { Bottle, Move } from './types.js';
 

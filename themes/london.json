@@ -3,10 +3,7 @@
   "name": "London",
   "setting": "Traditional pub",
   "order": 2,
-  "levels": [
-    101,
-    200
-  ],
+  "levels": [101, 200],
   "fonts": {
     "ui": "Outfit",
     "display": "Playfair Display"
@@ -37,12 +34,7 @@
   },
   "glass": {
     "shape": "nonic-pint",
-    "radius": [
-      4,
-      4,
-      8,
-      8
-    ]
+    "radius": [4, 4, 8, 8]
   },
   "drinks": [
     {
@@ -102,17 +94,8 @@
     "only": "reserved-beer-mat",
     "locked": "locked-tap"
   },
-  "bars": [
-    "The Red Lion",
-    "The Rose and Crown",
-    "The Fox and Fiddle",
-    "The Crown and Anchor",
-    "The Lamb and Flag"
-  ],
-  "design": [
-    "LondonMap",
-    "LondonLevel"
-  ],
+  "bars": ["The Red Lion", "The Rose and Crown", "The Fox and Fiddle", "The Crown and Anchor", "The Lamb and Flag"],
+  "design": ["LondonMap", "LondonLevel"],
   "booster": {
     "shape": "card",
     "border": 4

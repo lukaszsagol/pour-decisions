@@ -2,8 +2,25 @@ import type { Theme } from './types.js';
 
 const HEX = /^#[0-9a-f]{6}$/i;
 const REQUIRED_COLORS = [
-  'ground', 'surface', 'surfaceAlt', 'line', 'text', 'muted', 'accent', 'accentText', 'starDone', 'starEmpty',
-  'hard', 'glassFill', 'glassRim', 'selected', 'hint', 'reject', 'counterTop', 'counterFront', 'boosterFace',
+  'ground',
+  'surface',
+  'surfaceAlt',
+  'line',
+  'text',
+  'muted',
+  'accent',
+  'accentText',
+  'starDone',
+  'starEmpty',
+  'hard',
+  'glassFill',
+  'glassRim',
+  'selected',
+  'hint',
+  'reject',
+  'counterTop',
+  'counterFront',
+  'boosterFace',
   'boosterRim',
 ] as const;
 
@@ -20,7 +37,8 @@ export function validateTheme(data: unknown): string[] {
   const levels = data.levels;
   if (!Array.isArray(levels) || levels.length !== 2 || !levels.every((n) => Number.isInteger(n)))
     errors.push('levels must be [first, last]');
-  if (!isObj(data.fonts) || !isStr(data.fonts.ui) || !isStr(data.fonts.display)) errors.push('fonts need ui and display');
+  if (!isObj(data.fonts) || !isStr(data.fonts.ui) || !isStr(data.fonts.display))
+    errors.push('fonts need ui and display');
   if (!isObj(data.colors)) errors.push('Missing colors');
   else {
     for (const key of REQUIRED_COLORS) if (!isStr(data.colors[key])) errors.push(`Missing colour ${key}`);
@@ -28,7 +46,8 @@ export function validateTheme(data: unknown): string[] {
       if (!isStr(value) || !HEX.test(value)) errors.push(`Colour ${key} must be #rrggbb`);
   }
   if (!isObj(data.glass) || !isStr(data.glass.shape)) errors.push('glass needs a shape');
-  else if (!Array.isArray(data.glass.radius) || data.glass.radius.length !== 4) errors.push('glass.radius needs 4 numbers');
+  else if (!Array.isArray(data.glass.radius) || data.glass.radius.length !== 4)
+    errors.push('glass.radius needs 4 numbers');
   if (!Array.isArray(data.drinks) || data.drinks.length === 0) errors.push('drinks must be a non-empty list');
   else {
     const ids = new Set<string>();
@@ -39,7 +58,8 @@ export function validateTheme(data: unknown): string[] {
       }
       if (ids.has(d.id)) errors.push(`Duplicate drink ${d.id}`);
       ids.add(d.id);
-      if (d.foam !== undefined && (!isStr(d.foam) || !HEX.test(d.foam))) errors.push(`Drink ${d.id} foam must be #rrggbb`);
+      if (d.foam !== undefined && (!isStr(d.foam) || !HEX.test(d.foam)))
+        errors.push(`Drink ${d.id} foam must be #rrggbb`);
     });
   }
   if (!isObj(data.blockers) || !['hidden', 'only', 'locked'].every((k) => isStr((data.blockers as Obj)[k])))

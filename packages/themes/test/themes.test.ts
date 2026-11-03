@@ -23,7 +23,11 @@ describe('theme files', () => {
 
   it('keep the designed drinks', () => {
     expect(drinksFor(getTheme('amsterdam'), 5).map((d) => d.id)).toEqual([
-      'jenever', 'advocaat', 'cherry', 'oranjebitter', 'curacao',
+      'jenever',
+      'advocaat',
+      'cherry',
+      'oranjebitter',
+      'curacao',
     ]);
     expect(new Set(drinksFor(getTheme('tokyo'), 5).map((d) => d.id))).toEqual(
       new Set(['umeshu', 'sakura', 'melon', 'yuzu', 'ramune']),

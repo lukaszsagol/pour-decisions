@@ -11,7 +11,12 @@ export default defineConfig({
     deviceScaleFactor: 2,
     reducedMotion: 'reduce',
   },
-  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'], viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 } }],
+  projects: [
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'], viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 },
+    },
+  ],
   webServer: {
     command: 'npx vite --port 4317 --strictPort',
     port: 4317,

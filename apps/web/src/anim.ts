@@ -14,7 +14,10 @@ export interface TweenOptions {
 }
 
 /** Runs `onUpdate` with eased progress 0→1 on animation frames. Resolves when done. With reduced motion it jumps to the end. */
-export function tween({ duration, ease = easeOut, onUpdate }: TweenOptions): { done: Promise<void>; cancel: () => void } {
+export function tween({ duration, ease = easeOut, onUpdate }: TweenOptions): {
+  done: Promise<void>;
+  cancel: () => void;
+} {
   let raf = 0;
   let cancelled = false;
   const done = new Promise<void>((resolve) => {

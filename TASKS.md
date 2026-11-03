@@ -13,11 +13,11 @@ The ordered backlog. Agents take the first task whose status is `todo` and whose
 ### T00 · Seed rules engine and solver · `done` · M
 Pure TypeScript engine (`packages/engine`): bottles, pour rule, hidden units, only and locked bottles, win and dead-end detection, state key, validation, breadth-first solver with node budget, golden tests including Tokyo level 327 (best 16).
 
-### T01 · CI and code style · `todo` · S
+### T01 · CI and code style · `in-review` · S
 Depends on: T00
-- [ ] `.github/workflows/ci.yml` runs `npm ci` and `npm run check` on every push and pull request (Node 22). (A starter file exists; make sure it passes.)
-- [ ] ESLint (typescript-eslint, recommended) and Prettier configured; `npm run lint` added to `npm run check`.
-- [ ] Whole repo formatted; check passes.
+- [x] `.github/workflows/ci.yml` runs `npm ci` and `npm run check` on every push and pull request (Node 22). (A starter file exists; make sure it passes.)
+- [x] ESLint (typescript-eslint, recommended) and Prettier configured; `npm run lint` added to `npm run check`.
+- [x] Whole repo formatted; check passes.
 
 ### T02 · Game session API · `in-review` · M
 Depends on: T00

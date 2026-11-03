@@ -25,7 +25,16 @@ export function glassGeometry(theme: Theme): GlassGeometry {
   const radius = theme.glass.radius;
   switch (theme.glass.shape) {
     case 'tulip-stemmed':
-      return { bodyW: 58, bodyH: 162, radius, border: 2, padding: 5, unitGap: 3, stem: { w: 6, h: 10 }, foot: { w: 34, h: 4, r: 2 } };
+      return {
+        bodyW: 58,
+        bodyH: 162,
+        radius,
+        border: 2,
+        padding: 5,
+        unitGap: 3,
+        stem: { w: 6, h: 10 },
+        foot: { w: 34, h: 4, r: 2 },
+      };
     case 'nonic-pint':
       return { bodyW: 58, bodyH: 160, radius, border: 2, padding: 5, unitGap: 3, nonic: true };
     case 'deco-tall':

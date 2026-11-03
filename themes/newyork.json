@@ -3,10 +3,7 @@
   "name": "New York",
   "setting": "Art Deco speakeasy",
   "order": 3,
-  "levels": [
-    201,
-    300
-  ],
+  "levels": [201, 300],
   "fonts": {
     "ui": "Outfit",
     "display": "Limelight"
@@ -35,12 +32,7 @@
   },
   "glass": {
     "shape": "deco-tall",
-    "radius": [
-      6,
-      6,
-      14,
-      14
-    ]
+    "radius": [6, 6, 14, 14]
   },
   "drinks": [
     {
@@ -99,17 +91,8 @@
     "only": "velvet-rope",
     "locked": "deco-door"
   },
-  "bars": [
-    "The Brass Rail",
-    "Club Midnight",
-    "The Gilded Door",
-    "The Starlight Room",
-    "The Penthouse"
-  ],
-  "design": [
-    "NewYorkMap",
-    "NewYorkLevel"
-  ],
+  "bars": ["The Brass Rail", "Club Midnight", "The Gilded Door", "The Starlight Room", "The Penthouse"],
+  "design": ["NewYorkMap", "NewYorkLevel"],
   "booster": {
     "shape": "round",
     "border": 2

@@ -9,7 +9,9 @@ export interface LevelEntry {
 
 /** Level number → level and its pack. Generated packs override the hand-made starter pack. */
 const byNumber = new Map<number, LevelEntry>();
-for (const [path, pack] of Object.entries(modules).sort(([a], [b]) => Number(b.includes('starter')) - Number(a.includes('starter')))) {
+for (const [path, pack] of Object.entries(modules).sort(
+  ([a], [b]) => Number(b.includes('starter')) - Number(a.includes('starter')),
+)) {
   void path;
   for (const level of pack.levels) byNumber.set(level.number, { level, pack });
 }

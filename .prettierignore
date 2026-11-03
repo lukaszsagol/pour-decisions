@@ -1,0 +1,7 @@
+docs/design/
+levels/
+package-lock.json
+agent-logs/
+dist/
+dist-types/
+*.md

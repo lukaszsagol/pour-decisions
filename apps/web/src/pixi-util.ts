@@ -62,7 +62,14 @@ export function box(
   if (fill) roundRect(g, x, y, w, h, radii).fill(typeof fill === 'string' ? { color: fill } : fill);
   if (border && border.width > 0) {
     const b = border.width / 2;
-    roundRect(g, x + b, y + b, w - border.width, h - border.width, radii.map((r) => Math.max(0, r - b)) as unknown as Radii).stroke({
+    roundRect(
+      g,
+      x + b,
+      y + b,
+      w - border.width,
+      h - border.width,
+      radii.map((r) => Math.max(0, r - b)) as unknown as Radii,
+    ).stroke({
       width: border.width,
       color: border.color,
       alpha: border.alpha ?? 1,
@@ -93,7 +100,15 @@ export function dashedLine(
 }
 
 /** Dashed rounded-rectangle outline (approximated by dashed sides, corners left open). */
-export function dashedBox(g: Graphics, x: number, y: number, w: number, h: number, r: number, style: { width: number; color: string; alpha?: number }): Graphics {
+export function dashedBox(
+  g: Graphics,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  r: number,
+  style: { width: number; color: string; alpha?: number },
+): Graphics {
   const b = style.width / 2;
   dashedLine(g, x + r, y + b, x + w - r, y + b, 5, 3, style);
   dashedLine(g, x + r, y + h - b, x + w - r, y + h - b, 5, 3, style);

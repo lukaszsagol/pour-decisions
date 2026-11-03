@@ -23,7 +23,7 @@ export function hexToLab(hex: string): Lab {
   const x = (0.4124564 * r + 0.3575761 * g + 0.1804375 * bl) / 0.95047;
   const y = 0.2126729 * r + 0.7151522 * g + 0.072175 * bl;
   const z = (0.0193339 * r + 0.119192 * g + 0.9503041 * bl) / 1.08883;
-  const f = (t: number) => (t > 216 / 24389 ? Math.cbrt(t) : (24389 / 27 * t + 16) / 116);
+  const f = (t: number) => (t > 216 / 24389 ? Math.cbrt(t) : ((24389 / 27) * t + 16) / 116);
   const fx = f(x);
   const fy = f(y);
   const fz = f(z);

@@ -3,10 +3,7 @@
   "name": "Amsterdam",
   "setting": "Brown café on a canal",
   "order": 1,
-  "levels": [
-    1,
-    100
-  ],
+  "levels": [1, 100],
   "fonts": {
     "ui": "Outfit",
     "display": "DM Serif Display"
@@ -57,12 +54,7 @@
   },
   "glass": {
     "shape": "tulip-stemmed",
-    "radius": [
-      10,
-      10,
-      26,
-      26
-    ]
+    "radius": [10, 10, 26, 26]
   },
   "drinks": [
     {
@@ -121,17 +113,8 @@
     "only": "kruik-tag",
     "locked": "chains-padlock"
   },
-  "bars": [
-    "Café 't Hoekje",
-    "De Druif",
-    "Het Bruine Paard",
-    "Café de Gracht",
-    "Proeflokaal Het Anker"
-  ],
-  "design": [
-    "AmsterdamMap",
-    "AmsterdamLevel"
-  ],
+  "bars": ["Café 't Hoekje", "De Druif", "Het Bruine Paard", "Café de Gracht", "Proeflokaal Het Anker"],
+  "design": ["AmsterdamMap", "AmsterdamLevel"],
   "booster": {
     "shape": "round",
     "border": 4

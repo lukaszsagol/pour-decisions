@@ -3,16 +3,11 @@
   "name": "Tokyo",
   "setting": "Neon back-alley bars",
   "order": 4,
-  "levels": [
-    301,
-    400
-  ],
+  "levels": [301, 400],
   "fonts": {
     "ui": "Outfit",
     "display": "Outfit",
-    "extra": [
-      "Zen Kaku Gothic New"
-    ]
+    "extra": ["Zen Kaku Gothic New"]
   },
   "colors": {
     "ground": "#070B1F",
@@ -50,12 +45,7 @@
   },
   "glass": {
     "shape": "highball",
-    "radius": [
-      8,
-      8,
-      16,
-      16
-    ]
+    "radius": [8, 8, 16, 16]
   },
   "drinks": [
     {
@@ -115,18 +105,8 @@
     "locked": "shutter",
     "frozen": "ice-ball"
   },
-  "bars": [
-    "Neon gate",
-    "Golden alley",
-    "Ginza highball",
-    "Jazz kissa",
-    "Rooftop Shibuya"
-  ],
-  "design": [
-    "TokyoMap",
-    "TokyoLevel",
-    "TokyoComplete"
-  ],
+  "bars": ["Neon gate", "Golden alley", "Ginza highball", "Jazz kissa", "Rooftop Shibuya"],
+  "design": ["TokyoMap", "TokyoLevel", "TokyoComplete"],
   "booster": {
     "shape": "round",
     "border": 2

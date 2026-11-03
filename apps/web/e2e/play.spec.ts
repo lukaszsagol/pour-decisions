@@ -31,7 +31,15 @@ test('wins golden Tokyo level 327 with the Tokyo theme', async ({ page }) => {
   await expect(page.getByText('Tokyo · Level 327')).toBeVisible();
   await shot(page, 'T09-tokyo-327-start');
   const bottles = parseBottles(
-    ['umeshu sakura melon ramune', 'sakura ramune umeshu yuzu', '?melon ?yuzu sakura umeshu', 'ramune melon yuzu yuzu', 'umeshu sakura melon ramune', '', ''],
+    [
+      'umeshu sakura melon ramune',
+      'sakura ramune umeshu yuzu',
+      '?melon ?yuzu sakura umeshu',
+      'ramune melon yuzu yuzu',
+      'umeshu sakura melon ramune',
+      '',
+      '',
+    ],
     4,
     { 5: { only: 'yuzu' } },
   );

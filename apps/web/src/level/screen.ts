@@ -104,7 +104,8 @@ export class LevelScreen {
   }
 
   destroy(): void {
-    if (!this.destroyed && !this.wonReported && this.game.moves > 0) this.opts.onEvent?.({ type: 'quit', moves: this.game.moves });
+    if (!this.destroyed && !this.wonReported && this.game.moves > 0)
+      this.opts.onEvent?.({ type: 'quit', moves: this.game.moves });
     this.destroyed = true;
     this.liftAnims.forEach((a) => a?.cancel());
     this.disposePixi?.();
@@ -307,7 +308,8 @@ export class LevelScreen {
     const name = (id: string) => this.theme.drinks.find((d) => d.id === id)?.name.toLowerCase() ?? id;
     const parts = [`Glass ${i + 1}`];
     if (this.game.selected === i) parts.push('selected');
-    if (this.hint && (this.hint.from === i || this.hint.to === i)) parts.push(this.hint.from === i ? 'hint: pour from here' : 'hint: pour here');
+    if (this.hint && (this.hint.from === i || this.hint.to === i))
+      parts.push(this.hint.from === i ? 'hint: pour from here' : 'hint: pour here');
     if (b.lockedUntil) parts.push(`chained shut until the ${name(b.lockedUntil)} is complete`);
     if (b.only) parts.push(`only takes ${name(b.only)}`);
     if (b.units.length === 0) parts.push('empty');

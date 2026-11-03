@@ -114,7 +114,10 @@ function tokyoDecor(c: Container, theme: Theme): void {
   g.roundRect(16, 198, STAGE_W - 32, 4, 2).fill({ color: color(theme, 'shelf', k.line) });
   counter(g, theme, color(theme, 'counterEdge', k.counterTop), 14);
   c.addChild(g);
-  const kanji = new Text({ text: '酒', style: { fontFamily: 'Zen Kaku Gothic New', fontWeight: '700', fontSize: 14, fill: k.text } });
+  const kanji = new Text({
+    text: '酒',
+    style: { fontFamily: 'Zen Kaku Gothic New', fontWeight: '700', fontSize: 14, fill: k.text },
+  });
   kanji.anchor.set(0.5);
   kanji.position.set(STAGE_W / 2, 29);
   c.addChild(kanji);
