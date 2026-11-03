@@ -8,6 +8,7 @@ import { MapScreen } from './map/screen.js';
 import { FamilyPlaceholder } from './family/placeholder.js';
 import { PassportScreen } from './passport/screen.js';
 import { tabBar, type Tab } from './tabbar.js';
+import { dailyLevel, dailyShareText, dateKey } from './daily/generate.js';
 import { session } from './session.js';
 import { createStage } from './stage.js';
 import { progress } from './state.js';
@@ -71,6 +72,37 @@ function levelScreen(number: number): Screen {
   });
 }
 
+function dailyScreen(): Screen {
+  const date = dateKey();
+  const d = dailyLevel(date);
+  return new LevelScreen(stage, {
+    theme: d.theme,
+    number: 0,
+    barName: "Tonight's pour",
+    subtitle: `${d.theme.name} · ${new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}`,
+    bottles: d.bottles,
+    best: d.best,
+    stock: { ...progress.data.stock },
+    backHref: '#/passport',
+    nextHref: '#/complete',
+    nextLabel: 'Collect rewards',
+    onStock: (stock) => progress.setStock(stock),
+    onWin: (result) => {
+      const rewards = progress.recordDaily(date, result.stars, result.moves, d.best);
+      session.complete = {
+        theme: d.theme,
+        result,
+        difficulty: 'normal',
+        rewards,
+        kicker: "Tonight's pour cleared",
+        share: dailyShareText(date, result.stars, result.moves, d.best),
+        nextHref: '#/passport',
+        nextLabel: 'Back to the passport',
+      };
+    },
+  });
+}
+
 function route(): Screen {
   const hash = location.hash.replace(/^#\/?/, '');
   const [name, arg] = hash.split('/');
@@ -101,9 +133,15 @@ function route(): Screen {
       footer: tabBar('map', tabs),
     });
   }
+  if (name === 'daily') return dailyScreen();
   if (name === 'family') return new FamilyPlaceholder(stage, themeForLevel(progress.data.current), tabs);
-  if (name === '' || name === 'passport' || name === 'daily')
-    return new PassportScreen(stage, { progress, tabs, dailyHref: '#/daily', dailyLine: 'A new level every night' });
+  if (name === '' || name === 'passport') {
+    const today = progress.data.daily[dateKey()];
+    const dailyLine = today
+      ? `${'★'.repeat(today.stars)}${'☆'.repeat(3 - today.stars)} ${today.moves} moves tonight (best ${today.best})`
+      : 'A new level every night';
+    return new PassportScreen(stage, { progress, tabs, dailyHref: '#/daily', dailyLine });
+  }
   return levelScreen(name === 'level' ? Number(arg) : progress.data.current);
 }
 

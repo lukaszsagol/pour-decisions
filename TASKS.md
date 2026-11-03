@@ -127,10 +127,10 @@ Depends on: T14
 - [x] GitHub Actions workflow deploying `apps/web` to GitHub Pages on pushes to main. **needs-human**: the owner enables Pages in repo settings; note this in the PR.
   Workflow added (`.github/workflows/pages.yml`). Owner: Settings → Pages → Source: GitHub Actions, then merge to main or run the workflow by hand.
 
-### T18 · Daily pour · `todo` · M
+### T18 · Daily pour · `in-review` · M
 Depends on: T06, T15
-- [ ] Level of the day generated on the device from the date as seed (same for everyone), medium difficulty.
-- [ ] Share text like "Pour Decisions · 3 Nov · ★★★ 14 moves (best 13)".
+- [x] Level of the day generated on the device from the date as seed (same for everyone), medium difficulty.
+- [x] Share text like "Pour Decisions · 3 Nov · ★★★ 14 moves (best 13)".
 
 ### T19 · Play log · `todo` · S
 Depends on: T15

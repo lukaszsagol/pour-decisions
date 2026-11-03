@@ -32,6 +32,8 @@ export interface LevelScreenOptions {
   stock: BoosterStock;
   /** Where the back button goes. */
   backHref: string;
+  /** Line under the title; defaults to "City · Level N". */
+  subtitle?: string;
   /** Show the "tap this glass, then that one" pointer for the first pour. */
   guide?: boolean;
   /** Called once when the level is won, before the win overlay shows. */
@@ -494,7 +496,7 @@ export class LevelScreen {
     const overlay = this.el.querySelector<HTMLElement>('.lv-overlay')!;
     overlay.innerHTML = `
       <div class="win-card" role="dialog" aria-modal="true" aria-labelledby="win-verdict">
-        <div class="win-kicker">Level ${r.number} cleared</div>
+        <div class="win-kicker">${esc(this.opts.subtitle ? "Tonight's pour cleared" : `Level ${r.number} cleared`)}</div>
         <div class="win-stars" aria-label="${r.stars} of 3 stars">${stars}</div>
         <div class="win-verdict" id="win-verdict">${verdict}</div>
         <div class="win-moves">${r.moves} moves · best ${r.best}</div>
@@ -547,7 +549,7 @@ export class LevelScreen {
           <a class="icon-btn lv-back" href="${esc(this.opts.backHref)}" aria-label="Back to map">${icons.back(k.text)}</a>
           <div>
             <h1 class="lv-bar">${esc(this.opts.barName)}</h1>
-            <div class="lv-sub">${esc(t.name)} · Level ${this.opts.number}</div>
+            <div class="lv-sub">${esc(this.opts.subtitle ?? `${t.name} · Level ${this.opts.number}`)}</div>
           </div>
         </div>
         <div class="lv-right">

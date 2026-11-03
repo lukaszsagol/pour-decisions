@@ -18,6 +18,9 @@ export interface CompleteData {
   recipe?: { recipe: Recipe; index: number; total: number };
   nextHref: string;
   nextLabel: string;
+  /** Overrides for the daily pour. */
+  kicker?: string;
+  share?: string;
 }
 
 const boosterNames = { undo: 'Streak undo', extraGlass: 'Streak glass', hint: 'Streak hint' } as const;
@@ -88,7 +91,7 @@ export class CompleteScreen {
   }
 
   private async share(): Promise<void> {
-    const text = shareText(this.data.result);
+    const text = this.data.share ?? shareText(this.data.result);
     const toast = this.el.querySelector<HTMLElement>('.toast')!;
     try {
       await navigator.clipboard.writeText(text);
@@ -116,7 +119,7 @@ export class CompleteScreen {
       `<div class="cp-card"><div class="cp-card-value">${icon}<span>${esc(value)}</span></div><div class="cp-card-label">${esc(label)}</div></div>`;
     return `
       <div class="cp-head">
-        <div class="cp-kicker">Level ${r.number} cleared</div>
+        <div class="cp-kicker">${esc(this.data.kicker ?? `Level ${r.number} cleared`)}</div>
         <div class="cp-stars" role="img" aria-label="${r.stars} of 3 stars"><span>${star(1)}</span><span>${star(2)}</span><span>${star(3)}</span></div>
         <h1 class="cp-verdict">${esc(verdictFor(r))}</h1>
         <div class="cp-sub">${esc(sub)}</div>

@@ -1,6 +1,6 @@
 import type { BoosterStock, Difficulty } from '@pour/engine';
 import { economy, type BoosterKind } from './config.js';
-import { rewardsFor, type Rewards } from './rewards.js';
+import { rewardsFor, winCoins, type Rewards } from './rewards.js';
 
 export const SAVE_KEY = 'pour-decisions:save';
 export const SAVE_VERSION = 1;
@@ -22,6 +22,8 @@ export interface SaveData {
   /** Highest level the player may play (the next unbeaten one). */
   current: number;
   settings: { muted: boolean };
+  /** Daily pour results by date (YYYY-MM-DD). The first finish of the day counts. */
+  daily: Record<string, { stars: number; moves: number; best: number }>;
 }
 
 /** Minimal storage interface so tests can use memory instead of localStorage. */
@@ -41,6 +43,7 @@ export function freshSave(): SaveData {
     streak: 0,
     current: 1,
     settings: { muted: false },
+    daily: {},
   };
 }
 
@@ -157,6 +160,17 @@ export class Progress {
     if (input.number >= this.data.current) this.data.current = Math.min(this.maxLevel, input.number + 1);
     this.commit();
     return rewards;
+  }
+
+  /** Records the daily pour. Only the first finish of a day pays coins. */
+  recordDaily(date: string, stars: number, moves: number, best: number): Rewards {
+    const first = !this.data.daily[date];
+    if (first) {
+      this.data.daily[date] = { stars, moves, best };
+      this.data.coins += winCoins(stars, 'normal');
+    }
+    this.commit();
+    return { coins: first ? winCoins(stars, 'normal') : 0, stars: 0, streak: this.data.streak };
   }
 
   /** A restart or leaving a level unfinished breaks the first-try streak. */
