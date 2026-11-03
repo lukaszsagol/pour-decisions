@@ -58,6 +58,13 @@ npm run levels -- --city tokyo --bar 2   # regenerate one bar (or --city amsterd
 
 Playwright needs a browser once: `npx playwright install chromium`.
 
+Android app: `apps/web/android/` is a Capacitor project that wraps the web build (no browser UI, works offline, fullscreen, portrait, Back steps back through screens). The **Android app** workflow builds the APK on every pull request and push; pushes to main publish it as the `android` release (`releases/latest/download/pour-decisions.apk`). It is signed with the key in the `ANDROID_KEYSTORE_BASE64` / `ANDROID_KEYSTORE_PASSWORD` secrets, or as a debug build when they are missing. Locally (JDK 21 and the Android SDK needed):
+
+```bash
+npm run android -w apps/web                  # web build + copy into the Android project
+(cd apps/web/android && ./gradlew assembleDebug)   # → app/build/outputs/apk/debug/app-debug.apk
+```
+
 Dev routes: `#/level/<n>` opens a level directly, `#/fixture/<name>` shows a design reference state (see `apps/web/src/fixtures.ts`).
 
 Tasks add more commands. Document any you add here.

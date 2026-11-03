@@ -1,7 +1,7 @@
+import '@fontsource/pixelify-sans/400.css';
+import '@fontsource/pixelify-sans/600.css';
 import './style.css';
-import { watchInstall } from './install.js';
-
-watchInstall();
+import { Capacitor } from '@capacitor/core';
 import { cityIds, getTheme, recipeFor, themeForLevel, type CityId } from '@pour/themes';
 import { CompleteScreen } from './complete/screen.js';
 import { designFixtures } from './fixtures.js';
@@ -270,7 +270,8 @@ async function show(): Promise<void> {
 window.addEventListener('hashchange', () => void show());
 void show();
 
-// Offline play: the service worker exists only in production builds.
-if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+// Offline play: the service worker exists only in production web builds. The Android app
+// already carries every file, so it skips it.
+if (import.meta.env.PROD && 'serviceWorker' in navigator && !Capacitor.isNativePlatform()) {
   window.addEventListener('load', () => void navigator.serviceWorker.register('./sw.js').catch(() => undefined));
 }

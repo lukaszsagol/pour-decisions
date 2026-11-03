@@ -8,6 +8,7 @@ export default tseslint.config(
       '**/dist-types/**',
       '**/node_modules/**',
       'docs/design/**',
+      'apps/web/android/**',
       'playwright-report/**',
       'test-results/**',
     ],
