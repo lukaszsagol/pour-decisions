@@ -8,6 +8,7 @@ export function applyTheme(el: HTMLElement, theme: Theme): void {
     '--f-display',
     `'${theme.fonts.display}', ${theme.fonts.display === theme.fonts.ui ? 'system-ui, sans-serif' : 'serif'}`,
   );
+  el.dataset.city = theme.id;
   document.body.style.background = theme.colors.ground;
   document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme.colors.ground);
 }

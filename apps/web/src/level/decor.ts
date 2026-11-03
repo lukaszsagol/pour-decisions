@@ -1,5 +1,5 @@
 import type { Theme } from '@pour/themes';
-import { Container, Graphics, Text } from 'pixi.js';
+import { Container, FillGradient, Graphics, Text } from 'pixi.js';
 import { roundRect } from '../pixi-util.js';
 import { color } from '../theme-css.js';
 import { STAGE_H, STAGE_W } from '../stage.js';
@@ -73,6 +73,11 @@ function amsterdamDecor(c: Container, theme: Theme): void {
   const bottle = (x: number, h: number, tone: typeof light) => {
     const y = 194 - h;
     roundRect(g, x, y, 26, h, [9, 9, 6, 6]).fill({ color: tone.body });
+    // Glazed stoneware: lit from the lamp side, shaded on the other.
+    const lit = x < STAGE_W / 2 ? x + 26 - 8 : x + 3;
+    const dark = x < STAGE_W / 2 ? x + 2 : x + 26 - 7;
+    roundRect(g, dark, y + 6, 5, h - 9, [3, 3, 3, 3]).fill({ color: '#000000', alpha: 0.18 });
+    roundRect(g, lit, y + 6, 4, h - 14, [2, 2, 2, 2]).fill({ color: '#FFFFFF', alpha: 0.28 });
     g.roundRect(x + 9, y - 6, 8, 8, 2).fill({ color: tone.cap });
     g.rect(x + 4, y + Math.round(h * 0.38), 18, 10).fill({ color: label });
   };
@@ -88,10 +93,91 @@ function amsterdamDecor(c: Container, theme: Theme): void {
   g.poly([185, 136, 205, 136, 215, 156, 175, 156]).fill({ color: color(theme, 'lamp', k.starDone) });
   roundRect(g, 188, 156, 14, 6, [0, 0, 7, 7]).fill({ color: color(theme, 'lampGlow', '#FFE2A8') });
 
-  // Shelf plank.
+  // Shelf plank with a lit edge and a shadow on the wall below.
+  g.rect(14, 200, STAGE_W - 28, 16).fill(verticalFade('rgba(0,0,0,0.42)'));
   g.roundRect(14, 194, STAGE_W - 28, 6, 2).fill({ color: color(theme, 'shelf', k.line) });
+  g.rect(16, 194, STAGE_W - 32, 1).fill({ color: '#FFFFFF', alpha: 0.18 });
   counter(g, theme, color(theme, 'brass', '#C9A24A'), 4);
+  // Counter: polished top catching the light, shadow under its edge.
+  g.rect(0, COUNTER_TOP + 4, STAGE_W, 20).fill(verticalFade('rgba(255,220,170,0.14)'));
+  g.rect(0, COUNTER_TOP + 24, STAGE_W, 22).fill(verticalFade('rgba(0,0,0,0.45)'));
   c.addChild(g);
+  c.addChild(barLighting());
+}
+
+/** Warm lamp light, a soft cone onto the glasses, board seams and a vignette. */
+function barLighting(): Graphics {
+  const g = new Graphics();
+  for (let i = 1; i < 10; i++) g.rect(i * 39 - 1, 200, 1, COUNTER_TOP - 200).fill({ color: '#000000', alpha: 0.22 });
+  g.poly([180, 160, 210, 160, 330, COUNTER_TOP, 60, COUNTER_TOP]).fill(verticalFade('rgba(255,200,120,0.12)'));
+  g.ellipse(STAGE_W / 2, 170, 210, 150).fill(radial('rgba(255,190,110,0.28)'));
+  // Darker towards the sides, so the glasses in the middle stand out.
+  g.rect(0, 214, 80, COUNTER_TOP - 214).fill(sideFade(false));
+  g.rect(STAGE_W - 80, 214, 80, COUNTER_TOP - 214).fill(sideFade(true));
+  return g;
+}
+
+const cache = new Map<string, FillGradient>();
+
+/** Colour at the top fading to clear at the bottom (local to the shape). */
+function verticalFade(colour: string): FillGradient {
+  const key = `v${colour}`;
+  if (!cache.has(key))
+    cache.set(
+      key,
+      new FillGradient({
+        type: 'linear',
+        start: { x: 0, y: 0 },
+        end: { x: 0, y: 1 },
+        colorStops: [
+          { offset: 0, color: colour },
+          { offset: 1, color: 'rgba(0,0,0,0)' },
+        ],
+        textureSpace: 'local',
+      }),
+    );
+  return cache.get(key)!;
+}
+
+/** Colour in the middle fading to clear at the edge (local to the shape). */
+function radial(colour: string): FillGradient {
+  const key = `r${colour}`;
+  if (!cache.has(key))
+    cache.set(
+      key,
+      new FillGradient({
+        type: 'radial',
+        center: { x: 0.5, y: 0.5 },
+        innerRadius: 0,
+        outerCenter: { x: 0.5, y: 0.5 },
+        outerRadius: 0.5,
+        colorStops: [
+          { offset: 0, color: colour },
+          { offset: 1, color: 'rgba(0,0,0,0)' },
+        ],
+        textureSpace: 'local',
+      }),
+    );
+  return cache.get(key)!;
+}
+
+function sideFade(right: boolean): FillGradient {
+  const key = `side${right}`;
+  if (!cache.has(key))
+    cache.set(
+      key,
+      new FillGradient({
+        type: 'linear',
+        start: { x: right ? 1 : 0, y: 0 },
+        end: { x: right ? 0 : 1, y: 0 },
+        colorStops: [
+          { offset: 0, color: 'rgba(0,0,0,0.38)' },
+          { offset: 1, color: 'rgba(0,0,0,0)' },
+        ],
+        textureSpace: 'local',
+      }),
+    );
+  return cache.get(key)!;
 }
 
 function tokyoDecor(c: Container, theme: Theme): void {

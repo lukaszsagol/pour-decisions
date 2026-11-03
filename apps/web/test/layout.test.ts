@@ -40,8 +40,12 @@ describe('glass geometry', () => {
     }
   });
 
-  it('gives the tulip glass the design unit size', () => {
-    const r = unitRects(glassGeometry(getTheme('amsterdam')), 4);
-    expect(r[0]).toMatchObject({ x: 7, w: 44, h: 34 });
+  it('runs the liquid wall to wall with no gaps, leaving air under the rim', () => {
+    const g = glassGeometry(getTheme('amsterdam'));
+    const r = unitRects(g, 4);
+    expect(r[0]).toMatchObject({ x: g.border, w: g.bodyW - 2 * g.border });
+    expect(r[0]!.y + r[0]!.h).toBe(g.bodyH - g.border);
+    for (let i = 1; i < 4; i++) expect(r[i]!.y + r[i]!.h).toBeCloseTo(r[i - 1]!.y);
+    expect(r[3]!.y).toBeGreaterThan(g.border + 10);
   });
 });

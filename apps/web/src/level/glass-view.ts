@@ -1,10 +1,11 @@
 import type { Bottle } from '@pour/engine';
 import { drinkById, type Theme } from '@pour/themes';
-import { Container, Graphics } from 'pixi.js';
-import { box } from '../pixi-util.js';
+import { BlurFilter, Container, FillGradient, Graphics } from 'pixi.js';
+import { lighten } from '../colour.js';
+import { box, roundRect, type Radii } from '../pixi-util.js';
 import { color } from '../theme-css.js';
 import { onlySlots, skinFor, type BlockerSkin, type SkinContext } from './skins.js';
-import { baseHeight, glassGeometry, SLOT_H, SLOT_W, unitRects, type GlassGeometry } from './geometry.js';
+import { baseHeight, glassGeometry, SLOT_H, SLOT_W, unitRects, type GlassGeometry, type UnitRect } from './geometry.js';
 
 export type GlassMark = 'none' | 'selected' | 'hint' | 'reject';
 
@@ -17,6 +18,85 @@ export interface GlassState {
    */
   level?: number;
 }
+
+export interface LiquidSegment {
+  drink: string;
+  hidden: boolean;
+  /** Includes the bottom unit (for rounded corners). */
+  first: boolean;
+  top: number;
+  bottom: number;
+}
+
+/**
+ * Groups the visible liquid into runs: consecutive units of the same drink
+ * become one block. Hidden units stay separate (each keeps its cover).
+ * `level` may be fractional while a pour animates. Coordinates are slot-local.
+ */
+export function liquidSegments(bottle: Bottle, level: number, rects: UnitRect[], bodyY: number): LiquidSegment[] {
+  const out: LiquidSegment[] = [];
+  for (let i = 0; i < bottle.units.length && i < level; i++) {
+    const u = bottle.units[i]!;
+    const r = rects[i]!;
+    const part = Math.min(1, level - i);
+    const top = bodyY + r.y + r.h * (1 - part);
+    const bottom = bodyY + r.y + r.h;
+    const last = out[out.length - 1];
+    if (last && !u.hidden && !last.hidden && last.drink === u.drink) last.top = top;
+    else out.push({ drink: u.drink, hidden: u.hidden, first: i === 0, top, bottom });
+  }
+  return out;
+}
+
+let shades: { interior: FillGradient; cylinder: FillGradient; contact: FillGradient } | null = null;
+
+/** Shared gradients (made once): glass depth, round liquid, contact shadow. */
+function gradients() {
+  shades ??= {
+    interior: new FillGradient({
+      type: 'linear',
+      start: { x: 0, y: 0 },
+      end: { x: 1, y: 0 },
+      colorStops: [
+        { offset: 0, color: 'rgba(0,0,0,0.35)' },
+        { offset: 0.35, color: 'rgba(255,255,255,0.04)' },
+        { offset: 0.7, color: 'rgba(0,0,0,0)' },
+        { offset: 1, color: 'rgba(0,0,0,0.4)' },
+      ],
+      textureSpace: 'local',
+    }),
+    cylinder: new FillGradient({
+      type: 'linear',
+      start: { x: 0, y: 0 },
+      end: { x: 1, y: 0 },
+      colorStops: [
+        { offset: 0, color: 'rgba(0,0,0,0.30)' },
+        { offset: 0.18, color: 'rgba(255,255,255,0.10)' },
+        { offset: 0.32, color: 'rgba(255,255,255,0.16)' },
+        { offset: 0.55, color: 'rgba(255,255,255,0)' },
+        { offset: 0.85, color: 'rgba(0,0,0,0.12)' },
+        { offset: 1, color: 'rgba(0,0,0,0.38)' },
+      ],
+      textureSpace: 'local',
+    }),
+    contact: new FillGradient({
+      type: 'radial',
+      center: { x: 0.5, y: 0.5 },
+      innerRadius: 0,
+      outerCenter: { x: 0.5, y: 0.5 },
+      outerRadius: 0.5,
+      colorStops: [
+        { offset: 0, color: 'rgba(0,0,0,0.55)' },
+        { offset: 1, color: 'rgba(0,0,0,0)' },
+      ],
+      textureSpace: 'local',
+    }),
+  };
+  return shades;
+}
+const interiorShade = () => gradients().interior;
+const cylinderShade = () => gradients().cylinder;
+const contactShadow = () => gradients().contact;
 
 /** Top-left of the glass body inside its slot. */
 export function bodyOrigin(g: GlassGeometry): { x: number; y: number } {
@@ -31,10 +111,17 @@ export function bodyOrigin(g: GlassGeometry): { x: number; y: number } {
 export class GlassView extends Container {
   readonly geometry: GlassGeometry;
   readonly mouth: { x: number; y: number };
+  private readonly shadow = new Graphics();
+  private readonly halo = new Graphics();
   private readonly glow = new Graphics();
   private readonly gfx = new Graphics();
+  private readonly liquid = new Graphics();
+  private readonly liquidMask = new Graphics();
   private readonly surface = new Graphics();
+  private readonly front = new Graphics();
   private readonly overlay = new Container();
+  /** Celebration effects; draw() leaves this layer alone. */
+  private readonly fx = new Container();
   /** Top edge and width of the topmost visible unit, for the surface wobble. */
   private surfaceLine: { x: number; y: number; w: number } | null = null;
   private readonly phase = Math.random() * Math.PI * 2;
@@ -47,7 +134,21 @@ export class GlassView extends Container {
     const o = bodyOrigin(this.geometry);
     this.mouth = { x: SLOT_W / 2, y: o.y };
     this.pivot.set(this.mouth.x, this.mouth.y);
-    this.addChild(this.glow, this.gfx, this.surface, this.overlay);
+    this.halo.filters = [new BlurFilter({ strength: 6, quality: 3 })];
+    this.liquid.mask = this.liquidMask;
+    this.surface.mask = this.liquidMask;
+    this.addChild(
+      this.shadow,
+      this.halo,
+      this.glow,
+      this.gfx,
+      this.liquidMask,
+      this.liquid,
+      this.surface,
+      this.front,
+      this.overlay,
+      this.fx,
+    );
   }
 
   /** Subtle idle movement of the liquid surface. Call every frame with the time in ms. */
@@ -74,8 +175,43 @@ export class GlassView extends Container {
       .moveTo(0, -5)
       .lineTo(0, 5)
       .stroke({ width: 1, color: this.theme.colors.text, alpha: 0.7 });
-    this.overlay.addChild(garnish);
+    this.fx.addChild(garnish);
+    // A burst of sparkles from the mouth of the glass.
+    const sparks = Array.from({ length: 14 }, (_, i) => {
+      const angle = -Math.PI / 2 + ((i / 13) * 2 - 1) * 1.25;
+      const speed = 34 + ((i * 37) % 26);
+      const g = new Graphics();
+      const r = 2.5 + (i % 3);
+      g.poly([
+        0,
+        -r * 1.8,
+        r * 0.5,
+        -r * 0.5,
+        r * 1.8,
+        0,
+        r * 0.5,
+        r * 0.5,
+        0,
+        r * 1.8,
+        -r * 0.5,
+        r * 0.5,
+        -r * 1.8,
+        0,
+        -r * 0.5,
+        -r * 0.5,
+      ]).fill({
+        color: i % 2 ? '#FFFFFF' : accent,
+      });
+      this.fx.addChild(g);
+      return { g, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed };
+    });
     return onFrame((t) => {
+      for (const s of sparks) {
+        s.g.position.set(SLOT_W / 2 + s.vx * t, o.y + s.vy * t + 60 * t * t);
+        s.g.alpha = 1 - t;
+        s.g.rotation = t * 3;
+        s.g.scale.set(1 - t * 0.5);
+      }
       const g = this.glow.clear();
       const a = Math.sin(Math.PI * t) * 0.55;
       box(
@@ -97,83 +233,137 @@ export class GlassView extends Container {
     }).then(() => {
       this.glow.clear();
       garnish.destroy();
+      sparks.forEach((s) => s.g.destroy());
     });
   }
 
   draw(state: GlassState): void {
     const { theme, geometry: geo } = this;
     const { bottle, mark } = state;
-    const g = this.gfx.clear();
+    const back = this.gfx.clear();
+    const liquid = this.liquid.clear();
+    const front = this.front.clear();
+    const shadow = this.shadow.clear();
     this.overlay.removeChildren().forEach((c) => c.destroy());
     const o = bodyOrigin(geo);
     const locked = bottle.lockedUntil !== undefined;
     const only = bottle.only !== undefined ? drinkById(theme, bottle.only).color : null;
+    const inset = geo.border;
+    const inner = { x: o.x + inset, y: o.y + inset, w: geo.bodyW - inset * 2, h: geo.bodyH - inset * 2 };
+    const innerRadii = geo.radius.map((r) => Math.max(0, r - inset)) as unknown as Radii;
 
     let rim = theme.colors.glassRim;
-    let rimWidth = geo.border;
     if (locked) rim = color(theme, 'lockedRim', theme.colors.line);
     else if (only) rim = only;
-    if (mark === 'selected') {
-      rim = theme.colors.selected;
-      rimWidth = geo.border + 0.5;
-    } else if (mark === 'hint') {
-      rim = theme.colors.hint;
-      rimWidth = geo.border + 0.5;
-    } else if (mark === 'reject') {
-      rim = theme.colors.reject;
-      rimWidth = geo.border + 0.5;
-    }
+    const markColour = {
+      none: null,
+      selected: theme.colors.selected,
+      hint: theme.colors.hint,
+      reject: theme.colors.reject,
+    }[mark];
+    if (markColour) rim = markColour;
     const fill = locked ? color(theme, 'lockedFill', theme.colors.glassFill) : theme.colors.glassFill;
 
-    // Body.
-    box(g, o.x, o.y, geo.bodyW, geo.bodyH, geo.radius, fill);
+    // Soft contact shadow where the glass stands.
+    const footY = SLOT_H - 1;
+    shadow.ellipse(SLOT_W / 2, footY, (geo.foot?.w ?? geo.bodyW) / 2 + 8, 6).fill(contactShadow());
 
-    // Units.
+    // Selection, hint or reject glow behind the glass.
+    this.halo.clear();
+    if (markColour) {
+      roundRect(
+        this.halo,
+        o.x - 3,
+        o.y - 3,
+        geo.bodyW + 6,
+        geo.bodyH + 6,
+        geo.radius.map((r) => r + 3) as unknown as Radii,
+      ).stroke({
+        width: 6,
+        color: markColour,
+        alpha: 0.75,
+      });
+    }
+
+    // Dark glass interior, slightly lighter towards the rim.
+    box(back, o.x, o.y, geo.bodyW, geo.bodyH, geo.radius, fill);
+    roundRect(this.liquidMask.clear(), inner.x, inner.y, inner.w, inner.h, innerRadii).fill({ color: '#ffffff' });
+    liquid.rect(inner.x, inner.y, inner.w, inner.h).fill({ fill: interiorShade(), alpha: 1 });
+
+    // Liquid: same-drink runs merge into one block, wall to wall.
     const rects = unitRects(geo, bottle.capacity);
-    const bottomRadius = Math.max(4, geo.radius[2] - 8);
-    const level = state.level ?? bottle.units.length;
+    const level = Math.min(state.level ?? bottle.units.length, bottle.units.length);
+    const segments = liquidSegments(bottle, level, rects, o.y);
     this.surfaceLine = null;
-    bottle.units.forEach((unit, i) => {
-      if (i >= level) return;
-      const full = rects[i]!;
-      const part = Math.min(1, level - i);
-      const r = { ...full, y: full.y + full.h * (1 - part), h: full.h * part };
-      if (!unit.hidden) this.surfaceLine = { x: o.x + r.x, y: o.y + r.y, w: r.w };
-      const radii = i === 0 ? ([4, 4, bottomRadius, bottomRadius] as const) : ([4, 4, 4, 4] as const);
-      if (unit.hidden) {
-        this.skin.hiddenUnit(g, this.overlay, { x: o.x + r.x, y: o.y + r.y, w: r.w, h: r.h }, radii, theme);
-        return;
+    let liquidTop = Infinity;
+    const bottomRadius = Math.max(0, geo.radius[2] - inset);
+    for (const seg of segments) {
+      if (seg.bottom - seg.top < 0.5) continue;
+      liquidTop = Math.min(liquidTop, seg.top);
+      if (seg.hidden) {
+        // Hidden units keep their own cover, drawn by the city's skin.
+        const radii: Radii = seg.first ? [0, 0, bottomRadius, bottomRadius] : [0, 0, 0, 0];
+        this.skin.hiddenUnit(
+          front,
+          this.overlay,
+          { x: inner.x, y: seg.top, w: inner.w, h: seg.bottom - seg.top },
+          radii,
+          theme,
+        );
+        continue;
       }
-      const drink = drinkById(theme, unit.drink);
-      if (r.h < 0.5) return;
-      box(g, o.x + r.x, o.y + r.y, r.w, r.h, radii, drink.color);
-      // Stout gets its head on the top unit of a run.
-      const above = i + 1 < level ? bottle.units[i + 1] : undefined;
-      if (drink.foam && (!above || above.drink !== unit.drink))
-        box(g, o.x + r.x, o.y + r.y, r.w, 5, [4, 4, 0, 0], drink.foam);
-    });
-    if (only) onlySlots(g, rects, bottle.units.length, only, o);
+      const drink = drinkById(theme, seg.drink);
+      liquid.rect(inner.x, seg.top, inner.w, seg.bottom - seg.top).fill({ color: drink.color });
+      // A brighter surface band on top of every run.
+      liquid
+        .rect(inner.x, seg.top, inner.w, Math.min(3, seg.bottom - seg.top))
+        .fill({ color: lighten(drink.color, 0.35), alpha: 0.9 });
+      if (drink.foam)
+        liquid.rect(inner.x, seg.top, inner.w, Math.min(6, seg.bottom - seg.top)).fill({ color: drink.foam });
+      if (seg.top <= liquidTop) this.surfaceLine = { x: inner.x, y: seg.top, w: inner.w };
+    }
+    // Round, glassy shading across the whole liquid column.
+    if (liquidTop < Infinity)
+      liquid.rect(inner.x, liquidTop, inner.w, inner.y + inner.h - liquidTop).fill({ fill: cylinderShade() });
+    if (only) onlySlots(back, rects, bottle.units.length, only, o);
     // Locked contents stay visible but dimmed behind the lock.
-    if (locked) box(g, o.x, o.y, geo.bodyW, geo.bodyH, geo.radius, { color: fill, alpha: 0.7 });
+    if (locked) box(front, o.x, o.y, geo.bodyW, geo.bodyH, geo.radius, { color: fill, alpha: 0.7 });
 
-    // Rim drawn last so it sits on top of the units.
-    box(g, o.x, o.y, geo.bodyW, geo.bodyH, geo.radius, null, { width: rimWidth, color: rim });
+    // Glass in front of the liquid: gloss streaks, then the rim.
+    front
+      .roundRect(inner.x + 4, inner.y + 10, 4, inner.h - Math.max(26, geo.radius[2]))
+      .fill({ color: '#ffffff', alpha: 0.2 });
+    front.roundRect(inner.x + 10, inner.y + 10, 1.5, inner.h * 0.45, 1).fill({ color: '#ffffff', alpha: 0.12 });
+    front.roundRect(inner.x + inner.w - 5, inner.y + 16, 2, inner.h * 0.55, 1).fill({ color: '#ffffff', alpha: 0.08 });
+    box(front, o.x, o.y, geo.bodyW, geo.bodyH, geo.radius, null, {
+      width: geo.border + (markColour ? 0.5 : 0),
+      color: rim,
+    });
+    front
+      .moveTo(o.x + geo.radius[0], o.y + 1)
+      .lineTo(o.x + geo.bodyW - geo.radius[1], o.y + 1)
+      .stroke({ width: 1.5, color: lighten(rim, 0.45) });
 
     // Stem, foot and other bases.
     const base = mark === 'none' ? (locked ? rim : theme.colors.glassRim) : rim;
     const by = o.y + geo.bodyH;
     if (geo.stem && geo.foot) {
-      g.rect((SLOT_W - geo.stem.w) / 2, by, geo.stem.w, geo.stem.h).fill({ color: base });
-      g.roundRect((SLOT_W - geo.foot.w) / 2, by + geo.stem.h, geo.foot.w, geo.foot.h, geo.foot.r).fill({ color: base });
+      back.rect((SLOT_W - geo.stem.w) / 2, by, geo.stem.w, geo.stem.h).fill({ color: base });
+      back.rect((SLOT_W - geo.stem.w) / 2, by, 2, geo.stem.h).fill({ color: lighten(base, 0.35) });
+      back
+        .roundRect((SLOT_W - geo.foot.w) / 2, by + geo.stem.h, geo.foot.w, geo.foot.h, geo.foot.r)
+        .fill({ color: base });
+      back.rect((SLOT_W - geo.foot.w) / 2 + 2, by + geo.stem.h, geo.foot.w - 4, 1).fill({ color: lighten(base, 0.4) });
     }
     if (geo.nonic) {
       // The nonic bulge just under the rim.
-      g.rect(o.x - 3, o.y + 12, 4, 10).fill({ color: rim });
-      g.rect(o.x + geo.bodyW - 1, o.y + 12, 4, 10).fill({ color: rim });
+      front.rect(o.x - 3, o.y + 12, 4, 10).fill({ color: rim });
+      front.rect(o.x + geo.bodyW - 1, o.y + 12, 4, 10).fill({ color: rim });
     }
     if (geo.plinth) {
-      g.rect((SLOT_W - 40) / 2, by, 40, 8).fill({ color: base });
-      g.roundRect((SLOT_W - 50) / 2, by + 8, 50, 8, 2).fill({ color: base });
+      back.rect((SLOT_W - 40) / 2, by, 40, 8).fill({ color: base });
+      back.roundRect((SLOT_W - 50) / 2, by + 8, 50, 8, 2).fill({ color: base });
+      back.rect((SLOT_W - 50) / 2 + 2, by + 8, 46, 1).fill({ color: lighten(base, 0.4) });
     }
 
     // Blocker pictures and their release badge, drawn by the city's skin.
