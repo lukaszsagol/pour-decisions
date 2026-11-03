@@ -70,18 +70,46 @@ export function availableBlockers(city: CityId, level: number): BlockerKind[] {
 
 interface Recipe {
   drinks: number;
+  /** Spare glasses of space, and how many of them are spread over part-filled glasses. */
   empties: number;
+  spread: number;
   maxRun: number;
   blockers: BlockerKind[];
   /** Blockers stay easy (an extra locked glass rather than locking a spare one). */
   gentle: boolean;
 }
 
-function recipeFor(city: CityId, level: number, kind: SlotKind, rng: Rng): Recipe {
+/**
+ * How a level's spare space is laid out: `spread` of its `empties` spare
+ * glasses are shared out as gaps in part-filled glasses instead of starting
+ * empty. Fixed per level number, so the mix holds whichever deal is picked:
+ * the first 20 levels keep two empty glasses to learn on; after that most
+ * levels start with no empty glass, some with one; Hard and Super Hard never
+ * start with one, and some Super Hard levels have only one glass of space.
+ */
+export function layoutFor(
+  city: CityId,
+  level: number,
+  kind: SlotKind,
+  drinks: number,
+): { empties: number; spread: number } {
+  const r = createRng(`${city}-${level}-layout`).next();
+  if (drinks === 2) return { empties: 1, spread: 0 };
+  if (level <= 20 || kind === 'teach') return { empties: 2, spread: 0 };
+  if (kind === 'relief') return { empties: 2, spread: 1 };
+  if (kind === 'superHard') return drinks >= 6 && r < 0.3 ? { empties: 1, spread: 1 } : { empties: 2, spread: 2 };
+  if (kind === 'hard') return { empties: 2, spread: 2 };
+  if (level <= 40) return { empties: 2, spread: r < 0.5 ? 2 : 1 };
+  return { empties: 2, spread: r < 0.7 ? 2 : 1 };
+}
+
+type Layout = ReturnType<typeof layoutFor>;
+
+function recipeFor(city: CityId, level: number, kind: SlotKind, rng: Rng, layout?: Layout): Recipe {
   const drinks = drinkCount(level, kind);
   const recipe: Recipe = {
     drinks,
-    empties: drinks === 2 ? 1 : 2,
+    ...(layout ?? layoutFor(city, level, kind, drinks)),
     maxRun: level <= 2 ? 3 : 2,
     blockers: [],
     gentle: true,
@@ -147,14 +175,20 @@ interface Candidate {
   score: number;
 }
 
-function candidate(city: CityId, number: number, kind: SlotKind, k: number): Candidate | null {
+function candidate(city: CityId, number: number, kind: SlotKind, k: number, layout?: Layout): Candidate | null {
   const seed = `${city}-${number}-${k}`;
   const rng = createRng(`${seed}-recipe`);
-  const recipe = recipeFor(city, number, kind, rng);
+  const recipe = recipeFor(city, number, kind, rng, layout);
   const drinks = drinksFor(getTheme(city), recipe.drinks).map((d) => d.id);
   let bottles: Bottle[];
   try {
-    bottles = deal({ drinks, empties: recipe.empties, seed, constraints: { maxRun: recipe.maxRun } });
+    bottles = deal({
+      drinks,
+      empties: recipe.empties,
+      spread: recipe.spread,
+      seed,
+      constraints: { maxRun: recipe.maxRun },
+    });
   } catch {
     return null;
   }
@@ -206,12 +240,26 @@ export function generateLevel(city: CityId, number: number, kind: SlotKind, cand
   if (golden && golden.city === city) return golden.build();
   const target = targetScore(number, kind);
   const found: Candidate[] = [];
-  for (let k = 0; k < 60 && found.length < candidates; k++) {
-    const c = candidate(city, number, kind, k);
-    if (!c) continue;
-    // The first levels must not punish: skip deals where many first pours already lose.
-    if (number <= 40 && c.level.metrics.deadEndShare > 0.25) continue;
-    found.push(c);
+  // The level's layout first; if no deal of it is solvable, looser ones (more room, then an empty glass).
+  const drinks = drinkCount(number, kind);
+  const planned = layoutFor(city, number, kind, drinks);
+  const layouts: Layout[] = [
+    planned,
+    { empties: 2, spread: 2 },
+    { empties: 2, spread: 1 },
+    { empties: 2, spread: 0 },
+  ].filter(
+    (l, i, all) => i === 0 || (l.empties >= planned.empties && l.spread <= planned.spread && all.indexOf(l) === i),
+  );
+  for (const layout of layouts) {
+    for (let k = 0; k < 60 && found.length < candidates; k++) {
+      const c = candidate(city, number, kind, k, layout);
+      if (!c) continue;
+      // The first levels must not punish: skip deals where many first pours already lose.
+      if (number <= 40 && c.level.metrics.deadEndShare > 0.25) continue;
+      found.push(c);
+    }
+    if (found.length > 0) break;
   }
   if (found.length === 0) throw new Error(`No solvable level found for ${city} ${number}`);
   // Level 1 must be obvious: the shortest solution wins.
