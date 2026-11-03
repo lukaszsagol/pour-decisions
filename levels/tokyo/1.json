@@ -22,75 +22,76 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":56,"botWinRate":0.233,"branching":3.321,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":2,"optimal":1},
+      "metrics": {"score":52,"botWinRate":0.325,"branching":3.179,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":2,"optimal":1},
       "solution": [[0,9],[1,10],[2,0],[4,2],[4,1],[0,4],[3,0],[3,9],[0,3],[2,0],[7,0],[8,7],[8,10],[2,8],[1,2],[7,1],[7,10],[3,7],[5,3],[5,10],[5,8],[4,5],[4,9],[6,3],[6,9],[6,3],[1,6],[1,2]]
     },
     {
       "id": "tokyo-302",
       "number": 302,
       "difficulty": "normal",
-      "best": 26,
-      "seed": "tokyo-302-2",
+      "best": 30,
+      "seed": "tokyo-302-5",
       "bottles": [
-        {"capacity":4,"units":[{"drink":"melon","hidden":true},{"drink":"kyoho","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"ramune","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"ramune","hidden":false},{"drink":"matcha","hidden":false},{"drink":"calpis","hidden":false},{"drink":"calpis","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"matcha","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"melon","hidden":false},{"drink":"calpis","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"yuzu","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"ramune","hidden":false},{"drink":"matcha","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"umeshu","hidden":false},{"drink":"akadama","hidden":false},{"drink":"akadama","hidden":false},{"drink":"melon","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"kyoho","hidden":false},{"drink":"calpis","hidden":false},{"drink":"sakura","hidden":false},{"drink":"yuzu","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"sakura","hidden":false},{"drink":"akadama","hidden":false},{"drink":"matcha","hidden":true},{"drink":"kyoho","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"ramune","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"sakura","hidden":false},{"drink":"sakura","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"akadama","hidden":false},{"drink":"melon","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"umeshu","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"melon","hidden":false},{"drink":"sakura","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"ramune","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"ramune","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"sakura","hidden":false},{"drink":"umeshu","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"ramune","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"calpis","hidden":false},{"drink":"kyoho","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"melon","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"matcha","hidden":false},{"drink":"calpis","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"akadama","hidden":false},{"drink":"akadama","hidden":false},{"drink":"matcha","hidden":false},{"drink":"melon","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"akadama","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"ramune","hidden":false},{"drink":"umeshu","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"akadama","hidden":false},{"drink":"matcha","hidden":false},{"drink":"melon","hidden":false},{"drink":"calpis","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"matcha","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"sakura","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"kyoho","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"calpis","hidden":false},{"drink":"sakura","hidden":false}]},
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":57,"botWinRate":0.192,"branching":4.115,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":2,"optimal":1},
-      "solution": [[0,9],[1,10],[2,10],[3,1],[3,9],[4,2],[8,3],[0,8],[6,0],[6,1],[6,4],[7,6],[0,7],[2,0],[3,2],[5,3],[5,6],[5,10],[7,5],[7,9],[8,3],[8,0],[4,8],[2,4],[1,2],[1,9]]
+      "metrics": {"score":60,"botWinRate":0.242,"branching":3.867,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":4,"optimal":1},
+      "solution": [[1,9],[1,10],[5,9],[0,5],[0,1],[0,10],[4,0],[7,10],[2,7],[3,2],[3,4],[7,3],[7,1],[4,7],[8,10],[6,8],[6,0],[6,7],[4,6],[1,4],[5,1],[5,4],[5,6],[2,5],[2,9],[1,2],[8,5],[8,9],[3,8],[0,3]]
     },
     {
       "id": "tokyo-303",
       "number": 303,
       "difficulty": "normal",
       "best": 28,
-      "seed": "tokyo-303-4",
+      "seed": "tokyo-303-5",
       "bottles": [
-        {"capacity":4,"units":[{"drink":"melon","hidden":false},{"drink":"calpis","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"yuzu","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"umeshu","hidden":false},{"drink":"sakura","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"sakura","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"kyoho","hidden":false},{"drink":"melon","hidden":false},{"drink":"akadama","hidden":false},{"drink":"ramune","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"kyoho","hidden":false},{"drink":"sakura","hidden":false},{"drink":"melon","hidden":false},{"drink":"sakura","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"umeshu","hidden":false},{"drink":"calpis","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"yuzu","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"akadama","hidden":false},{"drink":"akadama","hidden":false},{"drink":"matcha","hidden":false},{"drink":"kyoho","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"ramune","hidden":false},{"drink":"calpis","hidden":false},{"drink":"matcha","hidden":false},{"drink":"matcha","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"ramune","hidden":false},{"drink":"akadama","hidden":false},{"drink":"ramune","hidden":false},{"drink":"umeshu","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"umeshu","hidden":false},{"drink":"calpis","hidden":false},{"drink":"melon","hidden":false},{"drink":"matcha","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"sakura","hidden":false},{"drink":"melon","hidden":false},{"drink":"matcha","hidden":false},{"drink":"akadama","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"calpis","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"melon","hidden":false},{"drink":"umeshu","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"akadama","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"ramune","hidden":false},{"drink":"ramune","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"calpis","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"melon","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"umeshu","hidden":false},{"drink":"ramune","hidden":false},{"drink":"akadama","hidden":false},{"drink":"yuzu","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"akadama","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"matcha","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"sakura","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"matcha","hidden":false},{"drink":"matcha","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"sakura","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"calpis","hidden":false},{"drink":"calpis","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"ramune","hidden":false},{"drink":"melon","hidden":false},{"drink":"sakura","hidden":false},{"drink":"yuzu","hidden":false}]},
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]},
-        {"capacity":4,"units":[],"only":"umeshu"}
+        {"capacity":4,"units":[],"only":"akadama"}
       ],
-      "metrics": {"score":34,"botWinRate":0.75,"branching":5.393,"deadEndShare":0,"firstMoves":19,"winningFirstMoves":19,"emptyPours":4,"optimal":0},
-      "solution": [[0,9],[1,10],[1,9],[1,10],[3,10],[4,9],[5,0],[7,1],[2,7],[8,5],[3,8],[3,10],[0,3],[0,4],[8,0],[4,8],[1,4],[5,1],[2,5],[2,0],[2,3],[6,1],[6,2],[7,6],[7,5],[6,7],[8,2],[4,8]]
+      "metrics": {"score":32,"botWinRate":0.783,"branching":4.929,"deadEndShare":0,"firstMoves":19,"winningFirstMoves":19,"emptyPours":4,"optimal":0},
+      "solution": [[3,9],[3,10],[4,3],[0,4],[5,0],[1,5],[1,9],[5,1],[5,10],[4,5],[2,4],[2,10],[2,5],[0,2],[0,9],[6,2],[3,6],[7,3],[7,10],[0,7],[6,0],[6,7],[8,0],[8,7],[8,9],[4,8],[1,4],[1,3]]
     },
     {
       "id": "tokyo-304",
       "number": 304,
       "difficulty": "normal",
-      "best": 27,
-      "seed": "tokyo-304-2",
+      "best": 26,
+      "seed": "tokyo-304-1",
       "bottles": [
-        {"capacity":4,"units":[{"drink":"yuzu","hidden":false},{"drink":"akadama","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"calpis","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"matcha","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"melon","hidden":false},{"drink":"umeshu","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"ramune","hidden":false},{"drink":"ramune","hidden":false},{"drink":"matcha","hidden":false},{"drink":"calpis","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"akadama","hidden":false},{"drink":"ramune","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"matcha","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"kyoho","hidden":false},{"drink":"akadama","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"kyoho","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"umeshu","hidden":false},{"drink":"akadama","hidden":false},{"drink":"melon","hidden":false},{"drink":"calpis","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"yuzu","hidden":false},{"drink":"sakura","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"matcha","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"melon","hidden":false},{"drink":"sakura","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"calpis","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"sakura","hidden":false},{"drink":"melon","hidden":false},{"drink":"sakura","hidden":false},{"drink":"ramune","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"calpis","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"matcha","hidden":false},{"drink":"akadama","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"umeshu","hidden":false},{"drink":"melon","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"yuzu","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"ramune","hidden":false},{"drink":"sakura","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"kyoho","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"ramune","hidden":false},{"drink":"ramune","hidden":false},{"drink":"matcha","hidden":false},{"drink":"akadama","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"matcha","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"ramune","hidden":false},{"drink":"calpis","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"matcha","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"melon","hidden":false},{"drink":"melon","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"akadama","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"sakura","hidden":false},{"drink":"kyoho","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"umeshu","hidden":false},{"drink":"calpis","hidden":false},{"drink":"calpis","hidden":false},{"drink":"sakura","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"melon","hidden":false},{"drink":"sakura","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"akadama","hidden":false}]},
         {"capacity":4,"units":[]},
-        {"capacity":4,"units":[]}
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[],"only":"ramune"}
       ],
-      "metrics": {"score":37,"botWinRate":0.6,"branching":5.296,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":2,"optimal":1},
-      "solution": [[0,9],[1,0],[2,9],[3,2],[3,10],[4,10],[5,9],[1,5],[0,1],[0,4],[7,9],[7,0],[8,3],[7,8],[5,7],[5,4],[1,5],[2,1],[3,2],[4,3],[4,10],[6,1],[6,0],[8,6],[8,7],[6,8],[0,6]]
+      "metrics": {"score":32,"botWinRate":0.742,"branching":4.692,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":3,"optimal":0},
+      "solution": [[1,9],[2,10],[6,10],[6,2],[6,9],[0,6],[3,6],[0,3],[0,10],[4,0],[7,2],[7,0],[1,7],[5,1],[5,9],[3,5],[4,3],[4,9],[4,5],[2,4],[2,3],[8,6],[8,7],[8,4],[1,8],[1,7]]
     },
     {
       "id": "tokyo-305",
@@ -111,7 +112,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":40,"botWinRate":0.55,"branching":4.407,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":2,"optimal":1},
+      "metrics": {"score":36,"botWinRate":0.617,"branching":4.333,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":2,"optimal":1},
       "solution": [[1,9],[3,10],[4,10],[0,4],[5,10],[5,1],[4,5],[6,0],[3,6],[2,3],[8,9],[8,2],[8,9],[5,8],[1,5],[2,1],[2,10],[2,9],[7,1],[4,7],[0,4],[7,0],[6,7],[3,6],[7,3],[6,7],[0,6]]
     },
     {
@@ -135,7 +136,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[],"only":"hojicha"}
       ],
-      "metrics": {"score":49,"botWinRate":0.483,"branching":4.387,"deadEndShare":0,"firstMoves":21,"winningFirstMoves":21,"emptyPours":4,"optimal":0},
+      "metrics": {"score":36,"botWinRate":0.733,"branching":4.194,"deadEndShare":0,"firstMoves":21,"winningFirstMoves":21,"emptyPours":4,"optimal":0},
       "solution": [[1,10],[5,11],[7,1],[9,10],[7,9],[7,11],[6,7],[5,6],[3,5],[3,10],[2,3],[2,11],[4,3],[2,4],[6,2],[6,11],[6,7],[4,6],[0,4],[0,10],[0,6],[0,7],[1,0],[4,1],[8,4],[8,6],[0,8],[9,4],[9,2],[5,9],[3,5]]
     },
     {
@@ -156,7 +157,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":39,"botWinRate":0.525,"branching":4.609,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
+      "metrics": {"score":36,"botWinRate":0.583,"branching":4.043,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
       "solution": [[0,8],[1,9],[4,9],[4,0],[5,1],[2,5],[6,0],[6,8],[1,6],[1,9],[6,1],[7,8],[7,6],[4,7],[2,4],[2,9],[0,2],[0,6],[3,4],[3,7],[5,3],[5,6],[3,5]]
     },
     {
@@ -164,22 +165,22 @@
       "number": 308,
       "difficulty": "normal",
       "best": 25,
-      "seed": "tokyo-308-1",
+      "seed": "tokyo-308-2",
       "bottles": [
-        {"capacity":4,"units":[{"drink":"calpis","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"sakura","hidden":false},{"drink":"matcha","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"matcha","hidden":false},{"drink":"matcha","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"ramune","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"ramune","hidden":false},{"drink":"akadama","hidden":false},{"drink":"ramune","hidden":false},{"drink":"akadama","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"melon","hidden":false},{"drink":"melon","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"melon","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"kyoho","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"calpis","hidden":false},{"drink":"sakura","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"umeshu","hidden":false},{"drink":"sakura","hidden":false},{"drink":"matcha","hidden":false},{"drink":"sakura","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"akadama","hidden":false},{"drink":"ramune","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"calpis","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"umeshu","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"akadama","hidden":false},{"drink":"calpis","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"yuzu","hidden":false},{"drink":"melon","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"umeshu","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"melon","hidden":false},{"drink":"sakura","hidden":false},{"drink":"matcha","hidden":false},{"drink":"akadama","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"ramune","hidden":false},{"drink":"akadama","hidden":false},{"drink":"melon","hidden":false},{"drink":"matcha","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"umeshu","hidden":false},{"drink":"melon","hidden":false},{"drink":"akadama","hidden":false},{"drink":"sakura","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"kyoho","hidden":false},{"drink":"sakura","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"umeshu","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"yuzu","hidden":false},{"drink":"melon","hidden":false},{"drink":"calpis","hidden":false},{"drink":"yuzu","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"sakura","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"calpis","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"ramune","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"calpis","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"ramune","hidden":false},{"drink":"matcha","hidden":false},{"drink":"matcha","hidden":false},{"drink":"kyoho","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"akadama","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"calpis","hidden":false},{"drink":"ramune","hidden":false}]},
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":29,"botWinRate":0.742,"branching":4.24,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":2,"optimal":1},
-      "solution": [[1,9],[4,10],[5,10],[0,5],[0,10],[0,1],[4,0],[6,0],[7,0],[2,7],[2,9],[7,2],[8,7],[8,4],[3,8],[3,4],[8,3],[1,8],[5,1],[5,10],[5,7],[6,8],[6,9],[2,6],[2,9]]
+      "metrics": {"score":40,"botWinRate":0.525,"branching":3.88,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":2,"optimal":1},
+      "solution": [[1,9],[5,10],[6,10],[4,6],[4,10],[1,4],[0,1],[0,9],[2,0],[2,1],[2,4],[3,2],[3,0],[5,3],[0,5],[4,0],[6,4],[7,3],[7,9],[6,7],[8,7],[8,10],[8,2],[1,8],[1,7]]
     },
     {
       "id": "tokyo-309",
@@ -200,7 +201,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":49,"botWinRate":0.433,"branching":4.231,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":4,"optimal":1},
+      "metrics": {"score":53,"botWinRate":0.358,"branching":3.885,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":4,"optimal":1},
       "solution": [[0,9],[6,0],[7,10],[8,10],[8,9],[6,8],[6,9],[0,6],[3,0],[5,6],[5,3],[1,5],[1,9],[4,5],[4,7],[2,4],[0,2],[0,6],[1,0],[3,0],[5,3],[2,5],[2,10],[8,1],[7,8],[7,10]]
     },
     {
@@ -222,30 +223,30 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":47,"botWinRate":0.4,"branching":3.308,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":2,"optimal":1},
+      "metrics": {"score":48,"botWinRate":0.367,"branching":3.154,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":2,"optimal":1},
       "solution": [[2,9],[2,10],[6,10],[8,2],[8,10],[2,8],[7,2],[7,10],[3,7],[0,3],[1,3],[1,9],[1,6],[3,1],[4,0],[5,4],[5,9],[6,3],[0,6],[4,0],[4,3],[6,4],[6,7],[8,5],[0,8],[0,2]]
     },
     {
       "id": "tokyo-311",
       "number": 311,
       "difficulty": "normal",
-      "best": 27,
-      "seed": "tokyo-311-2",
+      "best": 26,
+      "seed": "tokyo-311-0",
       "bottles": [
-        {"capacity":4,"units":[{"drink":"umeshu","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"ramune","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"matcha","hidden":false},{"drink":"calpis","hidden":false},{"drink":"akadama","hidden":false},{"drink":"matcha","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"melon","hidden":false},{"drink":"sakura","hidden":false},{"drink":"calpis","hidden":false},{"drink":"kyoho","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"calpis","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"matcha","hidden":false},{"drink":"sakura","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"akadama","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"calpis","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"ramune","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"ramune","hidden":false},{"drink":"umeshu","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"melon","hidden":false},{"drink":"sakura","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"sakura","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"matcha","hidden":false},{"drink":"akadama","hidden":false},{"drink":"melon","hidden":false},{"drink":"yuzu","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"kyoho","hidden":false},{"drink":"ramune","hidden":false},{"drink":"melon","hidden":false},{"drink":"akadama","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"umeshu","hidden":false},{"drink":"ramune","hidden":false},{"drink":"calpis","hidden":false},{"drink":"umeshu","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"matcha","hidden":false},{"drink":"calpis","hidden":false},{"drink":"sakura","hidden":false},{"drink":"sakura","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"yuzu","hidden":false},{"drink":"sakura","hidden":false},{"drink":"ramune","hidden":false},{"drink":"matcha","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"kyoho","hidden":false},{"drink":"calpis","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"ramune","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"akadama","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"melon","hidden":false},{"drink":"akadama","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"melon","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"melon","hidden":false},{"drink":"yuzu","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"yuzu","hidden":false},{"drink":"akadama","hidden":false},{"drink":"akadama","hidden":false},{"drink":"kyoho","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"calpis","hidden":false},{"drink":"matcha","hidden":false},{"drink":"sakura","hidden":false},{"drink":"ramune","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"melon","hidden":false},{"drink":"matcha","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"kyoho","hidden":false}]},
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":30,"botWinRate":0.75,"branching":7,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":2,"optimal":1},
-      "solution": [[3,9],[1,3],[6,9],[6,10],[6,9],[7,10],[7,6],[1,7],[4,1],[2,4],[2,1],[2,9],[2,6],[8,7],[8,6],[0,8],[0,10],[5,0],[5,8],[5,0],[8,5],[4,8],[7,4],[3,7],[3,10],[1,3],[1,7]]
+      "metrics": {"score":41,"botWinRate":0.508,"branching":3.654,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":2,"optimal":1},
+      "solution": [[1,9],[3,10],[0,3],[0,1],[0,10],[3,0],[1,3],[2,1],[2,10],[2,9],[5,2],[7,10],[7,9],[7,1],[3,7],[6,3],[4,6],[4,5],[4,2],[6,4],[2,6],[8,3],[8,1],[5,8],[5,0],[5,8]]
     },
     {
       "id": "tokyo-312",
@@ -267,7 +268,7 @@
         {"capacity":4,"units":[],"only":"kyoho"},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":50,"botWinRate":0.442,"branching":4.242,"deadEndShare":0,"firstMoves":13,"winningFirstMoves":13,"emptyPours":3,"optimal":1},
+      "metrics": {"score":47,"botWinRate":0.5,"branching":4.091,"deadEndShare":0,"firstMoves":13,"winningFirstMoves":13,"emptyPours":3,"optimal":1},
       "solution": [[0,10],[4,10],[5,11],[7,10],[9,7],[4,9],[1,4],[1,5],[1,11],[3,4],[3,11],[0,3],[5,1],[7,0],[6,7],[2,6],[2,11],[8,2],[8,10],[2,8],[7,2],[1,7],[0,1],[3,0],[4,3],[0,4],[9,5],[9,2],[5,9],[6,5],[6,1],[8,6],[5,8]]
     },
     {
@@ -288,7 +289,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":20,"botWinRate":0.917,"branching":4.12,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
+      "metrics": {"score":22,"botWinRate":0.883,"branching":3.92,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
       "solution": [[0,8],[0,9],[1,0],[2,8],[2,9],[0,2],[5,9],[6,0],[6,8],[1,6],[3,1],[4,3],[4,1],[3,4],[3,0],[1,3],[6,1],[4,6],[4,8],[7,5],[7,1],[7,2],[5,7],[5,0],[5,7]]
     },
     {
@@ -310,7 +311,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":55,"botWinRate":0.3,"branching":3.5,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":3,"optimal":1},
+      "metrics": {"score":52,"botWinRate":0.35,"branching":3.357,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":3,"optimal":1},
       "solution": [[0,9],[7,10],[1,7],[2,1],[2,9],[2,10],[3,2],[6,2],[8,2],[8,10],[3,8],[7,3],[0,7],[1,0],[6,1],[6,10],[7,6],[3,7],[4,3],[4,8],[4,6],[0,4],[0,1],[5,3],[5,4],[5,9],[8,5],[8,9]]
     },
     {
@@ -332,31 +333,31 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":39,"botWinRate":0.558,"branching":4.815,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":2,"optimal":1},
+      "metrics": {"score":37,"botWinRate":0.608,"branching":4.593,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":2,"optimal":1},
       "solution": [[0,9],[2,9],[2,10],[2,9],[5,10],[5,9],[5,10],[0,5],[0,2],[1,0],[6,0],[6,1],[3,6],[4,6],[4,2],[3,4],[3,2],[1,3],[7,10],[7,0],[1,7],[8,4],[8,5],[7,8],[4,7],[6,4],[6,8]]
     },
     {
       "id": "tokyo-316",
       "number": 316,
       "difficulty": "normal",
-      "best": 26,
-      "seed": "tokyo-316-0",
+      "best": 29,
+      "seed": "tokyo-316-4",
       "bottles": [
-        {"capacity":4,"units":[{"drink":"yuzu","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"calpis","hidden":false},{"drink":"ramune","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"umeshu","hidden":false},{"drink":"ramune","hidden":false},{"drink":"ramune","hidden":false},{"drink":"akadama","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"sakura","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"melon","hidden":false},{"drink":"matcha","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"kyoho","hidden":false},{"drink":"calpis","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"melon","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"kyoho","hidden":false},{"drink":"ramune","hidden":false},{"drink":"akadama","hidden":false},{"drink":"sakura","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"matcha","hidden":false},{"drink":"akadama","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"melon","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"calpis","hidden":false},{"drink":"sakura","hidden":false},{"drink":"sakura","hidden":false},{"drink":"calpis","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"kyoho","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"akadama","hidden":false},{"drink":"umeshu","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"melon","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"matcha","hidden":false},{"drink":"matcha","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"kyoho","hidden":false},{"drink":"calpis","hidden":false},{"drink":"sakura","hidden":false},{"drink":"sakura","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"yuzu","hidden":false},{"drink":"calpis","hidden":false},{"drink":"matcha","hidden":false},{"drink":"melon","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"akadama","hidden":false},{"drink":"ramune","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"melon","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"ramune","hidden":false},{"drink":"calpis","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"umeshu","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"kyoho","hidden":false},{"drink":"melon","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"umeshu","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"matcha","hidden":false},{"drink":"matcha","hidden":false},{"drink":"melon","hidden":false},{"drink":"akadama","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"kyoho","hidden":false},{"drink":"matcha","hidden":false},{"drink":"ramune","hidden":false},{"drink":"umeshu","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"sakura","hidden":false},{"drink":"akadama","hidden":false},{"drink":"ramune","hidden":false},{"drink":"calpis","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"sakura","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"akadama","hidden":false}]},
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]},
-        {"capacity":4,"units":[],"only":"melon"}
+        {"capacity":4,"units":[],"only":"ramune"}
       ],
-      "metrics": {"score":32,"botWinRate":0.733,"branching":5.192,"deadEndShare":0,"firstMoves":20,"winningFirstMoves":20,"emptyPours":3,"optimal":0},
-      "solution": [[0,9],[1,10],[1,9],[6,0],[4,6],[4,10],[4,9],[7,1],[7,10],[7,1],[4,7],[2,4],[3,2],[8,4],[8,1],[2,8],[2,7],[5,8],[3,5],[0,3],[5,0],[5,10],[4,5],[6,2],[3,6],[3,7]]
+      "metrics": {"score":23,"botWinRate":0.983,"branching":5.966,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":4,"optimal":0},
+      "solution": [[1,9],[2,9],[3,10],[2,3],[4,10],[6,10],[2,6],[5,2],[5,9],[1,5],[7,1],[8,2],[6,11],[6,5],[4,6],[4,9],[4,6],[1,4],[3,1],[3,4],[3,7],[7,11],[7,2],[0,7],[0,4],[0,6],[8,1],[8,10],[7,8]]
     },
     {
       "id": "tokyo-317",
@@ -377,52 +378,52 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":61,"botWinRate":0.158,"branching":5.815,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":3,"optimal":1},
+      "metrics": {"score":60,"botWinRate":0.175,"branching":5.111,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":3,"optimal":1},
       "solution": [[0,9],[2,9],[1,2],[1,10],[3,9],[4,0],[7,1],[5,7],[5,10],[6,5],[6,10],[6,9],[1,6],[5,1],[3,5],[3,10],[4,3],[7,1],[5,7],[8,3],[4,8],[7,4],[8,7],[2,8],[2,7],[0,2],[0,8]]
     },
     {
       "id": "tokyo-318",
       "number": 318,
       "difficulty": "normal",
-      "best": 28,
-      "seed": "tokyo-318-1",
+      "best": 29,
+      "seed": "tokyo-318-2",
       "bottles": [
-        {"capacity":4,"units":[{"drink":"ramune","hidden":false},{"drink":"matcha","hidden":false},{"drink":"melon","hidden":false},{"drink":"calpis","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"calpis","hidden":false},{"drink":"ramune","hidden":false},{"drink":"akadama","hidden":false},{"drink":"sakura","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"calpis","hidden":false},{"drink":"melon","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"umeshu","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"umeshu","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"ramune","hidden":false},{"drink":"sakura","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"ramune","hidden":false},{"drink":"melon","hidden":false},{"drink":"matcha","hidden":false},{"drink":"sakura","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"melon","hidden":false},{"drink":"matcha","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"akadama","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"kyoho","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"akadama","hidden":false},{"drink":"yuzu","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"calpis","hidden":false},{"drink":"sakura","hidden":false},{"drink":"matcha","hidden":false},{"drink":"yuzu","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"kyoho","hidden":false},{"drink":"akadama","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"kyoho","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"yuzu","hidden":false},{"drink":"akadama","hidden":false},{"drink":"ramune","hidden":false},{"drink":"sakura","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"yuzu","hidden":false},{"drink":"calpis","hidden":false},{"drink":"matcha","hidden":false},{"drink":"melon","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"ramune","hidden":false},{"drink":"matcha","hidden":false},{"drink":"calpis","hidden":false},{"drink":"akadama","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"sakura","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"umeshu","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"kyoho","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"calpis","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"akadama","hidden":false},{"drink":"sakura","hidden":false},{"drink":"melon","hidden":false},{"drink":"ramune","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"ramune","hidden":false},{"drink":"melon","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"akadama","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"sakura","hidden":false},{"drink":"matcha","hidden":false},{"drink":"calpis","hidden":false},{"drink":"yuzu","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"melon","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"matcha","hidden":false},{"drink":"yuzu","hidden":false}]},
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":62,"botWinRate":0.192,"branching":3.75,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":4,"optimal":1},
-      "solution": [[1,9],[1,10],[3,9],[1,3],[0,1],[4,9],[5,10],[6,5],[6,10],[5,6],[4,5],[0,4],[0,5],[3,0],[2,3],[2,4],[1,2],[5,1],[4,5],[0,4],[6,0],[7,0],[7,1],[7,9],[2,7],[8,6],[8,10],[6,8]]
+      "metrics": {"score":60,"botWinRate":0.242,"branching":4.069,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":4,"optimal":1},
+      "solution": [[2,9],[2,10],[4,10],[3,4],[6,9],[6,3],[1,6],[1,2],[1,10],[7,1],[7,10],[2,7],[5,2],[5,6],[0,5],[0,2],[0,9],[0,1],[4,0],[3,4],[3,5],[7,3],[5,7],[5,9],[8,1],[8,3],[8,0],[6,8],[2,6]]
     },
     {
       "id": "tokyo-319",
       "number": 319,
       "difficulty": "normal",
-      "best": 27,
-      "seed": "tokyo-319-5",
+      "best": 28,
+      "seed": "tokyo-319-2",
       "bottles": [
-        {"capacity":4,"units":[{"drink":"yuzu","hidden":false},{"drink":"akadama","hidden":false},{"drink":"melon","hidden":false},{"drink":"melon","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"akadama","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"matcha","hidden":false},{"drink":"sakura","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"ramune","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"calpis","hidden":false},{"drink":"calpis","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"calpis","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"sakura","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"kyoho","hidden":false},{"drink":"calpis","hidden":false},{"drink":"melon","hidden":false},{"drink":"umeshu","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"kyoho","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"ramune","hidden":false},{"drink":"akadama","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"ramune","hidden":false},{"drink":"akadama","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"melon","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"kyoho","hidden":false},{"drink":"sakura","hidden":false},{"drink":"matcha","hidden":false},{"drink":"sakura","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"matcha","hidden":false},{"drink":"matcha","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"ramune","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"melon","hidden":false},{"drink":"matcha","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"akadama","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"calpis","hidden":false},{"drink":"sakura","hidden":false},{"drink":"ramune","hidden":false},{"drink":"melon","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"umeshu","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"melon","hidden":false},{"drink":"yuzu","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"akadama","hidden":false},{"drink":"ramune","hidden":false},{"drink":"calpis","hidden":false},{"drink":"kyoho","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"ramune","hidden":false},{"drink":"umeshu","hidden":false},{"drink":"sakura","hidden":false},{"drink":"akadama","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"akadama","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"matcha","hidden":false},{"drink":"umeshu","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"sakura","hidden":false},{"drink":"melon","hidden":false},{"drink":"sakura","hidden":false},{"drink":"ramune","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"umeshu","hidden":false},{"drink":"calpis","hidden":false},{"drink":"calpis","hidden":false},{"drink":"kyoho","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"matcha","hidden":false},{"drink":"yuzu","hidden":false},{"drink":"kyoho","hidden":false},{"drink":"matcha","hidden":false}]},
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":45,"botWinRate":0.483,"branching":4.926,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":3,"optimal":1},
-      "solution": [[0,9],[1,10],[3,10],[4,3],[4,9],[2,4],[5,0],[6,9],[7,10],[1,7],[1,2],[0,1],[2,0],[2,5],[3,2],[6,2],[6,1],[5,6],[5,2],[3,5],[4,3],[4,5],[8,6],[8,0],[7,8],[7,10],[5,7]]
+      "metrics": {"score":44,"botWinRate":0.475,"branching":3.714,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":2,"optimal":1},
+      "solution": [[2,9],[1,2],[3,10],[6,1],[7,10],[3,7],[1,3],[6,1],[2,6],[2,9],[5,2],[8,5],[8,10],[8,9],[5,8],[5,9],[0,5],[0,10],[0,8],[4,5],[4,1],[2,4],[6,0],[1,6],[7,1],[4,7],[3,4],[3,5]]
     },
     {
       "id": "tokyo-320",
@@ -443,7 +444,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":56,"botWinRate":0.258,"branching":5.889,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":3,"optimal":1},
+      "metrics": {"score":58,"botWinRate":0.225,"branching":5.741,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":3,"optimal":1},
       "solution": [[2,9],[2,10],[0,2],[4,0],[4,9],[5,9],[6,9],[5,6],[2,5],[6,2],[1,6],[7,10],[7,4],[7,2],[4,7],[8,1],[8,2],[8,10],[5,8],[0,5],[3,0],[3,5],[0,3],[6,0],[1,6],[3,1],[0,3]]
     }
   ]

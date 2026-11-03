@@ -7,22 +7,22 @@
       "id": "london-161",
       "number": 161,
       "difficulty": "normal",
-      "best": 25,
-      "seed": "london-161-1",
+      "best": 24,
+      "seed": "london-161-2",
       "bottles": [
-        {"capacity":4,"units":[{"drink":"stout","hidden":false},{"drink":"gin-tonic","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"gin-tonic","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"elderflower","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"sloe-gin","hidden":false},{"drink":"sloe-gin","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"elderflower","hidden":false},{"drink":"blackcurrant","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"stout","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"rhubarb-gin","hidden":false},{"drink":"blackcurrant","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"sloe-gin","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"stout","hidden":false},{"drink":"lager","hidden":false},{"drink":"stout","hidden":false},{"drink":"blackcurrant","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"bitter","hidden":false},{"drink":"gin-tonic","hidden":false},{"drink":"bitter","hidden":false},{"drink":"lager","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"sloe-gin","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"gin-tonic","hidden":false},{"drink":"bitter","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"lager","hidden":false},{"drink":"lager","hidden":false},{"drink":"blackcurrant","hidden":false},{"drink":"bitter","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"rhubarb-gin","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"lager","hidden":false},{"drink":"elderflower","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"blackcurrant","hidden":false},{"drink":"sloe-gin","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"bitter","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"sloe-gin","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"bitter","hidden":false},{"drink":"sloe-gin","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"gin-tonic","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"blackcurrant","hidden":false},{"drink":"bitter","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"blackcurrant","hidden":false},{"drink":"blackcurrant","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"stout","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"stout","hidden":false},{"drink":"lager","hidden":false},{"drink":"sloe-gin","hidden":false},{"drink":"elderflower","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"gin-tonic","hidden":false},{"drink":"lager","hidden":false},{"drink":"gin-tonic","hidden":false},{"drink":"gin-tonic","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"stout","hidden":false},{"drink":"bitter","hidden":false},{"drink":"lager","hidden":false},{"drink":"stout","hidden":false}]},
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":50,"botWinRate":0.367,"branching":3.4,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":3,"optimal":1},
-      "solution": [[0,8],[6,9],[6,8],[7,9],[4,7],[2,4],[2,6],[7,2],[5,7],[5,9],[5,8],[5,9],[2,5],[6,2],[1,6],[0,1],[0,8],[3,6],[3,1],[3,5],[1,3],[1,2],[4,0],[4,7],[0,4]]
+      "metrics": {"score":51,"botWinRate":0.325,"branching":3.042,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":3,"optimal":1},
+      "solution": [[0,8],[0,9],[5,8],[2,5],[1,2],[1,0],[5,1],[5,9],[4,5],[4,0],[7,5],[7,9],[2,7],[2,8],[1,2],[1,4],[3,1],[3,4],[3,8],[6,3],[6,9],[3,6],[7,1],[5,7]]
     },
     {
       "id": "london-162",
@@ -42,7 +42,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":32,"botWinRate":0.625,"branching":4.45,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
+      "metrics": {"score":35,"botWinRate":0.583,"branching":4.25,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
       "solution": [[0,8],[0,9],[1,9],[3,8],[5,3],[5,1],[5,0],[1,5],[2,1],[2,0],[4,2],[6,2],[6,4],[6,1],[2,6],[7,8],[7,9],[4,7],[3,4],[0,3]]
     },
     {
@@ -63,7 +63,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":40,"botWinRate":0.55,"branching":4.958,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":3,"optimal":1},
+      "metrics": {"score":42,"botWinRate":0.508,"branching":4.792,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":3,"optimal":1},
       "solution": [[0,8],[1,9],[3,1],[3,8],[4,9],[5,4],[5,8],[5,9],[4,5],[3,4],[0,3],[0,4],[1,0],[1,9],[1,3],[6,3],[2,6],[7,2],[7,8],[6,7],[6,0],[2,6],[2,0],[2,6]]
     },
     {
@@ -85,7 +85,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[],"lockedUntil":"gin-tonic"}
       ],
-      "metrics": {"score":39,"botWinRate":0.592,"branching":3.72,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":3,"optimal":1},
+      "metrics": {"score":43,"botWinRate":0.5,"branching":3.44,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":3,"optimal":1},
       "solution": [[5,8],[5,9],[4,5],[4,8],[4,9],[2,4],[2,8],[2,9],[1,2],[3,1],[3,5],[0,3],[0,1],[0,8],[1,0],[3,1],[5,3],[4,5],[6,4],[6,1],[4,6],[7,6],[7,5],[7,9],[2,7]]
     },
     {
@@ -106,29 +106,29 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":39,"botWinRate":0.533,"branching":5.208,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
+      "metrics": {"score":37,"botWinRate":0.575,"branching":5,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
       "solution": [[0,8],[2,8],[5,0],[4,5],[2,4],[2,9],[0,2],[5,0],[5,8],[4,5],[7,8],[7,4],[7,9],[3,7],[3,9],[1,3],[1,5],[1,4],[0,1],[0,3],[6,3],[6,9],[6,2],[6,7]]
     },
     {
       "id": "london-166",
       "number": 166,
       "difficulty": "normal",
-      "best": 22,
-      "seed": "london-166-0",
+      "best": 23,
+      "seed": "london-166-5",
       "bottles": [
-        {"capacity":4,"units":[{"drink":"stout","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"sloe-gin","hidden":false},{"drink":"stout","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"lager","hidden":false},{"drink":"sloe-gin","hidden":false},{"drink":"blackcurrant","hidden":false},{"drink":"gin-tonic","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"blackcurrant","hidden":false},{"drink":"blackcurrant","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"stout","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"bitter","hidden":false},{"drink":"bitter","hidden":false},{"drink":"sloe-gin","hidden":false},{"drink":"lager","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"elderflower","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"gin-tonic","hidden":false},{"drink":"stout","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"gin-tonic","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"elderflower","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"bitter","hidden":false},{"drink":"bitter","hidden":false},{"drink":"blackcurrant","hidden":false},{"drink":"lager","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"rhubarb-gin","hidden":false},{"drink":"sloe-gin","hidden":false},{"drink":"gin-tonic","hidden":false},{"drink":"lager","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"lager","hidden":false},{"drink":"bitter","hidden":false},{"drink":"gin-tonic","hidden":false},{"drink":"bitter","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"stout","hidden":false},{"drink":"sloe-gin","hidden":false},{"drink":"bitter","hidden":false},{"drink":"elderflower","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"sloe-gin","hidden":false},{"drink":"stout","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"gin-tonic","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"lager","hidden":false},{"drink":"stout","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"stout","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"rhubarb-gin","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"blackcurrant","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"lager","hidden":false},{"drink":"bitter","hidden":false},{"drink":"blackcurrant","hidden":false},{"drink":"rhubarb-gin","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"gin-tonic","hidden":false},{"drink":"gin-tonic","hidden":false},{"drink":"sloe-gin","hidden":false},{"drink":"sloe-gin","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"lager","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"blackcurrant","hidden":false},{"drink":"blackcurrant","hidden":false}]},
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":42,"botWinRate":0.492,"branching":4.364,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":3,"optimal":1},
-      "solution": [[0,8],[0,9],[2,8],[4,8],[1,4],[5,0],[2,5],[1,2],[1,9],[3,1],[3,9],[6,1],[6,2],[3,6],[4,3],[0,4],[0,8],[7,1],[7,3],[7,9],[5,7],[3,5]]
+      "metrics": {"score":38,"botWinRate":0.592,"branching":3.565,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":3,"optimal":1},
+      "solution": [[0,8],[1,9],[1,8],[2,0],[2,9],[3,2],[5,3],[4,5],[4,9],[3,4],[2,3],[1,2],[3,1],[6,2],[0,6],[0,8],[0,3],[5,0],[5,8],[3,5],[7,0],[7,9],[5,7]]
     },
     {
       "id": "london-167",
@@ -148,7 +148,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":40,"botWinRate":0.575,"branching":3.423,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":3,"optimal":1},
+      "metrics": {"score":43,"botWinRate":0.508,"branching":3.192,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":3,"optimal":1},
       "solution": [[0,8],[1,9],[3,8],[1,3],[1,8],[7,1],[7,9],[6,7],[6,9],[3,6],[2,3],[2,7],[4,3],[4,8],[2,4],[6,2],[0,6],[0,9],[4,0],[1,4],[3,1],[3,6],[5,1],[5,6],[5,0],[5,7]]
     },
     {
@@ -169,7 +169,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":26,"botWinRate":0.783,"branching":5.478,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
+      "metrics": {"score":26,"botWinRate":0.783,"branching":5.217,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
       "solution": [[1,8],[2,8],[0,2],[0,8],[0,9],[3,0],[3,9],[2,3],[4,0],[4,9],[1,4],[5,1],[6,2],[5,6],[5,9],[4,5],[6,4],[6,2],[6,8],[7,5],[7,1],[7,3],[4,7]]
     },
     {
@@ -190,30 +190,30 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":45,"botWinRate":0.5,"branching":4.125,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":4,"optimal":1},
+      "metrics": {"score":49,"botWinRate":0.417,"branching":3.625,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":4,"optimal":1},
       "solution": [[0,8],[1,9],[1,8],[0,1],[0,8],[3,0],[6,9],[5,6],[3,5],[0,3],[2,0],[4,0],[4,9],[6,0],[4,6],[5,4],[5,8],[1,5],[2,1],[2,4],[1,2],[7,2],[7,5],[6,7]]
     },
     {
       "id": "london-170",
       "number": 170,
       "difficulty": "hard",
-      "best": 27,
-      "seed": "london-170-6",
+      "best": 29,
+      "seed": "london-170-4",
       "bottles": [
-        {"capacity":4,"units":[{"drink":"gin-tonic","hidden":false},{"drink":"bitter","hidden":false},{"drink":"stout","hidden":false},{"drink":"bramble","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"bramble","hidden":false},{"drink":"gin-tonic","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"blackcurrant","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"lager","hidden":false},{"drink":"blackcurrant","hidden":false},{"drink":"lager","hidden":true},{"drink":"bitter","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"bramble","hidden":true},{"drink":"lager","hidden":false},{"drink":"gin-tonic","hidden":false},{"drink":"lager","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"bitter","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"stout","hidden":false},{"drink":"sloe-gin","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"sloe-gin","hidden":false},{"drink":"sloe-gin","hidden":false},{"drink":"elderflower","hidden":true},{"drink":"elderflower","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"bitter","hidden":true},{"drink":"rhubarb-gin","hidden":false},{"drink":"bramble","hidden":false},{"drink":"sloe-gin","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"stout","hidden":false},{"drink":"blackcurrant","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"rhubarb-gin","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"blackcurrant","hidden":false},{"drink":"stout","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"gin-tonic","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"elderflower","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"blackcurrant","hidden":false},{"drink":"lager","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"bitter","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"stout","hidden":false},{"drink":"gin-tonic","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"gin-tonic","hidden":false},{"drink":"stout","hidden":false},{"drink":"bitter","hidden":false},{"drink":"rhubarb-gin","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"rhubarb-gin","hidden":false},{"drink":"gin-tonic","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"blackcurrant","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"sloe-gin","hidden":false},{"drink":"bramble","hidden":false},{"drink":"sloe-gin","hidden":false},{"drink":"stout","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"sloe-gin","hidden":false},{"drink":"lager","hidden":false},{"drink":"lager","hidden":false},{"drink":"sloe-gin","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"blackcurrant","hidden":false},{"drink":"bitter","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"lager","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"blackcurrant","hidden":false},{"drink":"bramble","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"gin-tonic","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"bramble","hidden":false},{"drink":"stout","hidden":false},{"drink":"bramble","hidden":false},{"drink":"bitter","hidden":false}]},
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":46,"botWinRate":0.417,"branching":6.259,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":2,"optimal":1},
-      "solution": [[5,9],[5,9],[4,5],[6,5],[0,6],[0,4],[2,0],[3,2],[7,10],[1,7],[1,10],[1,3],[6,1],[6,10],[0,6],[3,0],[2,3],[7,2],[4,7],[4,9],[4,6],[8,0],[8,9],[8,7],[2,8],[3,2],[1,3]]
+      "metrics": {"score":40,"botWinRate":0.608,"branching":4.034,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":3,"optimal":1},
+      "solution": [[0,9],[0,10],[2,0],[3,10],[6,9],[6,0],[2,6],[4,2],[5,4],[5,9],[4,5],[8,6],[4,8],[4,5],[2,4],[1,2],[1,4],[3,1],[3,2],[0,3],[1,0],[6,1],[6,10],[7,2],[7,0],[8,7],[8,4],[7,8],[7,10]]
     },
     {
       "id": "london-171",
@@ -232,7 +232,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":25,"botWinRate":0.775,"branching":4.368,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
+      "metrics": {"score":23,"botWinRate":0.808,"branching":4.211,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
       "solution": [[0,7],[1,8],[2,8],[0,2],[0,7],[3,8],[3,7],[3,0],[4,3],[4,0],[5,3],[5,4],[5,0],[1,5],[1,2],[6,5],[6,4],[2,6],[2,7]]
     },
     {
@@ -253,7 +253,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":38,"botWinRate":0.558,"branching":4.12,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
+      "metrics": {"score":39,"botWinRate":0.55,"branching":3.92,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
       "solution": [[2,8],[2,9],[1,2],[3,2],[4,3],[1,4],[1,9],[3,1],[0,3],[6,9],[6,8],[6,1],[3,6],[5,3],[5,8],[5,0],[0,5],[4,0],[4,8],[3,4],[7,6],[7,5],[7,9],[2,7],[2,4]]
     },
     {
@@ -274,7 +274,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":40,"botWinRate":0.567,"branching":3.92,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":3,"optimal":1},
+      "metrics": {"score":39,"botWinRate":0.575,"branching":3.56,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":3,"optimal":1},
       "solution": [[1,8],[2,9],[4,2],[4,8],[6,9],[4,6],[5,4],[3,5],[3,6],[3,9],[0,3],[0,1],[0,8],[1,0],[1,3],[2,1],[7,8],[7,5],[7,4],[0,7],[2,0],[2,3],[6,0],[5,6],[1,5]]
     },
     {
@@ -295,31 +295,31 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":42,"botWinRate":0.508,"branching":3.783,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":3,"optimal":1},
+      "metrics": {"score":44,"botWinRate":0.467,"branching":3.565,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":3,"optimal":1},
       "solution": [[1,8],[1,9],[2,9],[4,8],[3,4],[0,3],[0,9],[5,1],[7,5],[6,7],[6,8],[3,6],[0,3],[4,0],[2,4],[2,9],[1,2],[5,1],[4,5],[3,4],[7,0],[7,5],[2,7]]
     },
     {
       "id": "london-175",
       "number": 175,
       "difficulty": "superHard",
-      "best": 25,
-      "seed": "london-175-8",
+      "best": 29,
+      "seed": "london-175-9",
       "bottles": [
-        {"capacity":4,"units":[{"drink":"rhubarb-gin","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"bitter","hidden":false},{"drink":"gin-tonic","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"sloe-gin","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"blackcurrant","hidden":false},{"drink":"lager","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"gin-tonic","hidden":false},{"drink":"sloe-gin","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"elderflower","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"lager","hidden":false},{"drink":"stout","hidden":false},{"drink":"lager","hidden":false},{"drink":"gin-tonic","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"stout","hidden":false},{"drink":"bramble","hidden":false},{"drink":"bramble","hidden":false},{"drink":"gin-tonic","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"lager","hidden":false},{"drink":"bramble","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"elderflower","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"sloe-gin","hidden":false},{"drink":"sloe-gin","hidden":false},{"drink":"bitter","hidden":false},{"drink":"elderflower","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"bramble","hidden":false},{"drink":"blackcurrant","hidden":false},{"drink":"bitter","hidden":false},{"drink":"blackcurrant","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"bitter","hidden":false},{"drink":"blackcurrant","hidden":false},{"drink":"stout","hidden":false},{"drink":"stout","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"lager","hidden":false},{"drink":"gin-tonic","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"lager","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"blackcurrant","hidden":false},{"drink":"sloe-gin","hidden":false},{"drink":"gin-tonic","hidden":false},{"drink":"blackcurrant","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"rhubarb-gin","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"sloe-gin","hidden":false},{"drink":"stout","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"bitter","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"bramble","hidden":true},{"drink":"lager","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"stout","hidden":false},{"drink":"bramble","hidden":false},{"drink":"blackcurrant","hidden":false},{"drink":"gin-tonic","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"sloe-gin","hidden":true},{"drink":"bitter","hidden":true},{"drink":"sloe-gin","hidden":false},{"drink":"bitter","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"bramble","hidden":false},{"drink":"stout","hidden":false},{"drink":"bitter","hidden":false},{"drink":"blackcurrant","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"elderflower","hidden":false},{"drink":"lager","hidden":true},{"drink":"rhubarb-gin","hidden":false},{"drink":"elderflower","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"rhubarb-gin","hidden":false},{"drink":"stout","hidden":false},{"drink":"gin-tonic","hidden":false},{"drink":"bramble","hidden":false}]},
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]},
-        {"capacity":4,"units":[],"lockedUntil":"elderflower"}
+        {"capacity":4,"units":[],"lockedUntil":"bitter"}
       ],
-      "metrics": {"score":41,"botWinRate":0.542,"branching":8.96,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":3,"optimal":1},
-      "solution": [[0,9],[2,10],[3,9],[1,3],[4,9],[5,10],[4,5],[6,10],[0,6],[1,11],[1,0],[2,0],[1,2],[7,11],[8,4],[8,11],[6,8],[2,6],[2,9],[7,8],[7,11],[5,7],[3,5],[3,4],[3,5]]
+      "metrics": {"score":52,"botWinRate":0.358,"branching":6.172,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":3,"optimal":1},
+      "solution": [[0,9],[1,10],[3,9],[4,1],[4,10],[3,4],[0,3],[1,0],[6,10],[5,6],[5,1],[6,5],[2,6],[2,1],[7,3],[7,2],[7,9],[3,7],[5,3],[0,11],[0,9],[1,5],[1,10],[8,4],[8,11],[6,8],[4,6],[8,4],[2,8]]
     },
     {
       "id": "london-176",
@@ -338,7 +338,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":21,"botWinRate":0.85,"branching":4.1,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
+      "metrics": {"score":22,"botWinRate":0.842,"branching":3.95,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
       "solution": [[1,7],[2,8],[3,2],[0,3],[4,7],[5,4],[1,5],[0,1],[4,0],[5,4],[5,8],[2,5],[3,2],[3,8],[0,3],[0,1],[6,5],[6,4],[6,2],[1,6]]
     },
     {
@@ -346,21 +346,22 @@
       "number": 177,
       "difficulty": "normal",
       "best": 25,
-      "seed": "london-177-3",
+      "seed": "london-177-2",
       "bottles": [
-        {"capacity":4,"units":[{"drink":"gin-tonic","hidden":false},{"drink":"bitter","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"rhubarb-gin","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"blackcurrant","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"lager","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"stout","hidden":false},{"drink":"sloe-gin","hidden":false},{"drink":"stout","hidden":false},{"drink":"blackcurrant","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"lager","hidden":false},{"drink":"blackcurrant","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"bitter","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"stout","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"blackcurrant","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"sloe-gin","hidden":false},{"drink":"lager","hidden":false},{"drink":"gin-tonic","hidden":false},{"drink":"sloe-gin","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"gin-tonic","hidden":false},{"drink":"stout","hidden":false},{"drink":"gin-tonic","hidden":false},{"drink":"sloe-gin","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"bitter","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"bitter","hidden":false},{"drink":"lager","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"lager","hidden":false},{"drink":"bitter","hidden":false},{"drink":"stout","hidden":false},{"drink":"bitter","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"gin-tonic","hidden":false},{"drink":"lager","hidden":false},{"drink":"gin-tonic","hidden":false},{"drink":"bitter","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"blackcurrant","hidden":false},{"drink":"bitter","hidden":false},{"drink":"sloe-gin","hidden":false},{"drink":"gin-tonic","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"rhubarb-gin","hidden":false},{"drink":"stout","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"rhubarb-gin","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"sloe-gin","hidden":false},{"drink":"gin-tonic","hidden":false},{"drink":"sloe-gin","hidden":false},{"drink":"stout","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"elderflower","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"stout","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"lager","hidden":false},{"drink":"sloe-gin","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"blackcurrant","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"blackcurrant","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"lager","hidden":false},{"drink":"blackcurrant","hidden":false}]},
         {"capacity":4,"units":[]},
-        {"capacity":4,"units":[]}
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[],"lockedUntil":"bitter"}
       ],
-      "metrics": {"score":45,"botWinRate":0.433,"branching":3.92,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
-      "solution": [[0,8],[0,9],[3,0],[3,8],[2,3],[4,3],[4,9],[2,4],[5,2],[6,2],[5,6],[1,5],[1,8],[1,9],[3,1],[5,3],[2,5],[2,4],[7,3],[7,0],[7,8],[0,7],[6,0],[6,4],[0,6]]
+      "metrics": {"score":43,"botWinRate":0.475,"branching":8.32,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
+      "solution": [[0,8],[0,9],[0,8],[1,8],[2,1],[4,9],[2,4],[2,8],[5,9],[3,5],[6,2],[3,6],[3,9],[5,3],[6,5],[4,6],[1,4],[1,0],[4,1],[6,4],[0,6],[7,2],[7,6],[7,5],[2,7]]
     },
     {
       "id": "london-178",
@@ -380,30 +381,29 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":34,"botWinRate":0.617,"branching":6.682,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
+      "metrics": {"score":33,"botWinRate":0.642,"branching":6.455,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
       "solution": [[1,8],[3,8],[3,9],[4,8],[0,4],[5,1],[0,5],[0,3],[6,9],[2,6],[0,2],[7,9],[7,3],[7,8],[6,7],[5,6],[3,5],[1,3],[4,1],[4,7],[2,4],[2,3]]
     },
     {
       "id": "london-179",
       "number": 179,
       "difficulty": "normal",
-      "best": 24,
-      "seed": "london-179-3",
+      "best": 25,
+      "seed": "london-179-2",
       "bottles": [
-        {"capacity":4,"units":[{"drink":"rhubarb-gin","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"stout","hidden":false},{"drink":"lager","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"blackcurrant","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"gin-tonic","hidden":false},{"drink":"lager","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"blackcurrant","hidden":false},{"drink":"stout","hidden":false},{"drink":"bitter","hidden":false},{"drink":"blackcurrant","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"stout","hidden":false},{"drink":"gin-tonic","hidden":false},{"drink":"blackcurrant","hidden":false},{"drink":"elderflower","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"sloe-gin","hidden":false},{"drink":"sloe-gin","hidden":false},{"drink":"bitter","hidden":false},{"drink":"elderflower","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"rhubarb-gin","hidden":false},{"drink":"sloe-gin","hidden":false},{"drink":"gin-tonic","hidden":false},{"drink":"elderflower","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"stout","hidden":false},{"drink":"sloe-gin","hidden":false},{"drink":"bitter","hidden":false},{"drink":"elderflower","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"gin-tonic","hidden":false},{"drink":"bitter","hidden":false},{"drink":"lager","hidden":false},{"drink":"lager","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"sloe-gin","hidden":false},{"drink":"lager","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"rhubarb-gin","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"stout","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"bitter","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"bitter","hidden":false},{"drink":"lager","hidden":false},{"drink":"sloe-gin","hidden":false},{"drink":"gin-tonic","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"sloe-gin","hidden":false},{"drink":"lager","hidden":false},{"drink":"sloe-gin","hidden":false},{"drink":"stout","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"gin-tonic","hidden":false},{"drink":"bitter","hidden":false},{"drink":"lager","hidden":false},{"drink":"stout","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"elderflower","hidden":false},{"drink":"stout","hidden":false},{"drink":"blackcurrant","hidden":false},{"drink":"blackcurrant","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"blackcurrant","hidden":false},{"drink":"gin-tonic","hidden":false},{"drink":"rhubarb-gin","hidden":false},{"drink":"gin-tonic","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"blackcurrant","hidden":false},{"drink":"elderflower","hidden":false},{"drink":"bitter","hidden":false},{"drink":"elderflower","hidden":false}]},
         {"capacity":4,"units":[]},
-        {"capacity":4,"units":[]},
-        {"capacity":4,"units":[],"lockedUntil":"sloe-gin"}
+        {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":39,"botWinRate":0.567,"branching":6.25,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":3,"optimal":1},
-      "solution": [[0,8],[1,8],[3,9],[2,3],[4,9],[2,4],[0,2],[5,9],[1,5],[0,1],[4,0],[6,9],[6,0],[6,4],[2,6],[3,2],[5,3],[5,4],[1,5],[1,2],[7,8],[7,0],[3,7],[3,6]]
+      "metrics": {"score":37,"botWinRate":0.617,"branching":2.72,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":3,"optimal":1},
+      "solution": [[0,8],[1,9],[1,8],[7,1],[7,9],[1,7],[3,1],[4,1],[0,4],[3,0],[4,3],[4,9],[2,4],[2,0],[6,4],[6,8],[6,4],[5,6],[5,1],[7,5],[6,7],[2,6],[2,9],[3,6],[0,3]]
     },
     {
       "id": "london-180",
@@ -423,7 +423,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":35,"botWinRate":0.633,"branching":5.231,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
+      "metrics": {"score":35,"botWinRate":0.642,"branching":5.077,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
       "solution": [[5,8],[4,5],[6,8],[2,6],[2,9],[1,2],[1,4],[7,9],[7,2],[0,7],[0,1],[4,0],[4,9],[3,4],[3,8],[5,4],[5,9],[5,7],[6,3],[6,8],[1,6],[2,1],[3,2],[0,3],[7,0],[6,7]]
     }
   ]
