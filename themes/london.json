@@ -112,5 +112,9 @@
   "design": [
     "LondonMap",
     "LondonLevel"
-  ]
+  ],
+  "booster": {
+    "shape": "card",
+    "border": 4
+  }
 }

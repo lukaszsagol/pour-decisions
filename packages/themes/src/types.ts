@@ -51,4 +51,6 @@ export interface Theme {
   blockers: Partial<Record<BlockerKind, string>> & { hidden: string; only: string; locked: string };
   bars: string[];
   design: string[];
+  /** Booster button style on the counter. */
+  booster?: { shape: 'round' | 'card'; border: number };
 }

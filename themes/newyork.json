@@ -109,5 +109,9 @@
   "design": [
     "NewYorkMap",
     "NewYorkLevel"
-  ]
+  ],
+  "booster": {
+    "shape": "round",
+    "border": 2
+  }
 }

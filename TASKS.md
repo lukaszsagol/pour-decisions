@@ -66,14 +66,14 @@ Depends on: T00
 
 ## Phase 2: the game client
 
-### T08 · Web app scaffold and static level screen · `todo` · L
+### T08 · Web app scaffold and static level screen · `in-review` · L
 Depends on: T02, T07
 The game starts in Amsterdam (levels 1–100), so the first city built is Amsterdam. Build the screen theme-driven from the start, so other cities are a theme swap plus skins.
-- [ ] `apps/web` with Vite + TypeScript + PixiJS. `npm run dev -w apps/web` serves it; `npm run build -w apps/web` builds it.
-- [ ] Renders the Amsterdam level screen matching `docs/design/screens/AmsterdamLevel.png`: Delft tile band, header with bar name and moves, back-bar shelf with stoneware bottles and lamp, tulip glasses in rows of 4, counter with three beer-mat boosters. Theme values come from `themes/amsterdam.json`.
-- [ ] Until T06 exists, use a small hand-made starter pack for Amsterdam levels 1–5 (2–3 drinks), committed in `levels/amsterdam/starter.json` and solver-verified by a test.
-- [ ] Scales to fit any phone width from 360 px; centred with a max width on larger screens.
-- [ ] Playwright set up (`npm run e2e -w apps/web`); a test loads the level and saves a screenshot to `agent-logs/assets/` for the PR.
+- [x] `apps/web` with Vite + TypeScript + PixiJS. `npm run dev -w apps/web` serves it; `npm run build -w apps/web` builds it.
+- [x] Renders the Amsterdam level screen matching `docs/design/screens/AmsterdamLevel.png`: Delft tile band, header with bar name and moves, back-bar shelf with stoneware bottles and lamp, tulip glasses in rows of 4, counter with three beer-mat boosters. Theme values come from `themes/amsterdam.json`.
+- [x] Until T06 exists, use a small hand-made starter pack for Amsterdam levels 1–5 (2–3 drinks), committed in `levels/amsterdam/starter.json` and solver-verified by a test.
+- [x] Scales to fit any phone width from 360 px; centred with a max width on larger screens.
+- [x] Playwright set up (`npm run e2e -w apps/web`); a test loads the level and saves a screenshot to `agent-logs/assets/` for the PR.
 
 ### T09 · Level interaction · `todo` · L
 Depends on: T08

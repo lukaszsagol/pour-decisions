@@ -33,7 +33,27 @@
     "boosterFace": "#F3E6CC",
     "boosterRim": "#2A5BA8",
     "tile": "#2A5BA8",
-    "canal": "#23476E"
+    "canal": "#23476E",
+    "tileBand": "#E6D7B8",
+    "tileFace": "#F3E6CC",
+    "stoneware": "#B9A586",
+    "stonewareDark": "#9C8A6E",
+    "stonewareCap": "#8C7A60",
+    "stonewareCapDark": "#7A6A52",
+    "lamp": "#E8A33D",
+    "lampGlow": "#FFE2A8",
+    "cord": "#1A0F08",
+    "brass": "#C9A24A",
+    "shelf": "#5A3A24",
+    "boosterUndo": "#2A5BA8",
+    "boosterGlass": "#A8213A",
+    "boosterHint": "#F28C28",
+    "boosterHintIcon": "#B5621A",
+    "badgeText": "#2A1A10",
+    "lockedRim": "#5A4432",
+    "lockedFill": "#140C06",
+    "hiddenUnit": "#4A3626",
+    "hiddenMark": "#D8C3A0"
   },
   "glass": {
     "shape": "tulip-stemmed",
@@ -111,5 +131,9 @@
   "design": [
     "AmsterdamMap",
     "AmsterdamLevel"
-  ]
+  ],
+  "booster": {
+    "shape": "round",
+    "border": 4
+  }
 }

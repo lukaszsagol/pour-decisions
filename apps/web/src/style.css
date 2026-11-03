@@ -1,0 +1,69 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; }
+body {
+  font-family: 'Outfit', system-ui, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+  touch-action: manipulation;
+}
+#app { position: fixed; inset: 0; }
+button { font-family: inherit; color: inherit; }
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--c-accent, #F28C28); outline-offset: 2px; }
+
+.stage {
+  position: absolute; left: 0; top: 0; width: 390px; height: 844px;
+  transform-origin: 0 0; overflow: hidden;
+  background: var(--c-ground); color: var(--c-text); font-family: var(--f-ui);
+}
+.stage-canvas { position: absolute; left: 0; top: 0; }
+.screen { position: absolute; inset: 0; }
+
+/* Level header */
+.lv-header {
+  position: absolute; left: 0; top: 64px; width: 390px; height: 52px;
+  padding: 0 8px 0 6px; display: flex; align-items: center; justify-content: space-between;
+}
+.lv-title { display: flex; align-items: center; gap: 4px; min-width: 0; }
+.icon-btn {
+  width: 44px; height: 44px; border-radius: 22px; border: none; background: transparent; padding: 0;
+  display: flex; align-items: center; justify-content: center; cursor: pointer; flex: none;
+}
+.lv-bar { font-family: var(--f-display); font-size: 21px; line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lv-sub { font-size: 12px; color: var(--c-muted); }
+.lv-right { display: flex; align-items: center; gap: 2px; flex: none; }
+.lv-moves {
+  height: 34px; padding: 0 12px; border-radius: 17px; background: var(--c-surface); border: 1px solid var(--c-line);
+  display: flex; align-items: center; gap: 6px; font-size: 13px; white-space: nowrap;
+}
+.lv-moves b { font-weight: 700; font-size: 15px; }
+.lv-moves span { color: var(--c-muted); }
+
+/* Glass tap targets sit over the Pixi drawing. */
+.lv-glass {
+  position: absolute; width: 60px; height: 200px; padding: 0; border: none; background: transparent;
+  cursor: pointer; transform-origin: 0 0;
+}
+
+/* Counter with boosters */
+.lv-counter {
+  position: absolute; left: 0; top: 684px; width: 390px; height: 160px; padding: 16px 24px 0;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;
+}
+.booster {
+  background: transparent; border: none; padding: 0; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--c-text);
+}
+.booster:disabled { cursor: default; }
+.booster:disabled .booster-face { opacity: 0.55; }
+.booster-face {
+  position: relative; width: 64px; height: 64px; border-radius: 32px; background: var(--c-boosterFace);
+  border: 4px solid var(--rim); display: flex; align-items: center; justify-content: center;
+}
+.booster-count {
+  position: absolute; right: -6px; top: -6px; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 11px;
+  background: var(--c-starDone); color: var(--c-badgeText, var(--c-accentText)); font-size: 12px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.booster-label { font-size: 13px; font-weight: 500; }

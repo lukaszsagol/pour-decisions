@@ -34,7 +34,19 @@
     "counterTop": "#D9B98A",
     "counterFront": "#2E2118",
     "boosterFace": "#121836",
-    "boosterRim": "#F4B860"
+    "boosterRim": "#F4B860",
+    "band": "#23306E",
+    "shelf": "#2B3466",
+    "lantern": "#E0453A",
+    "cord": "#3A2A2A",
+    "shelfBottle": "#1A2148",
+    "badgeText": "#3A2508",
+    "boosterUndoIcon": "#5EC3F0",
+    "boosterGlassIcon": "#FF8FB0",
+    "boosterHintIcon": "#F4B860",
+    "hiddenUnit": "#1E2652",
+    "hiddenMark": "#8A93C8",
+    "counterEdge": "#D9B98A"
   },
   "glass": {
     "shape": "highball",
@@ -114,5 +126,9 @@
     "TokyoMap",
     "TokyoLevel",
     "TokyoComplete"
-  ]
+  ],
+  "booster": {
+    "shape": "round",
+    "border": 2
+  }
 }
