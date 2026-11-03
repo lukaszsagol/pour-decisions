@@ -19,6 +19,8 @@ export interface CompleteData {
   recipe?: { recipe: Recipe; index: number; total: number };
   nextHref: string;
   nextLabel: string;
+  /** Family comparison row (family feature): resolves to HTML or null. */
+  family?: Promise<string | null>;
   /** Overrides for the daily pour and training. */
   kicker?: string;
   verdict?: string;
@@ -82,6 +84,11 @@ export class CompleteScreen {
     decor.mask = mask;
     app.stage.addChild(decor, mask);
     this.el.prepend(app.canvas);
+    void this.data.family?.then(
+      (html) =>
+        html &&
+        this.el.querySelector('.cp-rewards')?.insertAdjacentHTML('afterend', `<div class="cp-family">${html}</div>`),
+    );
     this.el.querySelector('.cp-share')!.addEventListener('click', () => void this.share());
     this.el.querySelector<HTMLElement>('.cp-next')!.focus();
     this.el.dataset.ready = 'true';

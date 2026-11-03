@@ -10,6 +10,8 @@ import { PassportScreen } from './passport/screen.js';
 import { tabBar, type Tab } from './tabbar.js';
 import { dailyLevel, dailyShareText, dateKey } from './daily/generate.js';
 import { TrainingScreen } from './training/screen.js';
+import { family } from './family/index.js';
+import { avatar, FamilyScreen } from './family/screen.js';
 import { modes, nextRating, planningScore, trainingLevel, type TrainingMode } from './training/logic.js';
 import { session } from './session.js';
 import { createStage } from './stage.js';
@@ -65,6 +67,7 @@ function levelScreen(number: number): Screen {
         difficulty: level.difficulty,
         firstTry: result.restarts === 0,
       });
+      void family()?.pushProgress(progress.data.current, progress.totalStars(), progress.totalStars());
       const lastOfBar = pack.levels[pack.levels.length - 1]!.number === level.number;
       const recipe = lastOfBar ? recipeFor(theme.id, pack.bar) : undefined;
       session.complete = {
@@ -73,6 +76,7 @@ function levelScreen(number: number): Screen {
         difficulty: level.difficulty,
         rewards,
         ...(recipe ? { recipe: { recipe, index: (theme.order - 1) * 5 + pack.bar, total: 20 } } : {}),
+        ...(family() ? { family: familyRow(level.number, result.moves) } : {}),
         nextHref: next ? `#/map/${themeForLevel(next.level.number).id}` : `#/map/${theme.id}`,
         nextLabel: 'Next level',
       };
@@ -98,6 +102,7 @@ function dailyScreen(): Screen {
     onEvent: (e) => playLog.add(`daily-${date}`, e),
     onWin: (result) => {
       const rewards = progress.recordDaily(date, result.stars, result.moves, d.best);
+      void family()?.pushDaily(date, result.stars, result.moves);
       session.complete = {
         theme: d.theme,
         result,
@@ -170,6 +175,38 @@ function trainingScreen(mode: TrainingMode): Screen {
   });
 }
 
+async function familyMembers() {
+  const g = await family()!.group();
+  const me = family()!.me();
+  return (g?.members ?? []).map((m) => ({ name: m.name, color: m.color, current: m.current, me: m.id === me }));
+}
+
+async function familyDailyLine(): Promise<string | null> {
+  const g = await family()!.group();
+  if (!g) return null;
+  const results = await family()!.daily(dateKey());
+  const byId = new Map(g.members.map((m) => [m.id, m]));
+  const played = results.map((r) => byId.get(r.memberId)).filter((m) => m !== undefined);
+  return `${played.map((m) => avatar(m)).join('')} ${played.length} of ${g.members.length} have played`;
+}
+
+async function familyRow(level: number, moves: number): Promise<string | null> {
+  const g = await family()!.group();
+  if (!g) return null;
+  const results = await family()!.levelResults(level);
+  if (results.length === 0) return null;
+  const byId = new Map(g.members.map((m) => [m.id, m]));
+  const best = results.reduce((a, b) => (b.moves < a.moves ? b : a));
+  const who = byId.get(best.memberId)!;
+  const verdict =
+    moves < best.moves
+      ? `Beat ${who.name}`
+      : moves === best.moves
+        ? `Tied ${who.name}`
+        : `${who.name} did it in ${best.moves}`;
+  return `${results.map((r) => avatar(byId.get(r.memberId)!)).join('')} <span>${verdict} for family best</span>`;
+}
+
 function route(): Screen {
   const hash = location.hash.replace(/^#\/?/, '');
   const [name, arg] = hash.split('/');
@@ -196,6 +233,7 @@ function route(): Screen {
       theme: getTheme(city),
       levels: levelsInCity(city),
       progress,
+      ...(family() ? { members: familyMembers() } : {}),
       backHref: '#/passport',
       footer: tabBar('map', tabs),
     });
@@ -203,13 +241,23 @@ function route(): Screen {
   if (name === 'daily') return dailyScreen();
   if (name === 'training') return new TrainingScreen(stage, themeForLevel(progress.data.current), progress);
   if (name === 'train' && arg && arg in modes) return trainingScreen(arg as TrainingMode);
-  if (name === 'family') return new FamilyPlaceholder(stage, themeForLevel(progress.data.current), tabs);
+  if (name === 'family') {
+    const backend = family();
+    const theme = themeForLevel(progress.data.current);
+    return backend ? new FamilyScreen(stage, theme, tabs, backend) : new FamilyPlaceholder(stage, theme, tabs);
+  }
   if (name === '' || name === 'passport') {
     const today = progress.data.daily[dateKey()];
     const dailyLine = today
       ? `${'★'.repeat(today.stars)}${'☆'.repeat(3 - today.stars)} ${today.moves} moves tonight (best ${today.best})`
       : 'A new level every night';
-    return new PassportScreen(stage, { progress, tabs, dailyHref: '#/daily', dailyLine });
+    return new PassportScreen(stage, {
+      progress,
+      tabs,
+      dailyHref: '#/daily',
+      dailyLine,
+      ...(family() ? { dailyFamily: familyDailyLine() } : {}),
+    });
   }
   return levelScreen(name === 'level' ? Number(arg) : progress.data.current);
 }

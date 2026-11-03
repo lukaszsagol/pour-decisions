@@ -18,6 +18,8 @@ export interface MapScreenOptions {
   backHref: string;
   /** Extra DOM shown under the panel (tab bar). */
   footer?: string;
+  /** Family members to place on their current levels (family feature). */
+  members?: Promise<{ name: string; color: string; current: number; me: boolean }[]>;
   /** Level to select instead of the current one. */
   focus?: number;
 }
@@ -77,6 +79,7 @@ export class MapScreen {
       }),
     );
     this.renderPanel();
+    void this.opts.members?.then((ms) => this.placeMembers(ms));
     const i = this.indexOf(this.selected);
     scroller.scrollTop = scrollFor(this.layout.nodes[i]!.y, STAGE_H, this.layout.height, this.opts.footer ? 280 : 196);
     sync();
@@ -87,6 +90,24 @@ export class MapScreen {
     this.destroyed = true;
     this.disposePixi?.();
     this.el.remove();
+  }
+
+  private placeMembers(members: { name: string; color: string; current: number; me: boolean }[]): void {
+    const world = this.el.querySelector('.map-world');
+    if (!world) return;
+    const perLevel = new Map<number, number>();
+    for (const m of members) {
+      const i = this.indexOf(m.current);
+      if (m.me || i < 0) continue;
+      const k = perLevel.get(m.current) ?? 0;
+      perLevel.set(m.current, k + 1);
+      const { x, y } = this.layout.nodes[i]!;
+      const left = x < 195 ? x - 58 - k * 18 : x + 32 + k * 18;
+      world.insertAdjacentHTML(
+        'beforeend',
+        `<span class="map-avatar" style="left:${left}px;top:${y - 40}px" aria-label="${esc(m.name)} is here" role="img"><span class="fam-avatar" style="background:${m.color};width:26px;height:26px">${esc(m.name[0]!.toUpperCase())}</span></span>`,
+      );
+    }
   }
 
   private indexOf(n: number): number {

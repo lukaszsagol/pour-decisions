@@ -143,6 +143,8 @@ Depends on: T15
 Depends on: T15
 Supabase project for family groups (invite codes), synced progress, daily results and leaderboards. An agent can build the client side behind a feature flag with a fake backend; the owner creates the project and adds keys.
 
+Agent part done (2026-11-03): the client behind the `family` feature flag (`?flags=family`, or the hidden debug menu), against a fake on-device backend (`apps/web/src/family/fake.ts`) with three pretend relatives. Covers create or join a group by invite code, members and where they are, the weekly stars board, tonight's results, avatars on the map, "N of M have played" on the passport, and the family-best row on the complete screen. **Owner**: create the Supabase project and keys, then an agent implements `FamilyBackend` (`apps/web/src/family/backend.ts`) for Supabase and switches `family/index.ts` to it when keys are configured.
+
 ### T21 · iOS and Android apps · `needs-human` · L
 Depends on: T17
 Capacitor wrapper, app icons, splash screens; TestFlight and Google Play closed testing. Needs a Mac with Xcode, an Apple Developer account and a Google Play developer account.

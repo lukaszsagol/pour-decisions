@@ -12,6 +12,8 @@ export interface PassportOptions {
   dailyHref: string;
   /** Short line under "Tonight's pour" (result or invitation). */
   dailyLine: string;
+  /** Replaces the daily line once family results arrive. */
+  dailyFamily?: Promise<string | null>;
 }
 
 const LEVELS_PER_CITY = 100;
@@ -48,6 +50,10 @@ export class PassportScreen {
     this.stage.el.replaceChildren(this.el);
     this.el.innerHTML = this.html(theme);
     this.el.querySelector('.pp-settings')!.addEventListener('click', () => openSettings(this.el, this.opts.progress));
+    void this.opts.dailyFamily?.then((html) => {
+      const line = this.el.querySelector('.pp-daily-line');
+      if (html && line) line.innerHTML = html;
+    });
     this.el.dataset.ready = 'true';
   }
 

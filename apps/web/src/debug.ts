@@ -1,6 +1,7 @@
 import { settingsRows } from './passport/settings.js';
 import { downloadLog } from './playlog.js';
 import { playLog } from './state.js';
+import { isOn, setFlag } from './flags.js';
 
 /**
  * Hidden debug menu: tap the version line in Settings five times to show
@@ -19,12 +20,16 @@ settingsRows.push((host) => {
       <div class="debug-title">Debug</div>
       <div class="debug-count">${playLog.all().length} logged events</div>
       <button class="btn btn-outline debug-export">Export play log</button>
-      <button class="btn btn-ghost debug-clear">Clear play log</button>`;
+      <button class="btn btn-ghost debug-clear">Clear play log</button>
+      <label class="sheet-row"><span>Family (fake server)</span><input type="checkbox" class="debug-family" ${isOn('family') ? 'checked' : ''}></label>`;
     box.querySelector('.debug-export')!.addEventListener('click', () => downloadLog(playLog));
     box.querySelector('.debug-clear')!.addEventListener('click', () => {
       playLog.clear();
       box.querySelector('.debug-count')!.textContent = '0 logged events';
     });
+    box
+      .querySelector<HTMLInputElement>('.debug-family')!
+      .addEventListener('change', (e) => setFlag('family', (e.target as HTMLInputElement).checked));
     host.appendChild(box);
   });
   host.appendChild(version);
