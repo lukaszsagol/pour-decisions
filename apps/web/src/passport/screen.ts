@@ -81,7 +81,7 @@ export class PassportScreen {
       </header>
       <div class="pp-title">
         <div class="pp-title-row"><h1>Your passport</h1></div>
-        <p>${visited} of 20 bars visited · ${p.totalStars()} stars</p>
+        <p>${visited} of 20 bars visited · ${p.totalStars()} stars · ${p.perfectCount()} perfect</p>
       </div>
       <div class="pp-cards">
         ${order.map((t) => this.card(t)).join('')}

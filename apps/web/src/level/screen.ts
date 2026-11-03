@@ -633,7 +633,13 @@ export class LevelScreen {
 
   private showWin(r: LevelResult): void {
     const k = this.theme.colors;
-    const verdict = r.perfect ? 'Perfect pour' : r.stars === 3 ? 'Great pour' : r.stars === 2 ? 'Nice pour' : 'Cleared';
+    const verdict = r.perfect
+      ? 'Perfect pour'
+      : r.moves < r.best
+        ? 'You beat the computer'
+        : r.stars === 2
+          ? 'Nice pour'
+          : 'Cleared';
     const stars = [1, 2, 3].map((i) => icons.star(i <= r.stars ? k.starDone : k.starEmpty, 44)).join('');
     const overlay = this.el.querySelector<HTMLElement>('.lv-overlay')!;
     overlay.innerHTML = `
@@ -641,7 +647,7 @@ export class LevelScreen {
         <div class="win-kicker">${esc(this.opts.subtitle ? "Tonight's pour cleared" : `Level ${r.number} cleared`)}</div>
         <div class="win-stars" aria-label="${r.stars} of 3 stars">${stars}</div>
         <div class="win-verdict" id="win-verdict">${verdict}</div>
-        <div class="win-moves">${r.moves} moves · best ${r.best}</div>
+        <div class="win-moves">${r.moves} moves · ${r.moves <= r.best ? `best ${r.best}` : `3 stars in ${r.best}`}</div>
         <a class="btn btn-primary win-next" href="${esc(this.opts.nextHref)}">${esc(this.opts.nextLabel ?? 'Next level')}</a>
         <button class="btn btn-ghost win-again">Play again</button>
       </div>`;

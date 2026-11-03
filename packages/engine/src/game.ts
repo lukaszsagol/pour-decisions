@@ -49,10 +49,14 @@ export interface GameSnapshot {
   usedBoosters: number;
 }
 
-/** Stars per `docs/spec/rules.md`, before the extra-glass cap. */
+/**
+ * Stars per `docs/spec/rules.md`, before the extra-glass cap: three only for
+ * the fewest pours (no wasted pour, and undo gives none back), two within
+ * about a third more.
+ */
 export function starsFor(moves: number, best: number): 1 | 2 | 3 {
-  if (moves <= Math.max(best + 1, Math.floor(best * 1.1))) return 3;
-  if (moves <= Math.floor(best * 1.35)) return 2;
+  if (moves <= best) return 3;
+  if (moves <= Math.max(best + 1, Math.floor(best * 1.35))) return 2;
   return 1;
 }
 

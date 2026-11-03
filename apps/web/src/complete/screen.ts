@@ -122,7 +122,7 @@ export class CompleteScreen {
       ? `${r.moves} moves · matched the best solution`
       : r.moves < r.best
         ? `${r.moves} moves · ${r.best - r.moves} fewer than the computer`
-        : `${r.moves} moves · best ${r.best}`;
+        : `${r.moves} moves · ${r.moves - r.best} more than the best (${r.best})`;
     const earned = rewards?.earned ?? [];
     const third =
       earned.length === 0
