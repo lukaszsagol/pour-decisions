@@ -1,0 +1,418 @@
+{
+  "city": "amsterdam",
+  "bar": 4,
+  "name": "Café de Gracht",
+  "levels": [
+    {
+      "id": "amsterdam-61",
+      "number": 61,
+      "difficulty": "normal",
+      "best": 20,
+      "seed": "amsterdam-61-0",
+      "bottles": [
+        {"capacity":4,"units":[{"drink":"curacao","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"advocaat","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"jenever","hidden":false},{"drink":"oranjebitter","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"jenever","hidden":false},{"drink":"jenever","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"cherry","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"bessenjenever","hidden":false},{"drink":"curacao","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"cherry","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"bessenjenever","hidden":false},{"drink":"jenever","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"cherry","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"curacao","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"pisang-ambon","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"bessenjenever","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"cherry","hidden":false},{"drink":"oranjebitter","hidden":false}]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[],"lockedUntil":"jenever"}
+      ],
+      "metrics": {"score":34,"botWinRate":0.633,"branching":7.25,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":3,"optimal":1},
+      "solution": [[1,7],[2,8],[3,8],[4,8],[4,7],[1,4],[2,1],[4,2],[3,4],[0,3],[0,9],[0,3],[5,9],[5,1],[3,5],[3,4],[6,7],[6,8],[6,7],[4,6]]
+    },
+    {
+      "id": "amsterdam-62",
+      "number": 62,
+      "difficulty": "normal",
+      "best": 21,
+      "seed": "amsterdam-62-4",
+      "bottles": [
+        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"jenever","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"pisang-ambon","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"oranjebitter","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"advocaat","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"curacao","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"advocaat","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"cherry","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"curacao","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"jenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"advocaat","hidden":false},{"drink":"jenever","hidden":false},{"drink":"cherry","hidden":false},{"drink":"jenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"bessenjenever","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"curacao","hidden":false},{"drink":"oranjebitter","hidden":false}]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[]}
+      ],
+      "metrics": {"score":34,"botWinRate":0.6,"branching":4.095,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
+      "solution": [[0,7],[4,8],[5,8],[6,0],[3,6],[3,5],[3,7],[5,3],[5,8],[1,5],[1,7],[0,1],[0,8],[0,3],[2,5],[2,4],[2,5],[6,2],[6,7],[4,6],[2,4]]
+    },
+    {
+      "id": "amsterdam-63",
+      "number": 63,
+      "difficulty": "normal",
+      "best": 20,
+      "seed": "amsterdam-63-1",
+      "bottles": [
+        {"capacity":4,"units":[{"drink":"bessenjenever","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"pisang-ambon","hidden":false},{"drink":"jenever","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"bessenjenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"oranjebitter","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"pisang-ambon","hidden":false},{"drink":"cherry","hidden":false},{"drink":"jenever","hidden":false},{"drink":"advocaat","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"jenever","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"advocaat","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"jenever","hidden":false},{"drink":"cherry","hidden":false},{"drink":"cherry","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"curacao","hidden":false},{"drink":"curacao","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"pisang-ambon","hidden":false}]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[],"lockedUntil":"pisang-ambon"}
+      ],
+      "metrics": {"score":21,"botWinRate":0.858,"branching":4.65,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
+      "solution": [[0,7],[2,7],[1,2],[3,8],[4,8],[6,0],[1,6],[1,3],[0,1],[0,8],[2,0],[4,0],[4,8],[3,4],[5,3],[5,4],[3,5],[1,3],[6,2],[6,7]]
+    },
+    {
+      "id": "amsterdam-64",
+      "number": 64,
+      "difficulty": "normal",
+      "best": 18,
+      "seed": "amsterdam-64-3",
+      "bottles": [
+        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"jenever","hidden":false},{"drink":"oranjebitter","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"cherry","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"pisang-ambon","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"bessenjenever","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"jenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"bessenjenever","hidden":false},{"drink":"cherry","hidden":false},{"drink":"curacao","hidden":false},{"drink":"oranjebitter","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"jenever","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"pisang-ambon","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"jenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"advocaat","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"curacao","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[],"lockedUntil":"jenever"}
+      ],
+      "metrics": {"score":21,"botWinRate":0.842,"branching":7.722,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
+      "solution": [[0,7],[2,0],[1,2],[3,7],[3,8],[4,8],[4,7],[0,4],[2,0],[1,2],[1,3],[5,4],[6,8],[2,6],[5,2],[0,5],[3,0],[2,3]]
+    },
+    {
+      "id": "amsterdam-65",
+      "number": 65,
+      "difficulty": "superHard",
+      "best": 25,
+      "seed": "amsterdam-65-4",
+      "bottles": [
+        {"capacity":4,"units":[{"drink":"advocaat","hidden":false},{"drink":"parfait-amour","hidden":false},{"drink":"cherry","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"oranjebitter","hidden":false},{"drink":"jenever","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"parfait-amour","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"oranjebitter","hidden":false},{"drink":"curacao","hidden":false},{"drink":"curacao","hidden":false},{"drink":"cherry","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"jenever","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"oranjebitter","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"bessenjenever","hidden":false},{"drink":"jenever","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"advocaat","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"advocaat","hidden":false},{"drink":"cherry","hidden":false},{"drink":"parfait-amour","hidden":false},{"drink":"advocaat","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"curacao","hidden":false},{"drink":"cherry","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"parfait-amour","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"pisang-ambon","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"jenever","hidden":false},{"drink":"bessenjenever","hidden":false}]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[],"lockedUntil":"advocaat"}
+      ],
+      "metrics": {"score":34,"botWinRate":0.683,"branching":8.24,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":3,"optimal":1},
+      "solution": [[1,8],[2,9],[0,2],[0,9],[0,8],[4,0],[5,0],[5,8],[5,9],[0,5],[1,0],[6,8],[4,6],[1,4],[3,1],[3,0],[3,1],[4,3],[6,4],[6,9],[2,6],[1,2],[7,4],[7,3],[0,7]]
+    },
+    {
+      "id": "amsterdam-66",
+      "number": 66,
+      "difficulty": "normal",
+      "best": 16,
+      "seed": "amsterdam-66-2",
+      "bottles": [
+        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"cherry","hidden":false},{"drink":"jenever","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"jenever","hidden":false},{"drink":"jenever","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"jenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"curacao","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"pisang-ambon","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"oranjebitter","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"curacao","hidden":false},{"drink":"advocaat","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"oranjebitter","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"cherry","hidden":false},{"drink":"pisang-ambon","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"curacao","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"cherry","hidden":false},{"drink":"advocaat","hidden":false}]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[]}
+      ],
+      "metrics": {"score":15,"botWinRate":0.933,"branching":5.063,"deadEndShare":0,"firstMoves":12,"winningFirstMoves":12,"emptyPours":2,"optimal":1},
+      "solution": [[2,6],[2,7],[2,6],[0,2],[1,0],[1,6],[0,1],[3,7],[3,2],[4,6],[4,0],[3,4],[5,7],[5,0],[5,7],[2,5]]
+    },
+    {
+      "id": "amsterdam-67",
+      "number": 67,
+      "difficulty": "normal",
+      "best": 20,
+      "seed": "amsterdam-67-3",
+      "bottles": [
+        {"capacity":4,"units":[{"drink":"oranjebitter","hidden":false},{"drink":"jenever","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"cherry","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"curacao","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"pisang-ambon","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"curacao","hidden":false},{"drink":"curacao","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"jenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"bessenjenever","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"bessenjenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"jenever","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"jenever","hidden":false},{"drink":"pisang-ambon","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"advocaat","hidden":false},{"drink":"cherry","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"advocaat","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"cherry","hidden":false},{"drink":"cherry","hidden":false}]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[],"lockedUntil":"cherry"}
+      ],
+      "metrics": {"score":26,"botWinRate":0.75,"branching":4.1,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
+      "solution": [[0,7],[1,8],[3,1],[4,8],[2,4],[2,8],[5,2],[6,7],[6,8],[0,6],[4,0],[4,6],[0,4],[3,0],[1,3],[1,0],[1,2],[5,3],[5,7],[5,6]]
+    },
+    {
+      "id": "amsterdam-68",
+      "number": 68,
+      "difficulty": "normal",
+      "best": 20,
+      "seed": "amsterdam-68-0",
+      "bottles": [
+        {"capacity":4,"units":[{"drink":"pisang-ambon","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"pisang-ambon","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"jenever","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"jenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"pisang-ambon","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"bessenjenever","hidden":false},{"drink":"cherry","hidden":false},{"drink":"curacao","hidden":false},{"drink":"bessenjenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"advocaat","hidden":false},{"drink":"jenever","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"jenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"bessenjenever","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"cherry","hidden":false},{"drink":"cherry","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"curacao","hidden":false},{"drink":"curacao","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[],"lockedUntil":"pisang-ambon"}
+      ],
+      "metrics": {"score":16,"botWinRate":0.992,"branching":3.95,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":3,"optimal":1},
+      "solution": [[0,7],[1,8],[2,7],[3,2],[4,8],[4,1],[4,8],[0,4],[6,3],[6,4],[3,6],[5,3],[5,4],[2,5],[3,2],[3,5],[0,3],[0,7],[1,3],[1,8]]
+    },
+    {
+      "id": "amsterdam-69",
+      "number": 69,
+      "difficulty": "normal",
+      "best": 20,
+      "seed": "amsterdam-69-4",
+      "bottles": [
+        {"capacity":4,"units":[{"drink":"curacao","hidden":false},{"drink":"cherry","hidden":false},{"drink":"jenever","hidden":false},{"drink":"bessenjenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"bessenjenever","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"cherry","hidden":false},{"drink":"pisang-ambon","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"advocaat","hidden":false},{"drink":"curacao","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"bessenjenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"oranjebitter","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"advocaat","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"oranjebitter","hidden":false},{"drink":"cherry","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"jenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"jenever","hidden":false},{"drink":"jenever","hidden":false},{"drink":"curacao","hidden":false},{"drink":"advocaat","hidden":false}]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[],"lockedUntil":"jenever"}
+      ],
+      "metrics": {"score":31,"botWinRate":0.65,"branching":4.9,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
+      "solution": [[0,7],[1,8],[2,7],[4,2],[4,8],[3,4],[3,8],[1,3],[5,0],[5,8],[5,3],[4,5],[1,4],[1,7],[6,4],[6,2],[0,6],[0,3],[2,0],[2,4]]
+    },
+    {
+      "id": "amsterdam-70",
+      "number": 70,
+      "difficulty": "normal",
+      "best": 21,
+      "seed": "amsterdam-70-3",
+      "bottles": [
+        {"capacity":4,"units":[{"drink":"curacao","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"curacao","hidden":false},{"drink":"oranjebitter","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"curacao","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"cherry","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"cherry","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"advocaat","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"pisang-ambon","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"cherry","hidden":false},{"drink":"bessenjenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"oranjebitter","hidden":false},{"drink":"jenever","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"oranjebitter","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"advocaat","hidden":false},{"drink":"jenever","hidden":false},{"drink":"jenever","hidden":false},{"drink":"bessenjenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"curacao","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"jenever","hidden":false}]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[]}
+      ],
+      "metrics": {"score":30,"botWinRate":0.717,"branching":4.19,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":3,"optimal":1},
+      "solution": [[0,7],[3,8],[1,3],[4,7],[1,4],[2,1],[3,2],[3,8],[4,3],[5,8],[4,5],[4,7],[5,4],[1,5],[0,1],[0,7],[0,1],[6,4],[6,8],[6,3],[1,6]]
+    },
+    {
+      "id": "amsterdam-71",
+      "number": 71,
+      "difficulty": "hard",
+      "best": 24,
+      "seed": "amsterdam-71-5",
+      "bottles": [
+        {"capacity":4,"units":[{"drink":"advocaat","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"pisang-ambon","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"parfait-amour","hidden":false},{"drink":"curacao","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"oranjebitter","hidden":false},{"drink":"cherry","hidden":false},{"drink":"parfait-amour","hidden":false},{"drink":"pisang-ambon","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"parfait-amour","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"advocaat","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"cherry","hidden":false},{"drink":"jenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"bessenjenever","hidden":false},{"drink":"jenever","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"jenever","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"parfait-amour","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"curacao","hidden":false},{"drink":"jenever","hidden":false},{"drink":"pisang-ambon","hidden":false}]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[],"lockedUntil":"cherry"}
+      ],
+      "metrics": {"score":38,"botWinRate":0.55,"branching":4.708,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
+      "solution": [[0,8],[1,9],[2,8],[3,0],[5,9],[5,1],[4,5],[6,2],[7,8],[7,5],[7,9],[4,7],[6,4],[6,0],[5,6],[1,5],[1,9],[2,1],[2,7],[3,5],[3,2],[1,3],[4,2],[4,7]]
+    },
+    {
+      "id": "amsterdam-72",
+      "number": 72,
+      "difficulty": "normal",
+      "best": 19,
+      "seed": "amsterdam-72-0",
+      "bottles": [
+        {"capacity":4,"units":[{"drink":"advocaat","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"jenever","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"jenever","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"jenever","hidden":false},{"drink":"oranjebitter","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"advocaat","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"oranjebitter","hidden":false},{"drink":"cherry","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"jenever","hidden":false},{"drink":"cherry","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[]}
+      ],
+      "metrics": {"score":19,"botWinRate":0.892,"branching":6.579,"deadEndShare":0,"firstMoves":12,"winningFirstMoves":12,"emptyPours":2,"optimal":1},
+      "solution": [[0,6],[3,6],[1,3],[0,1],[3,0],[4,6],[2,4],[2,7],[3,2],[0,3],[4,0],[4,7],[2,4],[5,6],[5,0],[5,4],[1,5],[1,7],[1,5]]
+    },
+    {
+      "id": "amsterdam-73",
+      "number": 73,
+      "difficulty": "normal",
+      "best": 20,
+      "seed": "amsterdam-73-4",
+      "bottles": [
+        {"capacity":4,"units":[{"drink":"pisang-ambon","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"pisang-ambon","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"advocaat","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"jenever","hidden":false},{"drink":"advocaat","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"cherry","hidden":false},{"drink":"curacao","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"jenever","hidden":false},{"drink":"jenever","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"jenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"oranjebitter","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"curacao","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"cherry","hidden":false},{"drink":"bessenjenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"oranjebitter","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"curacao","hidden":false},{"drink":"pisang-ambon","hidden":false}]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[]}
+      ],
+      "metrics": {"score":15,"botWinRate":0.983,"branching":4.1,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
+      "solution": [[2,7],[5,8],[5,2],[0,5],[0,8],[1,0],[3,1],[4,3],[4,0],[3,4],[1,3],[1,8],[0,1],[5,0],[5,7],[6,0],[6,7],[6,8],[4,6],[2,4]]
+    },
+    {
+      "id": "amsterdam-74",
+      "number": 74,
+      "difficulty": "normal",
+      "best": 20,
+      "seed": "amsterdam-74-3",
+      "bottles": [
+        {"capacity":4,"units":[{"drink":"curacao","hidden":false},{"drink":"curacao","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"jenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"bessenjenever","hidden":false},{"drink":"cherry","hidden":false},{"drink":"curacao","hidden":false},{"drink":"bessenjenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"jenever","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"jenever","hidden":false},{"drink":"advocaat","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"pisang-ambon","hidden":false},{"drink":"cherry","hidden":false},{"drink":"cherry","hidden":false},{"drink":"advocaat","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"oranjebitter","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"cherry","hidden":false},{"drink":"bessenjenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"pisang-ambon","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"pisang-ambon","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"jenever","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[]}
+      ],
+      "metrics": {"score":21,"botWinRate":0.9,"branching":3.95,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":3,"optimal":1},
+      "solution": [[0,7],[2,8],[2,7],[3,8],[5,0],[5,8],[0,5],[6,0],[6,2],[1,6],[1,0],[1,3],[4,1],[6,1],[6,7],[3,6],[3,5],[4,6],[2,4],[2,7]]
+    },
+    {
+      "id": "amsterdam-75",
+      "number": 75,
+      "difficulty": "normal",
+      "best": 22,
+      "seed": "amsterdam-75-4",
+      "bottles": [
+        {"capacity":4,"units":[{"drink":"jenever","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"pisang-ambon","hidden":false},{"drink":"curacao","hidden":false},{"drink":"cherry","hidden":false},{"drink":"oranjebitter","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"oranjebitter","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"jenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"pisang-ambon","hidden":false},{"drink":"cherry","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"advocaat","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"advocaat","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"curacao","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"jenever","hidden":false},{"drink":"oranjebitter","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"cherry","hidden":false},{"drink":"jenever","hidden":false}]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[]}
+      ],
+      "metrics": {"score":26,"botWinRate":0.783,"branching":5.864,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
+      "solution": [[1,7],[5,7],[6,5],[1,6],[0,1],[4,1],[4,8],[4,7],[3,4],[0,3],[0,8],[2,0],[2,4],[2,7],[5,0],[5,8],[1,5],[3,1],[6,3],[6,8],[3,6],[1,3]]
+    },
+    {
+      "id": "amsterdam-76",
+      "number": 76,
+      "difficulty": "normal",
+      "best": 22,
+      "seed": "amsterdam-76-1",
+      "bottles": [
+        {"capacity":4,"units":[{"drink":"jenever","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"bessenjenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"oranjebitter","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"jenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"pisang-ambon","hidden":false},{"drink":"cherry","hidden":false},{"drink":"cherry","hidden":false},{"drink":"bessenjenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"jenever","hidden":false},{"drink":"curacao","hidden":false},{"drink":"jenever","hidden":false},{"drink":"pisang-ambon","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"curacao","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"oranjebitter","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"curacao","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"advocaat","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"bessenjenever","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"curacao","hidden":false},{"drink":"cherry","hidden":false}]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[],"lockedUntil":"pisang-ambon"}
+      ],
+      "metrics": {"score":19,"botWinRate":0.908,"branching":5.864,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
+      "solution": [[0,7],[2,7],[4,0],[4,8],[5,8],[5,7],[0,5],[0,8],[1,0],[3,1],[3,0],[3,4],[0,3],[6,2],[6,4],[1,6],[1,8],[5,1],[4,5],[2,4],[6,2],[6,7]]
+    },
+    {
+      "id": "amsterdam-77",
+      "number": 77,
+      "difficulty": "normal",
+      "best": 20,
+      "seed": "amsterdam-77-0",
+      "bottles": [
+        {"capacity":4,"units":[{"drink":"pisang-ambon","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"cherry","hidden":false},{"drink":"cherry","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"bessenjenever","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"jenever","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"oranjebitter","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"oranjebitter","hidden":false},{"drink":"curacao","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"jenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"advocaat","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"bessenjenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"curacao","hidden":false},{"drink":"oranjebitter","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"jenever","hidden":false},{"drink":"jenever","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[]}
+      ],
+      "metrics": {"score":22,"botWinRate":0.833,"branching":4.75,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
+      "solution": [[1,7],[3,1],[3,8],[3,7],[2,3],[4,2],[5,3],[5,7],[4,5],[2,4],[2,3],[0,2],[5,0],[2,5],[6,7],[6,8],[1,6],[1,8],[4,1],[4,8]]
+    },
+    {
+      "id": "amsterdam-78",
+      "number": 78,
+      "difficulty": "hard",
+      "best": 23,
+      "seed": "amsterdam-78-2",
+      "bottles": [
+        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"oranjebitter","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"parfait-amour","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"curacao","hidden":false},{"drink":"curacao","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"cherry","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"oranjebitter","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"cherry","hidden":false},{"drink":"bessenjenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"jenever","hidden":false},{"drink":"jenever","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"bessenjenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"parfait-amour","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"parfait-amour","hidden":false},{"drink":"jenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"oranjebitter","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"parfait-amour","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"advocaat","hidden":false},{"drink":"curacao","hidden":false},{"drink":"jenever","hidden":false},{"drink":"bessenjenever","hidden":false}]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[],"lockedUntil":"parfait-amour"}
+      ],
+      "metrics": {"score":35,"botWinRate":0.608,"branching":8.261,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
+      "solution": [[3,8],[2,3],[2,8],[4,8],[6,2],[7,8],[5,7],[5,6],[4,5],[7,4],[7,2],[5,7],[1,5],[1,7],[1,9],[3,1],[3,9],[0,3],[0,9],[0,1],[6,5],[6,9],[3,6]]
+    },
+    {
+      "id": "amsterdam-79",
+      "number": 79,
+      "difficulty": "normal",
+      "best": 14,
+      "seed": "amsterdam-79-5",
+      "bottles": [
+        {"capacity":4,"units":[{"drink":"advocaat","hidden":false},{"drink":"curacao","hidden":false},{"drink":"jenever","hidden":false},{"drink":"jenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"jenever","hidden":false},{"drink":"jenever","hidden":false},{"drink":"cherry","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"advocaat","hidden":false},{"drink":"curacao","hidden":false},{"drink":"cherry","hidden":false},{"drink":"cherry","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"pisang-ambon","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"oranjebitter","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"pisang-ambon","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"cherry","hidden":false},{"drink":"advocaat","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"oranjebitter","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[]}
+      ],
+      "metrics": {"score":19,"botWinRate":0.833,"branching":6.071,"deadEndShare":0,"firstMoves":12,"winningFirstMoves":12,"emptyPours":2,"optimal":1},
+      "solution": [[1,6],[1,7],[0,1],[0,6],[2,7],[2,6],[0,2],[4,2],[4,7],[5,6],[5,4],[3,5],[3,2],[3,4]]
+    },
+    {
+      "id": "amsterdam-80",
+      "number": 80,
+      "difficulty": "normal",
+      "best": 22,
+      "seed": "amsterdam-80-5",
+      "bottles": [
+        {"capacity":4,"units":[{"drink":"bessenjenever","hidden":false},{"drink":"curacao","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"cherry","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"bessenjenever","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"advocaat","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"jenever","hidden":false},{"drink":"bessenjenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"oranjebitter","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"jenever","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"jenever","hidden":false},{"drink":"cherry","hidden":false},{"drink":"cherry","hidden":false},{"drink":"jenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"oranjebitter","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"curacao","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"advocaat","hidden":false}]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[],"lockedUntil":"curacao"}
+      ],
+      "metrics": {"score":19,"botWinRate":0.917,"branching":4.591,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
+      "solution": [[0,7],[0,8],[1,0],[3,0],[4,3],[4,7],[3,4],[1,3],[5,1],[5,8],[2,5],[2,4],[2,8],[3,2],[1,3],[1,5],[6,2],[6,3],[6,8],[0,6],[5,0],[5,7]]
+    }
+  ]
+}

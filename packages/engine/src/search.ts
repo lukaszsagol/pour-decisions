@@ -190,8 +190,10 @@ export function analyse(start: readonly Bottle[], options: AutoSolveOptions = {}
   for (const m of first) {
     const next = pour(initial, m).bottles;
     if (isDeadEnd(next)) continue;
-    const sub = solveAuto(next, { bfsNodes: Math.min(options.bfsNodes ?? 150_000, 60_000), fallbackNodes: 100_000 });
-    if (sub.solvable) winning++;
+    // Only solvability matters here, so the fast search goes first.
+    const quick = solveBestFirst(next, { maxNodes: 20_000 });
+    if (quick.solvable) winning++;
+    else if (!quick.exhaustive && solve(next, { maxNodes: 60_000 }).solvable) winning++;
   }
   return {
     solvable: true,

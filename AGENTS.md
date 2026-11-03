@@ -49,6 +49,7 @@ npm run format              # Prettier write + ESLint fix
 npm run dev -w apps/web     # play the game at http://localhost:5173
 npm run build -w apps/web   # production build into apps/web/dist
 npm run e2e -w apps/web     # Playwright tests; saves screenshots to agent-logs/assets/
+npm run levels -- --city tokyo --bar 2   # regenerate one bar (or --city amsterdam, or --all)
 ```
 
 Playwright needs a browser once: `npx playwright install chromium`.

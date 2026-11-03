@@ -22,6 +22,8 @@ export interface PackLevel {
   seed: string;
   bottles: Bottle[];
   metrics: LevelMetrics;
+  /** A solution with `best` pours, as [from, to] pairs. Lets tests re-verify packs quickly. */
+  solution?: [number, number][];
 }
 
 export interface LevelPack {
@@ -44,6 +46,8 @@ export function validatePack(pack: LevelPack): string[] {
       errors.push(`Level ${level.number} has unknown difficulty ${level.difficulty}`);
     if (!Number.isInteger(level.best) || level.best < 1) errors.push(`Level ${level.number} needs a positive best`);
     for (const e of validateLevel(level.bottles)) errors.push(`Level ${level.number}: ${e}`);
+    if (level.solution && level.solution.length !== level.best)
+      errors.push(`Level ${level.number} solution has ${level.solution.length} pours, best is ${level.best}`);
   }
   return errors;
 }

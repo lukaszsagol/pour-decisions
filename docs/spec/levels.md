@@ -34,6 +34,8 @@ Levels are generated offline, verified by the solver, scored, then ordered into 
 }
 ```
 
+Each level also stores `solution`: a list of `[from, to]` pours of length `best`, so tests can re-verify every pack quickly. `metrics` holds the generator's numbers: `score` (0–100), `botWinRate`, `branching`, `deadEndShare`, `firstMoves`, `winningFirstMoves`, `emptyPours` and `optimal` (1 when `best` is proven shortest by breadth-first search; big levels may only have a best-known solution).
+
 `difficulty` is one of `normal`, `hard`, `superHard`. Pack files are generated; never edit them by hand. Regenerate from the command and seeds.
 
 ## Golden levels

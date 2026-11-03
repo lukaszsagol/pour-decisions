@@ -1,12 +1,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { solve, validatePack, type LevelPack } from '../src/index.js';
+import { solve, validatePack, verifySolution, type LevelPack } from '../src/index.js';
 
 const root = path.resolve(import.meta.dirname, '../../../levels');
 
 /** Every committed level pack, read from disk. */
-export function readPacks(): { file: string; pack: LevelPack }[] {
+function readPacks(): { file: string; pack: LevelPack }[] {
   if (!fs.existsSync(root)) return [];
   return fs
     .readdirSync(root)
@@ -27,13 +27,24 @@ describe('committed level packs', () => {
   });
 
   for (const { file, pack } of packs) {
-    it(`${file} is valid and every level solves in exactly best pours`, () => {
+    it(`${file} is valid and every stored solution wins in exactly best pours`, () => {
       expect(validatePack(pack)).toEqual([]);
       for (const level of pack.levels) {
-        const r = solve(level.bottles, { maxNodes: 2_000_000 });
-        expect(r.solvable, `level ${level.number}`).toBe(true);
-        expect(r.moves!.length, `level ${level.number}`).toBe(level.best);
+        expect(level.solution, `level ${level.number}`).toBeDefined();
+        const moves = level.solution!.map(([from, to]) => ({ from, to }));
+        expect(moves.length, `level ${level.number}`).toBe(level.best);
+        expect(verifySolution(level.bottles, moves), `level ${level.number}`).toBe(true);
       }
     });
   }
+
+  it('the first 40 levels have the proven shortest solution as best', () => {
+    for (const { pack } of packs) {
+      for (const level of pack.levels.filter((l) => l.number <= 40)) {
+        const r = solve(level.bottles, { maxNodes: 400_000 });
+        expect(r.exhaustive, `level ${level.number}`).toBe(true);
+        expect(r.moves!.length, `level ${level.number}`).toBe(level.best);
+      }
+    }
+  });
 });

@@ -49,14 +49,14 @@ Depends on: T02, T04
 - [x] `difficulty(level)` combines bot win rate over N runs with the solver metrics into a 0–100 score and a band (`easy`, `normal`, `hard`, `superHard`).
 - [x] Tests: easy golden levels score lower than Tokyo 327; results are deterministic for a given seed.
 
-### T06 · Level generator CLI and first packs · `todo` · L
+### T06 · Level generator CLI and first packs · `in-review` · L
 Depends on: T03, T04, T05
-- [ ] `tools/levelgen` workspace with `npm run levels -- --city tokyo --bar 2` writing `levels/<city>/<bar>.json` in the format in `docs/spec/levels.md`.
-- [ ] Each bar: 20 levels following the curve in `docs/spec/progression.md` (sawtooth, Hard every 5–10, one Super Hard, relief after each).
-- [ ] Generates Amsterdam bars 1–2 first (levels 1–40, the start of the game), then Tokyo bar 2. Tokyo level 327 must be the designed golden level (it is hand-made; insert it at its number).
-- [ ] The first levels teach the game: level 1 has 2 drinks and an obvious solution, drinks are added gradually, no blockers before Amsterdam bar 2, and the locked glass (Amsterdam's blocker) is introduced with an easy teaching level.
-- [ ] Every generated level is solver-verified; a test re-verifies all committed packs.
-- [ ] Re-running with the same seeds reproduces identical files.
+- [x] `tools/levelgen` workspace with `npm run levels -- --city tokyo --bar 2` writing `levels/<city>/<bar>.json` in the format in `docs/spec/levels.md`.
+- [x] Each bar: 20 levels following the curve in `docs/spec/progression.md` (sawtooth, Hard every 5–10, one Super Hard, relief after each).
+- [x] Generates Amsterdam bars 1–2 first (levels 1–40, the start of the game), then Tokyo bar 2. Tokyo level 327 must be the designed golden level (it is hand-made; insert it at its number).
+- [x] The first levels teach the game: level 1 has 2 drinks and an obvious solution, drinks are added gradually, no blockers before Amsterdam bar 2, and the locked glass (Amsterdam's blocker) is introduced with an easy teaching level.
+- [x] Every generated level is solver-verified; a test re-verifies all committed packs.
+- [x] Re-running with the same seeds reproduces identical files.
 
 ### T07 · Theme loading and drink palettes · `in-review` · M
 Depends on: T00

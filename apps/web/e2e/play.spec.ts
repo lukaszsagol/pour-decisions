@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 import { parseBottles, solve, type Bottle } from '@pour/engine';
-import starter from '../../../levels/amsterdam/starter.json' with { type: 'json' };
+import bar1 from '../../../levels/amsterdam/1.json' with { type: 'json' };
 import { open, shot } from './helpers';
 
 const glass = (page: Page, i: number) => page.locator(`.lv-glass[data-index="${i}"]`);
@@ -16,7 +16,7 @@ async function playSolution(page: Page, bottles: Bottle[]): Promise<number> {
 
 test('plays Amsterdam level 1 by tapping to a 3-star win', async ({ page }) => {
   await open(page, '#/level/1');
-  const n = await playSolution(page, starter.levels[0]!.bottles as Bottle[]);
+  const n = await playSolution(page, bar1.levels[0]!.bottles as Bottle[]);
   await expect(page.locator('.lv-move-count')).toHaveText(String(n));
   await expect(page.getByRole('dialog')).toBeVisible();
   await expect(page.getByLabel('3 of 3 stars')).toBeVisible();

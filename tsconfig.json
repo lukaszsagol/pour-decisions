@@ -8,6 +8,9 @@
       "path": "packages/themes"
     },
     {
+      "path": "tools/levelgen"
+    },
+    {
       "path": "apps/web"
     }
   ]

@@ -7,14 +7,9 @@ export interface LevelEntry {
   pack: LevelPack;
 }
 
-/** Level number → level and its pack. Generated packs override the hand-made starter pack. */
+/** Level number → level and its pack. */
 const byNumber = new Map<number, LevelEntry>();
-for (const [path, pack] of Object.entries(modules).sort(
-  ([a], [b]) => Number(b.includes('starter')) - Number(a.includes('starter')),
-)) {
-  void path;
-  for (const level of pack.levels) byNumber.set(level.number, { level, pack });
-}
+for (const pack of Object.values(modules)) for (const level of pack.levels) byNumber.set(level.number, { level, pack });
 
 export function getLevel(number: number): LevelEntry | undefined {
   return byNumber.get(number);
@@ -27,4 +22,11 @@ export function levelNumbers(): number[] {
 
 export function levelsInCity(city: string): LevelEntry[] {
   return [...byNumber.values()].filter((e) => e.pack.city === city).sort((a, b) => a.level.number - b.level.number);
+}
+
+/** Packs of a city in bar order. */
+export function packsInCity(city: string): LevelPack[] {
+  return Object.values(modules)
+    .filter((p) => p.city === city)
+    .sort((a, b) => a.bar - b.bar);
 }
