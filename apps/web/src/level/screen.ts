@@ -3,6 +3,7 @@ import type { Theme } from '@pour/themes';
 import { Container, Graphics } from 'pixi.js';
 import { easeInOut, linear, reducedMotion, tween, wait } from '../anim.js';
 import { esc, icons } from '../icons.js';
+import { sfx } from '../sound.js';
 import { createPixi, invalidate } from '../pixi-util.js';
 import type { Stage } from '../stage.js';
 import { applyTheme, color } from '../theme-css.js';
@@ -163,12 +164,20 @@ export class LevelScreen {
     this.hint = null;
     this.marks.clear();
     switch (event.type) {
+      case 'selected':
+        sfx.play('select');
+        break;
       case 'rejected':
+        sfx.play('reject');
         this.reject(index);
         break;
       case 'poured':
         this.opts.onEvent?.({ type: 'pour', from: event.from, to: event.to, moves: this.game.moves });
+        sfx.play('pour', event.amount);
         void this.animatePour(event.from, event.to, event.amount, bottlesBefore).then(() => {
+          if (event.unlocked.length) sfx.play('unlock');
+          if (event.completed) sfx.play(this.game.status === 'won' ? 'win' : 'complete');
+          else sfx.play('clink');
           if (this.destroyed) return;
           for (const i of event.unlocked) {
             const drink = bottlesBefore[i]!.lockedUntil!;

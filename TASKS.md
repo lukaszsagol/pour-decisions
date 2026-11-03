@@ -147,7 +147,7 @@ Supabase project for family groups (invite codes), synced progress, daily result
 Depends on: T17
 Capacitor wrapper, app icons, splash screens; TestFlight and Google Play closed testing. Needs a Mac with Xcode, an Apple Developer account and a Google Play developer account.
 
-### T22 · Sound · `todo` · S
+### T22 · Sound · `in-review` · S
 Depends on: T10
 Pour, clink, completion and win sounds synthesised with Web Audio (no audio files needed yet); per-city ambience hooks; mute setting.
 

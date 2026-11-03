@@ -13,6 +13,7 @@ import { session } from './session.js';
 import { createStage } from './stage.js';
 import { playLog, progress } from './state.js';
 import './debug.js';
+import { sfx } from './sound.js';
 import { economy } from './economy/config.js';
 
 interface Screen {
@@ -21,6 +22,9 @@ interface Screen {
 }
 
 const tabs: Record<Tab, string> = { map: '#/map', daily: '#/daily', passport: '#/passport', family: '#/family' };
+
+sfx.setMuted(progress.data.settings.muted);
+progress.onChange(() => sfx.setMuted(progress.data.settings.muted));
 
 const stage = createStage(document.getElementById('app')!);
 let current: Screen | null = null;
