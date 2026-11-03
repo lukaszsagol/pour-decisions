@@ -1,0 +1,67 @@
+{
+  "city": "london",
+  "recipes": [
+    {
+      "bar": 1,
+      "name": "Pimm's Cup",
+      "color": "#B5582E",
+      "glass": "highball",
+      "ingredients": [
+        ["50 ml", "Pimm's No. 1"],
+        ["150 ml", "Lemonade (British, fizzy)"],
+        ["A few", "Cucumber slices, strawberries, orange"],
+        ["1 sprig", "Mint"]
+      ],
+      "method": "Fill a tall glass with ice and the fruit. Add the Pimm's, top up with lemonade and stir gently. Finish with the mint."
+    },
+    {
+      "bar": 2,
+      "name": "Gin and tonic",
+      "color": "#E4EEDC",
+      "glass": "highball",
+      "ingredients": [
+        ["50 ml", "London dry gin"],
+        ["150 ml", "Tonic water, chilled"],
+        ["1 wedge", "Lime"]
+      ],
+      "method": "Fill a tall glass with ice. Pour in the gin, then the tonic down a bar spoon so it keeps its fizz. Squeeze the lime over and drop it in."
+    },
+    {
+      "bar": 3,
+      "name": "Bramble",
+      "color": "#6E1E3C",
+      "glass": "rocks",
+      "ingredients": [
+        ["50 ml", "London dry gin"],
+        ["25 ml", "Fresh lemon juice"],
+        ["12.5 ml", "Sugar syrup"],
+        ["15 ml", "Crème de mûre (blackberry liqueur)"]
+      ],
+      "method": "Fill a short glass with crushed ice. Add the gin, lemon and syrup and stir. Pile on more crushed ice, then drizzle the crème de mûre over the top. Garnish with a blackberry."
+    },
+    {
+      "bar": 4,
+      "name": "Shandy",
+      "color": "#E8C468",
+      "glass": "pint",
+      "ingredients": [
+        ["Half a pint", "Lager or bitter"],
+        ["Half a pint", "Lemonade (British, fizzy)"]
+      ],
+      "method": "Tilt a pint glass and pour in the beer, then top up with the lemonade. No stirring: it mixes as it pours."
+    },
+    {
+      "bar": 5,
+      "name": "Sloe gin fizz",
+      "color": "#B23452",
+      "glass": "highball",
+      "ingredients": [
+        ["50 ml", "Sloe gin"],
+        ["25 ml", "Fresh lemon juice"],
+        ["10 ml", "Sugar syrup"],
+        ["Top", "Soda water"]
+      ],
+      "method": "Shake the sloe gin, lemon and syrup hard with ice. Strain into a tall glass over fresh ice and top up with soda."
+    }
+  ]
+}

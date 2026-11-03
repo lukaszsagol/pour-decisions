@@ -1,0 +1,74 @@
+{
+  "city": "tokyo",
+  "recipes": [
+    {
+      "bar": 1,
+      "name": "Umeshu soda",
+      "local": "梅酒ソーダ",
+      "color": "#D9AE52",
+      "glass": "highball",
+      "ingredients": [
+        ["45 ml", "Umeshu (plum wine)"],
+        ["90 ml", "Soda water, chilled"],
+        ["Lots", "Ice"]
+      ],
+      "method": "Fill a tall glass with ice, pour in the umeshu and top up with soda. Stir once from the bottom."
+    },
+    {
+      "bar": 2,
+      "name": "Lemon sour",
+      "local": "レモンサワー",
+      "color": "#EDE7AE",
+      "glass": "highball",
+      "ingredients": [
+        ["45 ml", "Shochu"],
+        ["20 ml", "Fresh lemon juice"],
+        ["100 ml", "Soda water, chilled"],
+        ["Half", "Lemon, sliced"]
+      ],
+      "method": "Fill a tall glass with ice and lemon slices. Add the shochu and lemon juice, top up with soda and stir once."
+    },
+    {
+      "bar": 3,
+      "name": "Yuzu highball",
+      "local": "柚子ハイボール",
+      "color": "#E8C862",
+      "glass": "highball",
+      "ingredients": [
+        ["45 ml", "Japanese whisky"],
+        ["135 ml", "Chilled soda water"],
+        ["1 strip", "Yuzu peel, or lemon"],
+        ["Lots", "Clear ice"]
+      ],
+      "method": "Fill a tall glass with ice and stir the whisky until it's well chilled. Top up with soda, stir once, then twist the peel over the glass."
+    },
+    {
+      "bar": 4,
+      "name": "Mizuwari",
+      "local": "水割り",
+      "color": "#C88E2C",
+      "glass": "rocks",
+      "ingredients": [
+        ["45 ml", "Japanese whisky"],
+        ["90 ml", "Cold still water"],
+        ["Lots", "Ice"]
+      ],
+      "method": "Fill a glass with ice and stir to chill it. Pour off any water, add the whisky and stir thirteen and a half times. Add the cold water and stir three and a half times more."
+    },
+    {
+      "bar": 5,
+      "name": "Midori sour",
+      "local": "ミドリサワー",
+      "color": "#7CCF5C",
+      "glass": "rocks",
+      "ingredients": [
+        ["30 ml", "Midori melon liqueur"],
+        ["30 ml", "Vodka"],
+        ["15 ml", "Fresh lemon juice"],
+        ["15 ml", "Fresh lime juice"],
+        ["Top", "Soda water"]
+      ],
+      "method": "Shake the Midori, vodka and citrus with ice. Strain over fresh ice and top up with a splash of soda."
+    }
+  ]
+}

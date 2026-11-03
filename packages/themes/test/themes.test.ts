@@ -89,10 +89,15 @@ describe('drink palettes', () => {
 });
 
 describe('recipes', () => {
-  it('Amsterdam has a valid recipe for each of its five bars', async () => {
-    const { recipesFor, validateRecipes } = await import('../src/index.js');
-    const recipes = recipesFor('amsterdam');
-    expect(recipes.map((r) => r.bar)).toEqual([1, 2, 3, 4, 5]);
-    expect(validateRecipes({ city: 'amsterdam', recipes })).toEqual([]);
+  it('every city has a valid recipe for each of its five bars (20 cards)', async () => {
+    const { cityIds, recipesFor, validateRecipes } = await import('../src/index.js');
+    for (const city of cityIds) {
+      const recipes = recipesFor(city);
+      expect(
+        recipes.map((r) => r.bar),
+        city,
+      ).toEqual([1, 2, 3, 4, 5]);
+      expect(validateRecipes({ city, recipes }), city).toEqual([]);
+    }
   });
 });
