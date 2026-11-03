@@ -31,11 +31,11 @@ A `Game` class in `packages/engine/src/game.ts` that the client drives.
 - [x] Serialisable to and from JSON (to resume a level).
 - [x] Tests cover every bullet, including playing Tokyo 327's solver solution to a 3-star "perfect" win.
 
-### T03 · Seeded random numbers and the dealer · `todo` · S
+### T03 · Seeded random numbers and the dealer · `in-review` · S
 Depends on: T00
-- [ ] Seeded RNG (for example mulberry32) in `packages/engine/src/random.ts`; same seed gives the same sequence.
-- [ ] `deal({ drinks, capacity, empties, seed, constraints })` returns bottles per `docs/spec/levels.md` step 1 (no complete bottle at start, capped same-drink runs).
-- [ ] Tests: determinism, every drink appears `capacity` times, constraints hold over 1 000 seeds.
+- [x] Seeded RNG (for example mulberry32) in `packages/engine/src/random.ts`; same seed gives the same sequence.
+- [x] `deal({ drinks, capacity, empties, seed, constraints })` returns bottles per `docs/spec/levels.md` step 1 (no complete bottle at start, capped same-drink runs).
+- [x] Tests: determinism, every drink appears `capacity` times, constraints hold over 1 000 seeds.
 
 ### T04 · Solver metrics and larger levels · `todo` · M
 Depends on: T00

@@ -4,3 +4,5 @@ export * from './solver.js';
 export * from './level.js';
 export * from './game.js';
 export * from './pack.js';
+export * from './random.js';
+export * from './deal.js';
