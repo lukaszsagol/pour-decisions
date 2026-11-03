@@ -170,7 +170,7 @@ Planning score, plan-ahead mode, memory mode, adaptive difficulty and progress c
 
 The art style changes to pixel art. Read `docs/spec/pixel-art.md` and look at everything in `docs/design/pixel/` before starting any task in this phase. Game logic, levels, saves and tests stay as they are; only drawing and styling change. Keep the game playable after every task.
 
-### T25 · Pixel rendering foundation · `todo` · M
+### T25 · Pixel rendering foundation · `in-progress` · M
 Depends on: T24
 - [ ] A small pixel-drawing module in `apps/web/src/pixel/` ported from `docs/design/pixel/reference/pixel.py` and the helpers in `ams_pixel3.py`: pixel buffer, `px`, `rect`, `hline`, `vline`, `sprite`, `line`, `mix`, ordered dither, `shadowBox`, digit sprites. Unit-tested.
 - [ ] Buffers become Pixi textures with nearest-neighbour filtering. A helper redraws a buffer only when its content changes.
