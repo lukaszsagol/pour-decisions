@@ -10,6 +10,8 @@ export default defineConfig({
     viewport: { width: 390, height: 844 },
     deviceScaleFactor: 2,
     reducedMotion: 'reduce',
+    // PW_SOFTWARE_GL=1 renders without the GPU, like CI.
+    launchOptions: process.env.PW_SOFTWARE_GL ? { args: ['--disable-gpu'] } : {},
   },
   projects: [
     {

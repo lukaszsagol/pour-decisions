@@ -108,7 +108,10 @@ export class LevelScreen {
     }
     this.disposePixi = dispose;
     this.el.prepend(app.canvas);
-    app.stage.addChild(drawLevelDecor(this.theme), this.glassLayer);
+    // The backdrop never changes: render it once into a texture.
+    const decor = drawLevelDecor(this.theme);
+    decor.cacheAsTexture(true);
+    app.stage.addChild(decor, this.glassLayer);
     if (!reducedMotion()) onFrame((ms) => this.views.forEach((v) => v.wobble(ms)));
     this.el.insertAdjacentHTML('beforeend', this.chromeHtml());
     this.bindChrome();
@@ -200,8 +203,8 @@ export class LevelScreen {
           this.afterChange();
           this.render();
           if (!reducedMotion()) this.dip(event.to);
-          const next = this.queue.shift();
-          if (next !== undefined) this.onGlass(next);
+          // Replay queued taps until one starts the next pour (select + target can both be waiting).
+          while (this.queue.length > 0 && !this.pouring) this.onGlass(this.queue.shift()!);
         });
         this.render();
         return;
