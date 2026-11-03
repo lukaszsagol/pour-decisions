@@ -19,7 +19,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":19,"botWinRate":0.85,"branching":5.875,"deadEndShare":0,"firstMoves":12,"winningFirstMoves":12,"emptyPours":2,"optimal":1},
+      "metrics": {"score":16,"botWinRate":0.908,"branching":5.625,"deadEndShare":0,"firstMoves":12,"winningFirstMoves":12,"emptyPours":2,"optimal":1},
       "solution": [[0,6],[1,6],[3,1],[3,7],[2,3],[4,0],[4,7],[2,4],[2,6],[5,7],[5,3],[1,5],[0,1],[0,3],[5,0],[5,6]]
     },
     {
@@ -38,7 +38,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":17,"botWinRate":0.875,"branching":7.5,"deadEndShare":0,"firstMoves":12,"winningFirstMoves":12,"emptyPours":1,"optimal":1},
+      "metrics": {"score":14,"botWinRate":0.933,"branching":7.444,"deadEndShare":0,"firstMoves":12,"winningFirstMoves":12,"emptyPours":1,"optimal":1},
       "solution": [[3,6],[0,3],[5,6],[2,5],[4,2],[4,0],[4,6],[1,4],[2,4],[1,2],[3,1],[5,3],[0,5],[0,6],[2,0],[1,2],[5,1],[0,5]]
     },
     {
@@ -58,7 +58,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[],"lockedUntil":"advocaat"}
       ],
-      "metrics": {"score":14,"botWinRate":0.967,"branching":4.176,"deadEndShare":0,"firstMoves":12,"winningFirstMoves":12,"emptyPours":2,"optimal":1},
+      "metrics": {"score":12,"botWinRate":1,"branching":4,"deadEndShare":0,"firstMoves":12,"winningFirstMoves":12,"emptyPours":2,"optimal":1},
       "solution": [[0,6],[2,0],[2,7],[4,7],[4,6],[0,4],[3,0],[1,3],[1,0],[1,7],[3,1],[3,0],[2,3],[2,6],[5,3],[5,7],[1,5]]
     },
     {
@@ -77,7 +77,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":13,"botWinRate":0.992,"branching":4,"deadEndShare":0,"firstMoves":12,"winningFirstMoves":12,"emptyPours":2,"optimal":1},
+      "metrics": {"score":14,"botWinRate":0.967,"branching":3.824,"deadEndShare":0,"firstMoves":12,"winningFirstMoves":12,"emptyPours":2,"optimal":1},
       "solution": [[1,6],[1,7],[1,6],[4,6],[4,7],[0,4],[0,1],[2,0],[3,2],[3,7],[2,3],[2,0],[1,2],[5,4],[5,0],[5,7],[2,5]]
     },
     {
@@ -97,7 +97,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[],"lockedUntil":"cherry"}
       ],
-      "metrics": {"score":16,"botWinRate":0.883,"branching":8,"deadEndShare":0,"firstMoves":12,"winningFirstMoves":12,"emptyPours":1,"optimal":1},
+      "metrics": {"score":19,"botWinRate":0.825,"branching":7.824,"deadEndShare":0,"firstMoves":12,"winningFirstMoves":12,"emptyPours":1,"optimal":1},
       "solution": [[1,6],[3,6],[5,6],[3,5],[0,3],[0,1],[2,3],[2,0],[4,2],[4,0],[2,4],[0,2],[4,0],[5,4],[1,5],[3,1],[3,6]]
     },
     {
@@ -116,7 +116,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":13,"botWinRate":1,"branching":3.222,"deadEndShare":0,"firstMoves":12,"winningFirstMoves":12,"emptyPours":2,"optimal":1},
+      "metrics": {"score":14,"botWinRate":0.983,"branching":3.056,"deadEndShare":0,"firstMoves":12,"winningFirstMoves":12,"emptyPours":2,"optimal":1},
       "solution": [[0,6],[2,7],[3,0],[5,3],[5,7],[0,5],[0,7],[2,0],[1,2],[1,0],[1,6],[4,2],[4,6],[4,7],[3,4],[2,3],[5,1],[5,6]]
     },
     {
@@ -135,27 +135,27 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":10,"botWinRate":1,"branching":7,"deadEndShare":0,"firstMoves":12,"winningFirstMoves":12,"emptyPours":1,"optimal":1},
+      "metrics": {"score":11,"botWinRate":0.983,"branching":6.824,"deadEndShare":0,"firstMoves":12,"winningFirstMoves":12,"emptyPours":1,"optimal":1},
       "solution": [[3,6],[4,3],[5,6],[1,5],[1,6],[1,4],[0,1],[2,0],[2,1],[4,2],[4,1],[5,4],[0,5],[3,0],[5,3],[0,5],[0,4]]
     },
     {
       "id": "amsterdam-48",
       "number": 48,
       "difficulty": "normal",
-      "best": 14,
-      "seed": "amsterdam-48-2",
+      "best": 18,
+      "seed": "amsterdam-48-0",
       "bottles": [
-        {"capacity":4,"units":[{"drink":"curacao","hidden":false},{"drink":"cherry","hidden":false},{"drink":"curacao","hidden":false},{"drink":"oranjebitter","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"oranjebitter","hidden":false},{"drink":"jenever","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"advocaat","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"advocaat","hidden":false},{"drink":"curacao","hidden":false},{"drink":"jenever","hidden":false},{"drink":"jenever","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"jenever","hidden":false},{"drink":"curacao","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"pisang-ambon","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"pisang-ambon","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"cherry","hidden":false},{"drink":"cherry","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"advocaat","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"curacao","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"jenever","hidden":false},{"drink":"advocaat","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"pisang-ambon","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"curacao","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"cherry","hidden":false},{"drink":"cherry","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"jenever","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"jenever","hidden":false},{"drink":"advocaat","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"oranjebitter","hidden":false},{"drink":"cherry","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"curacao","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"advocaat","hidden":false},{"drink":"jenever","hidden":false},{"drink":"curacao","hidden":false},{"drink":"oranjebitter","hidden":false}]},
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":9,"botWinRate":1,"branching":7.429,"deadEndShare":0,"firstMoves":12,"winningFirstMoves":12,"emptyPours":1,"optimal":1},
-      "solution": [[1,6],[0,1],[5,6],[1,5],[2,1],[0,2],[4,0],[3,4],[3,2],[1,3],[5,1],[0,5],[2,0],[2,6]]
+      "metrics": {"score":13,"botWinRate":1,"branching":5.111,"deadEndShare":0,"firstMoves":12,"winningFirstMoves":12,"emptyPours":2,"optimal":1},
+      "solution": [[0,6],[1,7],[1,6],[2,1],[2,7],[3,6],[0,3],[0,7],[0,2],[4,2],[5,4],[5,2],[3,5],[4,3],[4,1],[3,4],[5,3],[5,6]]
     },
     {
       "id": "amsterdam-49",
@@ -174,7 +174,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":22,"botWinRate":0.842,"branching":3.9,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
+      "metrics": {"score":20,"botWinRate":0.875,"branching":3.7,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
       "solution": [[0,7],[0,8],[1,8],[2,7],[3,1],[4,2],[0,4],[5,0],[5,8],[1,5],[1,0],[4,1],[4,8],[2,4],[2,5],[2,3],[6,1],[6,7],[3,6],[3,4]]
     },
     {
@@ -192,7 +192,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":12,"botWinRate":0.992,"branching":4.867,"deadEndShare":0,"firstMoves":10,"winningFirstMoves":10,"emptyPours":2,"optimal":1},
+      "metrics": {"score":11,"botWinRate":1,"branching":4.733,"deadEndShare":0,"firstMoves":10,"winningFirstMoves":10,"emptyPours":2,"optimal":1},
       "solution": [[0,5],[2,0],[2,6],[1,2],[3,5],[1,3],[1,6],[3,1],[3,6],[3,5],[4,6],[4,0],[4,2],[0,4],[0,1]]
     },
     {
@@ -213,7 +213,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[],"lockedUntil":"cherry"}
       ],
-      "metrics": {"score":30,"botWinRate":0.675,"branching":5.381,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
+      "metrics": {"score":29,"botWinRate":0.708,"branching":5.238,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
       "solution": [[0,7],[3,7],[1,3],[1,8],[5,7],[2,5],[6,8],[3,6],[1,3],[0,1],[3,0],[2,3],[2,8],[4,2],[4,3],[5,2],[5,1],[0,5],[0,1],[6,4],[6,7]]
     },
     {
@@ -233,7 +233,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":21,"botWinRate":0.875,"branching":4.571,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
+      "metrics": {"score":24,"botWinRate":0.808,"branching":4.333,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
       "solution": [[1,7],[3,8],[4,8],[5,1],[5,7],[5,8],[1,5],[0,1],[0,3],[0,5],[2,0],[2,1],[3,2],[3,4],[0,3],[6,7],[6,8],[6,3],[4,6],[2,4],[1,2]]
     },
     {
@@ -253,7 +253,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":21,"botWinRate":0.842,"branching":4.105,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
+      "metrics": {"score":20,"botWinRate":0.867,"branching":3.895,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
       "solution": [[1,7],[2,8],[0,2],[5,7],[4,5],[3,4],[3,8],[3,7],[0,3],[5,0],[1,5],[4,1],[5,4],[1,5],[1,3],[6,8],[6,7],[2,6],[0,2]]
     },
     {
@@ -275,7 +275,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[],"lockedUntil":"pisang-ambon"}
       ],
-      "metrics": {"score":31,"botWinRate":0.708,"branching":7.92,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
+      "metrics": {"score":33,"botWinRate":0.658,"branching":7.4,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
       "solution": [[0,8],[0,9],[4,8],[5,9],[1,5],[6,8],[6,0],[4,6],[4,1],[2,4],[3,4],[3,6],[5,3],[5,9],[1,5],[1,9],[0,1],[2,5],[0,2],[7,4],[7,2],[7,1],[3,7],[2,3],[2,8]]
     },
     {
@@ -294,29 +294,28 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":19,"botWinRate":0.875,"branching":5.222,"deadEndShare":0,"firstMoves":12,"winningFirstMoves":12,"emptyPours":2,"optimal":1},
+      "metrics": {"score":18,"botWinRate":0.892,"branching":4.889,"deadEndShare":0,"firstMoves":12,"winningFirstMoves":12,"emptyPours":2,"optimal":1},
       "solution": [[3,6],[0,3],[0,6],[2,0],[2,7],[2,6],[1,2],[1,0],[1,7],[4,7],[4,1],[4,7],[2,4],[5,1],[5,3],[5,1],[3,5],[3,4]]
     },
     {
       "id": "amsterdam-56",
       "number": 56,
       "difficulty": "normal",
-      "best": 17,
-      "seed": "amsterdam-56-5",
+      "best": 19,
+      "seed": "amsterdam-56-3",
       "bottles": [
-        {"capacity":4,"units":[{"drink":"pisang-ambon","hidden":false},{"drink":"cherry","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"advocaat","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"curacao","hidden":false},{"drink":"curacao","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"cherry","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"bessenjenever","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"bessenjenever","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"jenever","hidden":false},{"drink":"jenever","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"pisang-ambon","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"pisang-ambon","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"curacao","hidden":false},{"drink":"curacao","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"bessenjenever","hidden":false},{"drink":"cherry","hidden":false},{"drink":"jenever","hidden":false},{"drink":"cherry","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"advocaat","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"jenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"jenever","hidden":false},{"drink":"bessenjenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"bessenjenever","hidden":false},{"drink":"curacao","hidden":false},{"drink":"curacao","hidden":false},{"drink":"bessenjenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"oranjebitter","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"advocaat","hidden":false},{"drink":"pisang-ambon","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"advocaat","hidden":false},{"drink":"cherry","hidden":false},{"drink":"cherry","hidden":false},{"drink":"jenever","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"cherry","hidden":false},{"drink":"pisang-ambon","hidden":false},{"drink":"curacao","hidden":false},{"drink":"advocaat","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"jenever","hidden":false},{"drink":"curacao","hidden":false},{"drink":"bessenjenever","hidden":false},{"drink":"pisang-ambon","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"pisang-ambon","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"oranjebitter","hidden":false},{"drink":"jenever","hidden":false}]},
         {"capacity":4,"units":[]},
-        {"capacity":4,"units":[]},
-        {"capacity":4,"units":[],"lockedUntil":"oranjebitter"}
+        {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":27,"botWinRate":0.708,"branching":5.824,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
-      "solution": [[1,7],[0,1],[2,0],[2,8],[0,2],[0,7],[3,0],[5,7],[5,3],[5,7],[2,5],[6,3],[6,8],[1,6],[4,1],[4,8],[0,4]]
+      "metrics": {"score":28,"botWinRate":0.708,"branching":3.947,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
+      "solution": [[2,7],[4,2],[4,8],[4,7],[5,7],[1,5],[1,8],[0,1],[3,0],[3,4],[2,3],[5,1],[5,8],[0,5],[0,2],[0,4],[6,5],[6,2],[6,7]]
     },
     {
       "id": "amsterdam-57",
@@ -336,7 +335,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[],"lockedUntil":"pisang-ambon"}
       ],
-      "metrics": {"score":18,"botWinRate":0.933,"branching":5,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
+      "metrics": {"score":15,"botWinRate":0.983,"branching":4.81,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
       "solution": [[1,7],[5,1],[4,5],[2,4],[6,8],[6,7],[2,6],[1,2],[1,8],[4,1],[5,4],[5,2],[0,5],[0,7],[0,8],[0,5],[3,5],[3,8],[3,1],[4,3],[4,6]]
     },
     {
@@ -356,7 +355,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":26,"botWinRate":0.775,"branching":4.238,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
+      "metrics": {"score":25,"botWinRate":0.792,"branching":4.048,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
       "solution": [[0,7],[2,8],[3,0],[5,7],[5,8],[1,5],[1,3],[4,1],[4,8],[3,4],[3,5],[4,3],[2,4],[2,7],[6,1],[6,4],[6,8],[5,6],[0,5],[0,4],[0,5]]
     },
     {
@@ -376,7 +375,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":24,"botWinRate":0.8,"branching":4.286,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
+      "metrics": {"score":24,"botWinRate":0.8,"branching":4.048,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
       "solution": [[0,7],[0,8],[0,7],[3,7],[4,0],[4,8],[2,4],[2,0],[1,2],[1,4],[1,3],[2,1],[3,2],[5,3],[5,4],[5,7],[6,0],[6,8],[6,1],[3,6],[2,3]]
     },
     {
@@ -397,7 +396,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[],"lockedUntil":"pisang-ambon"}
       ],
-      "metrics": {"score":21,"botWinRate":0.875,"branching":5,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
+      "metrics": {"score":20,"botWinRate":0.883,"branching":4.81,"deadEndShare":0,"firstMoves":14,"winningFirstMoves":14,"emptyPours":2,"optimal":1},
       "solution": [[1,7],[2,8],[2,7],[3,2],[3,8],[4,7],[4,2],[0,4],[0,7],[4,0],[1,4],[1,3],[1,4],[6,8],[5,6],[5,3],[6,5],[6,8],[5,6],[2,5],[2,4]]
     }
   ]

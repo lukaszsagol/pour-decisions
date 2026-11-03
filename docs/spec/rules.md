@@ -20,8 +20,9 @@ A pour from A to B is legal when all of these hold:
 3. B is not full.
 4. B is empty, or B's top unit is the same drink as A's top unit.
 5. If B has an **only** rule, A's top drink is that drink.
+6. B has room for A's whole top run (the contiguous same-drink units at the top).
 
-A pour moves A's whole top run (the contiguous same-drink units at the top), or as many as fit in B.
+A pour moves A's whole top run. A run is never split between two glasses: if it does not all fit, the pour is illegal. (Changed by the owner on 2026-11-03; earlier the pour moved as many units as fit.)
 
 Pouring out of a complete bottle is legal but pointless; the solver and hint system ignore it.
 

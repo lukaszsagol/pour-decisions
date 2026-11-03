@@ -23,7 +23,6 @@ function appeal(bottles: readonly Bottle[], m: Move, last: Move | null): number 
   let score = 0;
   if (b.units.length > 0) score += 3; // stacking onto the same drink
   if (b.units.length + run >= b.capacity && b.units.length > 0) score += 1;
-  if (b.capacity - b.units.length >= run) score += 1; // the whole run fits
   if (run === a.units.length && b.units.length === 0) score -= 4; // moving a clean glass into an empty one
   if (b.units.length === 0 && run < a.units.length) score += 0.5; // digging something out
   if (last && last.from === m.to && last.to === m.from) score -= 6; // pouring straight back

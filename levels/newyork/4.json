@@ -22,7 +22,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":39,"botWinRate":0.542,"branching":3.417,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":2,"optimal":1},
+      "metrics": {"score":36,"botWinRate":0.6,"branching":3.208,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":2,"optimal":1},
       "solution": [[0,9],[1,10],[5,1],[3,5],[3,9],[0,3],[6,0],[6,10],[8,10],[8,6],[3,8],[4,3],[4,6],[2,4],[2,9],[2,0],[7,4],[1,7],[1,9],[7,1],[5,7],[5,10],[8,2],[3,8]]
     },
     {
@@ -44,7 +44,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":47,"botWinRate":0.425,"branching":3.92,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":3,"optimal":1},
+      "metrics": {"score":48,"botWinRate":0.4,"branching":3.48,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":3,"optimal":1},
       "solution": [[0,9],[1,10],[3,9],[0,3],[4,10],[1,4],[7,9],[5,7],[5,1],[7,5],[7,1],[6,7],[2,6],[2,3],[8,0],[8,10],[8,1],[0,8],[4,0],[4,8],[2,4],[5,4],[2,5],[6,5],[6,7]]
     },
     {
@@ -66,7 +66,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":45,"botWinRate":0.492,"branching":3.704,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":3,"optimal":1},
+      "metrics": {"score":52,"botWinRate":0.342,"branching":3,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":3,"optimal":1},
       "solution": [[0,9],[1,10],[4,1],[7,0],[8,9],[2,8],[5,2],[6,5],[3,6],[3,10],[6,3],[6,10],[2,6],[8,2],[1,8],[4,1],[4,10],[0,4],[0,1],[7,0],[7,2],[5,7],[5,9],[3,5],[3,9],[8,0],[7,8]]
     },
     {
@@ -89,7 +89,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[],"only":"cosmopolitan"}
       ],
-      "metrics": {"score":36,"botWinRate":0.675,"branching":8.357,"deadEndShare":0,"firstMoves":19,"winningFirstMoves":19,"emptyPours":3,"optimal":0},
+      "metrics": {"score":34,"botWinRate":0.717,"branching":8.179,"deadEndShare":0,"firstMoves":19,"winningFirstMoves":19,"emptyPours":3,"optimal":0},
       "solution": [[0,9],[1,10],[2,0],[4,9],[5,9],[5,10],[8,11],[1,8],[1,5],[0,1],[0,11],[0,8],[3,1],[3,9],[3,4],[2,3],[6,2],[6,3],[6,10],[6,11],[7,2],[7,3],[7,5],[8,7],[4,8],[4,5],[2,4],[2,8]]
     },
     {
@@ -111,52 +111,52 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":40,"botWinRate":0.517,"branching":3.5,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":2,"optimal":1},
+      "metrics": {"score":42,"botWinRate":0.467,"branching":3.208,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":2,"optimal":1},
       "solution": [[4,9],[4,10],[5,9],[5,10],[4,5],[6,4],[6,10],[6,9],[0,6],[0,10],[1,6],[7,1],[7,4],[1,7],[1,0],[3,1],[2,3],[2,5],[2,7],[0,2],[8,1],[8,5],[3,8],[3,6]]
     },
     {
       "id": "newyork-266",
       "number": 266,
       "difficulty": "normal",
-      "best": 28,
-      "seed": "newyork-266-0",
+      "best": 25,
+      "seed": "newyork-266-5",
       "bottles": [
-        {"capacity":4,"units":[{"drink":"aviation","hidden":false},{"drink":"dry-martini","hidden":false},{"drink":"grasshopper","hidden":false},{"drink":"whiskey-sour","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"grasshopper","hidden":false},{"drink":"sidecar","hidden":false},{"drink":"sidecar","hidden":false},{"drink":"long-island","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"cosmopolitan","hidden":false},{"drink":"aviation","hidden":false},{"drink":"clover-club","hidden":false},{"drink":"dry-martini","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"aviation","hidden":false},{"drink":"clover-club","hidden":false},{"drink":"cosmopolitan","hidden":false},{"drink":"grasshopper","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"whiskey-sour","hidden":false},{"drink":"whiskey-sour","hidden":false},{"drink":"manhattan","hidden":false},{"drink":"grasshopper","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"cosmopolitan","hidden":false},{"drink":"long-island","hidden":false},{"drink":"whiskey-sour","hidden":false},{"drink":"manhattan","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"sidecar","hidden":false},{"drink":"dry-martini","hidden":false},{"drink":"long-island","hidden":false},{"drink":"manhattan","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"cosmopolitan","hidden":false},{"drink":"dry-martini","hidden":false},{"drink":"clover-club","hidden":false},{"drink":"aviation","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"long-island","hidden":false},{"drink":"manhattan","hidden":false},{"drink":"sidecar","hidden":false},{"drink":"clover-club","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"aviation","hidden":false},{"drink":"cosmopolitan","hidden":false},{"drink":"sidecar","hidden":false},{"drink":"aviation","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"aviation","hidden":false},{"drink":"clover-club","hidden":false},{"drink":"sidecar","hidden":false},{"drink":"grasshopper","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"sidecar","hidden":false},{"drink":"cosmopolitan","hidden":false},{"drink":"clover-club","hidden":false},{"drink":"clover-club","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"aviation","hidden":false},{"drink":"long-island","hidden":false},{"drink":"grasshopper","hidden":false},{"drink":"long-island","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"long-island","hidden":false},{"drink":"dry-martini","hidden":false},{"drink":"dry-martini","hidden":false},{"drink":"manhattan","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"dry-martini","hidden":false},{"drink":"whiskey-sour","hidden":false},{"drink":"whiskey-sour","hidden":false},{"drink":"cosmopolitan","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"cosmopolitan","hidden":false},{"drink":"dry-martini","hidden":false},{"drink":"whiskey-sour","hidden":false},{"drink":"whiskey-sour","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"clover-club","hidden":false},{"drink":"long-island","hidden":false},{"drink":"manhattan","hidden":false},{"drink":"grasshopper","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"manhattan","hidden":false},{"drink":"sidecar","hidden":false},{"drink":"grasshopper","hidden":false},{"drink":"manhattan","hidden":false}]},
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":51,"botWinRate":0.375,"branching":3.821,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":3,"optimal":1},
-      "solution": [[2,9],[5,10],[0,5],[3,0],[6,10],[1,6],[8,2],[8,1],[8,10],[6,8],[6,9],[1,6],[0,1],[0,9],[4,1],[4,10],[5,4],[5,8],[3,5],[2,3],[0,2],[3,0],[2,3],[2,5],[7,3],[7,0],[7,9],[5,7]]
+      "metrics": {"score":54,"botWinRate":0.25,"branching":3.32,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":2,"optimal":1},
+      "solution": [[1,9],[6,10],[7,9],[8,7],[8,9],[1,8],[2,1],[5,2],[5,10],[6,5],[2,6],[8,2],[4,8],[4,5],[3,4],[3,9],[3,4],[0,3],[0,2],[0,6],[0,3],[7,8],[7,4],[1,7],[1,3]]
     },
     {
       "id": "newyork-267",
       "number": 267,
       "difficulty": "normal",
       "best": 29,
-      "seed": "newyork-267-5",
+      "seed": "newyork-267-1",
       "bottles": [
-        {"capacity":4,"units":[{"drink":"clover-club","hidden":false},{"drink":"cosmopolitan","hidden":false},{"drink":"dry-martini","hidden":false},{"drink":"grasshopper","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"long-island","hidden":false},{"drink":"dry-martini","hidden":false},{"drink":"whiskey-sour","hidden":false},{"drink":"cosmopolitan","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"manhattan","hidden":false},{"drink":"grasshopper","hidden":false},{"drink":"long-island","hidden":false},{"drink":"dry-martini","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"cosmopolitan","hidden":false},{"drink":"aviation","hidden":false},{"drink":"whiskey-sour","hidden":false},{"drink":"grasshopper","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"whiskey-sour","hidden":false},{"drink":"grasshopper","hidden":false},{"drink":"cosmopolitan","hidden":false},{"drink":"whiskey-sour","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"aviation","hidden":false},{"drink":"sidecar","hidden":false},{"drink":"aviation","hidden":false},{"drink":"clover-club","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"sidecar","hidden":false},{"drink":"sidecar","hidden":false},{"drink":"long-island","hidden":false},{"drink":"aviation","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"manhattan","hidden":false},{"drink":"dry-martini","hidden":false},{"drink":"manhattan","hidden":false},{"drink":"clover-club","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"long-island","hidden":false},{"drink":"manhattan","hidden":false},{"drink":"sidecar","hidden":false},{"drink":"clover-club","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"sidecar","hidden":false},{"drink":"whiskey-sour","hidden":false},{"drink":"clover-club","hidden":false},{"drink":"long-island","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"sidecar","hidden":false},{"drink":"aviation","hidden":false},{"drink":"grasshopper","hidden":false},{"drink":"grasshopper","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"aviation","hidden":false},{"drink":"manhattan","hidden":false},{"drink":"dry-martini","hidden":false},{"drink":"manhattan","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"grasshopper","hidden":false},{"drink":"sidecar","hidden":false},{"drink":"manhattan","hidden":false},{"drink":"cosmopolitan","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"whiskey-sour","hidden":false},{"drink":"manhattan","hidden":false},{"drink":"dry-martini","hidden":false},{"drink":"long-island","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"dry-martini","hidden":false},{"drink":"long-island","hidden":false},{"drink":"sidecar","hidden":false},{"drink":"grasshopper","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"whiskey-sour","hidden":false},{"drink":"clover-club","hidden":false},{"drink":"dry-martini","hidden":false},{"drink":"aviation","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"cosmopolitan","hidden":false},{"drink":"clover-club","hidden":false},{"drink":"cosmopolitan","hidden":false},{"drink":"aviation","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"long-island","hidden":false},{"drink":"cosmopolitan","hidden":false},{"drink":"whiskey-sour","hidden":false},{"drink":"clover-club","hidden":false}]},
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":53,"botWinRate":0.35,"branching":4.828,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":3,"optimal":1},
-      "solution": [[0,9],[0,10],[1,0],[2,10],[3,9],[4,1],[4,0],[4,9],[1,4],[1,10],[1,2],[0,1],[3,4],[5,0],[5,3],[6,3],[7,0],[8,0],[8,5],[7,8],[7,10],[8,7],[2,8],[2,9],[2,7],[6,8],[5,6],[3,5],[1,3]]
+      "metrics": {"score":56,"botWinRate":0.275,"branching":5.103,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":3,"optimal":1},
+      "solution": [[1,9],[2,10],[5,9],[6,1],[2,6],[2,10],[1,2],[1,5],[7,2],[3,7],[3,10],[5,3],[0,5],[0,1],[4,5],[8,1],[8,0],[7,8],[7,1],[8,7],[5,8],[4,5],[4,10],[0,4],[3,0],[3,9],[6,5],[6,1],[4,6]]
     },
     {
       "id": "newyork-268",
@@ -178,7 +178,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":56,"botWinRate":0.267,"branching":5.786,"deadEndShare":0,"firstMoves":20,"winningFirstMoves":20,"emptyPours":3,"optimal":1},
+      "metrics": {"score":54,"botWinRate":0.317,"branching":5,"deadEndShare":0,"firstMoves":20,"winningFirstMoves":20,"emptyPours":3,"optimal":1},
       "solution": [[1,10],[0,1],[3,10],[4,10],[5,0],[6,11],[8,11],[8,5],[4,8],[9,8],[9,11],[0,9],[7,0],[7,3],[4,7],[0,4],[7,0],[2,7],[2,0],[5,2],[3,5],[1,3],[1,0],[6,7],[6,5],[6,9],[8,1],[3,8]]
     },
     {
@@ -199,7 +199,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":36,"botWinRate":0.592,"branching":4.542,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
+      "metrics": {"score":37,"botWinRate":0.567,"branching":4.208,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
       "solution": [[0,8],[1,9],[4,8],[6,8],[7,0],[7,9],[6,7],[1,6],[2,1],[3,2],[3,9],[3,8],[5,1],[5,3],[4,5],[2,4],[2,5],[2,7],[6,3],[0,6],[5,0],[4,5],[1,4],[1,7]]
     },
     {
@@ -221,7 +221,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":46,"botWinRate":0.467,"branching":4.536,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":3,"optimal":1},
+      "metrics": {"score":46,"botWinRate":0.467,"branching":4.357,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":3,"optimal":1},
       "solution": [[0,9],[0,10],[1,9],[1,0],[2,10],[3,1],[7,3],[7,10],[2,7],[5,2],[8,5],[8,2],[8,9],[7,8],[7,9],[5,7],[4,5],[4,0],[4,7],[1,4],[6,5],[6,8],[3,6],[3,7],[0,3],[2,0],[5,2],[5,10]]
     },
     {
@@ -244,30 +244,31 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[],"only":"grasshopper"}
       ],
-      "metrics": {"score":27,"botWinRate":0.883,"branching":8.963,"deadEndShare":0,"firstMoves":20,"winningFirstMoves":20,"emptyPours":4,"optimal":0},
+      "metrics": {"score":25,"botWinRate":0.925,"branching":8.741,"deadEndShare":0,"firstMoves":20,"winningFirstMoves":20,"emptyPours":4,"optimal":0},
       "solution": [[0,9],[1,9],[2,10],[2,9],[5,10],[5,2],[10,11],[4,10],[4,9],[4,2],[4,5],[7,10],[1,7],[1,11],[3,1],[6,3],[6,1],[7,6],[7,2],[5,7],[0,5],[3,0],[3,6],[3,5],[8,10],[8,7],[5,8]]
     },
     {
       "id": "newyork-272",
       "number": 272,
       "difficulty": "normal",
-      "best": 26,
-      "seed": "newyork-272-2",
+      "best": 28,
+      "seed": "newyork-272-5",
       "bottles": [
-        {"capacity":4,"units":[{"drink":"clover-club","hidden":false},{"drink":"clover-club","hidden":false},{"drink":"sidecar","hidden":false},{"drink":"whiskey-sour","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"long-island","hidden":false},{"drink":"whiskey-sour","hidden":true},{"drink":"dry-martini","hidden":false},{"drink":"aviation","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"dry-martini","hidden":true},{"drink":"whiskey-sour","hidden":false},{"drink":"manhattan","hidden":false},{"drink":"cosmopolitan","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"cosmopolitan","hidden":false},{"drink":"aviation","hidden":false},{"drink":"clover-club","hidden":false},{"drink":"manhattan","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"manhattan","hidden":false},{"drink":"manhattan","hidden":false},{"drink":"sidecar","hidden":false},{"drink":"sidecar","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"cosmopolitan","hidden":false},{"drink":"aviation","hidden":false},{"drink":"long-island","hidden":false},{"drink":"grasshopper","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"grasshopper","hidden":false},{"drink":"long-island","hidden":false},{"drink":"grasshopper","hidden":false},{"drink":"dry-martini","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"whiskey-sour","hidden":false},{"drink":"grasshopper","hidden":false},{"drink":"cosmopolitan","hidden":false},{"drink":"aviation","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"long-island","hidden":false},{"drink":"clover-club","hidden":false},{"drink":"dry-martini","hidden":false},{"drink":"sidecar","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"long-island","hidden":false},{"drink":"long-island","hidden":false},{"drink":"manhattan","hidden":false},{"drink":"whiskey-sour","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"cosmopolitan","hidden":false},{"drink":"long-island","hidden":false},{"drink":"grasshopper","hidden":false},{"drink":"whiskey-sour","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"grasshopper","hidden":false},{"drink":"manhattan","hidden":false},{"drink":"manhattan","hidden":false},{"drink":"sidecar","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"sidecar","hidden":false},{"drink":"cosmopolitan","hidden":false},{"drink":"dry-martini","hidden":false},{"drink":"aviation","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"whiskey-sour","hidden":false},{"drink":"long-island","hidden":false},{"drink":"clover-club","hidden":false},{"drink":"grasshopper","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"clover-club","hidden":false},{"drink":"aviation","hidden":false},{"drink":"sidecar","hidden":false},{"drink":"clover-club","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"manhattan","hidden":false},{"drink":"sidecar","hidden":false},{"drink":"grasshopper","hidden":false},{"drink":"whiskey-sour","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"aviation","hidden":false},{"drink":"cosmopolitan","hidden":false},{"drink":"dry-martini","hidden":false},{"drink":"cosmopolitan","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"aviation","hidden":false},{"drink":"dry-martini","hidden":false},{"drink":"clover-club","hidden":false},{"drink":"dry-martini","hidden":false}]},
         {"capacity":4,"units":[]},
-        {"capacity":4,"units":[]}
+        {"capacity":4,"units":[]},
+        {"capacity":4,"units":[],"only":"whiskey-sour"}
       ],
-      "metrics": {"score":50,"botWinRate":0.333,"branching":4.038,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":2,"optimal":1},
-      "solution": [[1,9],[4,10],[3,4],[6,1],[5,6],[7,9],[2,7],[2,4],[0,2],[0,10],[3,0],[3,9],[7,3],[6,7],[6,5],[7,6],[2,7],[1,2],[1,7],[5,1],[5,9],[3,5],[8,10],[8,2],[8,0],[1,8]]
+      "metrics": {"score":30,"botWinRate":0.783,"branching":5.214,"deadEndShare":0,"firstMoves":21,"winningFirstMoves":21,"emptyPours":3,"optimal":0},
+      "solution": [[8,9],[5,8],[2,5],[0,10],[0,2],[1,10],[6,10],[1,6],[1,0],[7,1],[7,9],[7,1],[3,7],[3,9],[3,1],[5,3],[5,7],[8,5],[8,9],[7,8],[2,7],[4,2],[4,5],[4,0],[4,10],[6,2],[6,3],[6,7]]
     },
     {
       "id": "newyork-273",
@@ -289,7 +290,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[],"only":"grasshopper"}
       ],
-      "metrics": {"score":33,"botWinRate":0.783,"branching":5.31,"deadEndShare":0,"firstMoves":19,"winningFirstMoves":19,"emptyPours":4,"optimal":0},
+      "metrics": {"score":34,"botWinRate":0.767,"branching":4.655,"deadEndShare":0,"firstMoves":19,"winningFirstMoves":19,"emptyPours":4,"optimal":0},
       "solution": [[2,9],[3,9],[2,3],[0,10],[0,9],[10,0],[1,10],[2,1],[5,2],[5,0],[5,9],[3,5],[0,3],[7,2],[7,10],[6,7],[8,2],[8,0],[7,8],[4,7],[4,0],[4,10],[4,7],[1,4],[1,0],[1,10],[6,4],[6,7],[4,6]]
     },
     {
@@ -311,7 +312,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":37,"botWinRate":0.625,"branching":5.04,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":3,"optimal":1},
+      "metrics": {"score":36,"botWinRate":0.642,"branching":4.8,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":3,"optimal":1},
       "solution": [[3,9],[3,10],[4,9],[5,10],[6,9],[0,6],[0,9],[5,0],[7,10],[4,7],[4,5],[7,4],[1,7],[1,4],[2,1],[2,3],[2,0],[3,2],[3,10],[8,2],[8,1],[6,8],[6,4],[8,6],[7,8]]
     },
     {
@@ -334,7 +335,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[],"only":"dry-martini"}
       ],
-      "metrics": {"score":26,"botWinRate":0.867,"branching":4.778,"deadEndShare":0,"firstMoves":19,"winningFirstMoves":19,"emptyPours":3,"optimal":0},
+      "metrics": {"score":19,"botWinRate":1,"branching":4.556,"deadEndShare":0,"firstMoves":19,"winningFirstMoves":19,"emptyPours":3,"optimal":0},
       "solution": [[3,9],[0,3],[0,10],[0,9],[4,10],[7,0],[8,4],[7,8],[5,7],[5,0],[4,5],[4,10],[6,4],[6,9],[8,6],[8,10],[5,8],[5,6],[1,5],[1,9],[1,4],[1,5],[3,5],[3,0],[2,3],[7,2],[3,7]]
     },
     {
@@ -358,7 +359,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[],"only":"blue-moon"}
       ],
-      "metrics": {"score":57,"botWinRate":0.292,"branching":5.71,"deadEndShare":0,"firstMoves":21,"winningFirstMoves":21,"emptyPours":3,"optimal":0},
+      "metrics": {"score":49,"botWinRate":0.442,"branching":5.419,"deadEndShare":0,"firstMoves":21,"winningFirstMoves":21,"emptyPours":3,"optimal":0},
       "solution": [[1,10],[3,11],[4,1],[5,3],[5,10],[5,11],[4,5],[8,3],[6,8],[9,6],[8,12],[9,8],[9,10],[0,9],[0,11],[0,5],[2,9],[3,0],[1,3],[1,4],[2,1],[2,10],[2,5],[6,1],[4,6],[4,12],[7,3],[7,9],[7,12],[6,7],[6,8]]
     },
     {
@@ -379,7 +380,7 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":24,"botWinRate":0.842,"branching":6.72,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
+      "metrics": {"score":25,"botWinRate":0.833,"branching":6.52,"deadEndShare":0,"firstMoves":16,"winningFirstMoves":16,"emptyPours":2,"optimal":1},
       "solution": [[0,8],[1,8],[5,8],[0,5],[0,9],[3,0],[3,9],[4,3],[6,3],[2,6],[2,1],[2,4],[2,8],[7,9],[7,0],[5,7],[5,0],[6,5],[6,9],[7,6],[4,7],[4,5],[3,4],[1,3],[1,7]]
     },
     {
@@ -402,53 +403,53 @@
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[],"lockedUntil":"clover-club"}
       ],
-      "metrics": {"score":39,"botWinRate":0.542,"branching":6.84,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":2,"optimal":1},
+      "metrics": {"score":40,"botWinRate":0.525,"branching":6.72,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":2,"optimal":1},
       "solution": [[1,9],[4,1],[4,10],[7,9],[2,7],[8,9],[0,8],[6,0],[5,6],[2,5],[2,4],[3,2],[3,9],[0,3],[0,10],[0,4],[6,2],[6,10],[3,6],[1,3],[5,1],[8,5],[7,8],[7,10],[7,8]]
     },
     {
       "id": "newyork-279",
       "number": 279,
       "difficulty": "normal",
-      "best": 29,
-      "seed": "newyork-279-4",
+      "best": 28,
+      "seed": "newyork-279-1",
       "bottles": [
-        {"capacity":4,"units":[{"drink":"sidecar","hidden":false},{"drink":"grasshopper","hidden":false},{"drink":"aviation","hidden":false},{"drink":"whiskey-sour","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"manhattan","hidden":false},{"drink":"sidecar","hidden":false},{"drink":"manhattan","hidden":false},{"drink":"cosmopolitan","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"whiskey-sour","hidden":false},{"drink":"cosmopolitan","hidden":false},{"drink":"dry-martini","hidden":false},{"drink":"clover-club","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"long-island","hidden":false},{"drink":"dry-martini","hidden":false},{"drink":"whiskey-sour","hidden":false},{"drink":"long-island","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"dry-martini","hidden":false},{"drink":"manhattan","hidden":false},{"drink":"aviation","hidden":false},{"drink":"long-island","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"aviation","hidden":false},{"drink":"dry-martini","hidden":false},{"drink":"sidecar","hidden":false},{"drink":"grasshopper","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"aviation","hidden":false},{"drink":"whiskey-sour","hidden":false},{"drink":"long-island","hidden":false},{"drink":"clover-club","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"cosmopolitan","hidden":false},{"drink":"clover-club","hidden":false},{"drink":"grasshopper","hidden":false},{"drink":"manhattan","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"sidecar","hidden":false},{"drink":"cosmopolitan","hidden":false},{"drink":"grasshopper","hidden":false},{"drink":"clover-club","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"long-island","hidden":false},{"drink":"grasshopper","hidden":false},{"drink":"manhattan","hidden":false},{"drink":"manhattan","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"sidecar","hidden":false},{"drink":"whiskey-sour","hidden":false},{"drink":"cosmopolitan","hidden":false},{"drink":"clover-club","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"aviation","hidden":false},{"drink":"long-island","hidden":false},{"drink":"grasshopper","hidden":false},{"drink":"cosmopolitan","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"whiskey-sour","hidden":false},{"drink":"sidecar","hidden":false},{"drink":"aviation","hidden":false},{"drink":"clover-club","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"dry-martini","hidden":false},{"drink":"sidecar","hidden":false},{"drink":"whiskey-sour","hidden":false},{"drink":"cosmopolitan","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"dry-martini","hidden":false},{"drink":"dry-martini","hidden":false},{"drink":"long-island","hidden":false},{"drink":"clover-club","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"aviation","hidden":false},{"drink":"manhattan","hidden":false},{"drink":"aviation","hidden":false},{"drink":"dry-martini","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"whiskey-sour","hidden":false},{"drink":"clover-club","hidden":false},{"drink":"grasshopper","hidden":false},{"drink":"sidecar","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"manhattan","hidden":false},{"drink":"cosmopolitan","hidden":false},{"drink":"grasshopper","hidden":false},{"drink":"long-island","hidden":false}]},
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]}
       ],
-      "metrics": {"score":51,"botWinRate":0.342,"branching":4,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":2,"optimal":1},
-      "solution": [[2,9],[5,10],[6,9],[3,6],[0,3],[8,9],[8,10],[1,8],[7,1],[7,10],[7,9],[8,7],[5,8],[2,5],[2,7],[3,2],[3,5],[4,3],[0,4],[0,10],[0,8],[6,3],[6,2],[4,6],[1,4],[1,8],[4,1],[5,4],[5,6]]
+      "metrics": {"score":55,"botWinRate":0.3,"branching":3.786,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":3,"optimal":1},
+      "solution": [[1,9],[1,10],[2,10],[3,9],[4,10],[1,4],[5,9],[7,1],[2,7],[2,5],[3,2],[3,1],[4,3],[4,1],[6,4],[6,2],[0,6],[7,0],[7,9],[3,7],[0,3],[5,0],[4,5],[8,0],[8,3],[8,10],[6,8],[2,6]]
     },
     {
       "id": "newyork-280",
       "number": 280,
       "difficulty": "normal",
-      "best": 27,
-      "seed": "newyork-280-2",
+      "best": 28,
+      "seed": "newyork-280-5",
       "bottles": [
-        {"capacity":4,"units":[{"drink":"clover-club","hidden":false},{"drink":"manhattan","hidden":false},{"drink":"whiskey-sour","hidden":false},{"drink":"dry-martini","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"sidecar","hidden":false},{"drink":"aviation","hidden":false},{"drink":"cosmopolitan","hidden":false},{"drink":"long-island","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"long-island","hidden":false},{"drink":"grasshopper","hidden":false},{"drink":"sidecar","hidden":false},{"drink":"grasshopper","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"aviation","hidden":false},{"drink":"cosmopolitan","hidden":false},{"drink":"sidecar","hidden":false},{"drink":"manhattan","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"cosmopolitan","hidden":false},{"drink":"long-island","hidden":false},{"drink":"aviation","hidden":false},{"drink":"cosmopolitan","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"sidecar","hidden":false},{"drink":"clover-club","hidden":false},{"drink":"whiskey-sour","hidden":false},{"drink":"aviation","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"grasshopper","hidden":false},{"drink":"whiskey-sour","hidden":false},{"drink":"whiskey-sour","hidden":false},{"drink":"long-island","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"dry-martini","hidden":false},{"drink":"dry-martini","hidden":false},{"drink":"manhattan","hidden":false},{"drink":"dry-martini","hidden":false}]},
-        {"capacity":4,"units":[{"drink":"manhattan","hidden":false},{"drink":"clover-club","hidden":false},{"drink":"clover-club","hidden":false},{"drink":"grasshopper","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"grasshopper","hidden":false},{"drink":"cosmopolitan","hidden":false},{"drink":"cosmopolitan","hidden":false},{"drink":"clover-club","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"grasshopper","hidden":false},{"drink":"long-island","hidden":false},{"drink":"dry-martini","hidden":false},{"drink":"aviation","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"aviation","hidden":false},{"drink":"dry-martini","hidden":false},{"drink":"clover-club","hidden":false},{"drink":"manhattan","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"sidecar","hidden":false},{"drink":"manhattan","hidden":false},{"drink":"dry-martini","hidden":false},{"drink":"sidecar","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"long-island","hidden":false},{"drink":"cosmopolitan","hidden":false},{"drink":"sidecar","hidden":false},{"drink":"whiskey-sour","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"whiskey-sour","hidden":false},{"drink":"clover-club","hidden":false},{"drink":"clover-club","hidden":false},{"drink":"long-island","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"cosmopolitan","hidden":false},{"drink":"grasshopper","hidden":false},{"drink":"dry-martini","hidden":false},{"drink":"long-island","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"sidecar","hidden":false},{"drink":"aviation","hidden":false},{"drink":"whiskey-sour","hidden":false},{"drink":"aviation","hidden":false}]},
+        {"capacity":4,"units":[{"drink":"grasshopper","hidden":false},{"drink":"manhattan","hidden":false},{"drink":"manhattan","hidden":false},{"drink":"whiskey-sour","hidden":false}]},
         {"capacity":4,"units":[]},
         {"capacity":4,"units":[]},
-        {"capacity":4,"units":[],"lockedUntil":"whiskey-sour"}
+        {"capacity":4,"units":[],"only":"cosmopolitan"}
       ],
-      "metrics": {"score":54,"botWinRate":0.308,"branching":8.556,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":3,"optimal":1},
-      "solution": [[0,9],[0,10],[3,0],[7,9],[7,0],[7,9],[1,7],[4,1],[5,4],[5,10],[6,7],[6,10],[2,6],[2,3],[2,6],[2,7],[8,6],[8,5],[0,8],[5,0],[3,5],[1,3],[4,1],[4,7],[3,4],[1,3],[1,5]]
+      "metrics": {"score":47,"botWinRate":0.5,"branching":4.679,"deadEndShare":0,"firstMoves":18,"winningFirstMoves":18,"emptyPours":4,"optimal":1},
+      "solution": [[0,9],[1,10],[7,10],[4,7],[3,4],[1,3],[5,1],[5,9],[6,1],[7,5],[7,10],[4,7],[0,4],[8,5],[2,8],[2,9],[2,6],[2,10],[3,2],[6,2],[0,6],[3,0],[3,7],[8,0],[6,8],[4,6],[1,4],[1,8]]
     }
   ]
 }

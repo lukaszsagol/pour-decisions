@@ -54,12 +54,14 @@ export function canPour(bottles: readonly Bottle[], move: Move): boolean {
   if (b.only !== undefined && b.only !== t.drink) return false;
   const bt = top(b);
   if (bt && (bt.hidden || bt.drink !== t.drink)) return false;
+  // A run of one drink moves as a whole: it is never split between glasses.
+  if (topRun(a) > b.capacity - b.units.length) return false;
   return true;
 }
 
 /**
- * Applies a pour and returns new bottles. Moves the whole top run, or as much
- * as fits. Afterwards reveals new top units and unlocks bottles whose drink
+ * Applies a pour and returns new bottles. Moves the whole top run (a pour is
+ * only legal when it all fits). Afterwards reveals new top units and unlocks bottles whose drink
  * has been completed. Throws on an illegal move.
  */
 export function pour(bottles: readonly Bottle[], move: Move): PourResult {
