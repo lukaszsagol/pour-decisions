@@ -5,8 +5,8 @@
   "order": 3,
   "levels": [201, 300],
   "fonts": {
-    "ui": "Outfit",
-    "display": "Limelight"
+    "ui": "Pixelify Sans",
+    "display": "Pixelify Sans"
   },
   "colors": {
     "ground": "#111111",

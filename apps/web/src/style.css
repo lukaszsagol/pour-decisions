@@ -8,7 +8,7 @@ body {
   overflow: hidden;
 }
 body {
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: 'Pixelify Sans', ui-monospace, monospace;
   -webkit-tap-highlight-color: transparent;
   -webkit-font-smoothing: antialiased;
   user-select: none;

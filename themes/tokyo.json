@@ -5,8 +5,8 @@
   "order": 4,
   "levels": [301, 400],
   "fonts": {
-    "ui": "Outfit",
-    "display": "Outfit",
+    "ui": "Pixelify Sans",
+    "display": "Pixelify Sans",
     "extra": ["Zen Kaku Gothic New"]
   },
   "colors": {

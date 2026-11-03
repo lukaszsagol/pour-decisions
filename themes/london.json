@@ -5,8 +5,8 @@
   "order": 2,
   "levels": [101, 200],
   "fonts": {
-    "ui": "Outfit",
-    "display": "Playfair Display"
+    "ui": "Pixelify Sans",
+    "display": "Pixelify Sans"
   },
   "colors": {
     "ground": "#2B1A12",
