@@ -190,10 +190,10 @@ Depends on: T26
 - [x] Badge icons drawn for every drink in every city that can release a lock or own an only-glass.
 - [x] A screenshot per city attached to the pull request; quality at least that of the Amsterdam reference (multi-tone shading, dithered light, outlines, no flat fills on large areas).
 
-### T28 · City maps in pixel art · `todo` · L
+### T28 · City maps in pixel art · `in-review` · L
 Depends on: T25
-- [ ] All four maps redrawn as pixel scenes (see the style guide), keeping the layout and behaviour of the current map screen: path, nodes, stars, hard and super hard markers, family avatars, bottom panel.
-- [ ] Pixel coin nodes and avatars; the current node pulses in whole-pixel steps.
+- [x] All four maps redrawn as pixel scenes (see the style guide), keeping the layout and behaviour of the current map screen: path, nodes, stars, hard and super hard markers, family avatars, bottom panel.
+- [x] Pixel coin nodes and avatars; the current node pulses in whole-pixel steps.
 
 ### T29 · Menus and overlays in pixel art · `todo` · L
 Depends on: T25

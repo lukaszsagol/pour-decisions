@@ -1573,3 +1573,70 @@ p {
   align-items: center;
   gap: 0;
 }
+
+/* ---------- Pixel art map: coins are drawn, buttons carry the numbers ---------- */
+.map-screen .map-node,
+.map-screen .map-node.is-current,
+.map-screen .map-node.is-locked,
+.map-screen .map-node.is-done.kind-hard,
+.map-screen .map-node.is-done.kind-superHard,
+.map-screen .map-node.is-locked.kind-hard,
+.map-screen .map-node.is-locked.kind-superHard {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  font-family: var(--f-ui);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--c-accentText);
+}
+.map-screen .map-node.is-current {
+  font-size: 17px;
+}
+.map-screen .map-node.is-locked {
+  color: var(--c-glassRim);
+}
+.map-screen .map-node.is-selected:not(.is-current) {
+  outline: 2px dashed var(--c-text);
+  outline-offset: -4px;
+}
+
+/* Pixel avatars: a stepped disc with a lit top-left and a shaded bottom-right. */
+.fam-avatar {
+  border: none;
+  border-radius: 0;
+  clip-path: polygon(
+    30% 0,
+    70% 0,
+    70% 8%,
+    85% 8%,
+    85% 15%,
+    92% 15%,
+    92% 30%,
+    100% 30%,
+    100% 70%,
+    92% 70%,
+    92% 85%,
+    85% 85%,
+    85% 92%,
+    70% 92%,
+    70% 100%,
+    30% 100%,
+    30% 92%,
+    15% 92%,
+    15% 85%,
+    8% 85%,
+    8% 70%,
+    0 70%,
+    0 30%,
+    8% 30%,
+    8% 15%,
+    15% 15%,
+    15% 8%,
+    30% 8%
+  );
+  box-shadow:
+    inset 4px 4px 0 rgba(255, 255, 255, 0.35),
+    inset -4px -4px 0 rgba(0, 0, 0, 0.3);
+  font-family: var(--f-ui);
+}
