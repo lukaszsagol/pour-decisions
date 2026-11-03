@@ -8,7 +8,7 @@ body {
   overflow: hidden;
 }
 body {
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: 'Pixelify Sans', ui-monospace, monospace;
   -webkit-tap-highlight-color: transparent;
   -webkit-font-smoothing: antialiased;
   user-select: none;
@@ -93,7 +93,7 @@ a {
   text-overflow: ellipsis;
 }
 .lv-sub {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--c-muted);
 }
 .lv-right {
@@ -184,7 +184,7 @@ a {
   border-radius: 11px;
   background: var(--c-starDone);
   color: var(--c-badgeText, var(--c-accentText));
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -456,7 +456,7 @@ p {
   font-weight: 700;
 }
 .cp-card-label {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--c-muted);
 }
 .cp-recipe {
@@ -484,13 +484,13 @@ p {
   border-radius: 12px;
   background: #1b1a2e;
   color: #f4ecdd;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   display: flex;
   align-items: center;
 }
 .cp-count {
-  font-size: 12px;
+  font-size: 13px;
   color: #5c5466;
 }
 .cp-recipe-body {
@@ -699,7 +699,7 @@ p {
   position: absolute;
   width: 52px;
   text-align: center;
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 1px;
   pointer-events: none;
 }
@@ -719,7 +719,7 @@ p {
   background: var(--c-superHardBg, var(--c-surface));
   border: 1px solid var(--c-hard);
   color: var(--c-superHardText, var(--c-hard));
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   display: flex;
   align-items: center;
@@ -735,7 +735,7 @@ p {
   background: var(--c-surface);
   border: 1px solid var(--c-line);
   color: var(--c-text);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   display: flex;
   align-items: center;
@@ -796,7 +796,7 @@ p {
   display: flex;
   justify-content: center;
   gap: 6px;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--c-muted);
 }
 .map-left b {
@@ -892,7 +892,7 @@ p {
   top: 14px;
 }
 .pp-kicker {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -930,7 +930,7 @@ p {
   min-width: 6px;
 }
 .pp-level {
-  font-size: 12px;
+  font-size: 13px;
 }
 .pp-continue {
   height: 44px;
@@ -971,7 +971,7 @@ p {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
+  font-size: 13px;
 }
 .pp-stamp b {
   letter-spacing: 0.08em;
@@ -1064,7 +1064,7 @@ p {
   background: none;
   border: none;
   color: var(--c-muted);
-  font-size: 12px;
+  font-size: 13px;
   min-height: 44px;
   width: 100%;
   cursor: default;
@@ -1132,7 +1132,7 @@ p {
   color: var(--c-muted);
 }
 .tr-note {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--c-muted);
   padding: 4px 4px 0;
 }
@@ -1187,7 +1187,7 @@ p {
   justify-content: center;
   border-radius: 50%;
   color: #1a1a1a;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   border: 2px solid var(--c-ground);
   flex: none;
@@ -1444,7 +1444,7 @@ p {
   grid-template-columns: repeat(7, 1fr);
   gap: 4px;
   text-align: center;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--c-muted);
 }
 .dy-day {
@@ -1472,4 +1472,510 @@ p {
 .dy-day.is-today span:last-child {
   color: var(--c-text);
   font-weight: 700;
+}
+
+/* ---------- Pixel art level screen ---------- */
+.stage-canvas {
+  image-rendering: pixelated;
+}
+.px-level .lv-back {
+  position: absolute;
+  left: 0;
+  top: 64px;
+  width: 48px;
+  height: 48px;
+}
+.px-level .lv-title {
+  position: absolute;
+  left: 40px;
+  top: 64px;
+  width: 200px;
+}
+.px-level .lv-bar {
+  font-family: var(--f-ui);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.05;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.px-level .lv-sub {
+  font-size: 14px;
+  margin-top: 3px;
+}
+.px-level .lv-moves {
+  position: absolute;
+  padding: 0;
+  border: none;
+  background: none;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.px-level .lv-moves b {
+  font-size: 17px;
+  font-weight: 600;
+}
+.px-level .lv-restart {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.px-level .lv-glass {
+  width: auto;
+  height: auto;
+  transform: none;
+}
+.px-level .lv-counter {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  display: block;
+  pointer-events: none;
+}
+.px-level .booster {
+  position: absolute;
+  height: 116px;
+  pointer-events: auto;
+  padding: 0 0 18px;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  color: inherit;
+}
+.px-level .booster:disabled {
+  cursor: default;
+}
+.px-level .booster-label {
+  font-size: 15px;
+  white-space: nowrap;
+}
+.px-level .booster[hidden] {
+  display: none;
+}
+.px-level .lv-title {
+  display: block;
+}
+.px-level .booster {
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0;
+}
+
+/* ---------- Pixel art map: coins are drawn, buttons carry the numbers ---------- */
+.map-screen .map-node,
+.map-screen .map-node.is-current,
+.map-screen .map-node.is-locked,
+.map-screen .map-node.is-done.kind-hard,
+.map-screen .map-node.is-done.kind-superHard,
+.map-screen .map-node.is-locked.kind-hard,
+.map-screen .map-node.is-locked.kind-superHard {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  font-family: var(--f-ui);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--c-accentText);
+}
+.map-screen .map-node.is-current {
+  font-size: 17px;
+}
+.map-screen .map-node.is-locked {
+  color: var(--c-glassRim);
+}
+.map-screen .map-node.is-selected:not(.is-current) {
+  outline: 2px dashed var(--c-text);
+  outline-offset: -4px;
+}
+
+/* Pixel avatars: a stepped disc with a lit top-left and a shaded bottom-right. */
+.fam-avatar {
+  border: none;
+  border-radius: 0;
+  clip-path: polygon(
+    30% 0,
+    70% 0,
+    70% 8%,
+    85% 8%,
+    85% 15%,
+    92% 15%,
+    92% 30%,
+    100% 30%,
+    100% 70%,
+    92% 70%,
+    92% 85%,
+    85% 85%,
+    85% 92%,
+    70% 92%,
+    70% 100%,
+    30% 100%,
+    30% 92%,
+    15% 92%,
+    15% 85%,
+    8% 85%,
+    8% 70%,
+    0 70%,
+    0 30%,
+    8% 30%,
+    8% 15%,
+    15% 15%,
+    15% 8%,
+    30% 8%
+  );
+  box-shadow:
+    inset 4px 4px 0 rgba(255, 255, 255, 0.35),
+    inset -4px -4px 0 rgba(0, 0, 0, 0.3);
+  font-family: var(--f-ui);
+}
+
+/* =====================================================================
+   Pixel UI kit (docs/spec/pixel-art.md, "Text and menus"):
+   stepped 2 px borders, no rounded corners or soft shadows, bevelled
+   slabs that press 2 px down, pixel icons, dithered backdrops.
+   ===================================================================== */
+
+/* Panels: a 2 px outline that skips the corners (a stepped edge), a lit
+   top-left inner edge, a dark bottom-right inner edge and a hard drop shadow. */
+.px-panel,
+.pp-current,
+.pp-city-card,
+.pp-daily,
+.pp-training,
+.pp-coins,
+.cp-card,
+.cp-recipe,
+.win-card,
+.lv-deadend,
+.sheet,
+.toast,
+.lv-peek,
+.dy-card,
+.dy-week,
+.tr-card,
+.fam-card,
+.fam-form,
+.map-panel,
+.map-total,
+.map-chip,
+.map-gate {
+  --px-edge: var(--c-line);
+  --px-face: var(--c-surface);
+  border: none !important;
+  border-radius: 0 !important;
+  background-color: var(--px-face);
+  box-shadow:
+    0 -2px 0 0 var(--px-edge),
+    0 2px 0 0 var(--px-edge),
+    -2px 0 0 0 var(--px-edge),
+    2px 0 0 0 var(--px-edge),
+    inset 2px 2px 0 0 color-mix(in srgb, var(--px-face), #fff 10%),
+    inset -2px -2px 0 0 color-mix(in srgb, var(--px-face), #000 30%),
+    4px 4px 0 0 color-mix(in srgb, var(--c-ground), #000 45%);
+}
+.map-panel {
+  box-shadow:
+    0 -2px 0 0 var(--px-edge),
+    inset 0 2px 0 0 color-mix(in srgb, var(--px-face), #fff 10%);
+}
+.map-chip,
+.map-total {
+  --px-face: var(--c-ground);
+}
+.cp-recipe {
+  --px-face: #f4ecdd;
+  --px-edge: #1b1a2e;
+  transform: none;
+}
+.win-card,
+.lv-deadend {
+  --px-edge: var(--c-accent);
+}
+
+/* Scenes behind passport cards, scaled without smoothing. */
+.px-scene {
+  background-image: var(--scene) !important;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+}
+.px-img {
+  image-rendering: pixelated;
+  display: block;
+}
+
+/* Buttons: bevelled slabs. */
+.btn,
+.map-play,
+.pp-continue,
+.pp-daily-play,
+.cp-share,
+.tr-start,
+.dy-play,
+.pp-install,
+.fam-form button,
+.set-close {
+  --btn-face: var(--c-surface);
+  --btn-edge: var(--c-line);
+  border: none !important;
+  border-radius: 0 !important;
+  background: var(--btn-face) !important;
+  box-shadow:
+    0 -2px 0 0 var(--btn-edge),
+    0 2px 0 0 var(--btn-edge),
+    -2px 0 0 0 var(--btn-edge),
+    2px 0 0 0 var(--btn-edge),
+    inset 2px 2px 0 0 color-mix(in srgb, var(--btn-face), #fff 35%),
+    inset -2px -4px 0 0 color-mix(in srgb, var(--btn-face), #000 35%);
+  transition: none;
+}
+.btn:active:not(:disabled),
+.map-play:active,
+.pp-continue:active,
+.pp-daily-play:active,
+.cp-share:active,
+.tr-start:active,
+.dy-play:active,
+.pp-install:active {
+  transform: translateY(2px);
+  box-shadow:
+    0 -2px 0 0 var(--btn-edge),
+    0 2px 0 0 var(--btn-edge),
+    -2px 0 0 0 var(--btn-edge),
+    2px 0 0 0 var(--btn-edge),
+    inset 2px 2px 0 0 color-mix(in srgb, var(--btn-face), #000 20%),
+    inset -2px -2px 0 0 color-mix(in srgb, var(--btn-face), #fff 15%);
+}
+.btn-primary,
+.map-play,
+.pp-continue,
+.dy-play,
+.tr-start {
+  --btn-face: var(--c-accent);
+  --btn-edge: color-mix(in srgb, var(--c-accent), #000 60%);
+  color: var(--c-accentText) !important;
+  font-weight: 600;
+}
+.btn-outline,
+.pp-daily-play,
+.pp-install {
+  --btn-edge: var(--c-hint);
+  color: var(--c-hint) !important;
+}
+.btn-ghost {
+  --btn-edge: var(--c-line);
+  color: var(--c-text);
+}
+.btn:disabled {
+  opacity: 0.45;
+}
+
+/* Tags: small stepped labels (Super hard, gates). */
+.px-tag,
+.map-flag {
+  border: none !important;
+  border-radius: 0 !important;
+  background: var(--c-superHardBg, var(--c-surface)) !important;
+  box-shadow:
+    0 -2px 0 0 var(--c-hard),
+    0 2px 0 0 var(--c-hard),
+    -2px 0 0 0 var(--c-hard),
+    2px 0 0 0 var(--c-hard);
+}
+
+/* Dimmed backdrops behind dialogs: a 50% dither instead of a blend. */
+.lv-overlay,
+.sheet-backdrop {
+  background: repeating-conic-gradient(color-mix(in srgb, var(--c-ground), #000 40%) 0 25%, transparent 0 50%) 0 0 / 4px
+    4px !important;
+  image-rendering: pixelated;
+}
+
+/* Tab bar: a stepped top edge and pixel icons. */
+.tabbar {
+  box-shadow:
+    0 -2px 0 0 var(--c-line),
+    inset 0 2px 0 0 color-mix(in srgb, var(--c-surfaceAlt), #fff 8%);
+  border: none;
+}
+.tab-icon {
+  display: flex;
+  height: 22px;
+  align-items: center;
+}
+.tab.is-active {
+  box-shadow: inset 0 -4px 0 0 var(--c-accent);
+}
+
+/* Passport details. */
+.pp-current,
+.pp-city-card {
+  overflow: hidden;
+}
+.pp-city-card.is-locked {
+  opacity: 1;
+  filter: none;
+}
+.pp-stamp {
+  border-radius: 0 !important;
+  border: 2px dashed currentColor !important;
+  rotate: 0deg !important;
+  background: color-mix(in srgb, var(--c-ground), transparent 30%);
+}
+.pp-bar,
+.pp-bar div {
+  border-radius: 0 !important;
+}
+.pp-coins {
+  display: none;
+}
+
+/* Complete screen. */
+.cp-share {
+  color: var(--c-text);
+}
+
+/* Map. */
+.map-gate {
+  --px-face: var(--c-surface);
+}
+
+/* Daily, training, family. */
+.dy-glass {
+  display: none;
+}
+.dy-dot {
+  border-radius: 0 !important;
+}
+.tr-chart {
+  shape-rendering: crispEdges;
+}
+.fam-form input {
+  border-radius: 0 !important;
+  box-shadow: inset 2px 2px 0 0 #000;
+}
+
+/* Pixel checkbox. */
+.sheet-row input[type='checkbox'] {
+  appearance: none;
+  width: 28px;
+  height: 28px;
+  margin: 0;
+  background: var(--c-ground);
+  box-shadow:
+    0 -2px 0 0 var(--c-line),
+    0 2px 0 0 var(--c-line),
+    -2px 0 0 0 var(--c-line),
+    2px 0 0 0 var(--c-line);
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+}
+.sheet-row input[type='checkbox']:checked::before {
+  content: '';
+  width: 14px;
+  height: 14px;
+  background: var(--c-accent);
+  box-shadow: inset 2px 2px 0 0 color-mix(in srgb, var(--c-accent), #fff 40%);
+}
+
+/* Level guide: a pixel arrow. */
+.lv-guide-dot {
+  border-radius: 0 !important;
+  width: 12px;
+  height: 12px;
+  box-shadow:
+    0 -2px 0 0 var(--c-text),
+    0 2px 0 0 var(--c-text),
+    -2px 0 0 0 var(--c-text),
+    2px 0 0 0 var(--c-text) !important;
+}
+.lv-guide::after {
+  border-width: 8px;
+}
+
+/* Win overlay stars sit on the pixel grid. */
+.win-stars svg,
+.cp-stars svg {
+  image-rendering: pixelated;
+}
+.pp-install {
+  height: 44px;
+}
+
+/* ---------- T30 review fixes ---------- */
+/* Pixelify's "fi" ligature reads as an "A". */
+body,
+button,
+input {
+  font-variant-ligatures: none;
+  font-feature-settings:
+    'liga' 0,
+    'clig' 0;
+}
+/* Dialog backdrops: a solid dim, so text behind it is not cut into checkers. */
+.lv-overlay,
+.sheet-backdrop {
+  background: color-mix(in srgb, var(--c-ground) 90%, transparent) !important;
+}
+/* Stars stay on the grid: no free rotation, outer stars sit 4 px lower. */
+.cp-stars span:first-child,
+.cp-stars span:last-child {
+  transform: translateY(8px) !important;
+}
+/* Without a recipe card, the complete screen centres its content. */
+.complete-screen:not(:has(.cp-recipe)) .cp-head {
+  top: 220px;
+}
+.complete-screen:not(:has(.cp-recipe)) .cp-rewards {
+  top: 404px;
+}
+/* A dark plate behind the map header, with a stepped bottom edge. */
+.map-header {
+  background: color-mix(in srgb, var(--c-ground), #000 25%);
+  box-shadow:
+    0 2px 0 0 var(--c-line),
+    0 6px 0 0 color-mix(in srgb, var(--c-ground), #000 45%);
+  height: 76px;
+}
+/* Disabled buttons stay readable. */
+.btn:disabled {
+  opacity: 1;
+  color: var(--c-muted) !important;
+  --btn-edge: var(--c-line);
+  filter: saturate(0.3);
+}
+.de-title {
+  color: var(--c-text);
+}
+.fam-soon {
+  margin: 16px 20px 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.4;
+}
+.lv-guide::after {
+  display: none;
+}
+.lv-guide {
+  width: 32px;
+  height: 36px;
+  animation: pd-guide 1.1s steps(2) infinite;
 }

@@ -5,6 +5,7 @@ import type { Stage } from '../stage.js';
 import { tabBar, type Tab } from '../tabbar.js';
 import { applyTheme } from '../theme-css.js';
 import { openSettings } from './settings.js';
+import { cityScene, dataUrl } from '../pixel/scenes.js';
 import { installMode, onInstallChange, startInstall } from '../install.js';
 
 export interface PassportOptions {
@@ -84,11 +85,11 @@ export class PassportScreen {
       <header class="pp-header">
         <div class="pp-brand">${icons.glass(k.accent).replace('width="26" height="26"', 'width="30" height="30"')}<span>Pour Decisions</span></div>
         <div class="pp-header-right">
-          <button class="icon-btn pp-settings" aria-label="Settings">${settingsIcon(k.muted)}</button>
+          <button class="icon-btn pp-settings" aria-label="Settings">${icons.gear(k.muted)}</button>
         </div>
       </header>
       <div class="pp-title">
-        <div class="pp-title-row"><h1>Your passport</h1><button class="pp-install" hidden>${downloadIcon()}Install</button></div>
+        <div class="pp-title-row"><h1>Your passport</h1><button class="pp-install" hidden>${icons.download(k.accent)}Install</button></div>
         <p>${visited} of 20 bars visited · ${p.totalStars()} stars</p>
       </div>
       <div class="pp-cards">
@@ -114,8 +115,7 @@ export class PassportScreen {
       const bar = Math.ceil(at / 20);
       const k = t.colors;
       return `
-        <section class="pp-current" style="background:${pp.card};border-color:${k.accent};color:${k.text}" aria-label="Now visiting ${esc(t.name)}">
-          <div class="pp-ornament" aria-hidden="true">${ornament(t)}</div>
+        <section class="pp-current px-scene" style="--scene:url(${dataUrl(cityScene(t, 175, 78))});--px-edge:${k.accent};background-color:${pp.card};color:${k.text}" aria-label="Now visiting ${esc(t.name)}">
           <div>
             <div class="pp-kicker" style="color:${k.accent}">Now visiting</div>
             <h2 class="pp-city" style="${display}">${esc(t.name)}</h2>
@@ -137,11 +137,11 @@ export class PassportScreen {
     const side =
       status === 'done'
         ? `<div class="pp-stamp" style="border-color:${pp.stamp};color:${pp.stamp};rotate:${t.order % 2 ? -8 : 8}deg" aria-label="Stamped, ${stars} stars"><b>${pp.code}</b><span>★ ${stars}</span></div>`
-        : `<div class="pp-lock" aria-label="Locked">${lockIcon(pp.sub)}</div>`;
+        : `<div class="pp-lock" aria-label="Locked">${icons.lock(pp.sub)}</div>`;
     const tag = status === 'done' ? 'a' : 'div';
     const href = status === 'done' ? ` href="#/map/${t.id}"` : '';
     return `
-      <${tag}${href} class="pp-city-card is-${status}" style="background:${pp.card};border-color:${pp.cardBorder};color:${pp.title}">
+      <${tag}${href} class="pp-city-card px-scene is-${status}" style="--scene:url(${dataUrl(cityScene(t, 175, 44, status === 'locked'))});--px-edge:${pp.cardBorder};background-color:${pp.card};color:${pp.title}">
         <div>
           <h2 class="pp-city-name" style="${display}">${esc(t.name)}</h2>
           <div class="pp-city-sub" style="color:${pp.sub}">${sub}</div>
@@ -151,31 +151,4 @@ export class PassportScreen {
   }
 }
 
-function downloadIcon(): string {
-  return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-}
-
 const capital = (s: string) => s[0]!.toUpperCase() + s.slice(1);
-
-function settingsIcon(c: string): string {
-  return `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="3" stroke="${c}" stroke-width="1.8"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" stroke="${c}" stroke-width="1.6" stroke-linejoin="round"/></svg>`;
-}
-
-function lockIcon(c: string): string {
-  return `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2.5" stroke="${c}" stroke-width="1.8"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="${c}" stroke-width="1.8"/></svg>`;
-}
-
-/** A small picture per city on the current-city card. */
-function ornament(t: Theme): string {
-  const k = t.colors;
-  switch (t.id) {
-    case 'tokyo':
-      return `<svg width="84" height="74" viewBox="0 0 84 74"><rect x="1" y="1" width="22" height="70" rx="4" fill="none" stroke="${k.hint}" stroke-width="1.5"/><text x="12" y="30" text-anchor="middle" font-family="Zen Kaku Gothic New" font-weight="700" font-size="13" fill="${k.hint}">夜</text><text x="12" y="52" text-anchor="middle" font-family="Zen Kaku Gothic New" font-weight="700" font-size="13" fill="${k.hint}">道</text><rect x="52" y="0" width="2" height="10" fill="#3A2A2A"/><rect x="42" y="10" width="22" height="28" rx="11" fill="#E0453A"/></svg>`;
-    case 'amsterdam':
-      return `<svg width="70" height="74" viewBox="0 0 70 74"><path d="M8 74V30h8V20h8V8h22v12h8v10h8v44z" fill="${k.mapBuildingC ?? k.line}"/><rect x="24" y="36" width="8" height="12" fill="${k.starDone}"/><rect x="38" y="36" width="8" height="12" fill="${k.starDone}" opacity=".5"/><rect x="31" y="56" width="8" height="18" fill="${k.ground}"/></svg>`;
-    case 'london':
-      return `<svg width="60" height="74" viewBox="0 0 60 74"><path d="M30 0v10" stroke="${k.accent}" stroke-width="2"/><rect x="8" y="10" width="44" height="50" rx="3" fill="${k.wall ?? k.surfaceAlt}" stroke="${k.accent}" stroke-width="2"/><circle cx="30" cy="35" r="10" fill="none" stroke="${k.accent}" stroke-width="2"/></svg>`;
-    default:
-      return `<svg width="76" height="60" viewBox="0 0 76 60"><path d="M6 58a32 32 0 0 1 64 0" fill="none" stroke="${k.accent}" stroke-width="2"/><path d="M38 58V22M38 58 16 34M38 58l22-24M38 58 8 50M38 58l30-8" stroke="${k.accent}" stroke-width="1.2"/></svg>`;
-  }
-}

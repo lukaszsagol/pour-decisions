@@ -5,8 +5,8 @@
   "order": 1,
   "levels": [1, 100],
   "fonts": {
-    "ui": "Outfit",
-    "display": "DM Serif Display"
+    "ui": "Pixelify Sans",
+    "display": "Pixelify Sans"
   },
   "colors": {
     "ground": "#2A1A10",

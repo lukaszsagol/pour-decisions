@@ -22,6 +22,7 @@ It ships as a web app (PWA) first, then as iOS and Android apps wrapped with Cap
 | `docs/design/source/` | Original design-canvas sources. `TokyoLevel.dc.html` contains a working prototype of the level logic. |
 | `themes/*.json` | Design tokens per city: colours, fonts, drinks, blocker skins. Code reads these; never hard-code city styling. |
 | `packages/engine` | The rules engine and solver. Pure TypeScript, no DOM, fully tested. |
+| `apps/web/src/pixel` | Pixel art: buffers drawn at 195×422 art pixels (ported from `docs/design/pixel/reference/`), shown as nearest-neighbour Pixi textures. Style guide: `docs/spec/pixel-art.md`. |
 | `agent-logs/` | Run logs and screenshots from unattended runs. |
 
 Planned (created by tasks): `tools/levelgen` (level generator CLI), `apps/web` (the game client), `levels/` (generated level packs).
@@ -50,6 +51,7 @@ npm run format              # Prettier write + ESLint fix
 npm run dev -w apps/web     # play the game at http://localhost:5173
 npm run build -w apps/web   # production build into apps/web/dist
 npm run e2e -w apps/web     # builds, then Playwright tests (dev + preview servers); screenshots to agent-logs/assets/
+npx playwright test e2e/pixel-screens.spec.ts   # (in apps/web) every screen in every city → agent-logs/assets/pixel/screens/
 node apps/web/scripts/icons.mjs   # re-render app icons from apps/web/public/icons/icon.svg
 npm run levels -- --city tokyo --bar 2   # regenerate one bar (or --city amsterdam, or --all)
 ```

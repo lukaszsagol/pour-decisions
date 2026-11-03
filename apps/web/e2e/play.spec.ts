@@ -58,7 +58,8 @@ test('selecting lifts a glass, illegal taps are rejected and keep the selection'
   const top0 = (await glass(page, 0).boundingBox())!.y;
   await glass(page, 0).click();
   await expect(glass(page, 0)).toHaveAttribute('aria-pressed', 'true');
-  await expect.poll(async () => top0 - (await glass(page, 0).boundingBox())!.y).toBeGreaterThan(15);
+  // The style guide lift: 7 art px = 14 logical px.
+  await expect.poll(async () => top0 - (await glass(page, 0).boundingBox())!.y).toBe(14);
   await glass(page, 1).click(); // jenever onto advocaat: illegal
   await expect(glass(page, 0)).toHaveAttribute('aria-pressed', 'true');
   await expect(page.locator('.lv-move-count')).toHaveText('0');

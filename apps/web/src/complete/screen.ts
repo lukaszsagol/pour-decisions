@@ -1,12 +1,12 @@
 import type { Difficulty } from '@pour/engine';
 import type { Recipe, Theme } from '@pour/themes';
-import { Graphics } from 'pixi.js';
 import type { Rewards } from '../economy/rewards.js';
 import { esc, icons } from '../icons.js';
-import { drawLevelDecor } from '../level/decor.js';
+import { cityBand, dataUrl, recipeGlass } from '../pixel/scenes.js';
+import { PixelLayer } from '../pixel/layer.js';
 import type { LevelResult } from '../level/screen.js';
 import { createPixi } from '../pixi-util.js';
-import { STAGE_W, type Stage } from '../stage.js';
+import { ART, type Stage } from '../stage.js';
 import { applyTheme } from '../theme-css.js';
 
 export interface CompleteData {
@@ -47,21 +47,6 @@ export function verdictFor(r: LevelResult): string {
   return r.stars === 3 ? 'Great pour' : r.stars === 2 ? 'Nice pour' : 'Cleared';
 }
 
-function recipeGlass(recipe: Recipe): string {
-  const c = recipe.color;
-  const ink = '#1B1A2E';
-  switch (recipe.glass) {
-    case 'tulip':
-      return `<svg width="70" height="150" viewBox="0 0 70 150" aria-hidden="true"><path d="M15 20 Q11 70 22 92 Q35 104 48 92 Q59 70 55 20Z" fill="${c}" opacity=".9"/><path d="M15 20 Q11 70 22 92 Q35 104 48 92 Q59 70 55 20" fill="none" stroke="${ink}" stroke-width="2.5"/><path d="M35 100v30M22 132h26" stroke="${ink}" stroke-width="2.5" stroke-linecap="round"/></svg>`;
-    case 'coupe':
-      return `<svg width="70" height="150" viewBox="0 0 70 150" aria-hidden="true"><path d="M8 40 Q35 78 62 40Z" fill="${c}" opacity=".9"/><path d="M6 36 Q35 84 64 36" fill="none" stroke="${ink}" stroke-width="2.5"/><path d="M35 62v58M20 122h30" stroke="${ink}" stroke-width="2.5" stroke-linecap="round"/></svg>`;
-    case 'rocks':
-      return `<svg width="70" height="150" viewBox="0 0 70 150" aria-hidden="true"><rect x="10" y="72" width="50" height="58" rx="6" fill="${c}" opacity=".9"/><rect x="20" y="80" width="22" height="22" rx="4" fill="#fff" opacity=".6"/><path d="M8 58v68a8 8 0 0 0 8 8h38a8 8 0 0 0 8-8V58" fill="none" stroke="${ink}" stroke-width="2.5"/></svg>`;
-    default:
-      return `<svg width="70" height="150" viewBox="0 0 70 150" aria-hidden="true"><rect x="40" y="2" width="26" height="9" rx="5" fill="#F5D547" transform="rotate(-24 53 6)"/><rect x="8" y="44" width="54" height="102" rx="8" fill="${c}" opacity=".9"/><rect x="14" y="52" width="22" height="22" rx="4" fill="#fff" opacity=".6"/><rect x="30" y="76" width="22" height="22" rx="4" fill="#fff" opacity=".55"/><path d="M6 12v126a8 8 0 0 0 8 8h42a8 8 0 0 0 8-8V12" fill="none" stroke="${ink}" stroke-width="2.5"/></svg>`;
-  }
-}
-
 /** Level complete: stars, verdict, rewards, the recipe card after a bar, Next and Share. */
 export class CompleteScreen {
   readonly el = document.createElement('div');
@@ -84,10 +69,11 @@ export class CompleteScreen {
     if (this.destroyed) return dispose();
     this.disposePixi = dispose;
     // The city's top band, cut from the level backdrop.
-    const decor = drawLevelDecor(theme);
-    const mask = new Graphics().rect(0, 0, STAGE_W, 58).fill({ color: '#FFFFFF' });
-    decor.mask = mask;
-    app.stage.addChild(decor, mask);
+    // The city's band of tiles, curtains or frieze, cut from its level art.
+    const band = new PixelLayer(195, 30);
+    band.put(cityBand(theme));
+    band.sprite.scale.set(ART);
+    app.stage.addChild(band.sprite);
     this.el.prepend(app.canvas);
     void this.data.family?.then(
       (html) =>
@@ -183,7 +169,7 @@ export class CompleteScreen {
             ${recipe.local && recipe.local !== recipe.name ? `<div class="cp-recipe-local">${esc(recipe.local)}</div>` : ''}
             <ul class="cp-ingredients">${ingredients}</ul>
           </div>
-          <div class="cp-recipe-glass">${recipeGlass(recipe)}</div>
+          <div class="cp-recipe-glass"><img class="px-img" alt="" src="${dataUrl(recipeGlass(recipe))}" width="70" height="150"></div>
         </div>
         <p class="cp-method">${esc(recipe.method)}</p>
       </article>`;

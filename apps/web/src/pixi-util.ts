@@ -1,4 +1,7 @@
-import { Application, Graphics } from 'pixi.js';
+import { Application, Graphics, TextureSource } from 'pixi.js';
+
+// Pixel art: every texture scales with nearest-neighbour filtering.
+TextureSource.defaultOptions.scaleMode = 'nearest';
 import { STAGE_H, STAGE_W, type Stage } from './stage.js';
 
 let dirty = true;
@@ -27,7 +30,8 @@ export async function createPixi(stage: Stage, height = STAGE_H): Promise<PixiHa
     width: STAGE_W,
     height,
     backgroundAlpha: 0,
-    antialias: true,
+    antialias: false,
+    roundPixels: true,
     resolution: resolution(),
     autoDensity: true,
     preference: 'webgl',

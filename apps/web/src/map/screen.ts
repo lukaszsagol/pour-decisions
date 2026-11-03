@@ -3,11 +3,15 @@ import type { Theme } from '@pour/themes';
 import type { Progress } from '../economy/save.js';
 import { esc, icons } from '../icons.js';
 import type { LevelEntry } from '../levels.js';
+import { Container } from 'pixi.js';
+import { reducedMotion } from '../anim.js';
+import { PixelCanvas } from '../pixel/canvas.js';
+import { PixelLayer } from '../pixel/layer.js';
+import { coinRadius, drawMap, pulseRing, type MapNode, type MapScene } from '../pixel/map.js';
 import { createPixi, invalidate } from '../pixi-util.js';
-import { STAGE_H, type Stage } from '../stage.js';
+import { ART, STAGE_H, type Stage } from '../stage.js';
 import { applyTheme, color } from '../theme-css.js';
-import { mapLayout, scrollFor, type MapLayout } from './path.js';
-import { drawMapWorld } from './world.js';
+import { mapLayout, pathX, scrollFor, type MapLayout } from './path.js';
 
 export interface MapScreenOptions {
   theme: Theme;
@@ -27,8 +31,9 @@ export interface MapScreenOptions {
 type NodeState = 'done' | 'current' | 'locked';
 
 /**
- * City map: a winding path of level nodes (Two Dots style). Pixi draws the
- * world behind a native scrolling layer that holds a real button per level.
+ * City map: a winding path of level nodes (Two Dots style), drawn as a pixel
+ * scene. The world sits behind a native scrolling layer that holds a real
+ * button per level; it moves in whole art pixels.
  */
 export class MapScreen {
   readonly el = document.createElement('div');
@@ -59,15 +64,48 @@ export class MapScreen {
     applyTheme(this.stage.el, theme);
     this.stage.el.replaceChildren(this.el);
     this.el.innerHTML = this.html();
-    const { app, dispose } = await createPixi(this.stage);
+    const { app, dispose, onFrame } = await createPixi(this.stage);
     if (this.destroyed) return dispose();
     this.disposePixi = dispose;
-    const world = drawMapWorld(theme, this.layout);
+    const scene = this.scene();
+    const art = drawMap(theme, scene);
+    // Chunks keep each texture within every GPU's size limit.
+    const world = new Container();
+    world.scale.set(ART);
+    const CHUNK = 1024;
+    for (let y0 = 0; y0 < art.h; y0 += CHUNK) {
+      const h = Math.min(CHUNK, art.h - y0);
+      const part = new PixelCanvas(art.w, h);
+      part.data.set(art.data.subarray(y0 * art.w, (y0 + h) * art.w));
+      const layer = new PixelLayer(art.w, h);
+      layer.put(part);
+      layer.sprite.y = y0;
+      world.addChild(layer.sprite);
+    }
+    // The current level's ring pulses in whole-pixel steps.
+    const current = scene.nodes.find((n) => n.state === 'current');
+    if (current) {
+      const r = coinRadius(current);
+      const pulse = new PixelLayer((r + 7) * 2 + 1, (r + 7) * 2 + 1);
+      pulse.put(pulseRing(theme, r, 0));
+      pulse.sprite.position.set(current.x - r - 7, current.y - r - 7);
+      world.addChild(pulse.sprite);
+      if (!reducedMotion()) {
+        let last = 0;
+        let frame = 0;
+        onFrame((ms) => {
+          if (ms - last < 260) return;
+          last = ms;
+          frame = (frame + 1) % 3;
+          pulse.put(pulseRing(theme, r, frame));
+        });
+      }
+    }
     app.stage.addChild(world);
     this.el.prepend(app.canvas);
     const scroller = this.el.querySelector<HTMLElement>('.map-scroll')!;
     const sync = () => {
-      world.y = -scroller.scrollTop;
+      world.y = -ART * Math.round(scroller.scrollTop / ART);
       invalidate();
     };
     scroller.addEventListener('scroll', sync, { passive: true });
@@ -108,6 +146,32 @@ export class MapScreen {
         `<span class="map-avatar" style="left:${left}px;top:${y - 40}px" aria-label="${esc(m.name)} is here" role="img"><span class="fam-avatar" style="background:${m.color};width:26px;height:26px">${esc(m.name[0]!.toUpperCase())}</span></span>`,
       );
     }
+  }
+
+  /** The map in art pixels: path, gates and node coins. */
+  private scene(): MapScene {
+    const { levels, progress } = this.opts;
+    const current = progress.data.current;
+    const nextSuper = levels.find((e) => e.level.difficulty === 'superHard' && e.level.number >= current)?.level.number;
+    const h = this.layout.height;
+    const nodes: MapNode[] = levels.map((e, i) => {
+      const n = e.level.number;
+      const p = this.layout.nodes[i]!;
+      return {
+        x: Math.round(p.x / ART),
+        y: Math.round(p.y / ART),
+        state: this.state(n),
+        kind: e.level.difficulty,
+        stars: progress.level(n)?.stars ?? 0,
+        flagged: n === nextSuper && this.state(n) === 'locked',
+      };
+    });
+    return {
+      height: Math.ceil(h / ART),
+      pathX: (y) => pathX(y * ART, h) / ART,
+      gates: this.layout.gates.map((g) => Math.round(g / ART)),
+      nodes,
+    };
   }
 
   private indexOf(n: number): number {
@@ -159,7 +223,8 @@ export class MapScreen {
     const state = this.state(n);
     const stars = this.opts.progress.level(n)?.stars ?? 0;
     const kind = level.difficulty;
-    const size = state === 'current' ? 52 : kind !== 'normal' && state === 'locked' ? 52 : kind !== 'normal' ? 48 : 40;
+    // Touch target at least 44 px, centred on the pixel coin.
+    const size = Math.max(44, (coinRadius({ state, kind }) * 2 + 1) * ART);
     const label = [
       `Level ${n}`,
       kind === 'hard' ? 'hard' : kind === 'superHard' ? 'super hard' : '',
@@ -167,21 +232,13 @@ export class MapScreen {
     ]
       .filter(Boolean)
       .join(', ');
-    const starRow =
-      state === 'done'
-        ? `<div class="map-stars" style="left:${x - 26}px;top:${y + size / 2 + 2}px" aria-hidden="true"><span class="on">${'★'.repeat(stars)}</span><span class="off">${'★'.repeat(3 - stars)}</span></div>`
-        : '';
-    const ring =
-      state === 'current'
-        ? `<div class="map-ring" style="left:${x - 36}px;top:${y - 36}px" aria-hidden="true"></div>`
-        : '';
     const flag =
       superHardFlag === n
-        ? `<div class="map-flag" style="left:${x + 35}px;top:${y - 16}px" aria-hidden="true">Super hard</div>`
+        ? `<div class="map-flag px-tag" style="left:${x + 32}px;top:${y - 15}px" aria-hidden="true">Super hard</div>`
         : '';
-    return `${ring}<button class="map-node is-${state} kind-${kind}${n === this.selected ? ' is-selected' : ''}" data-level="${n}"
+    return `<button class="map-node is-${state} kind-${kind}${n === this.selected ? ' is-selected' : ''}" data-level="${n}"
       style="left:${x - size / 2}px;top:${y - size / 2}px;width:${size}px;height:${size}px" aria-label="${label}"
-      ${state === 'locked' ? 'aria-disabled="true"' : ''}>${n}</button>${starRow}${flag}`;
+      ${state === 'locked' ? 'aria-disabled="true"' : ''}>${n}</button>${flag}`;
   }
 
   private html(): string {
