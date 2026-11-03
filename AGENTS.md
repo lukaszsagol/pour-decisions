@@ -13,6 +13,7 @@ It ships as a web app (PWA) first, then as iOS and Android apps wrapped with Cap
 | Path | What it is |
 | --- | --- |
 | `TASKS.md` | The ordered backlog. **Your work comes from here.** |
+| `docs/CONTEXT.md` | Background: how the project started, the owner's decisions and why. Read it once. |
 | `docs/OVERNIGHT.md` | The protocol for unattended builds. Follow it exactly when running unattended. |
 | `docs/spec/` | Specs: game rules, progression and economy, screens, cities and themes, levels. **The source of truth.** |
 | `docs/design/screens/*.png` | Reference screenshots of every designed screen (390×844 logical px, rendered at 2×). Match these. |

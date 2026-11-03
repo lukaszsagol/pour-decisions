@@ -1,1 +1,1 @@
-Read `AGENTS.md` first: it has all the instructions for working in this repository. For unattended builds, also follow `docs/OVERNIGHT.md`.
+Read `AGENTS.md` first: it has all the instructions for working in this repository. `docs/CONTEXT.md` explains the decisions behind the project. For unattended builds, also follow `docs/OVERNIGHT.md`.
