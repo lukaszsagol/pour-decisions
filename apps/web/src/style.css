@@ -1346,3 +1346,130 @@ p {
   font-size: 15px;
   line-height: 1.4;
 }
+
+/* Daily */
+.dy-card {
+  margin: 14px 20px 0;
+  padding: 18px;
+  border-radius: 22px;
+  border: 1.5px solid;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.dy-city {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.dy-facts {
+  font-size: 13px;
+}
+.dy-preview {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin: 12px 0 14px;
+}
+.dy-glass {
+  width: 22px;
+  height: 66px;
+  border-radius: 4px 4px 9px 9px;
+  border: 2px solid var(--c-glassRim);
+  background: var(--c-glassFill);
+  display: flex;
+  flex-direction: column-reverse;
+  overflow: hidden;
+  padding-top: 6px;
+}
+.dy-glass span {
+  display: block;
+  flex: none;
+}
+.dy-play {
+  height: 54px;
+  border-radius: 27px;
+  font-size: 17px;
+}
+.dy-note,
+.dy-next {
+  font-size: 13px;
+  color: var(--c-muted);
+  text-align: center;
+  margin-top: 4px;
+}
+.dy-result {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 12px;
+}
+.dy-stars {
+  font-size: 26px;
+  color: var(--c-starDone);
+  letter-spacing: 2px;
+}
+.dy-off {
+  color: var(--c-starEmpty);
+}
+.dy-moves {
+  font-size: 15px;
+  color: var(--c-muted);
+}
+.dy-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+.dy-actions .btn {
+  flex: 1;
+  gap: 6px;
+}
+.dy-week {
+  margin: 14px 20px 0;
+  padding: 14px 18px;
+  border-radius: 20px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+}
+.dy-week h2 {
+  font-size: 15px;
+  font-weight: 600;
+}
+.dy-days {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--c-muted);
+}
+.dy-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.dy-dot {
+  width: 34px;
+  height: 34px;
+  border-radius: 17px;
+  border: 1.5px dashed var(--c-line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  color: var(--c-accentText);
+  letter-spacing: -1px;
+}
+.dy-day.is-played .dy-dot {
+  background: var(--c-starDone);
+  border: none;
+}
+.dy-day.is-today span:last-child {
+  color: var(--c-text);
+  font-weight: 700;
+}

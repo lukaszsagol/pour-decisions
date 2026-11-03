@@ -28,3 +28,20 @@ describe('daily pour', () => {
     expect(dailyShareText('2026-11-03', 3, 14, 13)).toBe('Pour Decisions · 3 Nov · ★★★ 14 moves (best 13)');
   });
 });
+
+describe('daily screen helpers', () => {
+  it('counts nights in a row, from tonight or from last night', async () => {
+    const { nightsInARow } = await import('../src/daily/screen.js');
+    const today = new Date(2026, 10, 3, 20);
+    expect(nightsInARow({}, today)).toBe(0);
+    expect(nightsInARow({ '2026-11-03': 1, '2026-11-02': 1, '2026-10-31': 1 }, today)).toBe(2);
+    expect(nightsInARow({ '2026-11-02': 1, '2026-11-01': 1 }, today)).toBe(2);
+    expect(nightsInARow({ '2026-11-01': 1 }, today)).toBe(0);
+  });
+
+  it('counts down to midnight', async () => {
+    const { untilMidnight } = await import('../src/daily/screen.js');
+    expect(untilMidnight(new Date(2026, 10, 3, 18, 48))).toBe('5 h 12 min');
+    expect(untilMidnight(new Date(2026, 10, 3, 23, 50))).toBe('10 min');
+  });
+});

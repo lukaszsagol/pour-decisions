@@ -13,6 +13,7 @@ import { PassportScreen } from './passport/screen.js';
 import { tabBar, type Tab } from './tabbar.js';
 import { dailyLevel, dailyShareText, dateKey } from './daily/generate.js';
 import { TrainingScreen } from './training/screen.js';
+import { DailyScreen } from './daily/screen.js';
 import { family } from './family/index.js';
 import { avatar, FamilyScreen } from './family/screen.js';
 import { modes, nextRating, planningScore, trainingLevel, type TrainingMode } from './training/logic.js';
@@ -92,9 +93,9 @@ function dailyScreen(): Screen {
     bottles: d.bottles,
     best: d.best,
     stock: { ...progress.data.stock },
-    backHref: '#/passport',
+    backHref: '#/daily',
     nextHref: '#/complete',
-    nextLabel: 'Collect rewards',
+    nextLabel: 'See your result',
     onStock: (stock) => progress.setStock(stock),
     onEvent: (e) => playLog.add(`daily-${date}`, e),
     onWin: (result) => {
@@ -107,8 +108,8 @@ function dailyScreen(): Screen {
         rewards,
         kicker: "Tonight's pour cleared",
         share: dailyShareText(date, result.stars, result.moves, d.best),
-        nextHref: '#/passport',
-        nextLabel: 'Back to the passport',
+        nextHref: '#/daily',
+        nextLabel: "Back to tonight's pour",
       };
     },
   });
@@ -235,7 +236,8 @@ function route(): Screen {
       footer: tabBar('map', tabs),
     });
   }
-  if (name === 'daily') return dailyScreen();
+  if (name === 'daily' && arg === 'play') return dailyScreen();
+  if (name === 'daily') return new DailyScreen(stage, dailyLevel(dateKey()), progress, tabs);
   if (name === 'training') return new TrainingScreen(stage, themeForLevel(progress.data.current), progress);
   if (name === 'train' && arg && arg in modes) return trainingScreen(arg as TrainingMode);
   if (name === 'family') {
