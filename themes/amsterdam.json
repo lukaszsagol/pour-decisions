@@ -63,7 +63,8 @@
     "mapBridgeTop": "#8A5A3A",
     "mapMoon": "#F3E6CC",
     "superHardBg": "#3B1218",
-    "superHardText": "#F09595"
+    "superHardText": "#F09595",
+    "mapCurrent": "#F28C28"
   },
   "glass": {
     "shape": "tulip-stemmed",

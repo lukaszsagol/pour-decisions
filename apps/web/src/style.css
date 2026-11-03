@@ -664,7 +664,7 @@ p {
   border: 3px solid var(--c-hard);
 }
 .map-node.is-current {
-  background: var(--c-accent);
+  background: var(--c-mapCurrent, var(--c-accent));
   color: var(--c-accentText);
   font-size: 16px;
 }
@@ -691,7 +691,7 @@ p {
   width: 72px;
   height: 72px;
   border-radius: 36px;
-  border: 2px solid var(--c-accent);
+  border: 2px solid var(--c-mapCurrent, var(--c-accent));
   opacity: 0.5;
   pointer-events: none;
 }
@@ -1053,4 +1053,22 @@ p {
   width: 24px;
   height: 24px;
   accent-color: var(--c-accent);
+}
+.booster-face.is-card {
+  border-radius: 10px;
+}
+.booster-undo .booster-face.is-card {
+  rotate: -4deg;
+}
+.booster-glass .booster-face.is-card {
+  rotate: 3deg;
+}
+.booster-hint .booster-face.is-card {
+  rotate: -3deg;
+}
+.lv-title > div {
+  min-width: 0;
+}
+.lv-bar {
+  color: var(--c-headerTitle, var(--c-text));
 }

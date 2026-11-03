@@ -95,4 +95,49 @@ export const designFixtures: Record<string, DesignFixture> = {
     selected: null,
     stock: { undo: 5, extraGlass: 2, hint: 3 },
   },
+  /** LondonLevel.png: The Fox and Fiddle, level 151, a pewter tankard over hidden units. */
+  'london-151': {
+    city: 'london',
+    number: 151,
+    barName: 'The Fox and Fiddle',
+    bottles: parseBottles(
+      [
+        'stout blackcurrant lager bitter',
+        'bitter gin-tonic blackcurrant stout',
+        '?stout ?bitter ?lager blackcurrant',
+        'gin-tonic bitter stout lager',
+        'blackcurrant lager bitter gin-tonic',
+        '',
+        '',
+      ],
+      4,
+    ),
+    best: 19,
+    moves: 11,
+    selected: 4,
+    stock: { undo: 5, extraGlass: 1, hint: 2 },
+  },
+  /** NewYorkLevel.png: The Gilded Door, level 247, a velvet rope and an Art Deco door. */
+  'newyork-247': {
+    city: 'newyork',
+    number: 247,
+    barName: 'The Gilded Door',
+    bottles: parseBottles(
+      [
+        'manhattan cosmopolitan aviation whiskey-sour',
+        'aviation whiskey-sour grasshopper cosmopolitan',
+        'grasshopper manhattan cosmopolitan aviation',
+        'whiskey-sour aviation manhattan grasshopper',
+        'cosmopolitan grasshopper whiskey-sour',
+        'manhattan',
+        '',
+      ],
+      4,
+      { 5: { only: 'manhattan' }, 6: { lockedUntil: 'cosmopolitan' } },
+    ),
+    best: 23,
+    moves: 6,
+    selected: 1,
+    stock: { undo: 3, extraGlass: 1, hint: 4 },
+  },
 };

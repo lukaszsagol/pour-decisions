@@ -109,10 +109,11 @@ export class MapScreen {
     const chip = (svg: string, n: number, label: string) =>
       `<div class="map-chip" aria-label="${n} ${label}">${svg.replace(/width="26" height="26"/, 'width="16" height="16"')}${n}</div>`;
     const lastOfBar = pack.levels[pack.levels.length - 1]!.number;
+    const barWord = capital(this.opts.theme.passport?.barWord ?? 'bar');
     const nextBar = this.opts.levels.find((e) => e.pack.bar === pack.bar + 1)?.pack;
     const left = lastOfBar - Math.max(this.opts.progress.data.current, level.number) + 1;
     const leftLine = nextBar
-      ? `<span>${left} ${left === 1 ? 'level' : 'levels'} left to</span> <b>Bar ${nextBar.bar} · ${esc(nextBar.name)}</b>`
+      ? `<span>${left} ${left === 1 ? 'level' : 'levels'} left to</span> <b>${barWord} ${nextBar.bar} · ${esc(nextBar.name)}</b>`
       : `<span>${left} ${left === 1 ? 'level' : 'levels'} left in</span> <b>${esc(this.opts.theme.name)}</b>`;
     const record = this.opts.progress.level(level.number);
     this.el.querySelector('.map-panel-body')!.innerHTML = `
@@ -175,7 +176,7 @@ export class MapScreen {
     const gates = this.layout.gates
       .map(
         (y, b) =>
-          `<div class="map-gate" style="top:${y - 44}px">Bar ${b + 2} · ${esc(levels[(b + 1) * 20]?.pack.name ?? '')}</div>`,
+          `<div class="map-gate" style="top:${y - 44}px">${capital(theme.passport?.barWord ?? 'bar')} ${b + 2} · ${esc(levels[(b + 1) * 20]?.pack.name ?? '')}</div>`,
       )
       .join('');
     return `
@@ -190,7 +191,7 @@ export class MapScreen {
           <a class="icon-btn" href="${esc(this.opts.backHref)}" aria-label="Back to passport">${icons.back(k.text)}</a>
           <div>
             <h1 class="map-city">${esc(theme.name)}</h1>
-            <div class="map-bar">Bar ${here.bar} · ${esc(here.name)}</div>
+            <div class="map-bar">${capital(theme.passport?.barWord ?? 'bar')} ${here.bar} · ${esc(here.name)}</div>
           </div>
         </div>
         <div class="map-total" aria-label="${cityStars} stars in ${esc(theme.name)}"><span style="color:${color(theme, 'starDone', k.accent)}">★</span>${cityStars}</div>
@@ -198,3 +199,5 @@ export class MapScreen {
       <section class="map-panel" aria-label="Selected level"><div class="map-panel-body"></div>${this.opts.footer ?? ''}</section>`;
   }
 }
+
+const capital = (s: string) => s[0]!.toUpperCase() + s.slice(1);

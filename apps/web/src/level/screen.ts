@@ -538,7 +538,7 @@ export class LevelScreen {
     const border = t.booster?.border ?? 2;
     const booster = (kind: string, label: string, rimColor: string, svg: string) => `
       <button class="booster booster-${kind}" style="--rim:${rimColor}">
-        <span class="booster-face" style="border-width:${border}px">${svg}<span class="booster-count"></span></span>
+        <span class="booster-face${t.booster?.shape === 'card' ? ' is-card' : ''}" style="border-width:${border}px">${svg}<span class="booster-count"></span></span>
         <span class="booster-label">${label}</span>
       </button>`;
     return `

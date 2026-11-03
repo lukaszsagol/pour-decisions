@@ -116,10 +116,10 @@ Depends on: T09
 - [x] Rewards and prices from `docs/spec/progression.md`, all in one config file.
 - [x] Win streak rewards at 3, 5 and 10; fail resets.
 
-### T16 · London, New York and Tokyo skins · `todo` · L
+### T16 · London, New York and Tokyo skins · `in-review` · L
 Depends on: T11, T13
-- [ ] Level and map screens for each city matching their design references, including glass shapes and blocker skins in `docs/spec/cities.md`.
-- [ ] One test per city loads a level and saves a screenshot.
+- [x] Level and map screens for each city matching their design references, including glass shapes and blocker skins in `docs/spec/cities.md`.
+- [x] One test per city loads a level and saves a screenshot.
 
 ### T17 · Installable web app and deploy · `todo` · M
 Depends on: T14

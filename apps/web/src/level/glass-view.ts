@@ -166,6 +166,11 @@ export class GlassView extends Container {
       g.rect((SLOT_W - geo.stem.w) / 2, by, geo.stem.w, geo.stem.h).fill({ color: base });
       g.roundRect((SLOT_W - geo.foot.w) / 2, by + geo.stem.h, geo.foot.w, geo.foot.h, geo.foot.r).fill({ color: base });
     }
+    if (geo.nonic) {
+      // The nonic bulge just under the rim.
+      g.rect(o.x - 3, o.y + 12, 4, 10).fill({ color: rim });
+      g.rect(o.x + geo.bodyW - 1, o.y + 12, 4, 10).fill({ color: rim });
+    }
     if (geo.plinth) {
       g.rect((SLOT_W - 40) / 2, by, 40, 8).fill({ color: base });
       g.roundRect((SLOT_W - 50) / 2, by + 8, 50, 8, 2).fill({ color: base });

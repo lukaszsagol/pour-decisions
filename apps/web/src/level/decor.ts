@@ -23,6 +23,8 @@ type DecorFn = (c: Container, theme: Theme) => void;
 
 const decorByCity: Partial<Record<string, DecorFn>> = {
   amsterdam: amsterdamDecor,
+  london: londonDecor,
+  newyork: newYorkDecor,
   tokyo: tokyoDecor,
 };
 
@@ -121,4 +123,102 @@ function tokyoDecor(c: Container, theme: Theme): void {
   kanji.anchor.set(0.5);
   kanji.position.set(STAGE_W / 2, 29);
   c.addChild(kanji);
+}
+
+function londonDecor(c: Container, theme: Theme): void {
+  const k = theme.colors;
+  const brass = color(theme, 'brass', k.accent);
+  const g = new Graphics();
+  // Panelled bar room.
+  g.rect(0, 0, STAGE_W, STAGE_H).fill({ color: color(theme, 'panel', k.ground) });
+  for (let i = 0; i < 5; i++)
+    roundRect(g, 6 + i * 77, 226, 70, 432, [6, 6, 0, 0]).stroke({ width: 2, color: color(theme, 'panelLine', k.line) });
+  // Wallpaper with a diamond pattern behind the header and back bar.
+  g.rect(0, 59, STAGE_W, 152).fill({ color: color(theme, 'wall', k.surfaceAlt) });
+  const pattern = color(theme, 'wallPattern', k.line);
+  for (let y = 70; y < 205; y += 26)
+    for (let x = (y / 26) % 2 ? 9 : 22; x < STAGE_W; x += 26)
+      g.poly([x, y - 5, x + 5, y, x, y + 5, x - 5, y]).fill({ color: pattern });
+  // Fascia: "Free House" sign board.
+  g.rect(0, 0, STAGE_W, 56).fill({ color: color(theme, 'fascia', k.surface) });
+  g.rect(0, 56, STAGE_W, 3).fill({ color: brass });
+  g.rect(64, 27, 54, 2).fill({ color: brass });
+  g.rect(272, 27, 54, 2).fill({ color: brass });
+  // Dartboard.
+  g.circle(51, 157, 28).fill({ color: '#1A1A1A' });
+  g.circle(51, 157, 22).fill({ color: color(theme, 'dartRed', '#C8242E') });
+  g.circle(51, 157, 15).fill({ color: '#1A1A1A' });
+  g.circle(51, 157, 9).fill({ color: color(theme, 'dartGreen', '#1F5C44') });
+  g.circle(51, 157, 4).fill({ color: color(theme, 'dartRed', '#C8242E') });
+  // Beer pumps with clips in the colours of the first drinks.
+  theme.drinks.slice(0, 4).forEach((d, i) => {
+    const x = 123 + i * 48;
+    roundRect(g, x - 6, 134, 12, 36, [6, 6, 2, 2]).fill({ color: color(theme, 'pumpHandle', '#2B1D16') });
+    g.roundRect(x - 13, 168, 26, 20, 3)
+      .fill({ color: color(theme, 'fascia', k.surface) })
+      .stroke({ width: 2, color: brass });
+    g.circle(x, 178, 5).fill({ color: d.color });
+    g.rect(x - 3, 188, 6, 10).fill({ color: brass });
+  });
+  // Framed picture.
+  g.rect(306, 126, 62, 62).fill({ color: brass });
+  g.rect(310, 130, 54, 54).fill({ color: color(theme, 'fascia', k.surface) });
+  g.poly([322, 184, 330, 166, 336, 172, 342, 158, 352, 184]).fill({ color: '#C9752E' });
+  g.rect(0, 198, STAGE_W, 12).fill({ color: color(theme, 'shelf', k.counterTop) });
+  g.rect(0, 198, STAGE_W, 2).fill({ color: brass });
+  counter(g, theme, brass, 3);
+  c.addChild(g);
+  const sign = new Text({
+    text: 'FREE HOUSE',
+    style: { fontFamily: theme.fonts.display, fontWeight: '700', fontSize: 13, letterSpacing: 5, fill: brass },
+  });
+  sign.anchor.set(0.5);
+  sign.position.set(STAGE_W / 2 + 3, 28);
+  c.addChild(sign);
+}
+
+function newYorkDecor(c: Container, theme: Theme): void {
+  const k = theme.colors;
+  const gold = color(theme, 'brass', k.accent);
+  const g = new Graphics();
+  g.rect(0, 0, STAGE_W, STAGE_H).fill({ color: k.ground });
+  // Zigzag band.
+  g.rect(0, 0, STAGE_W, 56).fill({ color: k.surfaceAlt });
+  g.moveTo(0, 40);
+  for (let x = 0; x <= STAGE_W; x += 25) g.lineTo(x + 12.5, 17).lineTo(x + 25, 40);
+  g.stroke({ width: 2, color: gold });
+  g.rect(0, 47, STAGE_W, 1).fill({ color: k.glassRim });
+  g.rect(0, 56, STAGE_W, 2).fill({ color: gold });
+  // Sunburst behind the back bar.
+  const cx = STAGE_W / 2;
+  const cy = 202;
+  for (let a = 8; a <= 172; a += 9) {
+    const r = (a * Math.PI) / 180;
+    g.moveTo(cx, cy).lineTo(cx - Math.cos(r) * 175, cy - Math.sin(r) * 95);
+  }
+  g.stroke({ width: 1, color: gold, alpha: 0.35 });
+  g.arc(cx, cy, 60, Math.PI, 0).stroke({ width: 2, color: gold });
+  g.arc(cx, cy, 35, Math.PI, 0).stroke({ width: 1.5, color: gold, alpha: 0.6 });
+  // Bottles with gold caps.
+  const bottle = (x: number, h: number) => {
+    roundRect(g, x, 196 - h, 16, h, [8, 8, 2, 2]).fill({ color: color(theme, 'shelfBottle', '#1E1E1E') });
+    roundRect(g, x, 196 - h, 16, 6, [8, 8, 0, 0]).fill({ color: gold });
+  };
+  [
+    [24, 54],
+    [50, 40],
+    [80, 58],
+    [294, 56],
+    [320, 40],
+    [350, 48],
+  ].forEach(([x, h]) => bottle(x!, h!));
+  g.rect(14, 196, STAGE_W - 28, 4).fill({ color: gold });
+  // Counter: gold edge over dark stone with a soft wave.
+  g.rect(0, COUNTER_TOP, STAGE_W, 2).fill({ color: gold });
+  g.rect(0, COUNTER_TOP + 2, STAGE_W, 22).fill({ color: k.counterTop });
+  g.moveTo(0, COUNTER_TOP + 16)
+    .bezierCurveTo(130, COUNTER_TOP + 6, 260, COUNTER_TOP + 22, STAGE_W, COUNTER_TOP + 10)
+    .stroke({ width: 1, color: k.glassRim, alpha: 0.6 });
+  g.rect(0, COUNTER_TOP + 24, STAGE_W, STAGE_H - COUNTER_TOP - 24).fill({ color: k.counterFront });
+  c.addChild(g);
 }

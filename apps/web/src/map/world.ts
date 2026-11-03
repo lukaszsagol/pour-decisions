@@ -1,6 +1,6 @@
 import { createRng } from '@pour/engine';
 import type { Theme } from '@pour/themes';
-import { Container, Graphics } from 'pixi.js';
+import { Container, Graphics, Text } from 'pixi.js';
 import { dashedLine } from '../pixi-util.js';
 import { STAGE_W } from '../stage.js';
 import { color } from '../theme-css.js';
@@ -19,12 +19,13 @@ export interface MapPalette {
   bridge: string;
   bridgeTop: string;
   moon: string;
+  fog?: string;
 }
 
 export function mapPalette(theme: Theme): MapPalette {
   const k = theme.colors;
   return {
-    ground: k.ground,
+    ground: color(theme, 'mapGround', k.ground),
     bank: color(theme, 'mapBank', k.line),
     path: color(theme, 'mapPath', k.surface),
     pathLine: color(theme, 'mapPathLine', k.muted),
@@ -39,6 +40,7 @@ export function mapPalette(theme: Theme): MapPalette {
     bridge: color(theme, 'mapBridge', k.counterTop),
     bridgeTop: color(theme, 'mapBridgeTop', k.line),
     moon: color(theme, 'mapMoon', k.text),
+    fog: color(theme, 'mapFog', '#B9C4BE'),
   };
 }
 
@@ -151,5 +153,96 @@ export function drawMapWorld(theme: Theme, layout: MapLayout): Container {
   lamps(g, layout, p);
   for (const y of layout.gates) bridge(g, y, p, p.path);
   c.addChild(g);
+  extras[theme.id]?.(c, theme, layout, p);
   return c;
 }
+
+type Extra = (c: Container, theme: Theme, layout: MapLayout, p: MapPalette) => void;
+
+/** City details on top of the shared map: fog, phone boxes, towers, neon, lanterns, rain. */
+const extras: Partial<Record<string, Extra>> = {
+  london(c, theme, layout, p) {
+    const g = new Graphics();
+    const rng = createRng('london-fog');
+    for (let y = 300; y < layout.height - 200; y += 260 + rng.int(160)) {
+      const left = rng.next() < 0.5;
+      g.roundRect(left ? -40 : 80, y, 360, 56, 28).fill({ color: p.fog ?? '#B9C4BE', alpha: 0.08 });
+    }
+    for (let y = layout.height - 420; y > 300; y -= 900) {
+      g.roundRect(334, y, 30, 62, 4).fill({ color: '#C8242E' });
+      for (const dy of [10, 26]) for (const dx of [6, 17]) g.rect(334 + dx, y + dy, 8, 12).fill({ color: '#E8A07A' });
+    }
+    for (let y = layout.height - 900; y > 300; y -= 900) {
+      g.rect(330, y, 38, 4).fill({ color: theme.colors.accent });
+      g.rect(334, y + 4, 30, 40)
+        .fill({ color: theme.colors.surfaceAlt })
+        .stroke({ width: 2, color: theme.colors.accent });
+      g.roundRect(343, y + 14, 12, 20, 4).fill({ color: '#F6E3A6' });
+    }
+    c.addChild(g);
+  },
+  newyork(c, theme, layout) {
+    const g = new Graphics();
+    const gold = theme.colors.accent;
+    // Gold pinstripes on the towers down both sides.
+    for (const x of [18, 34, 50, STAGE_W - 50, STAGE_W - 34, STAGE_W - 18])
+      g.rect(x, 160, 2, layout.height - 160).fill({ color: gold, alpha: 0.35 });
+    for (let y = layout.height - 650; y > 300; y -= 1100) {
+      g.rect(330, y, 46, 60).fill({ color: theme.colors.ground }).stroke({ width: 2.5, color: gold });
+      for (let x = 336; x < 372; x += 6) {
+        g.circle(x, y + 7, 1.2).fill({ color: gold });
+        g.circle(x, y + 53, 1.2).fill({ color: gold });
+      }
+      const t = new Text({
+        text: 'JAZZ',
+        style: { fontFamily: theme.fonts.display, fontSize: 12, fill: theme.colors.hard },
+      });
+      t.anchor.set(0.5);
+      t.position.set(353, y + 30);
+      c.addChild(t);
+    }
+    c.addChildAt(g, 1);
+  },
+  tokyo(c, theme, layout) {
+    const g = new Graphics();
+    const rng = createRng('tokyo-rain');
+    for (let i = 0; i < layout.height / 40; i++) {
+      const x = rng.int(STAGE_W);
+      const y = rng.int(layout.height);
+      g.moveTo(x, y).lineTo(x - 3, y + 14);
+    }
+    g.stroke({ width: 1.5, color: theme.colors.hint, alpha: 0.25 });
+    let left = true;
+    for (let y = layout.height - 300; y > 200; y -= 230) {
+      const x = left ? 82 : 312;
+      g.rect(x - 1, y - 14, 2, 10).fill({ color: '#3A2A2A' });
+      g.roundRect(x - 11, y - 4, 22, 30, 11).fill({ color: '#E0453A' });
+      left = !left;
+    }
+    c.addChild(g);
+    const signs: [string, string, number][] = [
+      ['酒場', theme.colors.accent, 20],
+      ['居酒屋', theme.colors.starDone, 346],
+      ['歌', theme.colors.hint, 20],
+    ];
+    let i = 0;
+    for (let y = layout.height - 500; y > 300; y -= 420) {
+      const [word, tint, x] = signs[i++ % signs.length]!;
+      const h = word.length * 30 + 14;
+      const box = new Graphics()
+        .roundRect(x, y, 30, h, 4)
+        .fill({ color: theme.colors.ground })
+        .stroke({ width: 2.5, color: tint });
+      c.addChild(box);
+      [...word].forEach((ch, j) => {
+        const t = new Text({
+          text: ch,
+          style: { fontFamily: 'Zen Kaku Gothic New', fontWeight: '700', fontSize: 17, fill: tint },
+        });
+        t.anchor.set(0.5);
+        t.position.set(x + 15, y + 22 + j * 30);
+        c.addChild(t);
+      });
+    }
+  },
+};

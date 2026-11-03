@@ -169,3 +169,146 @@ export function onlySlots(
     dashedBox(g, origin.x + r.x, origin.y + r.y, r.w, r.h, 4, { width: 2, color: drinkColor, alpha: 0.55 });
   }
 }
+
+/** London: pewter tankards over hidden units, a reserved beer mat, a locked tap. */
+const londonSkin: Partial<BlockerSkin> = {
+  hiddenUnit(g, _layer, r, _radii, theme) {
+    const pewter = color(theme, 'pewter', '#9BA1A8');
+    const dark = color(theme, 'pewterDark', '#6E747A');
+    g.rect(r.x - 4, r.y - 2, r.w + 8, r.h + 4).fill({ color: pewter });
+    g.rect(r.x - 4, r.y + r.h / 2 - 1, r.w + 8, 2).fill({ color: dark, alpha: 0.6 });
+    // Handle on the right.
+    g.roundRect(r.x + r.w + 4, r.y + 2, 9, r.h - 4, 4).stroke({ width: 4, color: pewter });
+    g.circle(r.x + r.w / 2, r.y + r.h / 2, Math.min(9, r.h / 3)).stroke({
+      width: 2,
+      color: color(theme, 'pewterLight', '#C3C8CC'),
+    });
+  },
+  only(layer, ctx) {
+    // Reserved beer mat leaning on the glass.
+    const g = new Graphics();
+    const x = ctx.body.x - 6;
+    const y = ctx.body.y + ctx.geo.bodyH - 34;
+    g.roundRect(x, y, 22, 22, 3).fill({ color: ctx.theme.colors.text }).stroke({ width: 2, color: ctx.drinkColor });
+    g.circle(x + 11, y + 11, 6).fill({ color: ctx.drinkColor });
+    g.rotation = 0;
+    layer.addChild(g);
+    badge(layer, ctx);
+  },
+  locked(layer, ctx) {
+    // Locked beer tap across the glass mouth.
+    const g = new Graphics();
+    const brass = color(ctx.theme, 'brass', ctx.theme.colors.accent);
+    const { body, geo } = ctx;
+    box(g, body.x, body.y, geo.bodyW, geo.bodyH, geo.radius, { color: ctx.theme.colors.ground, alpha: 0.55 });
+    g.rect(body.x - 4, body.y + 10, geo.bodyW + 8, 10).fill({ color: brass });
+    g.roundRect(SLOT_W / 2 - 6, body.y + 20, 12, 22, 3).fill({ color: brass });
+    g.roundRect(SLOT_W / 2 - 11, body.y + 64, 22, 20, 4).fill({ color: brass });
+    g.moveTo(SLOT_W / 2 - 6, body.y + 64)
+      .arc(SLOT_W / 2, body.y + 64, 6, Math.PI, 0)
+      .stroke({ width: 3, color: brass });
+    g.circle(SLOT_W / 2, body.y + 73, 2.4).fill({ color: ctx.theme.colors.ground });
+    layer.addChild(g);
+    badge(layer, ctx);
+  },
+};
+
+/** New York: frosted Deco glass over hidden units, a velvet rope, an Art Deco door. */
+const newYorkSkin: Partial<BlockerSkin> = {
+  hiddenUnit(g, layer, r, radii, theme) {
+    box(g, r.x, r.y, r.w, r.h, radii, color(theme, 'hiddenUnit', '#2A2A2A'));
+    // Frosted glass: fine diagonal lines.
+    for (let x = r.x + 4; x < r.x + r.w; x += 7)
+      g.moveTo(x, r.y + r.h - 3).lineTo(Math.min(r.x + r.w - 2, x + 8), r.y + 3);
+    g.stroke({ width: 1, color: theme.colors.text, alpha: 0.18 });
+    if (r.h > 14) questionMark(layer, r, theme, color(theme, 'hiddenMark', theme.colors.muted));
+  },
+  only(layer, ctx) {
+    const g = new Graphics();
+    const brass = color(ctx.theme, 'brass', ctx.theme.colors.accent);
+    const { body, geo } = ctx;
+    const postY = body.y + geo.bodyH - 76;
+    for (const x of [body.x - 6, body.x + geo.bodyW + 6]) {
+      g.rect(x - 2, postY, 4, 64).fill({ color: brass });
+      g.circle(x, postY, 5).fill({ color: brass });
+      g.rect(x - 5, postY + 62, 10, 4).fill({ color: brass });
+    }
+    g.moveTo(body.x - 6, postY + 6)
+      .quadraticCurveTo(SLOT_W / 2, postY + 46, body.x + geo.bodyW + 6, postY + 6)
+      .stroke({ width: 6, color: color(ctx.theme, 'velvet', '#A8213A'), cap: 'round' });
+    layer.addChild(g);
+    badge(layer, ctx);
+  },
+  locked(layer, ctx) {
+    const g = new Graphics();
+    const brass = color(ctx.theme, 'brass', ctx.theme.colors.accent);
+    const { body, geo } = ctx;
+    const x = body.x + 6;
+    const y = body.y + 6;
+    const w = geo.bodyW - 12;
+    const h = geo.bodyH - 12;
+    roundRect(g, x, y, w, h, [w / 2, w / 2, 6, 6])
+      .fill({ color: ctx.theme.colors.ground })
+      .stroke({ width: 2, color: brass });
+    for (let a = 25; a <= 155; a += 26) {
+      const rad = (a * Math.PI) / 180;
+      g.moveTo(SLOT_W / 2, y + w / 2 + 6).lineTo(
+        SLOT_W / 2 - Math.cos(rad) * (w / 2 - 4),
+        y + w / 2 + 6 - Math.sin(rad) * (w / 2 - 6),
+      );
+    }
+    g.stroke({ width: 1, color: brass, alpha: 0.8 });
+    g.rect(x + 8, y + h * 0.45, w - 16, h * 0.42).stroke({ width: 1.2, color: brass });
+    g.circle(SLOT_W / 2, y + h * 0.6, 5).fill({ color: brass });
+    g.poly([
+      SLOT_W / 2 - 3,
+      y + h * 0.6,
+      SLOT_W / 2 + 3,
+      y + h * 0.6,
+      SLOT_W / 2 + 4,
+      y + h * 0.6 + 14,
+      SLOT_W / 2 - 4,
+      y + h * 0.6 + 14,
+    ]).fill({ color: brass });
+    layer.addChild(g);
+    badge(layer, ctx);
+  },
+};
+
+/** Tokyo: unlabelled bottles keep the generic "?"; a bottle-keep tag; a shutter pulled down. */
+const tokyoSkin: Partial<BlockerSkin> = {
+  only(layer, ctx) {
+    badge(layer, ctx);
+  },
+  locked(layer, ctx) {
+    const g = new Graphics();
+    const { body, geo, theme } = ctx;
+    const slat = color(theme, 'shutter', '#3B4577');
+    const line = color(theme, 'shutterLine', '#2B3466');
+    box(
+      g,
+      body.x + 2,
+      body.y + 2,
+      geo.bodyW - 4,
+      geo.bodyH - 4,
+      geo.radius.map((r) => Math.max(0, r - 2)) as unknown as [number, number, number, number],
+      slat,
+    );
+    for (let y = body.y + 12; y < body.y + geo.bodyH - 8; y += 10)
+      g.rect(body.x + 4, y, geo.bodyW - 8, 1.5).fill({ color: line });
+    g.roundRect(SLOT_W / 2 - 10, body.y + geo.bodyH - 18, 20, 6, 3).fill({ color: theme.colors.muted });
+    layer.addChild(g);
+    badge(layer, ctx);
+  },
+};
+
+registerSkins({
+  'pewter-tankard': { hiddenUnit: londonSkin.hiddenUnit! },
+  'reserved-beer-mat': { only: londonSkin.only! },
+  'locked-tap': { locked: londonSkin.locked! },
+  'frosted-deco-glass': { hiddenUnit: newYorkSkin.hiddenUnit! },
+  'velvet-rope': { only: newYorkSkin.only! },
+  'deco-door': { locked: newYorkSkin.locked! },
+  'bottle-keep': { only: tokyoSkin.only! },
+  shutter: { locked: tokyoSkin.locked! },
+});
