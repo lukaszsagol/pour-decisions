@@ -7,3 +7,4 @@ export * from './pack.js';
 export * from './random.js';
 export * from './deal.js';
 export * from './search.js';
+export * from './bot.js';

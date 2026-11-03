@@ -43,11 +43,11 @@ Depends on: T00
 - [x] A faster search for big levels (A* or iterative deepening with a heuristic such as colour breaks) used when breadth-first exceeds its budget; still returns verified solutions.
 - [x] A 10-drink, 12-bottle level solves in under 3 seconds on CI. Add it as a golden test.
 
-### T05 · Bot player and difficulty score · `todo` · M
+### T05 · Bot player and difficulty score · `in-review` · M
 Depends on: T02, T04
-- [ ] Bot that plays like a casual human: prefers same-drink pours, sometimes makes random legal pours (mistake rate parameter), uses no boosters.
-- [ ] `difficulty(level)` combines bot win rate over N runs with the solver metrics into a 0–100 score and a band (`easy`, `normal`, `hard`, `superHard`).
-- [ ] Tests: easy golden levels score lower than Tokyo 327; results are deterministic for a given seed.
+- [x] Bot that plays like a casual human: prefers same-drink pours, sometimes makes random legal pours (mistake rate parameter), uses no boosters.
+- [x] `difficulty(level)` combines bot win rate over N runs with the solver metrics into a 0–100 score and a band (`easy`, `normal`, `hard`, `superHard`).
+- [x] Tests: easy golden levels score lower than Tokyo 327; results are deterministic for a given seed.
 
 ### T06 · Level generator CLI and first packs · `todo` · L
 Depends on: T03, T04, T05
