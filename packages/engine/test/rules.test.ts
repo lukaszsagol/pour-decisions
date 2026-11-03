@@ -21,12 +21,19 @@ describe('pour rule', () => {
     expect(canPour(b, { from: 1, to: 0 })).toBe(false);
   });
 
-  it('moves the whole top run, limited by free space', () => {
-    const b = parseBottles(['red blue blue blue', 'yellow yellow blue'], 4);
+  it('moves the whole top run when it fits', () => {
+    const b = parseBottles(['red blue blue', 'yellow blue'], 4);
     const { bottles, amount } = pour(b, { from: 0, to: 1 });
-    expect(amount).toBe(1);
-    expect(bottles[0]!.units.map((u) => u.drink)).toEqual(['red', 'blue', 'blue']);
-    expect(bottles[1]!.units).toHaveLength(4);
+    expect(amount).toBe(2);
+    expect(bottles[0]!.units.map((u) => u.drink)).toEqual(['red']);
+    expect(bottles[1]!.units.map((u) => u.drink)).toEqual(['yellow', 'blue', 'blue', 'blue']);
+  });
+
+  it('never splits a run: the pour is illegal when the whole run does not fit', () => {
+    const b = parseBottles(['red blue blue blue', 'yellow yellow blue', ''], 4);
+    expect(canPour(b, { from: 0, to: 1 })).toBe(false);
+    expect(() => pour(b, { from: 0, to: 1 })).toThrow();
+    expect(canPour(b, { from: 0, to: 2 })).toBe(true);
   });
 
   it('measures the top run', () => {
