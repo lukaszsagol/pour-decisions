@@ -13,7 +13,8 @@ Match the reference closely for Amsterdam. Use the same rules and quality bar fo
 
 - The art grid is **195×422 art pixels**: exactly half the 390×844 logical stage. One art pixel = 2 logical px.
 - Draw art into small off-screen canvases (or Pixi `Graphics` with whole-pixel coordinates) at art resolution, then scale up with **nearest-neighbour** filtering (`scaleMode: 'nearest'`, CSS `image-rendering: pixelated`).
-- Scale by **whole numbers of device pixels**. Choose the largest integer `k` so that `195·k ≤ viewport width × devicePixelRatio` (and the height fits), draw at `k`, and centre with the city's ground colour around it. Never use fractional scaling for art: it blurs and makes pixels uneven.
+- Scale by **whole numbers of device pixels**. Choose the largest integer `k` so that `195·k ≤ viewport width × devicePixelRatio` (and the height fits), draw at `k`, and centre it. Never use fractional scaling for art: it blurs and makes pixels uneven.
+- **Fill the whole screen.** The screen around the centred stage is not left empty: each screen continues its art into the margins at the same scale and on the same grid. The level's walls, light and counter run on (without props), with a ceiling above and more cabinet below; the map adds more buildings either side; headers, panels, the tab bar and dialog dims reach the screen's edges.
 - All art coordinates, sizes and motion are whole art pixels. No anti-aliasing, no sub-pixel positions, no smooth gradients, no blur, no alpha-blended glows.
 
 ## Colour and shading

@@ -7,6 +7,7 @@ import { releaseBadge } from './badge.js';
 import { drawGlass, glassRows, UNIT, type Layer, type Rim, type Row } from './glass.js';
 import { artLayout, type ArtLayout } from './layout.js';
 import { rotateNearest } from './rotate.js';
+import type { Bleed } from '../../stage.js';
 
 export type Mark = 'none' | 'selected' | 'hint' | 'reject';
 
@@ -58,9 +59,12 @@ const SPARKLE = [
   ['#.....#', '.......', '...#...', '..#.#..', '...#...', '.......', '#.....#'],
 ];
 
-/** Composes the level screen into one 195×422 art buffer. */
+/**
+ * Composes the level screen into one art buffer: the 195×422 stage plus the
+ * margins around it (`setBleed`), where the city's backdrop continues.
+ */
 export class PixelLevelRenderer {
-  readonly cv = new PixelCanvas(195, 422);
+  cv = new PixelCanvas(195, 422);
   layout: ArtLayout = artLayout(1);
   private readonly backdrops = new Map<number, PixelCanvas>();
 
@@ -74,9 +78,25 @@ export class PixelLevelRenderer {
     return this.layout;
   }
 
+  /** Sizes the buffer for the stage plus `bleed` art pixels on each side. Returns true when it changed. */
+  setBleed(bleed: Bleed): boolean {
+    const cv = this.cv;
+    if (cv.ox === bleed.l && cv.oy === bleed.t && cv.w === 195 + bleed.l + bleed.r && cv.h === 422 + bleed.t + bleed.b)
+      return false;
+    this.cv = new PixelCanvas(195 + bleed.l + bleed.r, 422 + bleed.t + bleed.b, null, bleed.l, bleed.t);
+    this.backdrops.clear();
+    return true;
+  }
+
   private backdrop(phase: number): PixelCanvas {
     let b = this.backdrops.get(phase);
-    if (!b) this.backdrops.set(phase, (b = this.art.backdrop(phase)));
+    if (!b) {
+      const { w, h, ox, oy } = this.cv;
+      b = new PixelCanvas(w, h, null, ox, oy);
+      if (ox || oy || w > 195 || h > 422) this.art.bleed(b, phase);
+      b.blit(this.art.backdrop(phase), 0, 0);
+      this.backdrops.set(phase, b);
+    }
     return b;
   }
 
@@ -162,7 +182,7 @@ export class PixelLevelRenderer {
         const p = tmp.data[y * tmp.w + x]!;
         const tx = x0 - 15 + x;
         const ty = y0 - 30 + y + drop;
-        if (p && dith(x, y, 1 - t) && tx >= 0 && ty >= 0 && tx < cv.w && ty < cv.h) cv.data[ty * cv.w + tx] = p;
+        if (dith(x, y, 1 - t)) cv.setPacked(tx, ty, p);
       }
   }
 

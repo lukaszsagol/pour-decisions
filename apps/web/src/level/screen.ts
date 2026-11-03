@@ -9,7 +9,7 @@ import { UNIT } from '../pixel/level/glass.js';
 import { PixelLayer } from '../pixel/layer.js';
 import { createPixi } from '../pixi-util.js';
 import { sfx } from '../sound.js';
-import { ART, type Stage } from '../stage.js';
+import { ART, STAGE_H, type Stage } from '../stage.js';
 import { applyTheme } from '../theme-css.js';
 
 export interface LevelResult {
@@ -90,6 +90,7 @@ export class LevelScreen {
   protected glassButtons: HTMLButtonElement[] = [];
   protected marks = new Map<number, Mark>();
   private layer: PixelLayer | null = null;
+  private offResize: (() => void) | null = null;
   private lifts: number[] = [];
   private liftAnims: ({ cancel: () => void } | null)[] = [];
   private shakes: number[] = [];
@@ -128,16 +129,26 @@ export class LevelScreen {
   async mount(): Promise<void> {
     applyTheme(this.stage.el, this.theme);
     this.stage.el.replaceChildren(this.el);
-    const { app, dispose, onFrame } = await createPixi(this.stage);
+    const { app, dispose, onFrame } = await createPixi(this.stage, STAGE_H, 'xy');
     if (this.destroyed) {
       dispose();
       return;
     }
     this.disposePixi = dispose;
     this.el.prepend(app.canvas);
-    this.layer = new PixelLayer(195, 422);
-    this.layer.sprite.scale.set(ART);
-    app.stage.addChild(this.layer.sprite);
+    // The buffer covers the whole screen: the bar continues past the stage's edges.
+    const fit = () => {
+      if (!this.renderer.setBleed(this.stage.bleed) && this.layer) return;
+      this.layer?.destroy();
+      const { w, h, ox, oy } = this.renderer.cv;
+      this.layer = new PixelLayer(w, h);
+      this.layer.sprite.scale.set(ART);
+      this.layer.sprite.position.set(-ART * ox, -ART * oy);
+      app.stage.addChild(this.layer.sprite);
+      this.draw();
+    };
+    fit();
+    this.offResize = this.stage.onResize(fit);
     // The lamp light flickers between two dither patterns (off with reduced motion).
     if (!reducedMotion()) {
       let last = 0;
@@ -162,6 +173,7 @@ export class LevelScreen {
       this.opts.onEvent?.({ type: 'quit', moves: this.game.moves });
     this.destroyed = true;
     this.liftAnims.forEach((a) => a?.cancel());
+    this.offResize?.();
     this.layer?.destroy();
     this.disposePixi?.();
     this.el.remove();

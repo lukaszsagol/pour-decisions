@@ -38,7 +38,6 @@ a {
   width: 390px;
   height: 844px;
   transform-origin: 0 0;
-  overflow: hidden;
   background: var(--c-ground);
   color: var(--c-text);
   font-family: var(--f-ui);
@@ -1944,4 +1943,50 @@ input {
   width: 32px;
   height: 36px;
   animation: pd-guide 1.1s steps(2) infinite;
+}
+
+/* ---------- Beyond the stage ---------- */
+/*
+ * On screens wider or taller than the stage, bars and dims reach the screen's
+ * edges: a copy of their background (and pixel edges) behind them, reaching
+ * 2048 px past the stage.
+ */
+.lv-overlay,
+.sheet-backdrop,
+.map-header,
+.map-panel,
+.tabbar {
+  z-index: 3;
+}
+.map-panel .tabbar {
+  position: relative;
+}
+.lv-overlay::before,
+.sheet-backdrop::before,
+.map-header::before,
+.map-panel::before,
+.tabbar::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  background: inherit;
+  box-shadow: inherit;
+}
+/* The dims are drawn once, by the copy, so the stage isn't darker than the margins. */
+.lv-overlay,
+.sheet-backdrop {
+  background: none !important;
+}
+.lv-overlay::before,
+.sheet-backdrop::before {
+  inset: -2048px;
+  background: color-mix(in srgb, var(--c-ground) 90%, transparent);
+}
+.map-header::before {
+  inset: -2048px -2048px 0;
+}
+.map-panel::before,
+.tabbar::before {
+  inset: 0 -2048px -2048px;
 }

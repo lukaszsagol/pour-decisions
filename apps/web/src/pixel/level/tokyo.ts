@@ -1,11 +1,13 @@
 import { dith, mix, PixelCanvas } from '../canvas.js';
 import type { CityLevelArt } from './art.js';
 import { disc, frame, glow, panels, rail, roundCoaster, shelfShadow } from './common.js';
+import { ceiling } from './bleed.js';
 import type { GlassStyle, Row } from './glass.js';
 
 /** Tokyo: a neon back-alley bar. Indigo noren, a navy wall lit pink and cyan, kept bottles, a paper lantern. */
 
 const W = 195;
+const mod = (v: number, m: number) => ((v % m) + m) % m;
 const H = 422;
 const SIGN = { x: 121, y: 32, w: 70, h: 23 } as const;
 const RESTART = { x: 176, y: 59 } as const;
@@ -14,12 +16,12 @@ const NAVY = { base: '#0B1030', hi: '#141C48', dk: '#060920' };
 const NEON = { pink: '#FF5C8A', pinkHi: '#FFC2D4', cyan: '#5EC3F0', cyanHi: '#D2F0FF' };
 const HINOKI = { hi: '#F2DCB4', light: '#E6C99A', base: '#D9B98A', dark: '#B8946A', deep: '#7A5A3A' };
 
-function noren(cv: PixelCanvas): void {
-  cv.rect(0, 0, W, 27, '#05081A');
-  cv.rect(0, 0, W, 3, '#3A2A1E');
-  cv.hline(0, 0, W, '#5A4430');
+function noren(cv: PixelCanvas, plain = false): void {
+  cv.rect(cv.minX, 0, cv.w, 27, '#05081A');
+  cv.rect(cv.minX, 0, cv.w, 3, '#3A2A1E');
+  cv.hline(cv.minX, 0, cv.w, '#5A4430');
   // Three indigo panels with folds, a white crest on the middle one.
-  for (let p = 0; p < 3; p++) {
+  for (let p = Math.floor((cv.minX - 3) / 64); 3 + p * 64 < cv.maxX; p++) {
     const x = 3 + p * 64;
     const w = 61;
     for (let i = 0; i < w; i++) {
@@ -32,22 +34,24 @@ function noren(cv: PixelCanvas): void {
     cv.hline(x, 24, w, '#121A44');
     cv.hline(x, 25, w, '#0B1030');
   }
-  disc(cv, 97, 13, 7, { hi: '#FFFFFF', base: '#F4ECDD', dk: '#C8C0B4' });
-  disc(cv, 97, 13, 5, { hi: '#2E3C86', base: '#23306E', dk: '#1A245A' });
-  cv.sprite(94, 10, ['.#.#.', '#####', '.#.#.', '.###.', '.#.#.'], { '#': '#F4ECDD' });
-  cv.hline(0, 26, W, '#000000');
-  cv.shadowBox(0, 27, W, 3, 0.5, 0.5);
+  if (!plain) {
+    disc(cv, 97, 13, 7, { hi: '#FFFFFF', base: '#F4ECDD', dk: '#C8C0B4' });
+    disc(cv, 97, 13, 5, { hi: '#2E3C86', base: '#23306E', dk: '#1A245A' });
+    cv.sprite(94, 10, ['.#.#.', '#####', '.#.#.', '.###.', '.#.#.'], { '#': '#F4ECDD' });
+  }
+  cv.hline(cv.minX, 26, cv.w, '#000000');
+  cv.shadowBox(cv.minX, 27, cv.w, 3, 0.5, 0.5);
 }
 
 function wall(cv: PixelCanvas): void {
-  cv.rect(0, 27, W, 291, NAVY.base);
+  cv.rect(cv.minX, 27, cv.w, 291, NAVY.base);
   // Vertical boards, barely visible in the dark.
-  for (let x = 0; x < W; x += 13) {
+  for (let x = 13 * Math.floor(cv.minX / 13); x < cv.maxX; x += 13) {
     cv.vline(x, 27, 291, NAVY.dk);
     cv.vline(x + 1, 27, 291, NAVY.hi);
   }
   for (let y = 27; y < 318; y++)
-    for (let x = 0; x < W; x++) if (dith(x, y, 0.08) && (x * 7 + y * 3) % 11 === 0) cv.px(x, y, NAVY.hi);
+    for (let x = cv.minX; x < cv.maxX; x++) if (dith(x, y, 0.08) && mod(x * 7 + y * 3, 11) === 0) cv.px(x, y, NAVY.hi);
 }
 
 /** A neon tube drawn as a lit core with a soft dithered halo. */
@@ -166,26 +170,52 @@ function lantern(cv: PixelCanvas, cx: number, top: number): void {
 
 function counter(cv: PixelCanvas): void {
   rail(cv, 318, [HINOKI.hi, HINOKI.light, HINOKI.base, HINOKI.deep], '#1A1008');
-  cv.rect(0, 323, W, 12, HINOKI.base);
-  cv.hline(0, 323, W, HINOKI.hi);
-  cv.hline(0, 334, W, HINOKI.deep);
-  for (let k = 0; k < 26; k++) {
-    const gx = (k * 23 + 5) % W;
-    cv.hline(gx, 325 + (k % 8), 9 + (k % 6), HINOKI.dark);
-    cv.hline(gx + 3, 326 + (k % 8), 4, HINOKI.light);
-  }
-  cv.rect(0, 335, W, H - 335, '#2E2118');
-  cv.shadowBox(0, 335, W, 6, 0.6, 0.5);
+  cv.rect(cv.minX, 323, cv.w, 12, HINOKI.base);
+  cv.hline(cv.minX, 323, cv.w, HINOKI.hi);
+  cv.hline(cv.minX, 334, cv.w, HINOKI.deep);
+  for (let n = Math.floor(cv.minX / W); n * W < cv.maxX; n++)
+    for (let k = 0; k < 26; k++) {
+      const gx = n * W + ((k * 23 + 5) % W);
+      cv.hline(gx, 325 + (k % 8), 9 + (k % 6), HINOKI.dark);
+      cv.hline(gx + 3, 326 + (k % 8), 4, HINOKI.light);
+    }
+  cv.rect(cv.minX, 335, cv.w, cv.maxY - 335, '#2E2118');
+  cv.shadowBox(cv.minX, 335, cv.w, 6, 0.6, 0.5);
   panels(cv, 344, { fill: '#261A12', inner: '#22170F', shadow: '#140C06', light: '#3E2C1E' });
-  for (let x = 6; x < W; x += 6) cv.vline(x, 350, H - 362, '#1E140C');
+  for (let top = 344; top < cv.maxY; top += H - 344)
+    for (let x = 6 * Math.floor(cv.minX / 6); x < cv.maxX; x += 6)
+      if (x !== 0) cv.vline(x, top + 6, H - 362, '#1E140C');
+}
+
+function shelf(cv: PixelCanvas): void {
+  cv.hline(cv.minX, 100, cv.w, '#4A5A9A');
+  cv.hline(cv.minX, 101, cv.w, '#2B3466');
+  cv.rect(cv.minX, 102, cv.w, 3, '#1A2148');
+  cv.hline(cv.minX, 105, cv.w, '#05081A');
+  shelfShadow(cv, 106);
+}
+
+function lights(cv: PixelCanvas, phase: number): void {
+  glow(cv, 62, 80, 80, NEON.pink, { phase, strength: 0.07, y1: 318 });
+  glow(cv, 131, 80, 80, NEON.cyan, { phase, strength: 0.07, y1: 318 });
+  glow(cv, 97, 80, 55, '#FF7A4A', { phase, strength: 0.05, y1: 200 });
+}
+
+/** The margins around the stage: noren, navy wall and hinoki counter without the props, a dark slatted ceiling. */
+export function tokyoBleed(cv: PixelCanvas, phase = 0): void {
+  cv.rect(cv.minX, cv.minY, cv.w, cv.h, '#070B1F');
+  wall(cv);
+  lights(cv, phase);
+  noren(cv, true);
+  shelf(cv);
+  counter(cv);
+  ceiling(cv, { base: '#1A120C', light: '#3A2A1E', seam: '#05081A' });
 }
 
 export function tokyoBackdrop(phase = 0): PixelCanvas {
   const cv = new PixelCanvas(W, H, '#070B1F');
   wall(cv);
-  glow(cv, 62, 80, 80, NEON.pink, { phase, strength: 0.07, y1: 318 });
-  glow(cv, 131, 80, 80, NEON.cyan, { phase, strength: 0.07, y1: 318 });
-  glow(cv, 97, 80, 55, '#FF7A4A', { phase, strength: 0.05, y1: 200 });
+  lights(cv, phase);
   signs(cv);
   noren(cv);
   const ARROW = [
@@ -231,11 +261,7 @@ export function tokyoBackdrop(phase = 0): PixelCanvas {
     [176, 26, '#3A1E2E', 8],
   ] as const)
     keptBottle(cv, x, h, c, n);
-  cv.hline(0, 100, W, '#4A5A9A');
-  cv.hline(0, 101, W, '#2B3466');
-  cv.rect(0, 102, W, 3, '#1A2148');
-  cv.hline(0, 105, W, '#05081A');
-  shelfShadow(cv, 106);
+  shelf(cv);
   lantern(cv, 97, 64);
   counter(cv);
   return cv;
@@ -345,6 +371,7 @@ function coasters(cv: PixelCanvas, counts: [number, number, number], usable: [bo
 
 export const tokyoArt: CityLevelArt = {
   backdrop: tokyoBackdrop,
+  bleed: tokyoBleed,
   boosters: coasters,
   glass: HIGHBALL,
   locked: shutter,

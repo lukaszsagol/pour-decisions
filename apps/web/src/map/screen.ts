@@ -38,6 +38,7 @@ type NodeState = 'done' | 'current' | 'locked';
 export class MapScreen {
   readonly el = document.createElement('div');
   private disposePixi: (() => void) | null = null;
+  private offResize: (() => void) | null = null;
   private destroyed = false;
   private layout: MapLayout;
   private selected: number;
@@ -64,32 +65,46 @@ export class MapScreen {
     applyTheme(this.stage.el, theme);
     this.stage.el.replaceChildren(this.el);
     this.el.innerHTML = this.html();
-    const { app, dispose, onFrame } = await createPixi(this.stage);
+    const { app, dispose, onFrame } = await createPixi(this.stage, STAGE_H, 'x');
     if (this.destroyed) return dispose();
     this.disposePixi = dispose;
     const scene = this.scene();
-    const art = drawMap(theme, scene);
-    // Chunks keep each texture within every GPU's size limit.
     const world = new Container();
     world.scale.set(ART);
-    const CHUNK = 1024;
-    for (let y0 = 0; y0 < art.h; y0 += CHUNK) {
-      const h = Math.min(CHUNK, art.h - y0);
-      const part = new PixelCanvas(art.w, h);
-      part.data.set(art.data.subarray(y0 * art.w, (y0 + h) * art.w));
-      const layer = new PixelLayer(art.w, h);
-      layer.put(part);
-      layer.sprite.y = y0;
-      world.addChild(layer.sprite);
-    }
+    // The world is drawn wider than the stage on wide screens: more city either side.
+    let built = '';
+    const build = () => {
+      const { l, r } = this.stage.bleed;
+      if (built === `${l},${r}`) return;
+      built = `${l},${r}`;
+      world
+        .removeChildren()
+        .filter((c) => c !== pulse?.sprite)
+        .forEach((c) => c.destroy({ texture: true, textureSource: true }));
+      const art = drawMap(theme, scene, { l, r });
+      // Chunks keep each texture within every GPU's size limit.
+      const CHUNK = 1024;
+      for (let y0 = 0; y0 < art.h; y0 += CHUNK) {
+        const h = Math.min(CHUNK, art.h - y0);
+        const part = new PixelCanvas(art.w, h);
+        part.data.set(art.data.subarray(y0 * art.w, (y0 + h) * art.w));
+        const layer = new PixelLayer(art.w, h);
+        layer.put(part);
+        layer.sprite.position.set(-l, y0);
+        world.addChild(layer.sprite);
+      }
+      if (pulse) world.addChild(pulse.sprite);
+      invalidate();
+    };
     // The current level's ring pulses in whole-pixel steps.
     const current = scene.nodes.find((n) => n.state === 'current');
+    let pulse: PixelLayer | null = null;
     if (current) {
       const r = coinRadius(current);
-      const pulse = new PixelLayer((r + 7) * 2 + 1, (r + 7) * 2 + 1);
-      pulse.put(pulseRing(theme, r, 0));
-      pulse.sprite.position.set(current.x - r - 7, current.y - r - 7);
-      world.addChild(pulse.sprite);
+      const ring = new PixelLayer((r + 7) * 2 + 1, (r + 7) * 2 + 1);
+      pulse = ring;
+      ring.put(pulseRing(theme, r, 0));
+      ring.sprite.position.set(current.x - r - 7, current.y - r - 7);
       if (!reducedMotion()) {
         let last = 0;
         let frame = 0;
@@ -97,10 +112,12 @@ export class MapScreen {
           if (ms - last < 260) return;
           last = ms;
           frame = (frame + 1) % 3;
-          pulse.put(pulseRing(theme, r, frame));
+          ring.put(pulseRing(theme, r, frame));
         });
       }
     }
+    build();
+    this.offResize = this.stage.onResize(build);
     app.stage.addChild(world);
     this.el.prepend(app.canvas);
     const scroller = this.el.querySelector<HTMLElement>('.map-scroll')!;
@@ -126,6 +143,7 @@ export class MapScreen {
 
   destroy(): void {
     this.destroyed = true;
+    this.offResize?.();
     this.disposePixi?.();
     this.el.remove();
   }

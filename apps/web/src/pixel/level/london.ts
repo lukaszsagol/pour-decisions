@@ -14,11 +14,13 @@ import {
   rail,
   shelfShadow,
 } from './common.js';
+import { ceiling } from './bleed.js';
 import type { GlassStyle, Row } from './glass.js';
 
 /** London: a traditional pub. Green "Free house" fascia, red flock wallpaper, dark wainscot, mahogany bar. */
 
 const W = 195;
+const mod = (v: number, m: number) => ((v % m) + m) % m;
 const H = 422;
 const SIGN = { x: 121, y: 32, w: 70, h: 23 } as const;
 const RESTART = { x: 176, y: 59 } as const;
@@ -28,49 +30,52 @@ const FASCIA = { base: '#16382B', hi: '#2C5A46', dk: '#0C2219' };
 const FLOCK = { base: '#4A1418', pattern: '#5E1A22', hi: '#74242C', dk: '#330C10' };
 const MAHOGANY = { hi: '#8A4A30', light: '#6E3420', base: '#4E2216', dark: '#36160E', deep: '#200C06' };
 
-function fascia(cv: PixelCanvas): void {
-  cv.rect(0, 0, W, 27, FASCIA.base);
-  cv.hline(0, 0, W, FASCIA.hi);
-  cv.hline(0, 1, W, mix(FASCIA.base, FASCIA.hi, 0.5));
-  for (let x = 0; x < W; x += 2) cv.px(x, 21, FASCIA.dk);
-  const text = 'FREE HOUSE';
-  const tw = lettersWidth(text);
-  const tx = Math.floor((W - tw) / 2);
-  letters(cv, tx, 8, text, { face: '#C9A24A', hi: '#F4D58A', shadow: '#0A1A12' });
-  cv.hline(16, 11, tx - 26, '#C9A24A');
-  cv.hline(16, 12, tx - 26, '#8A6A1E');
-  cv.hline(tx + tw + 10, 11, W - 16 - (tx + tw + 10), '#C9A24A');
-  cv.hline(tx + tw + 10, 12, W - 16 - (tx + tw + 10), '#8A6A1E');
-  cv.hline(0, 24, W, '#F4D58A');
-  cv.hline(0, 25, W, '#C9A24A');
-  cv.hline(0, 26, W, '#120A05');
-  cv.shadowBox(0, 27, W, 3, 0.5, 0.45);
+function fascia(cv: PixelCanvas, plain = false): void {
+  cv.rect(cv.minX, 0, cv.w, 27, FASCIA.base);
+  cv.hline(cv.minX, 0, cv.w, FASCIA.hi);
+  cv.hline(cv.minX, 1, cv.w, mix(FASCIA.base, FASCIA.hi, 0.5));
+  for (let x = 2 * Math.floor(cv.minX / 2); x < cv.maxX; x += 2) cv.px(x, 21, FASCIA.dk);
+  if (!plain) {
+    const text = 'FREE HOUSE';
+    const tw = lettersWidth(text);
+    const tx = Math.floor((W - tw) / 2);
+    letters(cv, tx, 8, text, { face: '#C9A24A', hi: '#F4D58A', shadow: '#0A1A12' });
+    cv.hline(16, 11, tx - 26, '#C9A24A');
+    cv.hline(16, 12, tx - 26, '#8A6A1E');
+    cv.hline(tx + tw + 10, 11, W - 16 - (tx + tw + 10), '#C9A24A');
+    cv.hline(tx + tw + 10, 12, W - 16 - (tx + tw + 10), '#8A6A1E');
+  }
+  cv.hline(cv.minX, 24, cv.w, '#F4D58A');
+  cv.hline(cv.minX, 25, cv.w, '#C9A24A');
+  cv.hline(cv.minX, 26, cv.w, '#120A05');
+  cv.shadowBox(cv.minX, 27, cv.w, 3, 0.5, 0.45);
 }
 
 function wallpaper(cv: PixelCanvas): void {
-  cv.rect(0, 27, W, 181, FLOCK.base);
+  cv.rect(cv.minX, 27, cv.w, 181, FLOCK.base);
   // Flock diamonds on a dithered ground.
   for (let y = 30; y < 208; y += 12) {
     const off = Math.floor((y - 30) / 12) % 2 ? 6 : 0;
-    for (let x = off - 6; x < W; x += 12) {
+    for (let x = off - 6 + 12 * Math.floor((cv.minX - off + 6) / 12); x < cv.maxX; x += 12) {
       cv.sprite(x + 3, y, ['..#..', '.###.', '##.##', '.###.', '..#..'], { '#': FLOCK.pattern });
       cv.px(x + 5, y + 1, FLOCK.hi);
       cv.px(x + 5, y + 2, FLOCK.dk);
     }
   }
   for (let y = 27; y < 208; y++)
-    for (let x = 0; x < W; x++) if ((x + y) % 7 === 0 && (x * 3 + y) % 5 === 0) cv.tint(x, y, '#000000', 0.18);
+    for (let x = cv.minX; x < cv.maxX; x++)
+      if (mod(x + y, 7) === 0 && mod(x * 3 + y, 5) === 0) cv.tint(x, y, '#000000', 0.18);
 }
 
 function wainscot(cv: PixelCanvas): void {
   // Chair rail and dark panelled wood up to the bar.
-  cv.hline(0, 206, W, MAHOGANY.hi);
-  cv.hline(0, 207, W, MAHOGANY.light);
-  cv.rect(0, 208, W, 3, MAHOGANY.base);
-  cv.hline(0, 211, W, MAHOGANY.deep);
-  cv.shadowBox(0, 212, W, 4, 0.5, 0.45);
+  cv.hline(cv.minX, 206, cv.w, MAHOGANY.hi);
+  cv.hline(cv.minX, 207, cv.w, MAHOGANY.light);
+  cv.rect(cv.minX, 208, cv.w, 3, MAHOGANY.base);
+  cv.hline(cv.minX, 211, cv.w, MAHOGANY.deep);
+  cv.shadowBox(cv.minX, 212, cv.w, 4, 0.5, 0.45);
   boards(cv, 216, 102, ['#2B140C', '#27110A'], '#160804', 39, false);
-  for (let x = 0; x < W; x += 39) {
+  for (let x = 39 * Math.floor(cv.minX / 39); x < cv.maxX; x += 39) {
     cv.rect(x + 6, 226, 27, 82, '#22100A');
     cv.hline(x + 6, 226, 27, '#160804');
     cv.vline(x + 6, 226, 82, '#160804');
@@ -153,28 +158,54 @@ function pump(cv: PixelCanvas, x: number, clip: string): void {
 
 function counter(cv: PixelCanvas): void {
   rail(cv, 318, [BRASS.hi, BRASS.light, BRASS.base, BRASS.deep], '#120A05');
-  cv.rect(0, 323, W, 12, MAHOGANY.base);
-  cv.hline(0, 323, W, MAHOGANY.hi);
-  cv.hline(0, 324, W, MAHOGANY.light);
-  cv.hline(0, 334, W, MAHOGANY.deep);
-  for (let k = 0; k < 22; k++) {
-    const gx = (k * 29 + 7) % W;
-    cv.hline(gx, 326 + (k % 6), 5 + (k % 5), MAHOGANY.dark);
-    cv.hline(gx + 2, 327 + (k % 6), 3, MAHOGANY.light);
-  }
-  cv.rect(0, 335, W, H - 335, '#2A1410');
-  cv.shadowBox(0, 335, W, 6, 0.6, 0.45);
+  cv.rect(cv.minX, 323, cv.w, 12, MAHOGANY.base);
+  cv.hline(cv.minX, 323, cv.w, MAHOGANY.hi);
+  cv.hline(cv.minX, 324, cv.w, MAHOGANY.light);
+  cv.hline(cv.minX, 334, cv.w, MAHOGANY.deep);
+  for (let n = Math.floor(cv.minX / W); n * W < cv.maxX; n++)
+    for (let k = 0; k < 22; k++) {
+      const gx = n * W + ((k * 29 + 7) % W);
+      cv.hline(gx, 326 + (k % 6), 5 + (k % 5), MAHOGANY.dark);
+      cv.hline(gx + 2, 327 + (k % 6), 3, MAHOGANY.light);
+    }
+  cv.rect(cv.minX, 335, cv.w, cv.maxY - 335, '#2A1410');
+  cv.shadowBox(cv.minX, 335, cv.w, 6, 0.6, 0.45);
   panels(cv, 344, { fill: '#24100C', inner: '#1E0C08', shadow: '#140604', light: '#3A1C12' });
+}
+
+function shelf(cv: PixelCanvas): void {
+  cv.hline(cv.minX, 100, cv.w, MAHOGANY.hi);
+  cv.hline(cv.minX, 101, cv.w, MAHOGANY.light);
+  cv.rect(cv.minX, 102, cv.w, 4, MAHOGANY.base);
+  cv.hline(cv.minX, 106, cv.w, MAHOGANY.dark);
+  cv.hline(cv.minX, 107, cv.w, MAHOGANY.deep);
+  shelfShadow(cv, 108);
+}
+
+function lights(cv: PixelCanvas, phase: number): void {
+  // Warm, low pub light from two lamps either side of the sign.
+  glow(cv, 40, 70, 70, '#F2B860', { phase, y1: 210 });
+  glow(cv, 155, 70, 70, '#F2B860', { phase, y1: 210 });
+  glow(cv, 97, 260, 90, '#E8A33D', { phase, strength: 0.04, y0: 212, y1: 318 });
+}
+
+/** The margins around the stage: the pub's walls without the props, a mahogany ceiling, more bar front. */
+export function londonBleed(cv: PixelCanvas, phase = 0): void {
+  cv.rect(cv.minX, cv.minY, cv.w, cv.h, '#2A1410');
+  wallpaper(cv);
+  wainscot(cv);
+  lights(cv, phase);
+  fascia(cv, true);
+  shelf(cv);
+  counter(cv);
+  ceiling(cv, { base: MAHOGANY.dark, light: MAHOGANY.base, seam: MAHOGANY.deep });
 }
 
 export function londonBackdrop(phase = 0): PixelCanvas {
   const cv = new PixelCanvas(W, H, '#2A1410');
   wallpaper(cv);
   wainscot(cv);
-  // Warm, low pub light from two lamps either side of the sign.
-  glow(cv, 40, 70, 70, '#F2B860', { phase, y1: 210 });
-  glow(cv, 155, 70, 70, '#F2B860', { phase, y1: 210 });
-  glow(cv, 97, 260, 90, '#E8A33D', { phase, strength: 0.04, y0: 212, y1: 318 });
+  lights(cv, phase);
   fascia(cv);
   // Back arrow (as Amsterdam's).
   const ARROW = [
@@ -208,12 +239,7 @@ export function londonBackdrop(phase = 0): PixelCanvas {
   pump(cv, 94, '#E8DCC2');
   pump(cv, 112, '#A9DCE6');
   foxPicture(cv, 140, 60);
-  cv.hline(0, 100, W, MAHOGANY.hi);
-  cv.hline(0, 101, W, MAHOGANY.light);
-  cv.rect(0, 102, W, 4, MAHOGANY.base);
-  cv.hline(0, 106, W, MAHOGANY.dark);
-  cv.hline(0, 107, W, MAHOGANY.deep);
-  shelfShadow(cv, 108);
+  shelf(cv);
   // Brass picture lights over the dartboard and the fox, the pub's warm lamps.
   for (const [lx, w] of [
     [12, 24],
@@ -359,7 +385,7 @@ function tiltedMats(cv: PixelCanvas, counts: [number, number, number], usable: [
       const dx = Math.floor((j - 17) / 9) * dir;
       for (let x = 0; x < m.w; x++) {
         const p = m.data[j * m.w + x]!;
-        if (p) cv.data[(MATS.y - 1 + j) * cv.w + (cx - 17 + x + dx)] = p;
+        cv.setPacked(cx - 17 + x + dx, MATS.y - 1 + j, p);
       }
     }
     countBadge(cv, cx + 8, MATS.y - 7, counts[i]!);
@@ -368,6 +394,7 @@ function tiltedMats(cv: PixelCanvas, counts: [number, number, number], usable: [
 
 export const londonArt: CityLevelArt = {
   backdrop: londonBackdrop,
+  bleed: londonBleed,
   boosters: tiltedMats,
   glass: NONIC,
   locked: lockedTap,
