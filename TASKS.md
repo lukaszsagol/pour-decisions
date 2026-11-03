@@ -100,10 +100,10 @@ Depends on: T09
 - [x] Layout matches `docs/design/screens/TokyoComplete.png`, drawn with the current city's theme (Amsterdam first): stars, verdict, moves vs best, rewards row, recipe card when a bar is finished (recipes come from a `recipes` file per city; add Amsterdam's five, real recipes).
 - [x] Next level and Share (copies a text result to the clipboard) buttons.
 
-### T13 · City map screen · `todo` · L
+### T13 · City map screen · `in-review` · L
 Depends on: T06, T12
-- [ ] Amsterdam canal map matching `docs/design/screens/AmsterdamMap.png` (layout shared with `TokyoMap.png`), driven by the level packs and saved progress: path, nodes with stars, Hard ring, Super Hard flag, current node with ring, bottom panel with Play. A new player starts at level 1.
-- [ ] Scrolls through all 100 levels of the city; bars separated by a landmark (gate).
+- [x] Amsterdam canal map matching `docs/design/screens/AmsterdamMap.png` (layout shared with `TokyoMap.png`), driven by the level packs and saved progress: path, nodes with stars, Hard ring, Super Hard flag, current node with ring, bottom panel with Play. A new player starts at level 1.
+- [x] Scrolls through all 100 levels of the city; bars separated by a landmark (gate).
 
 ### T14 · Passport screen and navigation · `todo` · M
 Depends on: T13

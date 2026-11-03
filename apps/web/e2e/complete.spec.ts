@@ -26,5 +26,6 @@ test('finishing a bar shows the complete screen with a recipe card, and Share co
   const text = await page.evaluate(() => navigator.clipboard.readText());
   expect(text).toBe(`Pour Decisions · Level ${level.number} · ★★★ ${level.best} moves (best ${level.best})`);
   await page.getByRole('link', { name: 'Next level' }).click();
-  await expect(page.getByText(`Amsterdam · Level ${level.number + 1}`)).toBeVisible();
+  await page.locator('.map-screen[data-ready="true"]').waitFor();
+  await expect(page.getByRole('heading', { name: `Level ${level.number + 1}` })).toBeVisible();
 });

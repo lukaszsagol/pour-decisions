@@ -50,7 +50,20 @@
     "lockedRim": "#5A4432",
     "lockedFill": "#140C06",
     "hiddenUnit": "#4A3626",
-    "hiddenMark": "#D8C3A0"
+    "hiddenMark": "#D8C3A0",
+    "mapBank": "#4A3628",
+    "mapPath": "#23476E",
+    "mapPathLine": "#4C76A6",
+    "mapBuildingA": "#4A2A1C",
+    "mapBuildingB": "#3B2416",
+    "mapBuildingC": "#6E4A2E",
+    "mapWindow": "#E8A33D",
+    "mapPole": "#1A1A1A",
+    "mapBridge": "#6B3A26",
+    "mapBridgeTop": "#8A5A3A",
+    "mapMoon": "#F3E6CC",
+    "superHardBg": "#3B1218",
+    "superHardText": "#F09595"
   },
   "glass": {
     "shape": "tulip-stemmed",

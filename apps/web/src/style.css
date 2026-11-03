@@ -585,3 +585,221 @@ p {
 .toast[hidden] {
   display: none;
 }
+
+/* City map */
+.map-scroll {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.map-scroll::-webkit-scrollbar {
+  display: none;
+}
+.map-world {
+  position: relative;
+  width: 390px;
+}
+.map-header {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 390px;
+  height: 80px;
+  padding: 16px 16px 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+.map-header > * {
+  pointer-events: auto;
+}
+.map-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.map-city {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.1;
+}
+.map-bar {
+  font-size: 13px;
+  color: var(--c-muted);
+}
+.map-total {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 17px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  font-size: 14px;
+  font-weight: 600;
+}
+.map-node {
+  position: absolute;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--f-ui);
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--c-starDone);
+  color: var(--c-accentText);
+}
+.map-node.is-done.kind-hard,
+.map-node.is-done.kind-superHard {
+  border: 3px solid var(--c-hard);
+}
+.map-node.is-current {
+  background: var(--c-accent);
+  color: var(--c-accentText);
+  font-size: 16px;
+}
+.map-node.is-locked {
+  background: var(--c-surface);
+  color: var(--c-glassRim);
+  border: 2px solid var(--c-line);
+  font-weight: 600;
+  font-size: 15px;
+  cursor: default;
+}
+.map-node.is-locked.kind-hard {
+  border: 3px solid var(--c-hard);
+}
+.map-node.is-locked.kind-superHard {
+  border: 2px dashed var(--c-hard);
+}
+.map-node.is-selected:not(.is-current) {
+  outline: 3px solid var(--c-text);
+  outline-offset: 3px;
+}
+.map-ring {
+  position: absolute;
+  width: 72px;
+  height: 72px;
+  border-radius: 36px;
+  border: 2px solid var(--c-accent);
+  opacity: 0.5;
+  pointer-events: none;
+}
+.map-stars {
+  position: absolute;
+  width: 52px;
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 1px;
+  pointer-events: none;
+}
+.map-stars .on {
+  color: var(--c-starDone);
+}
+.map-stars .off {
+  color: var(--c-starEmpty);
+}
+.map-flag {
+  position: absolute;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 12px;
+  white-space: nowrap;
+  pointer-events: none;
+  background: var(--c-superHardBg, var(--c-surface));
+  border: 1px solid var(--c-hard);
+  color: var(--c-superHardText, var(--c-hard));
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+.map-gate {
+  position: absolute;
+  left: 50%;
+  translate: -50% 0;
+  height: 26px;
+  padding: 0 12px;
+  border-radius: 13px;
+  white-space: nowrap;
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  color: var(--c-text);
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+.map-panel {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 390px;
+  background: var(--c-surface);
+  border-top: 1px solid var(--c-line);
+  border-radius: 28px 28px 0 0;
+}
+.map-panel-body {
+  padding: 18px 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 196px;
+}
+.map-panel-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.map-level {
+  font-size: 22px;
+  font-weight: 600;
+}
+.map-level-sub {
+  font-size: 13px;
+  color: var(--c-muted);
+  margin-top: 2px;
+}
+.map-chips {
+  display: flex;
+  gap: 6px;
+  flex: none;
+}
+.map-chip {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: 16px;
+  background: var(--c-ground);
+  font-size: 13px;
+}
+.map-play {
+  height: 56px;
+  border-radius: 28px;
+  font-size: 17px;
+}
+.map-left {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--c-muted);
+}
+.map-left b {
+  color: var(--c-text);
+  font-weight: 600;
+}

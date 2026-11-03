@@ -1,9 +1,10 @@
 import './style.css';
-import { getTheme, recipeFor, themeForLevel } from '@pour/themes';
+import { cityIds, getTheme, recipeFor, themeForLevel, type CityId } from '@pour/themes';
 import { CompleteScreen } from './complete/screen.js';
 import { designFixtures } from './fixtures.js';
 import { LevelScreen, type LevelResult } from './level/screen.js';
-import { getLevel } from './levels.js';
+import { getLevel, levelsInCity } from './levels.js';
+import { MapScreen } from './map/screen.js';
 import { session } from './session.js';
 import { createStage } from './stage.js';
 import { progress } from './state.js';
@@ -29,7 +30,7 @@ function levelScreen(number: number): Screen {
     bottles: level.bottles,
     best: level.best,
     stock: { ...progress.data.stock },
-    backHref: '#/',
+    backHref: `#/map/${theme.id}`,
     guide: level.number === 1,
     nextHref: '#/complete',
     nextLabel: 'Collect rewards',
@@ -58,7 +59,7 @@ function levelScreen(number: number): Screen {
         difficulty: level.difficulty,
         rewards,
         ...(recipe ? { recipe: { recipe, index: (theme.order - 1) * 5 + pack.bar, total: 20 } } : {}),
-        nextHref: next ? `#/level/${next.level.number}` : '#/',
+        nextHref: next ? `#/map/${themeForLevel(next.level.number).id}` : `#/map/${theme.id}`,
         nextLabel: 'Next level',
       };
     },
@@ -85,6 +86,10 @@ function route(): Screen {
     return screen;
   }
   if (name === 'complete' && session.complete) return new CompleteScreen(stage, session.complete);
+  if (name === 'map' || name === '') {
+    const city = cityIds.includes(arg as CityId) ? (arg as CityId) : themeForLevel(progress.data.current).id;
+    return new MapScreen(stage, { theme: getTheme(city), levels: levelsInCity(city), progress, backHref: '#/' });
+  }
   return levelScreen(name === 'level' ? Number(arg) : progress.data.current);
 }
 

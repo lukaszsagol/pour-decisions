@@ -3,8 +3,7 @@ import bar1 from '../../../levels/amsterdam/1.json' with { type: 'json' };
 import { open } from './helpers';
 
 test('progress is saved: after winning level 1 a reload continues at level 2', async ({ page }) => {
-  await open(page, '');
-  await expect(page.getByText('Amsterdam · Level 1')).toBeVisible();
+  await open(page, '#/level/1');
   for (const [from, to] of bar1.levels[0]!.solution) {
     await page.locator(`.lv-glass[data-index="${from}"]`).click();
     await page.locator(`.lv-glass[data-index="${to}"]`).click();
@@ -15,7 +14,8 @@ test('progress is saved: after winning level 1 a reload continues at level 2', a
   await page.goto('/');
   await page.reload();
   await page.locator('.screen[data-ready="true"]').waitFor();
-  await expect(page.getByText('Amsterdam · Level 2')).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Play level 2' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Level 1, 3 stars' })).toBeVisible();
 });
 
 test('using a booster is saved', async ({ page }) => {
