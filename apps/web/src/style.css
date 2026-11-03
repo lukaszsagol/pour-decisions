@@ -1322,3 +1322,39 @@ p {
     inset 0 1px 0 rgba(255, 255, 255, 0.08),
     0 3px 8px rgba(0, 0, 0, 0.35);
 }
+
+/* Install */
+.pp-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.pp-install {
+  height: 36px;
+  min-width: 44px;
+  padding: 0 14px;
+  border-radius: 18px;
+  border: 1.5px solid var(--c-accent);
+  background: transparent;
+  color: var(--c-accent);
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  flex: none;
+}
+.pp-install[hidden] {
+  display: none;
+}
+.install-steps {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 15px;
+  line-height: 1.4;
+}
