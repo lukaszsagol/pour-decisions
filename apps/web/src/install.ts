@@ -1,8 +1,9 @@
 /**
  * Installing the game as an app. Chrome (Android, desktop) fires
  * `beforeinstallprompt` when the game can be installed; we keep the event and
- * fire it from our own Install button. iPhone Safari has no prompt, so there
- * we show the Share → Add to Home Screen steps instead.
+ * fire it from our own Install button. Chrome often holds the event back
+ * (not enough use yet, an offer dismissed recently, already installed), and
+ * iPhone Safari has none, so otherwise the button shows the manual steps.
  */
 
 interface InstallPromptEvent extends Event {
@@ -10,7 +11,8 @@ interface InstallPromptEvent extends Event {
   userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
 }
 
-export type InstallMode = 'prompt' | 'ios' | null;
+/** prompt: the browser's own dialog; ios / android: show the manual steps. */
+export type InstallMode = 'prompt' | 'ios' | 'android' | null;
 
 let deferred: InstallPromptEvent | null = null;
 let installed = false;
@@ -31,11 +33,16 @@ export function isIosSafari(ua: string = navigator.userAgent, touchPoints = navi
   return ios && /Safari/.test(ua) && !/CriOS|FxiOS|EdgiOS/.test(ua);
 }
 
+export function isAndroid(ua: string = navigator.userAgent): boolean {
+  return /Android/.test(ua);
+}
+
 /** How the game can be installed right now, or null when it can't (or already is). */
 export function installMode(): InstallMode {
   if (installed || isStandalone()) return null;
   if (deferred) return 'prompt';
-  return isIosSafari() ? 'ios' : null;
+  if (isIosSafari()) return 'ios';
+  return isAndroid() ? 'android' : null;
 }
 
 export function onInstallChange(fn: () => void): () => void {
@@ -71,20 +78,25 @@ export function watchInstall(target: Window = window): void {
 
 /** Opens the install dialog, or the iPhone steps. */
 export function startInstall(host: HTMLElement): void {
-  if (installMode() === 'prompt') {
+  const mode = installMode();
+  if (mode === 'prompt') {
     void promptInstall();
     return;
   }
+  const steps =
+    mode === 'android'
+      ? `<li>Open Chrome's menu (⋮, top right).</li>
+        <li>Choose <b>Add to Home screen</b>, then <b>Install</b>.</li>
+        <li>Open the game from its new icon: it plays fullscreen and offline.</li>`
+      : `<li>Tap the Share button in Safari's toolbar.</li>
+        <li>Choose <b>Add to Home Screen</b>.</li>
+        <li>Open the game from its new icon: it plays fullscreen and offline.</li>`;
   const sheet = document.createElement('div');
   sheet.className = 'sheet-backdrop';
   sheet.innerHTML = `
     <section class="sheet" role="dialog" aria-modal="true" aria-labelledby="install-title">
       <h2 id="install-title" class="sheet-title">Install Pour Decisions</h2>
-      <ol class="install-steps">
-        <li>Tap the Share button in Safari's toolbar.</li>
-        <li>Choose <b>Add to Home Screen</b>.</li>
-        <li>Open the game from its new icon: it plays fullscreen and offline.</li>
-      </ol>
+      <ol class="install-steps">${steps}</ol>
       <button class="btn btn-primary install-close">Got it</button>
     </section>`;
   host.appendChild(sheet);
