@@ -803,3 +803,254 @@ p {
   color: var(--c-text);
   font-weight: 600;
 }
+
+/* Tab bar */
+.tabbar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 390px;
+  height: 84px;
+  padding-bottom: 8px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: var(--c-surfaceAlt);
+  border-top: 1px solid var(--c-line);
+}
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  color: var(--c-muted);
+  font-size: 13px;
+  min-height: 44px;
+}
+.tab.is-active {
+  color: var(--c-accent);
+  font-weight: 600;
+}
+.map-panel .tabbar {
+  position: static;
+}
+
+/* Passport */
+.pp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px 0;
+  height: 62px;
+}
+.pp-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.pp-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pp-coins {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 12px 0 8px;
+  border-radius: 17px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  font-size: 14px;
+  font-weight: 600;
+}
+.pp-title {
+  padding: 18px 20px 0;
+}
+.pp-title h1 {
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.pp-title p {
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--c-muted);
+}
+.pp-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 20px 0;
+}
+.pp-current {
+  position: relative;
+  height: 156px;
+  border-radius: 22px;
+  border: 1.5px solid;
+  padding: 18px 18px 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.pp-ornament {
+  position: absolute;
+  right: 18px;
+  top: 14px;
+}
+.pp-kicker {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.pp-city {
+  font-size: 30px;
+  font-weight: 700;
+  margin-top: 4px;
+  letter-spacing: -0.01em;
+}
+.pp-sub {
+  font-size: 14px;
+  margin-top: 2px;
+}
+.pp-progress-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.pp-progress {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.pp-bar {
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.pp-bar div {
+  height: 6px;
+  border-radius: 3px;
+  min-width: 6px;
+}
+.pp-level {
+  font-size: 12px;
+}
+.pp-continue {
+  height: 44px;
+  padding: 0 20px;
+  border-radius: 22px;
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+}
+.pp-city-card {
+  height: 88px;
+  border-radius: 20px;
+  border: 1px solid;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.pp-city-card.is-locked {
+  opacity: 0.45;
+  filter: grayscale(0.6);
+}
+.pp-city-name {
+  font-size: 24px;
+  font-weight: 400;
+}
+.pp-city-sub {
+  font-size: 13px;
+  margin-top: 2px;
+}
+.pp-stamp {
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  border: 2px dashed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+}
+.pp-stamp b {
+  letter-spacing: 0.08em;
+}
+.pp-daily {
+  margin-top: 4px;
+  height: 78px;
+  border-radius: 20px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  padding: 0 14px 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.pp-daily-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+.pp-daily-line {
+  font-size: 13px;
+  color: var(--c-muted);
+  margin-top: 4px;
+}
+.pp-daily-play {
+  height: 44px;
+  padding: 0 22px;
+  border-radius: 22px;
+  border: 1.5px solid var(--c-hint);
+  color: var(--c-hint);
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+/* Sheets */
+.sheet-backdrop {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--c-ground) 70%, transparent);
+  display: flex;
+  align-items: flex-end;
+}
+.sheet {
+  width: 100%;
+  padding: 20px 20px 28px;
+  border-radius: 24px 24px 0 0;
+  background: var(--c-surface);
+  border-top: 1px solid var(--c-line);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.sheet-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+.sheet-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  font-size: 16px;
+}
+.sheet-row input {
+  width: 24px;
+  height: 24px;
+  accent-color: var(--c-accent);
+}

@@ -31,7 +31,7 @@ export function mapLayout(levels: number, perBar = 20): MapLayout {
 }
 
 /** Scroll position that puts world y in the middle of the visible map (between header and panel). */
-export function scrollFor(y: number, viewport: number, height: number): number {
-  const visibleMiddle = 80 + (viewport - 80 - 196) / 2;
+export function scrollFor(y: number, viewport: number, height: number, panel = 196): number {
+  const visibleMiddle = 80 + (viewport - 80 - panel) / 2;
   return Math.max(0, Math.min(height - viewport, y - visibleMiddle));
 }

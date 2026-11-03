@@ -110,5 +110,14 @@
   "booster": {
     "shape": "round",
     "border": 2
+  },
+  "passport": {
+    "code": "TKY",
+    "card": "#10163A",
+    "cardBorder": "#2B3466",
+    "title": "#F4ECDD",
+    "sub": "#A9B0DA",
+    "stamp": "#FF5C8A",
+    "barWord": "bar"
   }
 }

@@ -51,6 +51,16 @@ export interface Theme {
   blockers: Partial<Record<BlockerKind, string>> & { hidden: string; only: string; locked: string };
   bars: string[];
   design: string[];
+  /** How the city looks on the passport screen. */
+  passport?: {
+    code: string;
+    card: string;
+    cardBorder: string;
+    title: string;
+    sub: string;
+    stamp: string;
+    barWord: string;
+  };
   /** Booster button style on the counter. */
   booster?: { shape: 'round' | 'card'; border: number };
 }

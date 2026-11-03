@@ -17,7 +17,7 @@ async function seedSave(page: Page, current: number, stars: Record<number, numbe
 }
 
 test('a new player sees Amsterdam level 1 ready to play', async ({ page }) => {
-  await open(page, '');
+  await open(page, '#/map');
   await expect(page.getByRole('heading', { name: 'Amsterdam' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Level 1, play now' })).toBeVisible();
   await expect(page.getByRole('button', { name: /^Level 2,.*locked/ })).toHaveAttribute('aria-disabled', 'true');

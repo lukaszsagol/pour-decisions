@@ -96,5 +96,14 @@
   "booster": {
     "shape": "round",
     "border": 2
+  },
+  "passport": {
+    "code": "NYC",
+    "card": "#111111",
+    "cardBorder": "#3A3220",
+    "title": "#D4AF37",
+    "sub": "#CBBF9F",
+    "stamp": "#D4AF37",
+    "barWord": "bar"
   }
 }

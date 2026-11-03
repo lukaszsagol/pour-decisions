@@ -131,5 +131,14 @@
   "booster": {
     "shape": "round",
     "border": 4
+  },
+  "passport": {
+    "code": "AMS",
+    "card": "#2A1A10",
+    "cardBorder": "#4A3020",
+    "title": "#F3E6CC",
+    "sub": "#D8C3A0",
+    "stamp": "#E8A33D",
+    "barWord": "bar"
   }
 }

@@ -105,10 +105,10 @@ Depends on: T06, T12
 - [x] Amsterdam canal map matching `docs/design/screens/AmsterdamMap.png` (layout shared with `TokyoMap.png`), driven by the level packs and saved progress: path, nodes with stars, Hard ring, Super Hard flag, current node with ring, bottom panel with Play. A new player starts at level 1.
 - [x] Scrolls through all 100 levels of the city; bars separated by a landmark (gate).
 
-### T14 · Passport screen and navigation · `todo` · M
+### T14 · Passport screen and navigation · `in-review` · M
 Depends on: T13
-- [ ] Passport matching `docs/design/screens/Main.png`; city cards from themes and progress; locked cities shown greyed. A new player sees Amsterdam as the current city and the other three locked (the design shows a late-game player).
-- [ ] Navigation Passport → Map → Level → Complete → Map, tab bar on Passport and Map.
+- [x] Passport matching `docs/design/screens/Main.png`; city cards from themes and progress; locked cities shown greyed. A new player sees Amsterdam as the current city and the other three locked (the design shows a late-game player).
+- [x] Navigation Passport → Map → Level → Complete → Map, tab bar on Passport and Map.
 
 ### T15 · Saved progress and economy · `in-review` · M
 Depends on: T09

@@ -99,5 +99,14 @@
   "booster": {
     "shape": "card",
     "border": 4
+  },
+  "passport": {
+    "code": "LDN",
+    "card": "#16382B",
+    "cardBorder": "#2C5A46",
+    "title": "#EFE6D2",
+    "sub": "#C9D8C9",
+    "stamp": "#C9A24A",
+    "barWord": "pub"
   }
 }

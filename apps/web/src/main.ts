@@ -5,6 +5,9 @@ import { designFixtures } from './fixtures.js';
 import { LevelScreen, type LevelResult } from './level/screen.js';
 import { getLevel, levelsInCity } from './levels.js';
 import { MapScreen } from './map/screen.js';
+import { FamilyPlaceholder } from './family/placeholder.js';
+import { PassportScreen } from './passport/screen.js';
+import { tabBar, type Tab } from './tabbar.js';
 import { session } from './session.js';
 import { createStage } from './stage.js';
 import { progress } from './state.js';
@@ -14,6 +17,8 @@ interface Screen {
   mount(): Promise<void>;
   destroy(): void;
 }
+
+const tabs: Record<Tab, string> = { map: '#/map', daily: '#/daily', passport: '#/passport', family: '#/family' };
 
 const stage = createStage(document.getElementById('app')!);
 let current: Screen | null = null;
@@ -86,10 +91,19 @@ function route(): Screen {
     return screen;
   }
   if (name === 'complete' && session.complete) return new CompleteScreen(stage, session.complete);
-  if (name === 'map' || name === '') {
+  if (name === 'map') {
     const city = cityIds.includes(arg as CityId) ? (arg as CityId) : themeForLevel(progress.data.current).id;
-    return new MapScreen(stage, { theme: getTheme(city), levels: levelsInCity(city), progress, backHref: '#/' });
+    return new MapScreen(stage, {
+      theme: getTheme(city),
+      levels: levelsInCity(city),
+      progress,
+      backHref: '#/passport',
+      footer: tabBar('map', tabs),
+    });
   }
+  if (name === 'family') return new FamilyPlaceholder(stage, themeForLevel(progress.data.current), tabs);
+  if (name === '' || name === 'passport' || name === 'daily')
+    return new PassportScreen(stage, { progress, tabs, dailyHref: '#/daily', dailyLine: 'A new level every night' });
   return levelScreen(name === 'level' ? Number(arg) : progress.data.current);
 }
 

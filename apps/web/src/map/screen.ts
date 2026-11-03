@@ -75,7 +75,7 @@ export class MapScreen {
     );
     this.renderPanel();
     const i = this.indexOf(this.selected);
-    scroller.scrollTop = scrollFor(this.layout.nodes[i]!.y, STAGE_H, this.layout.height);
+    scroller.scrollTop = scrollFor(this.layout.nodes[i]!.y, STAGE_H, this.layout.height, this.opts.footer ? 280 : 196);
     sync();
     this.el.dataset.ready = 'true';
   }
