@@ -1,12 +1,13 @@
 import './style.css';
 import { getTheme, recipeFor, themeForLevel } from '@pour/themes';
 import { CompleteScreen } from './complete/screen.js';
-import { rewardsFor } from './economy/rewards.js';
 import { designFixtures } from './fixtures.js';
 import { LevelScreen, type LevelResult } from './level/screen.js';
 import { getLevel } from './levels.js';
 import { session } from './session.js';
 import { createStage } from './stage.js';
+import { progress } from './state.js';
+import { economy } from './economy/config.js';
 
 interface Screen {
   mount(): Promise<void>;
@@ -15,9 +16,6 @@ interface Screen {
 
 const stage = createStage(document.getElementById('app')!);
 let current: Screen | null = null;
-
-const defaultStock = () => ({ undo: 5, extraGlass: 2, hint: 3 });
-let streak = 0;
 
 function levelScreen(number: number): Screen {
   const entry = getLevel(number) ?? getLevel(1)!;
@@ -30,20 +28,28 @@ function levelScreen(number: number): Screen {
     barName: pack.name,
     bottles: level.bottles,
     best: level.best,
-    stock: defaultStock(),
+    stock: { ...progress.data.stock },
     backHref: '#/',
     guide: level.number === 1,
     nextHref: '#/complete',
     nextLabel: 'Collect rewards',
+    onStock: (stock) => progress.setStock(stock),
+    onEvent: (e) => {
+      if (e.type === 'restart' || e.type === 'quit') progress.recordFail();
+    },
+    continueOffer: {
+      price: economy.deadEndContinue,
+      canBuy: () => progress.data.coins >= economy.deadEndContinue,
+      buy: () => progress.buyBooster('extraGlass', economy.deadEndContinue),
+    },
     onWin: (result: LevelResult) => {
-      const rewards = rewardsFor({
+      const rewards = progress.recordWin({
+        number: result.number,
         stars: result.stars,
+        moves: result.moves,
         difficulty: level.difficulty,
-        previousStars: 0,
         firstTry: result.restarts === 0,
-        streakBefore: streak,
       });
-      streak = rewards.streak;
       const lastOfBar = pack.levels[pack.levels.length - 1]!.number === level.number;
       const recipe = lastOfBar ? recipeFor(theme.id, pack.bar) : undefined;
       session.complete = {
@@ -79,7 +85,7 @@ function route(): Screen {
     return screen;
   }
   if (name === 'complete' && session.complete) return new CompleteScreen(stage, session.complete);
-  return levelScreen(name === 'level' ? Number(arg) : 1);
+  return levelScreen(name === 'level' ? Number(arg) : progress.data.current);
 }
 
 async function show(): Promise<void> {

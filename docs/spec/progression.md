@@ -32,6 +32,8 @@ Starting values to tune from play data:
 - Booster price: 300 coins (about one per 3–5 normal levels).
 - Dead-end continue: an extra glass for 300 coins when the player has none.
 
+Implementation notes (T15): all numbers live in `apps/web/src/economy/config.ts`. The save is `localStorage["pour-decisions:save"]`, versioned, with a migration hook in `apps/web/src/economy/save.ts`. A "first try" is a win without restarting the level; a restart, or leaving a level unfinished, resets the streak. A dead end alone does not.
+
 ## Hooks
 
 - **Win streak**: consecutive first-try wins. Rewards at 3, 5 and 10 (an undo, an extra glass, a hint). A fail resets it.

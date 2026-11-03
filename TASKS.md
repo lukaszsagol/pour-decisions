@@ -110,11 +110,11 @@ Depends on: T13
 - [ ] Passport matching `docs/design/screens/Main.png`; city cards from themes and progress; locked cities shown greyed. A new player sees Amsterdam as the current city and the other three locked (the design shows a late-game player).
 - [ ] Navigation Passport → Map → Level → Complete → Map, tab bar on Passport and Map.
 
-### T15 · Saved progress and economy · `todo` · M
+### T15 · Saved progress and economy · `in-review` · M
 Depends on: T09
-- [ ] Versioned local save (localStorage with a migration hook): per-level stars and best moves, coins, booster stock, streak, current level.
-- [ ] Rewards and prices from `docs/spec/progression.md`, all in one config file.
-- [ ] Win streak rewards at 3, 5 and 10; fail resets.
+- [x] Versioned local save (localStorage with a migration hook): per-level stars and best moves, coins, booster stock, streak, current level.
+- [x] Rewards and prices from `docs/spec/progression.md`, all in one config file.
+- [x] Win streak rewards at 3, 5 and 10; fail resets.
 
 ### T16 · London, New York and Tokyo skins · `todo` · L
 Depends on: T11, T13

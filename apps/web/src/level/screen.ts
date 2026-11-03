@@ -42,6 +42,8 @@ export interface LevelScreenOptions {
   onDeadEnd?: () => void;
   /** Called after every pour, undo, booster use or restart (for the play log). */
   onEvent?: (event: { type: string; [key: string]: unknown }) => void;
+  /** Dead-end continue: buy an extra glass for coins when none are left. */
+  continueOffer?: { price: number; canBuy: () => boolean; buy: () => boolean };
   /** "Next" on the win overlay. */
   nextHref: string;
   nextLabel?: string;
@@ -456,7 +458,12 @@ export class LevelScreen {
     panel.hidden = !show;
     if (!show) return;
     panel.querySelector<HTMLButtonElement>('.de-undo')!.disabled = !this.game.canUndo();
-    panel.querySelector<HTMLButtonElement>('.de-glass')!.disabled = !this.game.canAddGlass();
+    const glass = panel.querySelector<HTMLButtonElement>('.de-glass')!;
+    const offer = this.opts.continueOffer;
+    const canBuy = !this.game.extraGlassUsed && this.game.stock.extraGlass === 0 && !!offer?.canBuy();
+    glass.textContent = canBuy ? `Add glass · ${offer!.price}` : 'Add glass';
+    glass.dataset.buy = String(canBuy);
+    glass.disabled = !this.game.canAddGlass() && !canBuy;
   }
 
   /** Level 1 pointer: points at the source glass, then at the target, until the first pour. */
@@ -510,7 +517,14 @@ export class LevelScreen {
     on('.booster-hint', () => this.useHint());
     on('.lv-restart', () => this.restart());
     on('.de-undo', () => this.undo());
-    on('.de-glass', () => this.addGlass());
+    on('.de-glass', () => {
+      const offer = this.opts.continueOffer;
+      if (this.game.stock.extraGlass === 0 && offer?.buy()) {
+        this.game.stock.extraGlass++;
+        this.opts.onEvent?.({ type: 'continue', price: offer.price });
+      }
+      this.addGlass();
+    });
     on('.de-restart', () => this.restart());
   }
 
