@@ -166,6 +166,46 @@ Planning score, plan-ahead mode, memory mode, adaptive difficulty and progress c
 
 ---
 
+## Phase 4: pixel art
+
+The art style changes to pixel art. Read `docs/spec/pixel-art.md` and look at everything in `docs/design/pixel/` before starting any task in this phase. Game logic, levels, saves and tests stay as they are; only drawing and styling change. Keep the game playable after every task.
+
+### T25 · Pixel rendering foundation · `todo` · M
+Depends on: T24
+- [ ] A small pixel-drawing module in `apps/web/src/pixel/` ported from `docs/design/pixel/reference/pixel.py` and the helpers in `ams_pixel3.py`: pixel buffer, `px`, `rect`, `hline`, `vline`, `sprite`, `line`, `mix`, ordered dither, `shadowBox`, digit sprites. Unit-tested.
+- [ ] Buffers become Pixi textures with nearest-neighbour filtering. A helper redraws a buffer only when its content changes.
+- [ ] The stage scales the 195×422 art grid by the largest whole number of device pixels that fits, centred, with the city ground colour around it. Text overlays stay aligned.
+- [ ] Pixelify Sans loaded and used as the game font; offline fallback via the service worker cache.
+
+### T26 · Amsterdam level in pixel art · `todo` · L
+Depends on: T25
+- [ ] The Amsterdam level screen matches `docs/design/pixel/amsterdam-level-screen.png`: backdrop, tulip glasses, liquids with full shading, reflection strip, locked glass with chain rings, padlock and cherry badge, counter and beer mats with counts.
+- [ ] A test renders the static backdrop buffer and compares it with `docs/design/pixel/amsterdam-level-1x.png` (allow small differences where the layout had to change, and list them in the pull request).
+- [ ] Selection lift, rejection shake, pour (tilt frames, 2 px stream, row-by-row fill), completion sparkle and unlock animations all move in whole art pixels.
+- [ ] Glass sizes and positions still fit 7–9 glasses; layouts with more glasses use a second row the same way.
+
+### T27 · London, New York and Tokyo levels in pixel art · `todo` · L
+Depends on: T26
+- [ ] Each city's level screen redrawn per the city table in `docs/spec/pixel-art.md`, with its own glass shape and all three blocker skins (locked, hidden, only).
+- [ ] Badge icons drawn for every drink in every city that can release a lock or own an only-glass.
+- [ ] A screenshot per city attached to the pull request; quality at least that of the Amsterdam reference (multi-tone shading, dithered light, outlines, no flat fills on large areas).
+
+### T28 · City maps in pixel art · `todo` · L
+Depends on: T25
+- [ ] All four maps redrawn as pixel scenes (see the style guide), keeping the layout and behaviour of the current map screen: path, nodes, stars, hard and super hard markers, family avatars, bottom panel.
+- [ ] Pixel coin nodes and avatars; the current node pulses in whole-pixel steps.
+
+### T29 · Menus and overlays in pixel art · `todo` · L
+Depends on: T25
+- [ ] Passport (with pixel city scenes on the cards), level complete (pixel stars, pixel recipe card), daily pour, family, training, settings, dead-end panel and win overlay restyled with the pixel UI kit: stepped borders, bevelled buttons, pixel icons, Pixelify Sans.
+- [ ] A shared set of CSS classes or components for panels, buttons and icons so screens stay consistent.
+- [ ] Accessibility unchanged: real buttons and labels, 44 px targets, contrast.
+
+### T30 · Pixel art screenshots and review · `todo` · S
+Depends on: T26, T27, T28, T29
+- [ ] Playwright screenshots of every screen in every city committed to `agent-logs/assets/pixel/`.
+- [ ] A reviewer pass (sub-agent if available) compares each against the style guide and fixes anything that falls short: blurry scaling, flat fills, missing shading, misaligned text.
+
 ## Found while working
 
 Agents add bugs and ideas here instead of fixing things outside their task.

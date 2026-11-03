@@ -1,6 +1,6 @@
 # Cities and themes
 
-All four cities share one way of drawing (flat shapes drawn in code, no bitmap art required) and differ in palette, fonts, glass shape, decoration, drinks, blocker skins and sound. A city is data: `themes/<city>.json` plus its level packs. The engine never knows which city it is in.
+All four cities share one way of drawing (pixel art drawn in code at 195×422 and scaled 2×, see `pixel-art.md`; no hand-made art files required) and differ in palette, fonts, glass shape, decoration, drinks, blocker skins and sound. A city is data: `themes/<city>.json` plus its level packs. The engine never knows which city it is in.
 
 | | Amsterdam | London | New York | Tokyo |
 | --- | --- | --- | --- | --- |

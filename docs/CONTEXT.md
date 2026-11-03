@@ -22,7 +22,7 @@ Key findings that shaped the design:
 | Fairness | Levels are fixed and solver-verified; a retry gives the same layout; owned boosters are usable at a dead end; hidden colours never decide the outcome by luck. |
 | Theme | A night out, cocktail bars across four cities: Amsterdam (brown café), London (traditional pub), New York (Art Deco speakeasy), Tokyo (neon back alley). More cities later as data. |
 | Order | Amsterdam first (levels 1–100), then London, New York, Tokyo. A new player starts in Amsterdam, level 1. |
-| Style | Flat graphics drawn in code, Two Dots-style level map, one look per city. No pixel art. |
+| Style | Pixel art (decided 3 Nov 2026, replacing the first flat style): a 195×422 art grid scaled 2×, rich shading with dithering, Two Dots-style level map, one look per city. See `docs/spec/pixel-art.md`. |
 | Drinks | Plain colours, no shapes or symbols on them (owner's choice). Colours must differ in lightness. |
 | Blockers | Shown visually, never with text: a picture of the blocker plus a round badge in the colour of the drink that releases it. No bikes in Amsterdam. |
 | Stars | Based on pours against the solver's best; undo does not refund moves; the extra glass caps at 2 stars; time never counts. |

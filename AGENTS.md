@@ -16,7 +16,8 @@ It ships as a web app (PWA) first, then as iOS and Android apps wrapped with Cap
 | `docs/CONTEXT.md` | Background: how the project started, the owner's decisions and why. Read it once. |
 | `docs/OVERNIGHT.md` | The protocol for unattended builds. Follow it exactly when running unattended. |
 | `docs/spec/` | Specs: game rules, progression and economy, screens, cities and themes, levels. **The source of truth.** |
-| `docs/design/screens/*.png` | Reference screenshots of every designed screen (390×844 logical px, rendered at 2×). Match these. |
+| `docs/design/pixel/` | **The current art style.** Pixel-art reference for the Amsterdam level (exact 1:1 pixels, screenshots and the drawing code). Read `docs/spec/pixel-art.md` with it. |
+| `docs/design/screens/*.png` | The earlier flat designs. Still the reference for **layout and content** of each screen, not for its look. |
 | `docs/design/screens/*.html` | The same screens as standalone HTML. Open them in a browser for exact colours, sizes and fonts. |
 | `docs/design/source/` | Original design-canvas sources. `TokyoLevel.dc.html` contains a working prototype of the level logic. |
 | `themes/*.json` | Design tokens per city: colours, fonts, drinks, blocker skins. Code reads these; never hard-code city styling. |
