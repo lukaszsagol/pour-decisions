@@ -856,18 +856,6 @@ p {
   align-items: center;
   gap: 8px;
 }
-.pp-coins {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  height: 34px;
-  padding: 0 12px 0 8px;
-  border-radius: 17px;
-  background: var(--c-surface);
-  border: 1px solid var(--c-line);
-  font-size: 14px;
-  font-weight: 600;
-}
 .pp-title {
   padding: 18px 20px 0;
 }

@@ -28,7 +28,12 @@ export interface CompleteData {
   share?: string;
 }
 
-const boosterNames = { undo: 'Streak undo', extraGlass: 'Streak glass', hint: 'Streak hint' } as const;
+/** Labels for an earned booster: [from a streak, from the daily pour]. */
+const boosterNames = {
+  undo: ['Streak undo', 'Daily undo'],
+  extraGlass: ['Streak glass', 'Daily glass'],
+  hint: ['Streak hint', 'Daily hint'],
+} as const;
 
 /** Text copied by Share: "Pour Decisions · Level 64 · ★★★ 14 moves (best 13)". */
 export function shareText(r: LevelResult): string {
@@ -122,9 +127,17 @@ export class CompleteScreen {
       : r.moves < r.best
         ? `${r.moves} moves · ${r.best - r.moves} fewer than the computer`
         : `${r.moves} moves · best ${r.best}`;
-    const third = rewards?.streakBooster
-      ? { icon: this.boosterIcon(rewards.streakBooster), value: '+1', label: boosterNames[rewards.streakBooster] }
-      : { icon: icons.star(k.accent, 18), value: String(rewards?.streak ?? 0), label: 'Win streak' };
+    const earned = rewards?.earned ?? [];
+    const third =
+      earned.length === 0
+        ? null
+        : earned.some((e) => e.reason === 'bar')
+          ? { icon: this.boosterIcon('extraGlass'), value: `+${earned.length}`, label: 'Bar boosters' }
+          : {
+              icon: this.boosterIcon(earned[0]!.kind),
+              value: '+1',
+              label: boosterNames[earned[0]!.kind][earned[0]!.reason === 'daily' ? 1 : 0],
+            };
     const card = (icon: string, value: string, label: string) =>
       `<div class="cp-card"><div class="cp-card-value">${icon}<span>${esc(value)}</span></div><div class="cp-card-label">${esc(label)}</div></div>`;
     return `
@@ -137,9 +150,9 @@ export class CompleteScreen {
       ${
         rewards
           ? `<div class="cp-rewards">
-        ${card(icons.coin(k.starDone).replace('width="22" height="22"', 'width="18" height="18"'), `+${rewards.coins}`, 'Coins')}
         ${card(icons.star(k.starDone, 18), `+${rewards.stars}`, 'Stars')}
-        ${card(third.icon, third.value, third.label)}
+        ${card(icons.star(k.accent, 18), String(rewards.streak), 'Win streak')}
+        ${third ? card(third.icon, third.value, third.label) : ''}
       </div>`
           : ''
       }

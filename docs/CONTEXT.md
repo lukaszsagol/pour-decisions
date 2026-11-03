@@ -18,7 +18,7 @@ Key findings that shaped the design:
 | --- | --- |
 | Audience | Friends and family, adults. Not for children. |
 | Money | No ads, no purchases, no monetisation at all. |
-| Feel | Keep all of Magic Sort's mechanics, difficulty and hooks: limited boosters, coins, streaks, hard levels, events, map. Everything is earned by playing. |
+| Feel | Keep all of Magic Sort's mechanics, difficulty and hooks: limited boosters, streaks, hard levels, events, map. Everything is earned by playing. No currency: coins were dropped by the owner on 2026-11-03. |
 | Fairness | Levels are fixed and solver-verified; a retry gives the same layout; owned boosters are usable at a dead end; hidden colours never decide the outcome by luck. |
 | Theme | A night out, cocktail bars across four cities: Amsterdam (brown café), London (traditional pub), New York (Art Deco speakeasy), Tokyo (neon back alley). More cities later as data. |
 | Order | Amsterdam first (levels 1–100), then London, New York, Tokyo. A new player starts in Amsterdam, level 1. |

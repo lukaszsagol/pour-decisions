@@ -10,7 +10,8 @@ test('progress is saved: after winning level 1 a reload continues at level 2', a
   }
   await expect(page.getByRole('dialog')).toBeVisible();
   const save = await page.evaluate(() => JSON.parse(localStorage.getItem('pour-decisions:save')!));
-  expect(save).toMatchObject({ version: 1, current: 2, streak: 1, coins: 340, levels: { '1': { stars: 3 } } });
+  expect(save).toMatchObject({ version: 2, current: 2, streak: 1, levels: { '1': { stars: 3 } } });
+  expect(save).not.toHaveProperty('coins');
   await page.goto('/#/map');
   await page.reload();
   await page.locator('.screen[data-ready="true"]').waitFor();

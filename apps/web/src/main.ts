@@ -21,7 +21,6 @@ import { createStage } from './stage.js';
 import { playLog, progress } from './state.js';
 import './debug.js';
 import { sfx } from './sound.js';
-import { economy } from './economy/config.js';
 
 interface Screen {
   mount(): Promise<void>;
@@ -57,21 +56,16 @@ function levelScreen(number: number): Screen {
       playLog.add(level.number, e);
       if (e.type === 'restart' || e.type === 'quit') progress.recordFail();
     },
-    continueOffer: {
-      price: economy.deadEndContinue,
-      canBuy: () => progress.data.coins >= economy.deadEndContinue,
-      buy: () => progress.buyBooster('extraGlass', economy.deadEndContinue),
-    },
     onWin: (result: LevelResult) => {
+      const lastOfBar = pack.levels[pack.levels.length - 1]!.number === level.number;
       const rewards = progress.recordWin({
         number: result.number,
         stars: result.stars,
         moves: result.moves,
-        difficulty: level.difficulty,
         firstTry: result.restarts === 0,
+        lastOfBar,
       });
       void family()?.pushProgress(progress.data.current, progress.totalStars(), progress.totalStars());
-      const lastOfBar = pack.levels[pack.levels.length - 1]!.number === level.number;
       const recipe = lastOfBar ? recipeFor(theme.id, pack.bar) : undefined;
       session.complete = {
         theme,

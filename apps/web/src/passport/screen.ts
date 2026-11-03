@@ -74,7 +74,6 @@ export class PassportScreen {
     const p = this.opts.progress;
     const k = current.colors;
     const visited = Math.min(20, Math.ceil(p.data.current / 20));
-    const coins = p.data.coins.toLocaleString('en-GB');
     // Current city first, then finished cities (newest first), then the ones still ahead.
     const order = [
       ...themes.filter((t) => this.status(t) === 'current'),
@@ -85,7 +84,6 @@ export class PassportScreen {
       <header class="pp-header">
         <div class="pp-brand">${icons.glass(k.accent).replace('width="26" height="26"', 'width="30" height="30"')}<span>Pour Decisions</span></div>
         <div class="pp-header-right">
-          <div class="pp-coins" aria-label="${coins} coins">${icons.coin(k.starDone)}<span>${coins}</span></div>
           <button class="icon-btn pp-settings" aria-label="Settings">${settingsIcon(k.muted)}</button>
         </div>
       </header>
