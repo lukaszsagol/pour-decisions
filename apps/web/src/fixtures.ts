@@ -73,4 +73,19 @@ export const designFixtures: Record<string, DesignFixture> = {
     selected: null,
     stock: { undo: 5, extraGlass: 2, hint: 3 },
   },
+  /** Every Amsterdam blocker skin at once: chains and padlock, stoneware jug covers, a kruik tag. */
+  'amsterdam-skins': {
+    city: 'amsterdam',
+    number: 21,
+    barName: 'De Druif',
+    bottles: parseBottles(
+      ['?cherry ?jenever advocaat cherry', 'advocaat cherry jenever jenever', 'jenever advocaat advocaat cherry', '', '', ''],
+      4,
+      { 3: { lockedUntil: 'cherry' }, 4: { only: 'advocaat' } },
+    ),
+    best: 9,
+    moves: 0,
+    selected: null,
+    stock: { undo: 5, extraGlass: 2, hint: 3 },
+  },
 };

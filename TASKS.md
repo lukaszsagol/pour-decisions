@@ -89,11 +89,11 @@ Depends on: T09
 - [x] Completed-glass celebration; subtle idle wobble of liquid surfaces.
 - [x] Respects `prefers-reduced-motion` (instant pours).
 
-### T11 · Blocker rendering · `todo` · M
+### T11 · Blocker rendering · `in-review` · M
 Depends on: T09
-- [ ] Generic skin interface: each theme maps `hidden`, `only` and `locked` to a renderer.
-- [ ] Amsterdam skins first (see `AmsterdamLevel.png`): locked glass with brass chains, padlock and a release badge; stoneware-jug cover for hidden units; kruik tag for only-glasses. Badge colour = the releasing drink. No text labels.
-- [ ] Locked bottles visibly unlock when their drink is completed (short animation).
+- [x] Generic skin interface: each theme maps `hidden`, `only` and `locked` to a renderer.
+- [x] Amsterdam skins first (see `AmsterdamLevel.png`): locked glass with brass chains, padlock and a release badge; stoneware-jug cover for hidden units; kruik tag for only-glasses. Badge colour = the releasing drink. No text labels.
+- [x] Locked bottles visibly unlock when their drink is completed (short animation).
 
 ### T12 · Level complete screen · `todo` · M
 Depends on: T09

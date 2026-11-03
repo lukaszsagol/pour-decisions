@@ -1,8 +1,9 @@
 import type { Bottle } from '@pour/engine';
 import { drinkById, type Theme } from '@pour/themes';
-import { Container, Graphics, Text } from 'pixi.js';
-import { box, dashedBox } from '../pixi-util.js';
+import { Container, Graphics } from 'pixi.js';
+import { box } from '../pixi-util.js';
 import { color } from '../theme-css.js';
+import { onlySlots, skinFor, type BlockerSkin, type SkinContext } from './skins.js';
 import { baseHeight, glassGeometry, SLOT_H, SLOT_W, unitRects, type GlassGeometry } from './geometry.js';
 
 export type GlassMark = 'none' | 'selected' | 'hint' | 'reject';
@@ -37,10 +38,12 @@ export class GlassView extends Container {
   /** Top edge and width of the topmost visible unit, for the surface wobble. */
   private surfaceLine: { x: number; y: number; w: number } | null = null;
   private readonly phase = Math.random() * Math.PI * 2;
+  private readonly skin: BlockerSkin;
 
   constructor(private readonly theme: Theme) {
     super();
     this.geometry = glassGeometry(theme);
+    this.skin = skinFor(theme);
     const o = bodyOrigin(this.geometry);
     this.mouth = { x: SLOT_W / 2, y: o.y };
     this.pivot.set(this.mouth.x, this.mouth.y);
@@ -138,19 +141,7 @@ export class GlassView extends Container {
       if (!unit.hidden) this.surfaceLine = { x: o.x + r.x, y: o.y + r.y, w: r.w };
       const radii = i === 0 ? ([4, 4, bottomRadius, bottomRadius] as const) : ([4, 4, 4, 4] as const);
       if (unit.hidden) {
-        box(g, o.x + r.x, o.y + r.y, r.w, r.h, radii, color(theme, 'hiddenUnit', theme.colors.surface));
-        const q = new Text({
-          text: '?',
-          style: {
-            fontFamily: theme.fonts.ui,
-            fontSize: 15,
-            fontWeight: '700',
-            fill: color(theme, 'hiddenMark', theme.colors.muted),
-          },
-        });
-        q.anchor.set(0.5);
-        q.position.set(o.x + r.x + r.w / 2, o.y + r.y + r.h / 2);
-        this.overlay.addChild(q);
+        this.skin.hiddenUnit(g, this.overlay, { x: o.x + r.x, y: o.y + r.y, w: r.w, h: r.h }, radii, theme);
         return;
       }
       const drink = drinkById(theme, unit.drink);
@@ -161,13 +152,7 @@ export class GlassView extends Container {
       if (drink.foam && (!above || above.drink !== unit.drink))
         box(g, o.x + r.x, o.y + r.y, r.w, 5, [4, 4, 0, 0], drink.foam);
     });
-    if (only) {
-      for (let i = bottle.units.length; i < bottle.capacity; i++) {
-        const r = rects[i]!;
-        box(g, o.x + r.x, o.y + r.y, r.w, r.h, [4, 4, 4, 4], { color: only, alpha: 0.08 });
-        dashedBox(g, o.x + r.x, o.y + r.y, r.w, r.h, 4, { width: 2, color: only, alpha: 0.55 });
-      }
-    }
+    if (only) onlySlots(g, rects, bottle.units.length, only, o);
     // Locked contents stay visible but dimmed behind the lock.
     if (locked) box(g, o.x, o.y, geo.bodyW, geo.bodyH, geo.radius, { color: fill, alpha: 0.7 });
 
@@ -186,20 +171,28 @@ export class GlassView extends Container {
       g.roundRect((SLOT_W - 50) / 2, by + 8, 50, 8, 2).fill({ color: base });
     }
 
-    // Release badge for only and locked glasses: a round badge in the drink's colour.
-    const badgeDrink = bottle.lockedUntil ?? bottle.only;
-    if (badgeDrink) this.drawBadge(drinkById(theme, badgeDrink).color, o.y);
+    // Blocker pictures and their release badge, drawn by the city's skin.
+    if (bottle.lockedUntil) this.skin.locked(this.overlay, this.skinContext(bottle.lockedUntil));
+    else if (bottle.only) this.skin.only(this.overlay, this.skinContext(bottle.only));
   }
 
-  private drawBadge(drinkColor: string, bodyTop: number): void {
-    const b = new Graphics();
-    const cy = Math.max(15, bodyTop - 9);
-    b.moveTo(SLOT_W / 2, cy)
-      .lineTo(SLOT_W / 2, bodyTop + 2)
-      .stroke({ width: 2, color: drinkColor });
-    b.circle(SLOT_W / 2, cy, 14)
-      .fill({ color: drinkColor })
-      .stroke({ width: 2.5, color: this.theme.colors.text });
-    this.overlay.addChild(b);
+  private skinContext(drink: string): SkinContext {
+    return {
+      theme: this.theme,
+      geo: this.geometry,
+      body: bodyOrigin(this.geometry),
+      drinkColor: drinkById(this.theme, drink).color,
+    };
+  }
+
+  /** The lock falls away when its drink is completed. */
+  playUnlock(drink: string, onFrame: (step: (t: number) => void) => Promise<void>): Promise<void> {
+    const layer = new Container();
+    this.skin.locked(layer, this.skinContext(drink));
+    this.addChild(layer);
+    return onFrame((t) => {
+      layer.alpha = 1 - t;
+      layer.position.y = t * t * 40;
+    }).then(() => layer.destroy({ children: true }));
   }
 }

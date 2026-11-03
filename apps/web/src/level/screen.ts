@@ -166,6 +166,13 @@ export class LevelScreen {
         this.opts.onEvent?.({ type: 'pour', from: event.from, to: event.to, moves: this.game.moves });
         void this.animatePour(event.from, event.to, event.amount, bottlesBefore).then(() => {
           if (this.destroyed) return;
+          for (const i of event.unlocked) {
+            const drink = bottlesBefore[i]!.lockedUntil!;
+            void this.views[i]!.playUnlock(
+              drink,
+              (step) => tween({ duration: 500, ease: linear, onUpdate: step }).done,
+            );
+          }
           if (event.completed)
             void this.views[event.to]!.celebrate(
               600,
