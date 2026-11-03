@@ -34,8 +34,40 @@ Levels are generated offline, verified by the solver, scored, then ordered into 
 }
 ```
 
+Each level also stores `solution`: a list of `[from, to]` pours of length `best`, so tests can re-verify every pack quickly. `metrics` holds the generator's numbers: `score` (0–100), `botWinRate`, `branching`, `deadEndShare`, `firstMoves`, `winningFirstMoves`, `emptyPours` and `optimal` (1 when `best` is proven shortest by breadth-first search; big levels may only have a best-known solution).
+
 `difficulty` is one of `normal`, `hard`, `superHard`. Pack files are generated; never edit them by hand. Regenerate from the command and seeds.
 
 ## Golden levels
 
 `packages/engine/test/fixtures.ts` holds hand-checked levels with known answers, including the designed Tokyo level 327 (best: 16 pours). They must always pass.
+
+## Play log
+
+The client keeps a local log of play events (`localStorage["pour-decisions:log"]`, newest 5 000 kept) so a later task can tune difficulty from real play. It never leaves the device unless exported: Settings → tap the version line five times → Export play log.
+
+The export is a JSON file:
+
+```json
+{
+  "version": 1,
+  "exportedAt": "2026-11-03T21:14:05.120Z",
+  "events": [
+    { "t": 1762204445120, "level": 21, "type": "start" },
+    { "t": 1762204447310, "level": 21, "type": "pour", "from": 0, "to": 4, "moves": 1 },
+    { "t": 1762204449002, "level": 21, "type": "undo" },
+    { "t": 1762204451876, "level": 21, "type": "booster", "booster": "hint" },
+    { "t": 1762204460000, "level": 21, "type": "deadEnd", "moves": 9 },
+    { "t": 1762204463000, "level": 21, "type": "continue", "price": 300 },
+    { "t": 1762204499000, "level": 21, "type": "win", "moves": 14, "stars": 3 }
+  ]
+}
+```
+
+| Field | Meaning |
+| --- | --- |
+| `t` | Milliseconds since the epoch, device clock. |
+| `level` | Global level number, or `"daily-YYYY-MM-DD"` for the daily pour. |
+| `type` | `start` (level opened), `pour`, `undo`, `booster` (`booster`: `extraGlass` or `hint`), `deadEnd` (no pours left), `continue` (extra glass bought for coins), `restart`, `win` (`moves`, `stars`), `quit` (left unfinished, `moves`). |
+
+Time to solve is `win.t − start.t`; thinking time per pour is the gap between `pour` events. Bump `version` if fields change meaning.

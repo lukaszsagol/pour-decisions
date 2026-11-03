@@ -3,10 +3,7 @@
   "name": "Amsterdam",
   "setting": "Brown café on a canal",
   "order": 1,
-  "levels": [
-    1,
-    100
-  ],
+  "levels": [1, 100],
   "fonts": {
     "ui": "Outfit",
     "display": "DM Serif Display"
@@ -33,16 +30,45 @@
     "boosterFace": "#F3E6CC",
     "boosterRim": "#2A5BA8",
     "tile": "#2A5BA8",
-    "canal": "#23476E"
+    "canal": "#23476E",
+    "tileBand": "#E6D7B8",
+    "tileFace": "#F3E6CC",
+    "stoneware": "#B9A586",
+    "stonewareDark": "#9C8A6E",
+    "stonewareCap": "#8C7A60",
+    "stonewareCapDark": "#7A6A52",
+    "lamp": "#E8A33D",
+    "lampGlow": "#FFE2A8",
+    "cord": "#1A0F08",
+    "brass": "#C9A24A",
+    "shelf": "#5A3A24",
+    "boosterUndo": "#2A5BA8",
+    "boosterGlass": "#A8213A",
+    "boosterHint": "#F28C28",
+    "boosterHintIcon": "#B5621A",
+    "badgeText": "#2A1A10",
+    "lockedRim": "#5A4432",
+    "lockedFill": "#140C06",
+    "hiddenUnit": "#4A3626",
+    "hiddenMark": "#D8C3A0",
+    "mapBank": "#4A3628",
+    "mapPath": "#23476E",
+    "mapPathLine": "#4C76A6",
+    "mapBuildingA": "#4A2A1C",
+    "mapBuildingB": "#3B2416",
+    "mapBuildingC": "#6E4A2E",
+    "mapWindow": "#E8A33D",
+    "mapPole": "#1A1A1A",
+    "mapBridge": "#6B3A26",
+    "mapBridgeTop": "#8A5A3A",
+    "mapMoon": "#F3E6CC",
+    "superHardBg": "#3B1218",
+    "superHardText": "#F09595",
+    "mapCurrent": "#F28C28"
   },
   "glass": {
     "shape": "tulip-stemmed",
-    "radius": [
-      10,
-      10,
-      26,
-      26
-    ]
+    "radius": [10, 10, 26, 26]
   },
   "drinks": [
     {
@@ -69,6 +95,31 @@
       "id": "curacao",
       "name": "Blue curaçao",
       "color": "#3E6FC4"
+    },
+    {
+      "id": "pisang-ambon",
+      "name": "Pisang ambon",
+      "color": "#4DB848"
+    },
+    {
+      "id": "bessenjenever",
+      "name": "Bessenjenever",
+      "color": "#5B1F51"
+    },
+    {
+      "id": "parfait-amour",
+      "name": "Parfait d’amour",
+      "color": "#AB6AD6"
+    },
+    {
+      "id": "jonge-jenever",
+      "name": "Jonge jenever",
+      "color": "#EEE8DA"
+    },
+    {
+      "id": "framboos",
+      "name": "Frambozenlikeur",
+      "color": "#F07A9C"
     }
   ],
   "blockers": {
@@ -76,15 +127,19 @@
     "only": "kruik-tag",
     "locked": "chains-padlock"
   },
-  "bars": [
-    "Café 't Hoekje",
-    "De Druif",
-    "Het Bruine Paard",
-    "Café de Gracht",
-    "Proeflokaal Het Anker"
-  ],
-  "design": [
-    "AmsterdamMap",
-    "AmsterdamLevel"
-  ]
+  "bars": ["Café 't Hoekje", "De Druif", "Het Bruine Paard", "Café de Gracht", "Proeflokaal Het Anker"],
+  "design": ["AmsterdamMap", "AmsterdamLevel"],
+  "booster": {
+    "shape": "round",
+    "border": 4
+  },
+  "passport": {
+    "code": "AMS",
+    "card": "#2A1A10",
+    "cardBorder": "#4A3020",
+    "title": "#F3E6CC",
+    "sub": "#D8C3A0",
+    "stamp": "#E8A33D",
+    "barWord": "bar"
+  }
 }

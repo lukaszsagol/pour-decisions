@@ -3,10 +3,7 @@
   "name": "London",
   "setting": "Traditional pub",
   "order": 2,
-  "levels": [
-    101,
-    200
-  ],
+  "levels": [101, 200],
   "fonts": {
     "ui": "Outfit",
     "display": "Playfair Display"
@@ -33,16 +30,46 @@
     "boosterFace": "#EFE6D2",
     "boosterRim": "#1F5C44",
     "wall": "#4A1418",
-    "fascia": "#16382B"
+    "fascia": "#16382B",
+    "brass": "#C9A24A",
+    "shelf": "#5A3A24",
+    "panel": "#2B1A12",
+    "panelLine": "#3B2416",
+    "wallPattern": "#5E1A22",
+    "dartRed": "#C8242E",
+    "dartGreen": "#1F5C44",
+    "pumpHandle": "#2B1D16",
+    "pewter": "#9BA1A8",
+    "pewterDark": "#6E747A",
+    "pewterLight": "#C3C8CC",
+    "boosterUndoIcon": "#1F5C44",
+    "boosterGlassIcon": "#8E2A3E",
+    "boosterHintIcon": "#B5892A",
+    "badgeText": "#1B140A",
+    "hiddenUnit": "#3A2E28",
+    "hiddenMark": "#D8C3A0",
+    "lockedRim": "#6E747A",
+    "lockedFill": "#1A1210",
+    "mapBank": "#25332C",
+    "mapPath": "#3A4A42",
+    "mapPathLine": "#5C6E64",
+    "mapBuildingA": "#1E3A30",
+    "mapBuildingB": "#17302A",
+    "mapBuildingC": "#13261F",
+    "mapWindow": "#C9B77A",
+    "mapPole": "#111111",
+    "mapBridge": "#3B2A22",
+    "mapBridgeTop": "#5A4434",
+    "mapMoon": "#E8E2C8",
+    "mapFog": "#B9C4BE",
+    "mapCurrent": "#A9DCE6",
+    "superHardBg": "#3A1A26",
+    "superHardText": "#F2A7BA",
+    "mapGround": "#14201C"
   },
   "glass": {
     "shape": "nonic-pint",
-    "radius": [
-      4,
-      4,
-      8,
-      8
-    ]
+    "radius": [4, 4, 8, 8]
   },
   "drinks": [
     {
@@ -70,6 +97,31 @@
       "id": "blackcurrant",
       "name": "Blackcurrant",
       "color": "#8E2A5E"
+    },
+    {
+      "id": "elderflower",
+      "name": "Elderflower fizz",
+      "color": "#FFF1E1"
+    },
+    {
+      "id": "sloe-gin",
+      "name": "Sloe gin",
+      "color": "#BB001C"
+    },
+    {
+      "id": "rhubarb-gin",
+      "name": "Rhubarb gin",
+      "color": "#F4A6B8"
+    },
+    {
+      "id": "bramble",
+      "name": "Bramble",
+      "color": "#37267D"
+    },
+    {
+      "id": "lime-cordial",
+      "name": "Gin and lime",
+      "color": "#8FCB3A"
     }
   ],
   "blockers": {
@@ -77,15 +129,19 @@
     "only": "reserved-beer-mat",
     "locked": "locked-tap"
   },
-  "bars": [
-    "The Red Lion",
-    "The Rose and Crown",
-    "The Fox and Fiddle",
-    "The Crown and Anchor",
-    "The Lamb and Flag"
-  ],
-  "design": [
-    "LondonMap",
-    "LondonLevel"
-  ]
+  "bars": ["The Red Lion", "The Rose and Crown", "The Fox and Fiddle", "The Crown and Anchor", "The Lamb and Flag"],
+  "design": ["LondonMap", "LondonLevel"],
+  "booster": {
+    "shape": "card",
+    "border": 4
+  },
+  "passport": {
+    "code": "LDN",
+    "card": "#16382B",
+    "cardBorder": "#2C5A46",
+    "title": "#EFE6D2",
+    "sub": "#C9D8C9",
+    "stamp": "#C9A24A",
+    "barWord": "pub"
+  }
 }

@@ -3,10 +3,7 @@
   "name": "New York",
   "setting": "Art Deco speakeasy",
   "order": 3,
-  "levels": [
-    201,
-    300
-  ],
+  "levels": [201, 300],
   "fonts": {
     "ui": "Outfit",
     "display": "Limelight"
@@ -31,16 +28,40 @@
     "counterTop": "#2A2A2A",
     "counterFront": "#0B0B0B",
     "boosterFace": "#111111",
-    "boosterRim": "#D4AF37"
+    "boosterRim": "#D4AF37",
+    "brass": "#D4AF37",
+    "shelf": "#D4AF37",
+    "shelfBottle": "#1E1E1E",
+    "velvet": "#A8213A",
+    "boosterUndoIcon": "#D4AF37",
+    "boosterGlassIcon": "#D4AF37",
+    "boosterHintIcon": "#D4AF37",
+    "badgeText": "#111111",
+    "hiddenUnit": "#2A2A2A",
+    "hiddenMark": "#CBBF9F",
+    "lockedRim": "#8C7A4E",
+    "lockedFill": "#0B0B0B",
+    "counterEdge": "#D4AF37",
+    "mapBank": "#5C4B22",
+    "mapPath": "#1F1F1F",
+    "mapPathLine": "#5C5444",
+    "mapBuildingA": "#1A1A1A",
+    "mapBuildingB": "#151515",
+    "mapBuildingC": "#222222",
+    "mapWindow": "#B8962E",
+    "mapPole": "#1A1A1A",
+    "mapBridge": "#2A2A2A",
+    "mapBridgeTop": "#D4AF37",
+    "mapMoon": "#E9E2CC",
+    "mapCurrent": "#E8578A",
+    "superHardBg": "#3A1424",
+    "superHardText": "#F4A3BF",
+    "headerTitle": "#D4AF37",
+    "mapGround": "#121212"
   },
   "glass": {
     "shape": "deco-tall",
-    "radius": [
-      6,
-      6,
-      14,
-      14
-    ]
+    "radius": [6, 6, 14, 14]
   },
   "drinks": [
     {
@@ -67,6 +88,31 @@
       "id": "grasshopper",
       "name": "Grasshopper",
       "color": "#5FB86A"
+    },
+    {
+      "id": "dry-martini",
+      "name": "Dry martini",
+      "color": "#EDF8E4"
+    },
+    {
+      "id": "sidecar",
+      "name": "Sidecar",
+      "color": "#E37B0E"
+    },
+    {
+      "id": "long-island",
+      "name": "Long Island iced tea",
+      "color": "#835E26"
+    },
+    {
+      "id": "clover-club",
+      "name": "Clover club",
+      "color": "#F9BECD"
+    },
+    {
+      "id": "blue-moon",
+      "name": "Blue moon",
+      "color": "#2376D7"
     }
   ],
   "blockers": {
@@ -74,15 +120,19 @@
     "only": "velvet-rope",
     "locked": "deco-door"
   },
-  "bars": [
-    "The Brass Rail",
-    "Club Midnight",
-    "The Gilded Door",
-    "The Starlight Room",
-    "The Penthouse"
-  ],
-  "design": [
-    "NewYorkMap",
-    "NewYorkLevel"
-  ]
+  "bars": ["The Brass Rail", "Club Midnight", "The Gilded Door", "The Starlight Room", "The Penthouse"],
+  "design": ["NewYorkMap", "NewYorkLevel"],
+  "booster": {
+    "shape": "round",
+    "border": 2
+  },
+  "passport": {
+    "code": "NYC",
+    "card": "#111111",
+    "cardBorder": "#3A3220",
+    "title": "#D4AF37",
+    "sub": "#CBBF9F",
+    "stamp": "#D4AF37",
+    "barWord": "bar"
+  }
 }

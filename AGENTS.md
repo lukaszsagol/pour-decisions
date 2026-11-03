@@ -40,13 +40,24 @@ Planned (created by tasks): `tools/levelgen` (level generator CLI), `apps/web` (
 ## Commands
 
 ```bash
-npm install          # once
-npm run check        # typecheck + all tests. Must pass before every commit.
-npm test             # tests only
-npm run typecheck    # tsc -b
+npm install                 # once
+npm run check               # typecheck + all tests. Must pass before every commit.
+npm test                    # tests only
+npm run typecheck           # tsc -b
+npm run lint                # ESLint + Prettier check (part of check)
+npm run format              # Prettier write + ESLint fix
+npm run dev -w apps/web     # play the game at http://localhost:5173
+npm run build -w apps/web   # production build into apps/web/dist
+npm run e2e -w apps/web     # builds, then Playwright tests (dev + preview servers); screenshots to agent-logs/assets/
+node apps/web/scripts/icons.mjs   # re-render app icons from apps/web/public/icons/icon.svg
+npm run levels -- --city tokyo --bar 2   # regenerate one bar (or --city amsterdam, or --all)
 ```
 
-Tasks add more commands (for example `npm run dev -w apps/web`, `npm run levels`). Document any you add here.
+Playwright needs a browser once: `npx playwright install chromium`.
+
+Dev routes: `#/level/<n>` opens a level directly, `#/fixture/<name>` shows a design reference state (see `apps/web/src/fixtures.ts`).
+
+Tasks add more commands. Document any you add here.
 
 ## Definition of done (every task)
 

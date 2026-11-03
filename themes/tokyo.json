@@ -3,16 +3,11 @@
   "name": "Tokyo",
   "setting": "Neon back-alley bars",
   "order": 4,
-  "levels": [
-    301,
-    400
-  ],
+  "levels": [301, 400],
   "fonts": {
     "ui": "Outfit",
     "display": "Outfit",
-    "extra": [
-      "Zen Kaku Gothic New"
-    ]
+    "extra": ["Zen Kaku Gothic New"]
   },
   "colors": {
     "ground": "#070B1F",
@@ -34,27 +29,51 @@
     "counterTop": "#D9B98A",
     "counterFront": "#2E2118",
     "boosterFace": "#121836",
-    "boosterRim": "#F4B860"
+    "boosterRim": "#F4B860",
+    "band": "#23306E",
+    "shelf": "#2B3466",
+    "lantern": "#E0453A",
+    "cord": "#3A2A2A",
+    "shelfBottle": "#1A2148",
+    "badgeText": "#3A2508",
+    "boosterUndoIcon": "#5EC3F0",
+    "boosterGlassIcon": "#FF8FB0",
+    "boosterHintIcon": "#F4B860",
+    "hiddenUnit": "#1E2652",
+    "hiddenMark": "#8A93C8",
+    "counterEdge": "#D9B98A",
+    "shutter": "#3B4577",
+    "shutterLine": "#2B3466",
+    "mapBank": "#121A45",
+    "mapPath": "#1A2358",
+    "mapPathLine": "#3B4A8E",
+    "mapBuildingA": "#101634",
+    "mapBuildingB": "#0D1330",
+    "mapBuildingC": "#141B40",
+    "mapWindow": "#8A7350",
+    "mapPole": "#2B2B2B",
+    "mapBridge": "#232C64",
+    "mapBridgeTop": "#3B4577",
+    "mapMoon": "#F4ECDD",
+    "mapCurrent": "#FF5C8A",
+    "superHardBg": "#3A1024",
+    "superHardText": "#FF8FB0",
+    "mapGround": "#0A0F2A"
   },
   "glass": {
     "shape": "highball",
-    "radius": [
-      8,
-      8,
-      16,
-      16
-    ]
+    "radius": [8, 8, 16, 16]
   },
   "drinks": [
-    {
-      "id": "umeshu",
-      "name": "Umeshu",
-      "color": "#C7772E"
-    },
     {
       "id": "sakura",
       "name": "Sakura",
       "color": "#F49AC1"
+    },
+    {
+      "id": "umeshu",
+      "name": "Umeshu",
+      "color": "#C7772E"
     },
     {
       "id": "melon",
@@ -70,6 +89,31 @@
       "id": "ramune",
       "name": "Ramune",
       "color": "#5EC3F0"
+    },
+    {
+      "id": "matcha",
+      "name": "Matcha highball",
+      "color": "#3F6B2A"
+    },
+    {
+      "id": "kyoho",
+      "name": "Kyoho sour",
+      "color": "#5E2B8A"
+    },
+    {
+      "id": "akadama",
+      "name": "Akadama",
+      "color": "#B4243B"
+    },
+    {
+      "id": "calpis",
+      "name": "Calpis soda",
+      "color": "#F3F1E8"
+    },
+    {
+      "id": "hojicha",
+      "name": "Hojicha",
+      "color": "#734926"
     }
   ],
   "blockers": {
@@ -78,16 +122,19 @@
     "locked": "shutter",
     "frozen": "ice-ball"
   },
-  "bars": [
-    "Neon gate",
-    "Golden alley",
-    "Ginza highball",
-    "Jazz kissa",
-    "Rooftop Shibuya"
-  ],
-  "design": [
-    "TokyoMap",
-    "TokyoLevel",
-    "TokyoComplete"
-  ]
+  "bars": ["Neon gate", "Golden alley", "Ginza highball", "Jazz kissa", "Rooftop Shibuya"],
+  "design": ["TokyoMap", "TokyoLevel", "TokyoComplete"],
+  "booster": {
+    "shape": "round",
+    "border": 2
+  },
+  "passport": {
+    "code": "TKY",
+    "card": "#10163A",
+    "cardBorder": "#2B3466",
+    "title": "#F4ECDD",
+    "sub": "#A9B0DA",
+    "stamp": "#FF5C8A",
+    "barWord": "bar"
+  }
 }

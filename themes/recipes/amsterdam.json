@@ -1,0 +1,73 @@
+{
+  "city": "amsterdam",
+  "recipes": [
+    {
+      "bar": 1,
+      "name": "Kopstootje",
+      "local": "Een kopstootje",
+      "color": "#E2B04A",
+      "glass": "tulip",
+      "ingredients": [
+        ["35 ml", "Oude jenever, chilled"],
+        ["250 ml", "Dutch pilsner"]
+      ],
+      "method": "Fill the tulip glass to the brim with jenever. Lean down and take the first sip without lifting it, then chase it with the beer."
+    },
+    {
+      "bar": 2,
+      "name": "Advocaat with cream",
+      "local": "Advocaatje met slagroom",
+      "color": "#F3D34A",
+      "glass": "tulip",
+      "ingredients": [
+        ["50 ml", "Advocaat"],
+        ["2 tbsp", "Whipped cream"],
+        ["A pinch", "Cocoa powder"]
+      ],
+      "method": "Pour the advocaat into a small glass, top with a cap of lightly sweetened whipped cream and dust with cocoa. Eat it with a spoon."
+    },
+    {
+      "bar": 3,
+      "name": "Genever old fashioned",
+      "local": "Jenever old fashioned",
+      "color": "#B87A2E",
+      "glass": "rocks",
+      "ingredients": [
+        ["60 ml", "Oude jenever"],
+        ["1 tsp", "Sugar syrup"],
+        ["2 dashes", "Angostura bitters"],
+        ["1 strip", "Orange peel"]
+      ],
+      "method": "Stir the jenever, syrup and bitters over ice until cold. Strain over a large ice cube and twist the orange peel over the top."
+    },
+    {
+      "bar": 4,
+      "name": "Bessenjenever tonic",
+      "local": "Bessenjenever-tonic",
+      "color": "#8E2A5E",
+      "glass": "highball",
+      "ingredients": [
+        ["50 ml", "Bessenjenever"],
+        ["150 ml", "Tonic water"],
+        ["1 wedge", "Lemon"],
+        ["Lots", "Ice"]
+      ],
+      "method": "Fill a tall glass with ice, add the bessenjenever and top up with cold tonic. Squeeze in the lemon and stir once."
+    },
+    {
+      "bar": 5,
+      "name": "Improved Holland gin cocktail",
+      "local": "Verbeterde jenevercocktail",
+      "color": "#E8C88A",
+      "glass": "coupe",
+      "ingredients": [
+        ["60 ml", "Oude jenever"],
+        ["1 tsp", "Sugar syrup"],
+        ["1 tsp", "Maraschino liqueur"],
+        ["2 dashes", "Angostura bitters"],
+        ["1 strip", "Lemon peel"]
+      ],
+      "method": "Stir everything except the peel over ice, strain into a chilled coupe and twist the lemon peel over the drink. From Jerry Thomas, 1876."
+    }
+  ]
+}

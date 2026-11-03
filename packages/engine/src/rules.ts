@@ -155,7 +155,8 @@ export function validateLevel(bottles: readonly Bottle[]): string[] {
   }
   for (const [i, b] of bottles.entries()) {
     if (b.only && !counts.has(b.only)) errors.push(`Bottle ${i} only accepts missing drink ${b.only}`);
-    if (b.lockedUntil && !counts.has(b.lockedUntil)) errors.push(`Bottle ${i} waits for missing drink ${b.lockedUntil}`);
+    if (b.lockedUntil && !counts.has(b.lockedUntil))
+      errors.push(`Bottle ${i} waits for missing drink ${b.lockedUntil}`);
   }
   return errors;
 }

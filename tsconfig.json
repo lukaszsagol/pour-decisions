@@ -1,4 +1,17 @@
 {
   "files": [],
-  "references": [{ "path": "packages/engine" }]
+  "references": [
+    {
+      "path": "packages/engine"
+    },
+    {
+      "path": "packages/themes"
+    },
+    {
+      "path": "tools/levelgen"
+    },
+    {
+      "path": "apps/web"
+    }
+  ]
 }
