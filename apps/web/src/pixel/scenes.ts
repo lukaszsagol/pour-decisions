@@ -44,7 +44,7 @@ function amsterdamScene(cv: PixelCanvas): void {
   for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) if (dith(x, y, 0.15) && y < h * 0.5) cv.px(x, y, '#2A1E16');
   disc(cv, w - 22, 9, 4, { hi: '#FFF9EC', base: '#F3E6CC', dk: '#D8C7A6' });
   const water = h - Math.max(10, Math.round(h * 0.28));
-  for (let i = 0, x = Math.round(w * 0.6); x < w; i++) {
+  for (let i = 0, x = Math.round(w * 0.66); x < w; i++) {
     const hw = 13 + (i % 3) * 3;
     const top = water - 18 - Math.round(hash(i + 3) * Math.min(18, h * 0.35));
     const c = ['#5A2A1C', '#3B2A20', '#6E4A2E', '#2E3A4A'][i % 4]!;
@@ -70,7 +70,7 @@ function londonScene(cv: PixelCanvas): void {
   const { w, h } = cv;
   cv.rect(0, 0, w, h, '#0E1814');
   // The pub front: green facade, gold-lettered fascia, warm bay windows, a door.
-  const x0 = Math.round(w * 0.6);
+  const x0 = Math.round(w * 0.66);
   const fw = w - x0 - 6;
   cv.rect(x0, 4, fw, h - 8, '#16382B');
   cv.vline(x0, 4, h - 8, '#2C5A46');
@@ -114,7 +114,7 @@ function newYorkScene(cv: PixelCanvas): void {
     cv.line(cx, h, Math.round(cx - Math.cos(r) * 60), Math.round(h - Math.sin(r) * h), '#3A3010');
   }
   for (let i = 0; i < 6; i++) {
-    const x = Math.round(w * 0.6) + i * 17;
+    const x = Math.round(w * 0.66) + i * 17;
     const th = Math.round(h * (0.45 + hash(i + 11) * 0.45));
     const top = h - th;
     cv.rect(x, top, 15, th, '#161616');
@@ -131,7 +131,7 @@ function newYorkScene(cv: PixelCanvas): void {
 function tokyoScene(cv: PixelCanvas): void {
   const { w, h } = cv;
   cv.rect(0, 0, w, h, '#070B1F');
-  const x0 = Math.round(w * 0.6);
+  const x0 = Math.round(w * 0.66);
   // Buildings with neon signs and a row of lanterns over a wet alley.
   for (let i = 0, x = x0; x < w; i++, x += 22) cv.rect(x, 2, 20, h - 8, i % 2 ? '#0D1330' : '#101634');
   const neon = ['#FF5C8A', '#5EC3F0', '#F4B860'];
@@ -169,16 +169,19 @@ const SCENES: Record<string, (cv: PixelCanvas) => void> = {
 };
 
 /**
- * A passport card scene, w×h art px. The left part is darkened with a dither
- * so the card's text stays readable; a locked city is drawn dim and cold.
+ * A passport card scene, w×h art px. The text column on the left is a plain
+ * plate in the card's colour; a locked city is drawn dim and cold.
  */
 export function cityScene(theme: Theme, w: number, h: number, locked = false): PixelCanvas {
   const cv = new PixelCanvas(w, h);
   (SCENES[theme.id] ?? amsterdamScene)(cv);
+  // A solid plate in the card's colour under the text, dithering into the art.
+  const plate = theme.passport?.card ?? theme.colors.surface;
+  const edge = Math.round(w * 0.64);
   for (let y = 0; y < h; y++)
-    for (let x = 0; x < w; x++) {
-      const t = Math.max(0, 1 - x / (w * 0.7));
-      if (t > 0 && dith(x, y, t)) cv.tint(x, y, '#000000', 0.55);
+    for (let x = 0; x < Math.min(w, edge + 10); x++) {
+      const t = x < edge ? 1 : 1 - (x - edge) / 10;
+      if (t >= 1 || dith(x, y, t)) cv.px(x, y, plate);
     }
   if (locked)
     for (let i = 0; i < cv.data.length; i++) {

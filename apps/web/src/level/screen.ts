@@ -1,7 +1,7 @@
 import { Game, type Bottle, type BoosterStock, type Move } from '@pour/engine';
 import type { Theme } from '@pour/themes';
 import { easeInOut, easeOut, linear, reducedMotion, tween, wait } from '../anim.js';
-import { esc, icons } from '../icons.js';
+import { esc, icons, pixelSvg } from '../icons.js';
 import { cityArt, type CityLevelArt } from '../pixel/level/art.js';
 import { GLASS_H, SLOT_W } from '../pixel/level/layout.js';
 import { PixelLevelRenderer, TILTS, type GlassFrame, type Mark, type PourFrame } from '../pixel/level/renderer.js';
@@ -53,6 +53,19 @@ export interface LevelScreenOptions {
   nextHref: string;
   nextLabel?: string;
 }
+
+/** The level 1 pointer: a shaded pixel arrow pointing down. */
+const GUIDE_ARROW = [
+  '.ooooo.',
+  '.ohhdo.',
+  '.oh#do.',
+  '.oh#do.',
+  'oooh#doo',
+  'oh###ddo',
+  '.oh##do.',
+  '..oh#o..',
+  '...oo...',
+];
 
 /** Lift of a selected glass, in art px (the style guide's 7). */
 export const LIFT = 7;
@@ -662,7 +675,7 @@ export class LevelScreen {
       </div>
       <button class="lv-restart" aria-label="Restart level" style="left:${a(restart.x + 6) - 22}px;top:${a(restart.y + 6) - 22}px"></button>
       <div class="lv-glasses"></div>
-      <div class="lv-guide" hidden aria-hidden="true"><span class="lv-guide-dot"></span></div>
+      <div class="lv-guide" hidden aria-hidden="true">${pixelSvg(GUIDE_ARROW, { o: '#1A0F08', '#': '#F3E6CC', h: '#FFFFFF', d: '#B8A888' }, 4)}</div>
       <div class="lv-counter" style="color:${text.title}">
         ${booster('undo', 'Undo', 0)}
         ${booster('glass', 'Extra glass', 1)}

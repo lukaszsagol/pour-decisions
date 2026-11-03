@@ -49,6 +49,32 @@ interface CityMap {
   details(cv: PixelCanvas, scene: MapScene, theme: Theme): void;
   /** The skyline at the top of the city. */
   skyline(cv: PixelCanvas, theme: Theme): void;
+  /** Texture for the open ground between the buildings and the path. */
+  texture?(x: number, y: number): string;
+}
+
+/** Fills the open ground between the side buildings with the city's texture. */
+function openGround(cv: PixelCanvas, scene: MapScene, fn: (x: number, y: number) => string): void {
+  for (let y = 78; y < scene.height; y++) for (let x = 32; x < MAP_W - 32; x++) cv.px(x, y, fn(x, y));
+}
+
+/** Stepped gables on the path side of each house (Amsterdam). */
+function gables(cv: PixelCanvas, height: number, tones: string[], storey = 34): void {
+  for (const side of [0, 1]) {
+    for (let y = 70, k = 0; y < height; y += storey, k++) {
+      const base = tones[(k + side * 2) % tones.length]!;
+      const dir = side ? -1 : 1;
+      const edge = side ? MAP_W - 33 : 32;
+      for (let step = 0; step < 3; step++) {
+        const len = storey - 8 - step * 8;
+        const y0 = y + 4 + step * 4;
+        const x0 = edge + dir * step * 2;
+        cv.rect(side ? x0 - 1 : x0, y0, 2, len, step === 2 ? mix(base, '#FFFFFF', 0.1) : base);
+        cv.hline(side ? x0 - 1 : x0, y0, 2, mix(base, '#FFFFFF', 0.22));
+        cv.hline(side ? x0 - 1 : x0, y0 + len - 1, 2, mix(base, '#000000', 0.35));
+      }
+    }
+  }
 }
 
 const hash = (n: number) => {
@@ -122,7 +148,17 @@ function lampPost(cv: PixelCanvas, x: number, y: number, light: string, pole: st
 
 const amsterdam: CityMap = {
   ground: '#2A1A10',
-  sides: (cv, s) => facades(cv, s.height, ['#5A2A1C', '#3B2A20', '#6E4A2E', '#4A3A2A'], '#E8A33D', { seed: 1 }),
+  sides(cv, s) {
+    facades(cv, s.height, ['#5A2A1C', '#3B2A20', '#6E4A2E', '#4A3A2A'], '#E8A33D', { seed: 1 });
+    gables(cv, s.height, ['#5A2A1C', '#3B2A20', '#6E4A2E', '#4A3A2A']);
+  },
+  texture: (x, y) => {
+    // A brick street: running bond, with the odd darker brick.
+    const row = Math.floor(y / 3);
+    const off = row % 2 ? 3 : 0;
+    if (y % 3 === 2 || (x + off) % 6 === 0) return '#24160D';
+    return hash(Math.floor((x + off) / 6) * 17 + row * 5) < 0.2 ? '#2E1D12' : '#33211A';
+  },
   path(cv, s) {
     // Brick quays, then the canal with dithered ripples.
     band(cv, s, 20, (x, y, d) => {
@@ -176,6 +212,12 @@ const amsterdam: CityMap = {
 const london: CityMap = {
   ground: '#14201C',
   sides: (cv, s) => facades(cv, s.height, ['#1E3A30', '#17302A', '#13261F', '#22402F'], '#C9B77A', { seed: 2 }),
+  texture: (x, y) => {
+    const row = Math.floor(y / 3);
+    const off = row % 2 ? 2 : 0;
+    if (y % 3 === 2 || (x + off) % 5 === 0) return '#0E1814';
+    return hash(Math.floor((x + off) / 5) * 31 + row * 7) < 0.4 ? '#1C2A24' : '#18241F';
+  },
   path(cv, s) {
     // A cobbled lane with kerbs.
     band(cv, s, 19, (x, y, d) => {
@@ -210,9 +252,12 @@ const london: CityMap = {
       lampPost(cv, x, y, '#F6D58A', '#111111');
     }
     for (let y = s.height - 220; y > 120; y -= 170) {
-      for (let yy = y; yy < y + 14; yy++)
-        for (let x = 0; x < MAP_W; x++)
-          if (dith(x + yy, yy, 0.35 - Math.abs(yy - y - 7) * 0.04)) cv.tint(x, yy, '#B9C4BE', 0.22);
+      // A bank of fog drifting over the lane and the open ground, not the houses.
+      for (let yy = y; yy < y + 18; yy++)
+        for (let x = 34; x < MAP_W - 34; x++) {
+          const t = 0.4 - Math.abs(yy - y - 9) * 0.04 - Math.abs(x - MAP_W / 2) * 0.003;
+          if (t > 0 && dith(x + yy * 3, yy, t)) cv.tint(x, yy, '#B9C4BE', 0.2);
+        }
     }
     for (let y = s.height - 260; y > 200; y -= 460) {
       const x = MAP_W - 22;
@@ -243,6 +288,7 @@ const london: CityMap = {
 
 const newyork: CityMap = {
   ground: '#121212',
+  texture: (x, y) => (x % 10 === 0 || y % 10 === 0 ? '#0E0E0E' : dith(x, y, 0.1) ? '#171717' : '#141414'),
   sides(cv, s) {
     // Stepped Deco towers with gold pinstripes.
     for (const side of [0, 1]) {
@@ -251,6 +297,14 @@ const newyork: CityMap = {
       for (const dx of [6, 14, 22, 30]) {
         const x = side ? x0 + 34 - dx : x0 + dx;
         cv.vline(x, 70, s.height - 70, mix(GOLD.base, '#1A1A1A', 0.55));
+      }
+      // Setbacks on the avenue side: the towers step back with gold trim.
+      for (let y = 100, k = 0; y < s.height; y += 60, k++) {
+        const depth = (k % 3) * 2 + 2;
+        const ex = side ? x0 - depth : x0 + 34;
+        cv.rect(ex, y, depth, 40, side ? '#151515' : '#1A1A1A');
+        cv.hline(ex, y, depth, GOLD.base);
+        cv.vline(side ? ex : ex + depth - 1, y, 40, mix(GOLD.base, '#1A1A1A', 0.4));
       }
       for (let y = 90; y < s.height; y += 22)
         for (const dx of [3, 10, 18, 26]) {
@@ -324,6 +378,12 @@ const newyork: CityMap = {
 
 const tokyo: CityMap = {
   ground: '#0A0F2A',
+  texture: (x, y) => {
+    // Wet asphalt with puddles catching the neon.
+    const puddle = hash(Math.floor(x / 9) * 13 + Math.floor(y / 7) * 29) < 0.12;
+    if (puddle) return dith(x, y, 0.5) ? (Math.floor(y / 7) % 2 ? '#3A1E4A' : '#123A54') : '#0D1430';
+    return dith(x, y, 0.06) ? '#121A3E' : '#0A0F2A';
+  },
   sides(cv, s) {
     facades(cv, s.height, ['#101634', '#0D1330', '#141B40'], '#8A7350', { seed: 4 });
     // Vertical neon signs on the buildings.
@@ -459,6 +519,7 @@ export function drawCoin(cv: PixelCanvas, n: MapNode, theme: Theme): void {
 export function drawMap(theme: Theme, scene: MapScene): PixelCanvas {
   const m = maps[theme.id] ?? amsterdam;
   const cv = new PixelCanvas(MAP_W, scene.height, m.ground);
+  if (m.texture) openGround(cv, scene, m.texture);
   m.sides(cv, scene, theme);
   m.skyline(cv, theme);
   m.path(cv, scene, theme);

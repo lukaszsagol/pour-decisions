@@ -127,7 +127,7 @@ function counter(cv: PixelCanvas): void {
   cv.hline(0, 334, W, '#000000');
   cv.rect(0, 335, W, H - 335, '#0B0B0B');
   cv.shadowBox(0, 335, W, 6, 0.6, 0.5);
-  panels(cv, 344, { fill: '#121212', inner: '#0E0E0E', shadow: '#050505', light: '#262626', line: GOLD.dark });
+  panels(cv, 344, { fill: '#121212', inner: '#0E0E0E', shadow: '#050505', light: '#262626' });
 }
 
 export function newYorkBackdrop(phase = 0): PixelCanvas {
@@ -135,8 +135,8 @@ export function newYorkBackdrop(phase = 0): PixelCanvas {
   wall(cv);
   sunburst(cv);
   // Gold sconce light, with a cool sheen on the lacquer.
-  glow(cv, 20, 150, 60, '#D4AF37', { phase, strength: 0.05, y1: 318 });
-  glow(cv, 175, 150, 60, '#D4AF37', { phase, strength: 0.05, y1: 318 });
+  glow(cv, 50, 76, 70, '#D4AF37', { phase, strength: 0.05, y1: 318 });
+  glow(cv, 145, 76, 70, '#D4AF37', { phase, strength: 0.05, y1: 318 });
   glow(cv, 97, 80, 70, '#8A9AB0', { phase, strength: 0.03, y1: 206 });
   frieze(cv);
   const ARROW = [
@@ -156,7 +156,12 @@ export function newYorkBackdrop(phase = 0): PixelCanvas {
   cv.sprite(8, 38, ARROW, { '#': '#F1E3C2' });
   frame(cv, SIGN.x, SIGN.y, SIGN.w, SIGN.h, { ...GOLD, panel: '#0B0B0B', panelDark: '#000000' });
   disc(cv, RESTART.x + 6, RESTART.y + 6, 5, { hi: GOLD.light, base: GOLD.base, dk: GOLD.deep, outline: '#000000' });
-  cv.sprite(RESTART.x + 3, RESTART.y + 3, ['.###.', '#...#', '#....', '#..#.', '.####'], { '#': '#0B0B0B' });
+  cv.sprite(
+    RESTART.x + 3,
+    RESTART.y + 3,
+    ['..####.', '.#...##', '#...###', '#......', '#.....#', '.#...#.', '..###..'],
+    { '#': '#0B0B0B' },
+  );
   for (const [x, h, c] of [
     [12, 30, '#2E4A2A'],
     [21, 24, '#5A2A18'],
@@ -171,8 +176,8 @@ export function newYorkBackdrop(phase = 0): PixelCanvas {
   cv.rect(0, 102, W, 3, '#1A1A1A');
   cv.hline(0, 105, W, '#000000');
   shelfShadow(cv, 106);
-  sconce(cv, 20, 140);
-  sconce(cv, 175, 140);
+  sconce(cv, 50, 66);
+  sconce(cv, 145, 66);
   counter(cv);
   return cv;
 }

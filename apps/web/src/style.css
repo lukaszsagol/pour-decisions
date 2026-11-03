@@ -1914,3 +1914,68 @@ p {
 .pp-install {
   height: 44px;
 }
+
+/* ---------- T30 review fixes ---------- */
+/* Pixelify's "fi" ligature reads as an "A". */
+body,
+button,
+input {
+  font-variant-ligatures: none;
+  font-feature-settings:
+    'liga' 0,
+    'clig' 0;
+}
+/* Dialog backdrops: a solid dim, so text behind it is not cut into checkers. */
+.lv-overlay,
+.sheet-backdrop {
+  background: color-mix(in srgb, var(--c-ground) 90%, transparent) !important;
+}
+/* Stars stay on the grid: no free rotation, outer stars sit 4 px lower. */
+.cp-stars span:first-child,
+.cp-stars span:last-child {
+  transform: translateY(8px) !important;
+}
+/* Without a recipe card, the complete screen centres its content. */
+.complete-screen:not(:has(.cp-recipe)) .cp-head {
+  top: 220px;
+}
+.complete-screen:not(:has(.cp-recipe)) .cp-rewards {
+  top: 404px;
+}
+/* A dark plate behind the map header, with a stepped bottom edge. */
+.map-header {
+  background: color-mix(in srgb, var(--c-ground), #000 25%);
+  box-shadow:
+    0 2px 0 0 var(--c-line),
+    0 6px 0 0 color-mix(in srgb, var(--c-ground), #000 45%);
+  height: 76px;
+}
+/* Disabled buttons stay readable. */
+.btn:disabled {
+  opacity: 1;
+  color: var(--c-muted) !important;
+  --btn-edge: var(--c-line);
+  filter: saturate(0.3);
+}
+.de-title {
+  color: var(--c-text);
+}
+.fam-soon {
+  margin: 16px 20px 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.4;
+}
+.lv-guide::after {
+  display: none;
+}
+.lv-guide {
+  width: 32px;
+  height: 36px;
+  animation: pd-guide 1.1s steps(2) infinite;
+}

@@ -201,10 +201,10 @@ Depends on: T25
 - [x] A shared set of CSS classes or components for panels, buttons and icons so screens stay consistent.
 - [x] Accessibility unchanged: real buttons and labels, 44 px targets, contrast.
 
-### T30 · Pixel art screenshots and review · `todo` · S
+### T30 · Pixel art screenshots and review · `in-review` · S
 Depends on: T26, T27, T28, T29
-- [ ] Playwright screenshots of every screen in every city committed to `agent-logs/assets/pixel/`.
-- [ ] A reviewer pass (sub-agent if available) compares each against the style guide and fixes anything that falls short: blurry scaling, flat fills, missing shading, misaligned text.
+- [x] Playwright screenshots of every screen in every city committed to `agent-logs/assets/pixel/`.
+- [x] A reviewer pass (sub-agent if available) compares each against the style guide and fixes anything that falls short: blurry scaling, flat fills, missing shading, misaligned text.
 
 ## Found while working
 

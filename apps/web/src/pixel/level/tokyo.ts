@@ -61,16 +61,16 @@ function neon(cv: PixelCanvas, points: [number, number][], core: string, hi: str
 }
 
 function signs(cv: PixelCanvas): void {
-  // Left: a pink sign box with a sake cup; right: a cyan wave.
-  cv.rect(14, 128, 20, 52, '#05081A');
+  // Two neon signs on the wall beside the lantern, above the shelf, where no glass reaches.
+  cv.rect(52, 62, 22, 34, '#05081A');
   neon(
     cv,
     [
-      [16, 130],
-      [32, 130],
-      [32, 178],
-      [16, 178],
-      [16, 130],
+      [53, 63],
+      [72, 63],
+      [72, 94],
+      [53, 94],
+      [53, 63],
     ],
     NEON.pink,
     NEON.pinkHi,
@@ -78,11 +78,11 @@ function signs(cv: PixelCanvas): void {
   neon(
     cv,
     [
-      [20, 140],
-      [28, 140],
-      [27, 150],
-      [21, 150],
-      [20, 140],
+      [57, 69],
+      [67, 69],
+      [66, 77],
+      [58, 77],
+      [57, 69],
     ],
     NEON.pink,
     NEON.pinkHi,
@@ -90,8 +90,8 @@ function signs(cv: PixelCanvas): void {
   neon(
     cv,
     [
-      [19, 158],
-      [29, 158],
+      [62, 80],
+      [62, 90],
     ],
     NEON.pink,
     NEON.pinkHi,
@@ -99,30 +99,30 @@ function signs(cv: PixelCanvas): void {
   neon(
     cv,
     [
-      [24, 158],
-      [24, 172],
+      [57, 84],
+      [67, 84],
     ],
     NEON.pink,
     NEON.pinkHi,
   );
-  cv.rect(160, 132, 22, 44, '#05081A');
-  for (let k = 0; k < 3; k++) {
-    const pts: [number, number][] = [];
-    for (let i = 0; i <= 16; i += 2) pts.push([163 + i, 140 + k * 12 + (Math.floor(i / 4) % 2 ? 3 : 0)]);
-    neon(cv, pts, NEON.cyan, NEON.cyanHi);
-  }
+  cv.rect(120, 62, 22, 34, '#05081A');
   neon(
     cv,
     [
-      [161, 133],
-      [181, 133],
-      [181, 175],
-      [161, 175],
-      [161, 133],
+      [121, 63],
+      [140, 63],
+      [140, 94],
+      [121, 94],
+      [121, 63],
     ],
     NEON.cyan,
     NEON.cyanHi,
   );
+  for (let k = 0; k < 3; k++) {
+    const pts: [number, number][] = [];
+    for (let i = 0; i <= 14; i += 2) pts.push([124 + i, 70 + k * 8 + (Math.floor(i / 4) % 2 ? 2 : 0)]);
+    neon(cv, pts, NEON.cyan, NEON.cyanHi);
+  }
 }
 
 function keptBottle(cv: PixelCanvas, x: number, h: number, glass: string, name: number): void {
@@ -183,8 +183,8 @@ function counter(cv: PixelCanvas): void {
 export function tokyoBackdrop(phase = 0): PixelCanvas {
   const cv = new PixelCanvas(W, H, '#070B1F');
   wall(cv);
-  glow(cv, 24, 155, 75, NEON.pink, { phase, strength: 0.07, y1: 318 });
-  glow(cv, 171, 155, 75, NEON.cyan, { phase, strength: 0.07, y1: 318 });
+  glow(cv, 62, 80, 80, NEON.pink, { phase, strength: 0.07, y1: 318 });
+  glow(cv, 131, 80, 80, NEON.cyan, { phase, strength: 0.07, y1: 318 });
   glow(cv, 97, 80, 55, '#FF7A4A', { phase, strength: 0.05, y1: 200 });
   signs(cv);
   noren(cv);
@@ -214,7 +214,12 @@ export function tokyoBackdrop(phase = 0): PixelCanvas {
   });
   cv.hline(SIGN.x + 4, SIGN.y + SIGN.h - 4, SIGN.w - 8, NEON.pink);
   disc(cv, RESTART.x + 6, RESTART.y + 6, 5, { hi: '#FFC2D4', base: NEON.pink, dk: '#A8325A', outline: '#05081A' });
-  cv.sprite(RESTART.x + 3, RESTART.y + 3, ['.###.', '#...#', '#....', '#..#.', '.####'], { '#': '#1A0710' });
+  cv.sprite(
+    RESTART.x + 3,
+    RESTART.y + 3,
+    ['..####.', '.#...##', '#...###', '#......', '#.....#', '.#...#.', '..###..'],
+    { '#': '#1A0710' },
+  );
   for (const [x, h, c, n] of [
     [10, 26, '#2E4A2A', 1],
     [19, 30, '#4A2A10', 2],

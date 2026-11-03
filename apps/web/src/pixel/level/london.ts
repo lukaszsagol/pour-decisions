@@ -15,7 +15,6 @@ import {
   shelfShadow,
 } from './common.js';
 import type { GlassStyle, Row } from './glass.js';
-import { rotateNearest } from './rotate.js';
 
 /** London: a traditional pub. Green "Free house" fascia, red flock wallpaper, dark wainscot, mahogany bar. */
 
@@ -196,7 +195,12 @@ export function londonBackdrop(phase = 0): PixelCanvas {
   frame(cv, SIGN.x, SIGN.y, SIGN.w, SIGN.h, { ...BRASS, panel: '#0E2A1F', panelDark: '#071810' });
   // Restart: a brass disc.
   disc(cv, RESTART.x + 6, RESTART.y + 6, 5, { hi: BRASS.light, base: BRASS.base, dk: BRASS.deep, outline: '#120A05' });
-  cv.sprite(RESTART.x + 3, RESTART.y + 3, ['.###.', '#...#', '#....', '#..#.', '.####'], { '#': '#22140B' });
+  cv.sprite(
+    RESTART.x + 3,
+    RESTART.y + 3,
+    ['..####.', '.#...##', '#...###', '#......', '#.....#', '.#...#.', '..###..'],
+    { '#': '#22140B' },
+  );
   // Back bar: dartboard, beer pumps, the fox picture, a mahogany shelf.
   dartboard(cv, 24, 76);
   pump(cv, 58, '#F1C84B');
@@ -347,10 +351,17 @@ function tiltedMats(cv: PixelCanvas, counts: [number, number, number], usable: [
     m.vline(29, 4, 26, fade('#DDD3BC'));
     m.sprite(11, 12, ICONS[icon], { '#': fade(mix(ICON_TONES[i]!, '#EFE6D2', 0.45)) });
     m.sprite(10, 11, ICONS[icon], { '#': fade(ICON_TONES[i]!) });
-    const r = rotateNearest(m, [-5, 4, -4][i]!, 17, 17);
+    // Tilt by shearing whole rows a pixel at a time, so edges stay even.
+    const dir = [-1, 1, -1][i]!;
     const cx = MATS.centres[i]!;
     cv.shadowBox(cx - 14, MATS.y + 3, 33, 33, 0.6, 0.5);
-    cv.blit(r.cv, cx - r.px, MATS.y + 16 - r.py);
+    for (let j = 0; j < m.h; j++) {
+      const dx = Math.floor((j - 17) / 9) * dir;
+      for (let x = 0; x < m.w; x++) {
+        const p = m.data[j * m.w + x]!;
+        if (p) cv.data[(MATS.y - 1 + j) * cv.w + (cx - 17 + x + dx)] = p;
+      }
+    }
     countBadge(cv, cx + 8, MATS.y - 7, counts[i]!);
   });
 }
