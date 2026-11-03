@@ -11,6 +11,9 @@ import {
   stonewareCover,
 } from './amsterdam.js';
 import { TULIP, type GlassStyle, type Row } from './glass.js';
+import { londonArt } from './london.js';
+import { newYorkArt } from './newyork.js';
+import { tokyoArt } from './tokyo.js';
 
 /** Everything a city draws on its level screen. All coordinates are art pixels. */
 export interface CityLevelArt {
@@ -46,14 +49,19 @@ export const amsterdamArt: CityLevelArt = {
   text: { title: '#F3E6CC', sub: '#D8C3A0' },
 };
 
-const byCity: Record<string, CityLevelArt> = { amsterdam: amsterdamArt };
+const byCity: Record<string, CityLevelArt> = {
+  amsterdam: amsterdamArt,
+  london: londonArt,
+  newyork: newYorkArt,
+  tokyo: tokyoArt,
+};
 
 /** Registers a city's art (London, New York and Tokyo add theirs). */
 export function registerCityArt(city: string, art: CityLevelArt): void {
   byCity[city] = art;
 }
 
-/** The art for a theme's city; cities without their own art yet use Amsterdam's. */
+/** The art for a theme's city (Amsterdam's for any city without its own). */
 export function cityArt(theme: Theme): CityLevelArt {
   return byCity[theme.id] ?? amsterdamArt;
 }

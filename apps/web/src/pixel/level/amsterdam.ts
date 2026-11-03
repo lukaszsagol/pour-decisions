@@ -477,22 +477,8 @@ const LOCK = [
   'oooooooooooooooo',
 ];
 
-/** Brass chains crossing the glass at 45°, the drop chain, and the steel-shackle padlock. */
-export function chainsAndPadlock(cv: PixelCanvas, x0: number, y0: number): void {
-  const cx = x0 + 13;
-  chain45(cv, x0 - 3, y0 + 10, 1, 6);
-  chain45(cv, x0 + 29, y0 + 10, -1, 6);
-  for (let y = y0 - 3; y < y0 + 25; y += 4) {
-    if (Math.floor(y / 4) % 2) {
-      cv.sprite(cx - 2, y, ['.#.', '#.#', '#.#', '.#.'], { '#': '#C9A24A' });
-      cv.px(cx - 1, y, '#F4D58A');
-    } else {
-      cv.rect(cx - 1, y, 2, 4, '#A8842E');
-      cv.px(cx - 1, y, '#E6C26A');
-    }
-  }
-  const lx = cx - 8;
-  const ly = y0 + 22;
+/** The brass padlock with its steel shackle (16×18), with its dithered shadow. */
+export function padlock(cv: PixelCanvas, lx: number, ly: number): void {
   cv.shadowBox(lx + 2, ly + 9, 16, 11, 0.6, 0.5);
   const LP: Record<string, string> = {
     '#': '#B8BCC0',
@@ -518,6 +504,23 @@ export function chainsAndPadlock(cv: PixelCanvas, x0: number, y0: number): void 
   cv.px(lx + 12, ly + 2, '#7A8086');
   cv.rect(lx + 2, ly + 9, 2, 2, '#FFF6D8');
   cv.px(lx + 7, ly + 10, '#3A2A1A');
+}
+
+/** Brass chains crossing the glass at 45°, the drop chain, and the steel-shackle padlock. */
+export function chainsAndPadlock(cv: PixelCanvas, x0: number, y0: number): void {
+  const cx = x0 + 13;
+  chain45(cv, x0 - 3, y0 + 10, 1, 6);
+  chain45(cv, x0 + 29, y0 + 10, -1, 6);
+  for (let y = y0 - 3; y < y0 + 25; y += 4) {
+    if (Math.floor(y / 4) % 2) {
+      cv.sprite(cx - 2, y, ['.#.', '#.#', '#.#', '.#.'], { '#': '#C9A24A' });
+      cv.px(cx - 1, y, '#F4D58A');
+    } else {
+      cv.rect(cx - 1, y, 2, 4, '#A8842E');
+      cv.px(cx - 1, y, '#E6C26A');
+    }
+  }
+  padlock(cv, cx - 8, y0 + 22);
 }
 
 /** Hidden units: covered by a glazed stoneware sleeve with a "?" pressed into it. */

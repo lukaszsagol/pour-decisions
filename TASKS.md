@@ -184,11 +184,11 @@ Depends on: T25
 - [x] Selection lift, rejection shake, pour (tilt frames, 2 px stream, row-by-row fill), completion sparkle and unlock animations all move in whole art pixels.
 - [x] Glass sizes and positions still fit 7–9 glasses; layouts with more glasses use a second row the same way.
 
-### T27 · London, New York and Tokyo levels in pixel art · `todo` · L
+### T27 · London, New York and Tokyo levels in pixel art · `in-review` · L
 Depends on: T26
-- [ ] Each city's level screen redrawn per the city table in `docs/spec/pixel-art.md`, with its own glass shape and all three blocker skins (locked, hidden, only).
-- [ ] Badge icons drawn for every drink in every city that can release a lock or own an only-glass.
-- [ ] A screenshot per city attached to the pull request; quality at least that of the Amsterdam reference (multi-tone shading, dithered light, outlines, no flat fills on large areas).
+- [x] Each city's level screen redrawn per the city table in `docs/spec/pixel-art.md`, with its own glass shape and all three blocker skins (locked, hidden, only).
+- [x] Badge icons drawn for every drink in every city that can release a lock or own an only-glass.
+- [x] A screenshot per city attached to the pull request; quality at least that of the Amsterdam reference (multi-tone shading, dithered light, outlines, no flat fills on large areas).
 
 ### T28 · City maps in pixel art · `todo` · L
 Depends on: T25

@@ -101,8 +101,13 @@ export function drawGlass(cv: PixelCanvas, g: GlassDraw): Row[] {
   while (k < g.layers.length && k * UNIT < filled) {
     const layer = g.layers[k]!;
     let end = k + 1;
-    if (!layer.hidden)
-      while (end < g.layers.length && !g.layers[end]!.hidden && g.layers[end]!.key === layer.key) end++;
+    // Runs of one drink merge; so do runs of hidden units, under one cover.
+    while (
+      end < g.layers.length &&
+      g.layers[end]!.hidden === layer.hidden &&
+      (layer.hidden || g.layers[end]!.key === layer.key)
+    )
+      end++;
     const segBottom = n - 1 - k * UNIT;
     const segRows = Math.min((end - k) * UNIT, filled - k * UNIT);
     const segTop = segBottom - segRows + 1;
