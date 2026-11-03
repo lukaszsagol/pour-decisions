@@ -21,18 +21,20 @@ The goal: keep everything that makes Magic Sort compelling (scarcity, streaks, h
 
 | Item | How you get it | What it is for |
 | --- | --- | --- |
-| Coins | Every win; more for stars, Hard levels, streaks, events | Buying boosters, the dead-end continue |
-| Undo, extra glass, hint | Starting stock, chests, streak rewards, events, coins | Boosters (see `rules.md`) |
-| Stars | 1–3 per level | Chests on the map, the gate to the next bar |
+| Undo, extra glass, hint | Starting stock, win-streak rewards, finishing a bar, the daily pour, events | Boosters (see `rules.md`) |
+| Stars | 1–3 per level | Progress shown on the map and passport, the gate to the next bar |
+
+There is no currency (coins were dropped by the owner on 2026-11-03): boosters stay scarce and are only earned.
 
 Starting values to tune from play data:
 
-- New player: 5 undo, 2 extra glass, 3 hint, 300 coins.
-- Win: 20 coins, +10 per star above 1, ×2 on Hard, ×3 on Super Hard.
-- Booster price: 300 coins (about one per 3–5 normal levels).
-- Dead-end continue: an extra glass for 300 coins when the player has none.
+- New player: 5 undo, 2 extra glass, 3 hint.
+- Win streak of 3, 5 and 10 first-try wins: an undo, an extra glass, a hint.
+- Finishing a bar for the first time: one of each booster.
+- The first finish of the daily pour each day: a hint.
+- At a dead end the player can undo, use an extra glass they own, or restart.
 
-Implementation notes (T15): all numbers live in `apps/web/src/economy/config.ts`. The save is `localStorage["pour-decisions:save"]`, versioned, with a migration hook in `apps/web/src/economy/save.ts`. A "first try" is a win without restarting the level; a restart, or leaving a level unfinished, resets the streak. A dead end alone does not.
+Implementation notes: all numbers live in `apps/web/src/economy/config.ts`. The save is `localStorage["pour-decisions:save"]`, versioned (version 2 dropped coins), with a migration in `apps/web/src/economy/save.ts`. A "first try" is a win without restarting the level; a restart, or leaving a level unfinished, resets the streak. A dead end alone does not.
 
 ## Hooks
 

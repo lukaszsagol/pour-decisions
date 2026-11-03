@@ -46,6 +46,15 @@ self.addEventListener('fetch', (e) => {
     return;
   }
   if (url.origin !== self.location.origin) return;
+  // The page itself: network first, so a new version shows on the next open; cached copy when offline.
+  if (e.request.mode === 'navigate') {
+    e.respondWith(
+      fetch(e.request)
+        .then((r) => { const copy = r.clone(); caches.open(CACHE).then((c) => c.put('./', copy)); return r; })
+        .catch(() => caches.match('./', { ignoreVary: true })),
+    );
+    return;
+  }
   e.respondWith(
     caches.match(e.request, { ignoreSearch: true, ignoreVary: true }).then((hit) => hit || fetch(e.request).catch(() => caches.match('./'))),
   );

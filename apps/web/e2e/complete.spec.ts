@@ -17,7 +17,8 @@ test('finishing a bar shows the complete screen with a recipe card, and Share co
   await page.locator('.complete-screen[data-ready="true"]').waitFor();
   await expect(page.getByText(`Level ${level.number} cleared`)).toBeVisible();
   await expect(page.getByRole('img', { name: '3 of 3 stars' })).toBeVisible();
-  await expect(page.getByText('Coins')).toBeVisible();
+  await expect(page.getByText('Win streak')).toBeVisible();
+  await expect(page.getByText('Bar boosters')).toBeVisible();
   await expect(page.getByRole('article', { name: 'New recipe card: Kopstootje' })).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
   await shot(page, 'T12-amsterdam-complete');

@@ -13,6 +13,7 @@ import { PassportScreen } from './passport/screen.js';
 import { tabBar, type Tab } from './tabbar.js';
 import { dailyLevel, dailyShareText, dateKey } from './daily/generate.js';
 import { TrainingScreen } from './training/screen.js';
+import { DailyScreen } from './daily/screen.js';
 import { family } from './family/index.js';
 import { avatar, FamilyScreen } from './family/screen.js';
 import { modes, nextRating, planningScore, trainingLevel, type TrainingMode } from './training/logic.js';
@@ -21,7 +22,6 @@ import { createStage } from './stage.js';
 import { playLog, progress } from './state.js';
 import './debug.js';
 import { sfx } from './sound.js';
-import { economy } from './economy/config.js';
 
 interface Screen {
   mount(): Promise<void>;
@@ -57,21 +57,16 @@ function levelScreen(number: number): Screen {
       playLog.add(level.number, e);
       if (e.type === 'restart' || e.type === 'quit') progress.recordFail();
     },
-    continueOffer: {
-      price: economy.deadEndContinue,
-      canBuy: () => progress.data.coins >= economy.deadEndContinue,
-      buy: () => progress.buyBooster('extraGlass', economy.deadEndContinue),
-    },
     onWin: (result: LevelResult) => {
+      const lastOfBar = pack.levels[pack.levels.length - 1]!.number === level.number;
       const rewards = progress.recordWin({
         number: result.number,
         stars: result.stars,
         moves: result.moves,
-        difficulty: level.difficulty,
         firstTry: result.restarts === 0,
+        lastOfBar,
       });
       void family()?.pushProgress(progress.data.current, progress.totalStars(), progress.totalStars());
-      const lastOfBar = pack.levels[pack.levels.length - 1]!.number === level.number;
       const recipe = lastOfBar ? recipeFor(theme.id, pack.bar) : undefined;
       session.complete = {
         theme,
@@ -98,9 +93,9 @@ function dailyScreen(): Screen {
     bottles: d.bottles,
     best: d.best,
     stock: { ...progress.data.stock },
-    backHref: '#/passport',
+    backHref: '#/daily',
     nextHref: '#/complete',
-    nextLabel: 'Collect rewards',
+    nextLabel: 'See your result',
     onStock: (stock) => progress.setStock(stock),
     onEvent: (e) => playLog.add(`daily-${date}`, e),
     onWin: (result) => {
@@ -113,8 +108,8 @@ function dailyScreen(): Screen {
         rewards,
         kicker: "Tonight's pour cleared",
         share: dailyShareText(date, result.stars, result.moves, d.best),
-        nextHref: '#/passport',
-        nextLabel: 'Back to the passport',
+        nextHref: '#/daily',
+        nextLabel: "Back to tonight's pour",
       };
     },
   });
@@ -241,7 +236,8 @@ function route(): Screen {
       footer: tabBar('map', tabs),
     });
   }
-  if (name === 'daily') return dailyScreen();
+  if (name === 'daily' && arg === 'play') return dailyScreen();
+  if (name === 'daily') return new DailyScreen(stage, dailyLevel(dateKey()), progress, tabs);
   if (name === 'training') return new TrainingScreen(stage, themeForLevel(progress.data.current), progress);
   if (name === 'train' && arg && arg in modes) return trainingScreen(arg as TrainingMode);
   if (name === 'family') {

@@ -33,3 +33,16 @@ test.describe('on iPhone Safari', () => {
     await expect(page.getByText('Add to Home Screen')).toBeVisible();
   });
 });
+
+test.describe('on Android when Chrome holds back its prompt', () => {
+  test.use({
+    userAgent:
+      'Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Mobile Safari/537.36',
+  });
+
+  test('Install still shows, with the Chrome menu steps', async ({ page }) => {
+    await open(page, '#/passport');
+    await page.getByRole('button', { name: 'Install' }).click();
+    await expect(page.getByText('Add to Home screen')).toBeVisible();
+  });
+});

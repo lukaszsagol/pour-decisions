@@ -5,7 +5,7 @@ export const LOG_VERSION = 1;
 /** Oldest events are dropped beyond this many. */
 export const LOG_LIMIT = 5000;
 
-export type PlayEventType = 'start' | 'pour' | 'undo' | 'booster' | 'deadEnd' | 'continue' | 'restart' | 'win' | 'quit';
+export type PlayEventType = 'start' | 'pour' | 'undo' | 'booster' | 'deadEnd' | 'restart' | 'win' | 'quit';
 
 /** One line of the play log. See `docs/spec/levels.md` for the format. */
 export interface PlayEvent {

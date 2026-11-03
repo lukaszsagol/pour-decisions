@@ -58,7 +58,6 @@ The export is a JSON file:
     { "t": 1762204449002, "level": 21, "type": "undo" },
     { "t": 1762204451876, "level": 21, "type": "booster", "booster": "hint" },
     { "t": 1762204460000, "level": 21, "type": "deadEnd", "moves": 9 },
-    { "t": 1762204463000, "level": 21, "type": "continue", "price": 300 },
     { "t": 1762204499000, "level": 21, "type": "win", "moves": 14, "stars": 3 }
   ]
 }
@@ -68,6 +67,6 @@ The export is a JSON file:
 | --- | --- |
 | `t` | Milliseconds since the epoch, device clock. |
 | `level` | Global level number, or `"daily-YYYY-MM-DD"` for the daily pour. |
-| `type` | `start` (level opened), `pour`, `undo`, `booster` (`booster`: `extraGlass` or `hint`), `deadEnd` (no pours left), `continue` (extra glass bought for coins), `restart`, `win` (`moves`, `stars`), `quit` (left unfinished, `moves`). |
+| `type` | `start` (level opened), `pour`, `undo`, `booster` (`booster`: `extraGlass` or `hint`), `deadEnd` (no pours left), `restart`, `win` (`moves`, `stars`), `quit` (left unfinished, `moves`). |
 
 Time to solve is `win.t − start.t`; thinking time per pour is the gap between `pour` events. Bump `version` if fields change meaning.

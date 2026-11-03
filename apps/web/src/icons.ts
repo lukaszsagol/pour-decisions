@@ -14,8 +14,6 @@ export const icons = {
     `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15V3M7 8l5-5 5 5" stroke="${c}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7" stroke="${c}" stroke-width="2" stroke-linecap="round"/></svg>`,
   star: (c: string, size = 16) =>
     `<svg width="${size}" height="${size}" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z" fill="${c}"/></svg>`,
-  coin: (c: string) =>
-    `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="${c}" stroke-width="2"/><path d="M9.5 8.5h3.5a2 2 0 0 1 0 4H9.5h4a2 2 0 0 1 0 4H9.5M11 7v11" stroke="${c}" stroke-width="1.8" stroke-linecap="round"/></svg>`,
 };
 
 /** Escapes text for use inside HTML. */

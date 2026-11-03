@@ -4,7 +4,7 @@ Instructions for coding agents working in this repository. Read this file fully 
 
 ## What we are building
 
-**Pour Decisions** is a water-sort puzzle game for a private group of friends and family. You pour layers of coloured drinks between glasses until every glass holds one drink. The game is set over one night out in four cities (Amsterdam, London, New York, Tokyo), each with its own look, drinks and blockers. There are no ads and no in-app purchases. The game must still be properly hard and properly hooky: limited boosters, coins earned in play, win streaks, stars, Hard and Super Hard levels, a level map and family leaderboards.
+**Pour Decisions** is a water-sort puzzle game for a private group of friends and family. You pour layers of coloured drinks between glasses until every glass holds one drink. The game is set over one night out in four cities (Amsterdam, London, New York, Tokyo), each with its own look, drinks and blockers. There are no ads and no in-app purchases. The game must still be properly hard and properly hooky: limited boosters earned in play (no currency), win streaks, stars, Hard and Super Hard levels, a level map and family leaderboards.
 
 It ships as a web app (PWA) first, then as iOS and Android apps wrapped with Capacitor. Everything is written by agents; one human (the owner) reviews pull requests, plays the game and owns the store accounts.
 

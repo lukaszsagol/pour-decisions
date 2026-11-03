@@ -20,7 +20,7 @@ describe('install', () => {
 
   it('keeps the browser prompt, fires it on demand and forgets it once installed', async () => {
     vi.resetModules();
-    vi.stubGlobal('navigator', { userAgent: 'Android Chrome', maxTouchPoints: 5 });
+    vi.stubGlobal('navigator', { userAgent: 'Mozilla/5.0 (Windows NT 10.0) Chrome/131.0', maxTouchPoints: 0 });
     vi.stubGlobal('matchMedia', () => ({ matches: false }));
     const install = await import('../src/install.js');
     const target = new EventTarget() as unknown as Window;
@@ -40,6 +40,17 @@ describe('install', () => {
     expect(prompt).toHaveBeenCalledOnce();
     expect(install.installMode()).toBeNull();
     expect(changes).toHaveBeenCalledTimes(2);
+    vi.unstubAllGlobals();
+  });
+
+  it('offers the manual steps on Android when Chrome holds back its prompt', async () => {
+    vi.resetModules();
+    vi.stubGlobal('navigator', { userAgent: 'Mozilla/5.0 (Linux; Android 15) Chrome/131.0 Mobile', maxTouchPoints: 5 });
+    vi.stubGlobal('matchMedia', () => ({ matches: false }));
+    const install = await import('../src/install.js');
+    expect(install.installMode()).toBe('android');
+    vi.stubGlobal('matchMedia', () => ({ matches: true }));
+    expect(install.installMode()).toBeNull();
     vi.unstubAllGlobals();
   });
 });

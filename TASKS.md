@@ -112,7 +112,7 @@ Depends on: T13
 
 ### T15 · Saved progress and economy · `in-review` · M
 Depends on: T09
-- [x] Versioned local save (localStorage with a migration hook): per-level stars and best moves, coins, booster stock, streak, current level.
+- [x] Versioned local save (localStorage with a migration hook): per-level stars and best moves, coins, booster stock, streak, current level. (Coins removed later by the owner; save version 2.)
 - [x] Rewards and prices from `docs/spec/progression.md`, all in one config file.
 - [x] Win streak rewards at 3, 5 and 10; fail resets.
 
@@ -174,5 +174,4 @@ Agents add bugs and ideas here instead of fixing things outside their task.
 - **Frozen layer** (Tokyo's planned blocker) is not in the engine yet, so Tokyo uses the earlier blockers. Needs its own engine task, then a skin (`ice-ball` in `themes/tokyo.json`).
 - **Release badges** are plain discs in the drink's colour. The designs show an icon in the badge (a cherry); that would need an icon per drink.
 - **Bundle size**: all 400 levels are bundled eagerly (about 1.1 MB of JS, 170 KB gzipped). Lazy-load packs per city if start-up gets slow on old phones.
-- **Shop**: boosters can be bought for coins in code (`Progress.buyBooster`), but only the dead-end "Add glass · 300" offer has UI. A small shop sheet would let coins buy undo and hints.
 - **Map header** sits over the top of the path, as in the designs; on very short screens a node can hide under it until scrolled.
