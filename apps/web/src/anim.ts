@@ -8,6 +8,11 @@ export const reducedMotion = (): boolean =>
 export const easeOut = (t: number): number => 1 - (1 - t) ** 3;
 export const easeInOut = (t: number): number => (t < 0.5 ? 4 * t ** 3 : 1 - (-2 * t + 2) ** 3 / 2);
 export const linear = (t: number): number => t;
+/** Ease out with a small overshoot, for things that spring into place. */
+export const easeOutBack = (t: number): number => {
+  const c = 1.9;
+  return 1 + (c + 1) * (t - 1) ** 3 + c * (t - 1) ** 2;
+};
 
 export interface TweenOptions {
   duration: number;

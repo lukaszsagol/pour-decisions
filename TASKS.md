@@ -137,6 +137,13 @@ Depends on: T15
 - [x] Local event log (level start, pour, undo, booster use, dead end, win, quit) with an export button in a hidden debug menu.
 - [x] Documented format in `docs/spec/levels.md` so a later task can tune difficulty from it.
 
+### T24 · Visual polish pass, Amsterdam · `in-review` · M
+Requested by the owner after review.
+- [x] Liquid fills the glass wall to wall; runs of the same drink merge into one block.
+- [x] Glass shading: cylinder shading on the liquid, a bright surface band, gloss streaks, rim highlight, contact shadow; selected, hint and reject glasses glow.
+- [x] Amsterdam lighting: lamp glow and light cone, shelf and counter shadows, lit stoneware, board seams, darker sides.
+- [x] Motion: lift with a little overshoot, a dip when a pour lands, sparkles and garnish on a completed glass (now on their own layer, so they are not wiped by the redraw), boosters that press down.
+
 ## Phase 3: needs a person
 
 ### T20 · Family backend · `needs-human` · L

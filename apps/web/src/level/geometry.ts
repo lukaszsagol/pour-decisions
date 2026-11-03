@@ -30,17 +30,17 @@ export function glassGeometry(theme: Theme): GlassGeometry {
         bodyH: 162,
         radius,
         border: 2,
-        padding: 5,
-        unitGap: 3,
+        padding: 0,
+        unitGap: 0,
         stem: { w: 6, h: 10 },
         foot: { w: 34, h: 4, r: 2 },
       };
     case 'nonic-pint':
-      return { bodyW: 58, bodyH: 160, radius, border: 2, padding: 5, unitGap: 3, nonic: true };
+      return { bodyW: 58, bodyH: 160, radius, border: 2, padding: 0, unitGap: 0, nonic: true };
     case 'deco-tall':
-      return { bodyW: 60, bodyH: 156, radius, border: 2, padding: 5, unitGap: 3, plinth: true };
+      return { bodyW: 60, bodyH: 156, radius, border: 2, padding: 0, unitGap: 0, plinth: true };
     default:
-      return { bodyW: 54, bodyH: 156, radius, border: 2, padding: 5, unitGap: 3 };
+      return { bodyW: 54, bodyH: 156, radius, border: 2, padding: 0, unitGap: 0 };
   }
 }
 
@@ -58,12 +58,18 @@ export interface UnitRect {
   h: number;
 }
 
-/** Rectangles for unit slots, bottom to top, relative to the body's top-left. */
+/** Share of the glass interior the liquid can fill: the rest is air under the rim. */
+export const FILL_SHARE = 0.86;
+
+/**
+ * Rectangles for unit slots, bottom to top, relative to the body's top-left.
+ * Liquid runs wall to wall: the slots span the whole inside of the glass.
+ */
 export function unitRects(g: GlassGeometry, capacity: number): UnitRect[] {
   const inset = g.border + g.padding;
   const w = g.bodyW - inset * 2;
-  const inner = g.bodyH - inset * 2;
-  const h = Math.floor((inner - g.unitGap * (capacity - 1)) / capacity);
+  const inner = (g.bodyH - inset * 2) * FILL_SHARE;
+  const h = (inner - g.unitGap * (capacity - 1)) / capacity;
   const bottom = g.bodyH - inset;
   return Array.from({ length: capacity }, (_, i) => ({ x: inset, y: bottom - (i + 1) * h - i * g.unitGap, w, h }));
 }
