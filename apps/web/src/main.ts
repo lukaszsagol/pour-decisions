@@ -1,4 +1,7 @@
 import './style.css';
+import { watchInstall } from './install.js';
+
+watchInstall();
 import { cityIds, getTheme, recipeFor, themeForLevel, type CityId } from '@pour/themes';
 import { CompleteScreen } from './complete/screen.js';
 import { designFixtures } from './fixtures.js';

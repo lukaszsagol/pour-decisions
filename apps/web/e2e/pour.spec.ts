@@ -28,3 +28,16 @@ test('queues taps made during an animation instead of dropping them', async ({ p
   await expect(page.getByRole('dialog')).toBeVisible({ timeout: 15_000 });
   await expect(page.locator('.lv-move-count')).toHaveText(String(level.best));
 });
+
+test('a whole pour tapped during an animation still happens', async ({ page }) => {
+  await open(page, '#/level/2');
+  const [first, second] = bar1.levels[1]!.solution as [number, number][];
+  const [a, b] = first!;
+  const [c, d] = second!;
+  // Four taps in one go: the second pour's select and target both arrive mid-animation.
+  await page.evaluate(
+    (idx) => idx.forEach((i) => (document.querySelector(`.lv-glass[data-index="${i}"]`) as HTMLButtonElement).click()),
+    [a, b, c, d],
+  );
+  await expect(page.locator('.lv-move-count')).toHaveText('2', { timeout: 5000 });
+});

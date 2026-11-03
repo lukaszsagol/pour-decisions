@@ -116,9 +116,9 @@ export class GlassView extends Container {
   private readonly glow = new Graphics();
   private readonly gfx = new Graphics();
   private readonly liquid = new Graphics();
-  private readonly liquidMask = new Graphics();
   private readonly surface = new Graphics();
   private readonly front = new Graphics();
+  private readonly haloBlur: BlurFilter;
   private readonly overlay = new Container();
   /** Celebration effects; draw() leaves this layer alone. */
   private readonly fx = new Container();
@@ -134,15 +134,12 @@ export class GlassView extends Container {
     const o = bodyOrigin(this.geometry);
     this.mouth = { x: SLOT_W / 2, y: o.y };
     this.pivot.set(this.mouth.x, this.mouth.y);
-    this.halo.filters = [new BlurFilter({ strength: 6, quality: 3 })];
-    this.liquid.mask = this.liquidMask;
-    this.surface.mask = this.liquidMask;
+    this.haloBlur = new BlurFilter({ strength: 6, quality: 2 });
     this.addChild(
       this.shadow,
       this.halo,
       this.glow,
       this.gfx,
-      this.liquidMask,
       this.liquid,
       this.surface,
       this.front,
@@ -270,6 +267,8 @@ export class GlassView extends Container {
 
     // Selection, hint or reject glow behind the glass.
     this.halo.clear();
+    // The blur only runs while a glass glows: filters cost a render pass each frame.
+    this.halo.filters = markColour ? [this.haloBlur] : [];
     if (markColour) {
       roundRect(
         this.halo,
@@ -287,8 +286,13 @@ export class GlassView extends Container {
 
     // Dark glass interior, slightly lighter towards the rim.
     box(back, o.x, o.y, geo.bodyW, geo.bodyH, geo.radius, fill);
-    roundRect(this.liquidMask.clear(), inner.x, inner.y, inner.w, inner.h, innerRadii).fill({ color: '#ffffff' });
-    liquid.rect(inner.x, inner.y, inner.w, inner.h).fill({ fill: interiorShade(), alpha: 1 });
+    roundRect(liquid, inner.x, inner.y, inner.w, inner.h, innerRadii).fill({ fill: interiorShade(), alpha: 1 });
+    // Liquid touching the bottom takes the glass's rounded corners (no mask needed: masks cost a pass per frame).
+    const innerBottom = inner.y + inner.h;
+    const inside = (y: number, h: number) =>
+      y + h >= innerBottom - 0.01
+        ? roundRect(liquid, inner.x, y, inner.w, h, [0, 0, innerRadii[2], innerRadii[3]])
+        : liquid.rect(inner.x, y, inner.w, h);
 
     // Liquid: same-drink runs merge into one block, wall to wall.
     const rects = unitRects(geo, bottle.capacity);
@@ -313,18 +317,17 @@ export class GlassView extends Container {
         continue;
       }
       const drink = drinkById(theme, seg.drink);
-      liquid.rect(inner.x, seg.top, inner.w, seg.bottom - seg.top).fill({ color: drink.color });
-      // A brighter surface band on top of every run.
-      liquid
-        .rect(inner.x, seg.top, inner.w, Math.min(3, seg.bottom - seg.top))
-        .fill({ color: lighten(drink.color, 0.35), alpha: 0.9 });
-      if (drink.foam)
-        liquid.rect(inner.x, seg.top, inner.w, Math.min(6, seg.bottom - seg.top)).fill({ color: drink.foam });
+      const h = seg.bottom - seg.top;
+      inside(seg.top, h).fill({ color: drink.color });
+      // A brighter surface band on top of every run (skipped where it would cut into the rounded bottom).
+      const roomForBand = seg.bottom < innerBottom - 0.01 || h > innerRadii[2] + 4;
+      if (roomForBand)
+        liquid.rect(inner.x, seg.top, inner.w, Math.min(3, h)).fill({ color: lighten(drink.color, 0.35), alpha: 0.9 });
+      if (drink.foam && roomForBand) liquid.rect(inner.x, seg.top, inner.w, Math.min(6, h)).fill({ color: drink.foam });
       if (seg.top <= liquidTop) this.surfaceLine = { x: inner.x, y: seg.top, w: inner.w };
     }
     // Round, glassy shading across the whole liquid column.
-    if (liquidTop < Infinity)
-      liquid.rect(inner.x, liquidTop, inner.w, inner.y + inner.h - liquidTop).fill({ fill: cylinderShade() });
+    if (liquidTop < Infinity) inside(liquidTop, innerBottom - liquidTop).fill({ fill: cylinderShade() });
     if (only) onlySlots(back, rects, bottle.units.length, only, o);
     // Locked contents stay visible but dimmed behind the lock.
     if (locked) box(front, o.x, o.y, geo.bodyW, geo.bodyH, geo.radius, { color: fill, alpha: 0.7 });

@@ -1,4 +1,5 @@
 import type { Progress } from '../economy/save.js';
+import { installMode, startInstall } from '../install.js';
 
 /** Settings sheet: sound and starting over. Extra rows can be appended by other features. */
 export const settingsRows: ((sheet: HTMLElement, progress: Progress) => void)[] = [];
@@ -10,6 +11,7 @@ export function openSettings(host: HTMLElement, progress: Progress): void {
     <section class="sheet" role="dialog" aria-modal="true" aria-labelledby="settings-title">
       <h2 id="settings-title" class="sheet-title">Settings</h2>
       <label class="sheet-row"><span>Sound</span><input type="checkbox" class="set-sound" ${progress.data.settings.muted ? '' : 'checked'}></label>
+      ${installMode() ? '<button class="btn btn-outline set-install">Install the app</button>' : ''}
       <button class="btn btn-ghost set-reset">Start over</button>
       <div class="set-extra"></div>
       <button class="btn btn-primary set-close">Done</button>
@@ -21,6 +23,10 @@ export function openSettings(host: HTMLElement, progress: Progress): void {
   sheet
     .querySelector<HTMLInputElement>('.set-sound')!
     .addEventListener('change', (e) => progress.setMuted(!(e.target as HTMLInputElement).checked));
+  sheet.querySelector('.set-install')?.addEventListener('click', () => {
+    close();
+    startInstall(host);
+  });
   const reset = sheet.querySelector<HTMLButtonElement>('.set-reset')!;
   reset.addEventListener('click', () => {
     if (reset.dataset.confirm !== 'true') {

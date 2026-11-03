@@ -39,11 +39,17 @@ export async function createPixi(stage: Stage, height = STAGE_H): Promise<PixiHa
   const continuous = new Set<(ms: number) => void>();
   let raf = 0;
   let alive = true;
+  let lastIdle = 0;
   dirty = true;
   const loop = (ms: number) => {
     if (!alive) return;
-    continuous.forEach((fn) => fn(ms));
-    if (dirty || continuous.size > 0) {
+    // Idle animations run at about 30 frames a second; real changes render at once.
+    const idleFrame = continuous.size > 0 && ms - lastIdle >= 32;
+    if (idleFrame) {
+      lastIdle = ms;
+      continuous.forEach((fn) => fn(ms));
+    }
+    if (dirty || idleFrame) {
       dirty = false;
       app.render();
     }

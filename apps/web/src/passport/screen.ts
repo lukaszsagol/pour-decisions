@@ -5,6 +5,7 @@ import type { Stage } from '../stage.js';
 import { tabBar, type Tab } from '../tabbar.js';
 import { applyTheme } from '../theme-css.js';
 import { openSettings } from './settings.js';
+import { installMode, onInstallChange, startInstall } from '../install.js';
 
 export interface PassportOptions {
   progress: Progress;
@@ -50,6 +51,11 @@ export class PassportScreen {
     this.stage.el.replaceChildren(this.el);
     this.el.innerHTML = this.html(theme);
     this.el.querySelector('.pp-settings')!.addEventListener('click', () => openSettings(this.el, this.opts.progress));
+    const install = this.el.querySelector<HTMLButtonElement>('.pp-install')!;
+    const showInstall = () => (install.hidden = installMode() === null);
+    install.addEventListener('click', () => startInstall(this.el));
+    this.offInstall = onInstallChange(showInstall);
+    showInstall();
     void this.opts.dailyFamily?.then((html) => {
       const line = this.el.querySelector('.pp-daily-line');
       if (html && line) line.innerHTML = html;
@@ -57,7 +63,10 @@ export class PassportScreen {
     this.el.dataset.ready = 'true';
   }
 
+  private offInstall: (() => void) | null = null;
+
   destroy(): void {
+    this.offInstall?.();
     this.el.remove();
   }
 
@@ -81,7 +90,7 @@ export class PassportScreen {
         </div>
       </header>
       <div class="pp-title">
-        <h1>Your passport</h1>
+        <div class="pp-title-row"><h1>Your passport</h1><button class="pp-install" hidden>${downloadIcon()}Install</button></div>
         <p>${visited} of 20 bars visited · ${p.totalStars()} stars</p>
       </div>
       <div class="pp-cards">
@@ -142,6 +151,10 @@ export class PassportScreen {
         ${side}
       </${tag}>`;
   }
+}
+
+function downloadIcon(): string {
+  return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 }
 
 const capital = (s: string) => s[0]!.toUpperCase() + s.slice(1);
