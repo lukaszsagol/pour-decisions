@@ -5,6 +5,9 @@ import { esc, icons } from '../icons.js';
 import type { Stage } from '../stage.js';
 import { tabBar, type Tab } from '../tabbar.js';
 import { applyTheme } from '../theme-css.js';
+import { mix, PixelCanvas } from '../pixel/canvas.js';
+import { dataUrl } from '../pixel/scenes.js';
+import { liquidTones } from '../pixel/tones.js';
 import { dailyShareText, dateKey, type DailyLevel } from './generate.js';
 
 /** Consecutive nights played, counting back from today (or from yesterday if tonight is not played yet). */
@@ -27,15 +30,28 @@ export function untilMidnight(now: Date = new Date()): string {
   return mins >= 60 ? `${Math.floor(mins / 60)} h ${mins % 60} min` : `${mins} min`;
 }
 
-/** A small picture of tonight's glasses, for the preview card. */
+/** A small pixel picture of tonight's glasses, for the preview card. */
 function preview(theme: Theme, bottles: Bottle[]): string {
-  const glass = (b: Bottle) => {
-    const units = b.units
-      .map((u) => `<span style="background:${drinkById(theme, u.drink).color};height:${100 / b.capacity}%"></span>`)
-      .join('');
-    return `<span class="dy-glass">${units}</span>`;
-  };
-  return `<div class="dy-preview" aria-hidden="true">${bottles.map(glass).join('')}</div>`;
+  const n = bottles.length;
+  const cv = new PixelCanvas(n * 13 + 1, 40);
+  const k = theme.colors;
+  bottles.forEach((b, i) => {
+    const x = i * 13 + 1;
+    cv.rect(x, 2, 11, 36, k.glassFill);
+    cv.vline(x - 1, 2, 36, mix(k.glassRim, '#FFFFFF', 0.35));
+    cv.vline(x + 11, 2, 36, mix(k.glassRim, '#000000', 0.35));
+    cv.hline(x - 1, 38, 13, k.glassRim);
+    cv.hline(x - 2, 1, 15, mix(k.glassRim, '#FFFFFF', 0.45));
+    b.units.forEach((u, j) => {
+      const t = liquidTones(u.drink, drinkById(theme, u.drink).color);
+      const y = 38 - (j + 1) * 8;
+      cv.rect(x, y, 11, 8, t.base);
+      cv.hline(x, y, 11, t.hi);
+      cv.vline(x, y, 8, mix(t.base, t.hi, 0.6));
+      cv.vline(x + 10, y, 8, t.dk);
+    });
+  });
+  return `<div class="dy-preview" aria-hidden="true"><img class="px-img" alt="" src="${dataUrl(cv)}" width="${cv.w * 2}" height="${cv.h * 2}"></div>`;
 }
 
 /** The Daily tab: tonight's level, your result, and your run of nights. */

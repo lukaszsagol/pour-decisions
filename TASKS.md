@@ -195,11 +195,11 @@ Depends on: T25
 - [x] All four maps redrawn as pixel scenes (see the style guide), keeping the layout and behaviour of the current map screen: path, nodes, stars, hard and super hard markers, family avatars, bottom panel.
 - [x] Pixel coin nodes and avatars; the current node pulses in whole-pixel steps.
 
-### T29 · Menus and overlays in pixel art · `todo` · L
+### T29 · Menus and overlays in pixel art · `in-review` · L
 Depends on: T25
-- [ ] Passport (with pixel city scenes on the cards), level complete (pixel stars, pixel recipe card), daily pour, family, training, settings, dead-end panel and win overlay restyled with the pixel UI kit: stepped borders, bevelled buttons, pixel icons, Pixelify Sans.
-- [ ] A shared set of CSS classes or components for panels, buttons and icons so screens stay consistent.
-- [ ] Accessibility unchanged: real buttons and labels, 44 px targets, contrast.
+- [x] Passport (with pixel city scenes on the cards), level complete (pixel stars, pixel recipe card), daily pour, family, training, settings, dead-end panel and win overlay restyled with the pixel UI kit: stepped borders, bevelled buttons, pixel icons, Pixelify Sans.
+- [x] A shared set of CSS classes or components for panels, buttons and icons so screens stay consistent.
+- [x] Accessibility unchanged: real buttons and labels, 44 px targets, contrast.
 
 ### T30 · Pixel art screenshots and review · `todo` · S
 Depends on: T26, T27, T28, T29

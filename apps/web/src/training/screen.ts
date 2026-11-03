@@ -11,7 +11,7 @@ const H = 64;
 /** Planning score over recent sessions: one line, scores 0–100, newest on the right. */
 export function sparkline(scores: number[], color: string, muted: string, grid: string): string {
   if (scores.length === 0) return `<p class="tr-empty">No sessions yet</p>`;
-  const x = (i: number) => (scores.length === 1 ? W / 2 : 24 + (i * (W - 32)) / (scores.length - 1));
+  const x = (i: number) => (scores.length === 1 ? W / 2 : 30 + (i * (W - 38)) / (scores.length - 1));
   const y = (s: number) => 6 + (1 - s / 100) * (H - 12);
   const pts = scores.map((s, i) => `${x(i).toFixed(1)},${y(s).toFixed(1)}`).join(' ');
   const last = scores.length - 1;
@@ -23,10 +23,10 @@ export function sparkline(scores: number[], color: string, muted: string, grid: 
     .join('');
   return `
     <svg class="tr-chart" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Planning score over the last ${scores.length} sessions, latest ${scores[last]}">
-      <line x1="24" x2="${W}" y1="${y(100)}" y2="${y(100)}" stroke="${grid}" stroke-width="1"/>
-      <line x1="24" x2="${W}" y1="${y(50)}" y2="${y(50)}" stroke="${grid}" stroke-width="1"/>
-      <text x="0" y="${y(100) + 4}" font-size="10" fill="${muted}">100</text>
-      <text x="6" y="${y(50) + 4}" font-size="10" fill="${muted}">50</text>
+      <line x1="30" x2="${W}" y1="${y(100)}" y2="${y(100)}" stroke="${grid}" stroke-width="1"/>
+      <line x1="30" x2="${W}" y1="${y(50)}" y2="${y(50)}" stroke="${grid}" stroke-width="1"/>
+      <text x="0" y="${y(100) + 4}" font-size="13" font-family="Pixelify Sans, monospace" fill="${muted}">100</text>
+      <text x="8" y="${y(50) + 4}" font-size="13" font-family="Pixelify Sans, monospace" fill="${muted}">50</text>
       <polyline points="${pts}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
       <circle cx="${x(last)}" cy="${y(scores[last]!)}" r="4.5" fill="${color}" stroke="var(--c-surface)" stroke-width="2"/>
       ${hits}
