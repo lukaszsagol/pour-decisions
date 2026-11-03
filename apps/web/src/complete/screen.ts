@@ -50,6 +50,7 @@ export function verdictFor(r: LevelResult): string {
 /** Level complete: stars, verdict, rewards, the recipe card after a bar, Next and Share. */
 export class CompleteScreen {
   readonly el = document.createElement('div');
+  private offResize: (() => void) | null = null;
   private disposePixi: (() => void) | null = null;
   private destroyed = false;
 
@@ -65,15 +66,23 @@ export class CompleteScreen {
     applyTheme(this.stage.el, theme);
     this.stage.el.replaceChildren(this.el);
     this.el.innerHTML = this.html();
-    const { app, dispose } = await createPixi(this.stage, 64);
+    const { app, dispose } = await createPixi(this.stage, 64, 'xt');
     if (this.destroyed) return dispose();
     this.disposePixi = dispose;
-    // The city's top band, cut from the level backdrop.
-    // The city's band of tiles, curtains or frieze, cut from its level art.
-    const band = new PixelLayer(195, 30);
-    band.put(cityBand(theme));
-    band.sprite.scale.set(ART);
-    app.stage.addChild(band.sprite);
+    // The city's band of tiles, curtains or frieze, cut from its level art,
+    // running on to the screen's edges.
+    let band: PixelLayer | null = null;
+    const fit = () => {
+      const art = cityBand(theme, this.stage.bleed);
+      band?.destroy();
+      band = new PixelLayer(art.w, art.h);
+      band.put(art);
+      band.sprite.scale.set(ART);
+      band.sprite.position.set(-ART * art.ox, -ART * art.oy);
+      app.stage.addChild(band.sprite);
+    };
+    fit();
+    this.offResize = this.stage.onResize(fit);
     this.el.prepend(app.canvas);
     void this.data.family?.then(
       (html) =>
@@ -87,6 +96,7 @@ export class CompleteScreen {
 
   destroy(): void {
     this.destroyed = true;
+    this.offResize?.();
     this.disposePixi?.();
     this.el.remove();
   }

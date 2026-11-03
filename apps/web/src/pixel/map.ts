@@ -51,6 +51,32 @@ interface CityMap {
   skyline(cv: PixelCanvas, theme: Theme): void;
   /** Texture for the open ground between the buildings and the path. */
   texture?(x: number, y: number): string;
+  /** Width of the side buildings (art px), repeated outwards on wide screens. */
+  sideW?: number;
+}
+
+const mod = (v: number, m: number) => ((v % m) + m) % m;
+
+/**
+ * Past the stage's sides (wide screens), more of the city: the side buildings
+ * repeat outwards, each copy a storey lower so its windows differ.
+ */
+function moreBuildings(cv: PixelCanvas, sideW: number, storey = 34): void {
+  const top = 70;
+  const span = Math.floor((cv.maxY - top) / storey) * storey;
+  const src = new PixelCanvas(cv.w, cv.h, null, cv.ox, cv.oy);
+  src.data.set(cv.data);
+  for (let x = cv.minX; x < cv.maxX; x++) {
+    if (x >= 0 && x < MAP_W) continue;
+    const left = x < 0;
+    const n = left ? Math.ceil(-x / sideW) : Math.floor((x - MAP_W) / sideW) + 1;
+    const sx = left ? mod(x, sideW) : MAP_W - sideW + mod(x - MAP_W, sideW);
+    for (let y = top; y < cv.maxY; y++) {
+      const sy = y - top < span ? top + mod(y - top + n * storey, span) : y;
+      const i = src.index(sx, sy);
+      if (i >= 0) cv.setPacked(x, y, src.data[i]!);
+    }
+  }
 }
 
 /** Fills the open ground between the side buildings with the city's texture. */
@@ -194,14 +220,14 @@ const amsterdam: CityMap = {
   },
   skyline(cv) {
     disc(cv, 160, 40, 6, { hi: '#FFF9EC', base: '#F3E6CC', dk: '#D8C7A6' });
-    for (let i = 0; i < 7; i++) {
+    for (let i = Math.floor(cv.minX / 28); i * 28 < cv.maxX; i++) {
       const x = i * 28;
       const h = 30 + Math.round(hash(i + 7) * 10);
       const top = 76 - h;
-      const c = ['#5A2A1C', '#3B2A20', '#6E4A2E', '#2E3A4A'][i % 4]!;
-      if (i % 3 === 0)
+      const c = ['#5A2A1C', '#3B2A20', '#6E4A2E', '#2E3A4A'][mod(i, 4)]!;
+      if (mod(i, 3) === 0)
         cv.sprite(x, top, ['....####....', '....####....', '..########..', '..########..', '############'], { '#': c });
-      else if (i % 3 === 1) for (let j = 0; j < 6; j++) cv.hline(x + 6 - j, top + j, 2 + j * 2, c);
+      else if (mod(i, 3) === 1) for (let j = 0; j < 6; j++) cv.hline(x + 6 - j, top + j, 2 + j * 2, c);
       cv.rect(x, top + 5, 26, h - 5, c);
       cv.rect(x + 7, top + 14, 5, 7, '#E8A33D');
       cv.rect(x + 15, top + 14, 5, 7, mix('#E8A33D', c, 0.6));
@@ -274,7 +300,7 @@ const london: CityMap = {
     }
   },
   skyline(cv) {
-    for (let i = 0; i < 9; i++) {
+    for (let i = Math.floor(cv.minX / 22); i * 22 < cv.maxX; i++) {
       const x = i * 22;
       const h = 20 + Math.round(hash(i + 40) * 14);
       cv.rect(x, 76 - h, 20, h, '#0E1814');
@@ -289,6 +315,7 @@ const london: CityMap = {
 const newyork: CityMap = {
   ground: '#121212',
   texture: (x, y) => (x % 10 === 0 || y % 10 === 0 ? '#0E0E0E' : dith(x, y, 0.1) ? '#171717' : '#141414'),
+  sideW: 34,
   sides(cv, s) {
     // Stepped Deco towers with gold pinstripes.
     for (const side of [0, 1]) {
@@ -363,7 +390,7 @@ const newyork: CityMap = {
     }
   },
   skyline(cv) {
-    for (let i = 0; i < 8; i++) {
+    for (let i = Math.floor(cv.minX / 25); i * 25 < cv.maxX; i++) {
       const x = i * 25;
       const h = 34 + Math.round(hash(i + 90) * 26);
       const top = 76 - h;
@@ -448,7 +475,7 @@ const tokyo: CityMap = {
     }
   },
   skyline(cv) {
-    for (let i = 0; i < 7; i++) {
+    for (let i = Math.floor(cv.minX / 28); i * 28 < cv.maxX; i++) {
       const x = i * 28;
       const h = 26 + Math.round(hash(i + 60) * 20);
       cv.rect(x, 76 - h, 26, h, '#0D1330');
@@ -515,16 +542,20 @@ export function drawCoin(cv: PixelCanvas, n: MapNode, theme: Theme): void {
   }
 }
 
-/** The whole map world for a city, at art resolution. */
-export function drawMap(theme: Theme, scene: MapScene): PixelCanvas {
+/**
+ * The whole map world for a city, at art resolution, with `l`/`r` extra art
+ * pixels of city either side for screens wider than the stage.
+ */
+export function drawMap(theme: Theme, scene: MapScene, bleed: { l: number; r: number } = { l: 0, r: 0 }): PixelCanvas {
   const m = maps[theme.id] ?? amsterdam;
-  const cv = new PixelCanvas(MAP_W, scene.height, m.ground);
+  const cv = new PixelCanvas(MAP_W + bleed.l + bleed.r, scene.height, m.ground, bleed.l, 0);
   if (m.texture) openGround(cv, scene, m.texture);
   m.sides(cv, scene, theme);
   m.skyline(cv, theme);
   m.path(cv, scene, theme);
   for (const y of scene.gates) m.gate(cv, y, scene, theme);
   m.details(cv, scene, theme);
+  if (bleed.l || bleed.r) moreBuildings(cv, m.sideW ?? 32);
   for (const n of scene.nodes) drawCoin(cv, n, theme);
   return cv;
 }

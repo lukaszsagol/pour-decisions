@@ -69,6 +69,12 @@ export function dith(x: number, y: number, t: number): boolean {
 
 export type Palette = Record<string, string>;
 
+/**
+ * A pixel buffer addressed in art pixels. `ox`/`oy` move the origin: a canvas
+ * made with `new PixelCanvas(w, h, bg, ox, oy)` covers x from -ox to w - ox, so
+ * art drawn at fixed coordinates can spill past the 195×422 stage into the
+ * margins around it (see `minX` … `maxY`).
+ */
 export class PixelCanvas {
   readonly data: Uint32Array;
 
@@ -76,25 +82,56 @@ export class PixelCanvas {
     readonly w: number,
     readonly h: number,
     bg: string | null = null,
+    readonly ox = 0,
+    readonly oy = 0,
   ) {
     this.data = new Uint32Array(w * h);
     if (bg) this.data.fill(pack(bg));
   }
 
+  /** The art-pixel extent this canvas covers: x in [minX, maxX), y in [minY, maxY). */
+  get minX(): number {
+    return -this.ox;
+  }
+  get maxX(): number {
+    return this.w - this.ox;
+  }
+  get minY(): number {
+    return -this.oy;
+  }
+  get maxY(): number {
+    return this.h - this.oy;
+  }
+
+  /** Index of art pixel (x, y) in `data`, or -1 outside the canvas. */
+  index(x: number, y: number): number {
+    const bx = x + this.ox;
+    const by = y + this.oy;
+    return bx >= 0 && by >= 0 && bx < this.w && by < this.h ? by * this.w + bx : -1;
+  }
+
   px(x: number, y: number, c: string | null | undefined): void {
-    if (c && x >= 0 && y >= 0 && x < this.w && y < this.h) this.data[y * this.w + x] = pack(c);
+    if (!c) return;
+    const i = this.index(x, y);
+    if (i >= 0) this.data[i] = pack(c);
+  }
+
+  /** Sets a packed colour (0 is transparent and is skipped). */
+  setPacked(x: number, y: number, p: number): void {
+    const i = this.index(x, y);
+    if (p && i >= 0) this.data[i] = p;
   }
 
   get(x: number, y: number): string | null {
-    if (x < 0 || y < 0 || x >= this.w || y >= this.h) return null;
-    return unpack(this.data[y * this.w + x]!);
+    const i = this.index(x, y);
+    return i < 0 ? null : unpack(this.data[i]!);
   }
 
   rect(x: number, y: number, w: number, h: number, c: string): void {
     const p = pack(c);
-    const x0 = Math.max(0, x);
-    const x1 = Math.min(this.w, x + w);
-    for (let yy = Math.max(0, y); yy < Math.min(this.h, y + h); yy++)
+    const x0 = Math.max(0, x + this.ox);
+    const x1 = Math.min(this.w, x + this.ox + w);
+    for (let yy = Math.max(0, y + this.oy); yy < Math.min(this.h, y + this.oy + h); yy++)
       this.data.fill(p, yy * this.w + x0, yy * this.w + Math.max(x0, x1));
   }
 
@@ -142,8 +179,8 @@ export class PixelCanvas {
 
   /** Moves an existing pixel's colour towards another (no-op on transparent pixels). */
   tint(x: number, y: number, toward: string, t: number): void {
-    if (x < 0 || y < 0 || x >= this.w || y >= this.h) return;
-    const i = y * this.w + x;
+    const i = this.index(x, y);
+    if (i < 0) return;
     const p = this.data[i]!;
     if (p) this.data[i] = mixPacked(p, pack(toward), t);
   }
@@ -159,14 +196,14 @@ export class PixelCanvas {
       for (let xx = x; xx < x + w; xx++) if (dith(xx, yy, t)) this.tint(xx, yy, '#000000', strength);
   }
 
-  /** Copies another canvas onto this one (transparent pixels skipped). */
+  /** Copies another canvas onto this one, its origin at (x, y) (transparent pixels skipped). */
   blit(src: PixelCanvas, x: number, y: number): void {
     for (let j = 0; j < src.h; j++) {
-      const ty = y + j;
+      const ty = y + j - src.oy + this.oy;
       if (ty < 0 || ty >= this.h) continue;
       for (let i = 0; i < src.w; i++) {
         const p = src.data[j * src.w + i]!;
-        const tx = x + i;
+        const tx = x + i - src.ox + this.ox;
         if (p && tx >= 0 && tx < this.w) this.data[ty * this.w + tx] = p;
       }
     }

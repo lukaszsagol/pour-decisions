@@ -197,11 +197,12 @@ export function cityScene(theme: Theme, w: number, h: number, locked = false): P
 }
 
 /** The city's top band, cut from its level backdrop (for the complete screen). */
-export function cityBand(theme: Theme): PixelCanvas {
-  const full = cityArt(theme).backdrop(0);
-  const h = 30;
-  const cv = new PixelCanvas(full.w, h);
-  cv.data.set(full.data.subarray(0, full.w * h));
+export function cityBand(theme: Theme, bleed: { l: number; r: number; t: number } = { l: 0, r: 0, t: 0 }): PixelCanvas {
+  const art = cityArt(theme);
+  // With margins, the band runs on past the stage's sides and up to the top of the screen.
+  const cv = new PixelCanvas(195 + bleed.l + bleed.r, 30 + bleed.t, null, bleed.l, bleed.t);
+  if (bleed.l || bleed.r || bleed.t) art.bleed(cv, 0);
+  cv.blit(art.backdrop(0), 0, 0);
   return cv;
 }
 

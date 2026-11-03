@@ -1,0 +1,7 @@
+{
+  "appId": "pl.sagol.pourdecisions",
+  "appName": "Pour Decisions",
+  "webDir": "dist",
+  "android": { "backgroundColor": "#2A1A10" },
+  "plugins": { "SystemBars": { "insetsHandling": "disable" } }
+}

@@ -2,7 +2,7 @@ import { Application, Graphics, TextureSource } from 'pixi.js';
 
 // Pixel art: every texture scales with nearest-neighbour filtering.
 TextureSource.defaultOptions.scaleMode = 'nearest';
-import { STAGE_H, STAGE_W, type Stage } from './stage.js';
+import { ART, STAGE_H, STAGE_W, type Stage } from './stage.js';
 
 let dirty = true;
 
@@ -22,10 +22,34 @@ export interface PixiHandle {
  * Creates a Pixi app covering the stage, rendered at device resolution.
  * It renders on demand rather than every frame: slow devices (and CI's
  * software WebGL) stay responsive while nothing moves.
+ *
+ * With `bleed`, the canvas also covers the screen beyond the stage on the
+ * sides ('x'), the sides and top ('xt') or all round ('xy'). The app's stage keeps the stage's
+ * coordinates, so content drawn at negative positions fills the margins.
  */
-export async function createPixi(stage: Stage, height = STAGE_H): Promise<PixiHandle> {
+export async function createPixi(
+  stage: Stage,
+  height = STAGE_H,
+  bleed: 'none' | 'x' | 'xt' | 'xy' = 'none',
+): Promise<PixiHandle> {
   const app = new Application();
   const resolution = () => Math.min(4, (window.devicePixelRatio || 1) * stage.scale);
+  const margins = () => {
+    const b = stage.bleed;
+    return {
+      l: bleed === 'none' ? 0 : b.l,
+      r: bleed === 'none' ? 0 : b.r,
+      t: bleed === 'xy' || bleed === 'xt' ? b.t : 0,
+      b: bleed === 'xy' ? b.b : 0,
+    };
+  };
+  const place = () => {
+    const m = margins();
+    app.renderer.resize(STAGE_W + ART * (m.l + m.r), height + ART * (m.t + m.b));
+    app.canvas.style.left = `${-ART * m.l}px`;
+    app.canvas.style.top = `${-ART * m.t}px`;
+    app.stage.position.set(ART * m.l, ART * m.t);
+  };
   await app.init({
     width: STAGE_W,
     height,
@@ -38,6 +62,7 @@ export async function createPixi(stage: Stage, height = STAGE_H): Promise<PixiHa
     autoStart: false,
   });
   app.ticker.stop();
+  place();
   app.canvas.classList.add('stage-canvas');
   app.canvas.setAttribute('aria-hidden', 'true');
   const continuous = new Set<(ms: number) => void>();
@@ -62,7 +87,7 @@ export async function createPixi(stage: Stage, height = STAGE_H): Promise<PixiHa
   raf = requestAnimationFrame(loop);
   const off = stage.onResize(() => {
     app.renderer.resolution = resolution();
-    app.renderer.resize(STAGE_W, height);
+    place();
     invalidate();
   });
   return {

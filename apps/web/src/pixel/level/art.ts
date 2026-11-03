@@ -2,6 +2,7 @@ import type { Theme } from '@pour/themes';
 import type { PixelCanvas } from '../canvas.js';
 import {
   amsterdamBackdrop,
+  amsterdamBleed,
   amsterdamMats,
   chainsAndPadlock,
   kruikTag,
@@ -19,6 +20,11 @@ import { tokyoArt } from './tokyo.js';
 export interface CityLevelArt {
   /** Static backdrop (no glasses, no boosters). Two phases for the light flicker. */
   backdrop(phase: number): PixelCanvas;
+  /**
+   * The margins on screens wider or taller than the stage, painted on a canvas
+   * whose origin is the stage's: the backdrop's materials continued, without props.
+   */
+  bleed(cv: PixelCanvas, phase: number): void;
   /** Booster mats with their counts. */
   boosters(cv: PixelCanvas, counts: [number, number, number], usable: [boolean, boolean, boolean]): void;
   glass: GlassStyle;
@@ -38,6 +44,7 @@ export interface CityLevelArt {
 
 export const amsterdamArt: CityLevelArt = {
   backdrop: (phase) => amsterdamBackdrop(phase),
+  bleed: amsterdamBleed,
   boosters: amsterdamMats,
   glass: TULIP,
   locked: chainsAndPadlock,

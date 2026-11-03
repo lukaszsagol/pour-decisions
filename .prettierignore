@@ -5,3 +5,4 @@ agent-logs/
 dist/
 dist-types/
 *.md
+apps/web/android/

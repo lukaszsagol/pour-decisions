@@ -1,0 +1,64 @@
+name: Android app
+
+# Builds the game as an Android app (Capacitor wraps the web build). Every run keeps
+# the APK as a workflow artifact; pushes to main also publish it as the "android"
+# release, downloadable at releases/latest/download/pour-decisions.apk.
+# Signing needs the ANDROID_KEYSTORE_BASE64 and ANDROID_KEYSTORE_PASSWORD secrets;
+# without them (pull requests from forks) a debug build is made instead.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: android-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+      - run: npm ci
+      - run: npm run android -w apps/web
+      - name: Build the APK
+        working-directory: apps/web/android
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.jks"
+            export ANDROID_KEYSTORE_FILE="$RUNNER_TEMP/release.jks"
+            ./gradlew assembleRelease -PversionCode=${{ github.run_number }} -PversionName=1.${{ github.run_number }}
+            cp app/build/outputs/apk/release/app-release.apk "$GITHUB_WORKSPACE/pour-decisions.apk"
+          else
+            ./gradlew assembleDebug -PversionCode=${{ github.run_number }} -PversionName=1.${{ github.run_number }}
+            cp app/build/outputs/apk/debug/app-debug.apk "$GITHUB_WORKSPACE/pour-decisions.apk"
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pour-decisions-apk
+          path: pour-decisions.apk
+      - name: Publish the release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete android --cleanup-tag --yes || true
+          gh release create android pour-decisions.apk --target "$GITHUB_SHA" --latest \
+            --title "Pour Decisions for Android (build ${{ github.run_number }})" \
+            --notes "Open this page on your Android phone, tap pour-decisions.apk and allow your browser to install apps. Newer builds install over older ones and keep your progress."

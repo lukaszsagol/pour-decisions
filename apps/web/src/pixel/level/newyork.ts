@@ -1,11 +1,13 @@
 import { dith, mix, PixelCanvas } from '../canvas.js';
 import type { CityLevelArt } from './art.js';
 import { disc, frame, glow, GOLD, panels, rail, roundCoaster, shelfShadow } from './common.js';
+import { ceiling } from './bleed.js';
 import type { GlassStyle, Row } from './glass.js';
 
 /** New York: an Art Deco speakeasy. Black lacquer, gold sunburst and frieze, marble bar. */
 
 const W = 195;
+const mod = (v: number, m: number) => ((v % m) + m) % m;
 const H = 422;
 const SIGN = { x: 121, y: 32, w: 70, h: 23 } as const;
 const RESTART = { x: 176, y: 59 } as const;
@@ -13,28 +15,29 @@ const MATS = { centres: [33, 98, 163], y: 356 } as const;
 const LACQUER = ['#141414', '#101010'] as [string, string];
 
 function frieze(cv: PixelCanvas): void {
-  cv.rect(0, 0, W, 27, '#0B0B0B');
+  cv.rect(cv.minX, 0, cv.w, 27, '#0B0B0B');
   // Stepped zigzag in gold, lit on its upper edges.
-  for (let x = 0; x < W; x++) {
-    const p = x % 16;
+  for (let x = cv.minX; x < cv.maxX; x++) {
+    const p = mod(x, 16);
     const y = 6 + (p < 8 ? p : 16 - p);
     cv.px(x, y, GOLD.light);
     cv.px(x, y + 1, GOLD.base);
     cv.px(x, y + 2, GOLD.deep);
   }
-  for (let x = 4; x < W; x += 16) cv.sprite(x + 1, 18, ['.#.', '###', '.#.'], { '#': GOLD.dark });
-  cv.hline(0, 1, W, GOLD.dark);
-  cv.hline(0, 22, W, GOLD.dark);
-  cv.hline(0, 24, W, GOLD.light);
-  cv.hline(0, 25, W, GOLD.base);
-  cv.hline(0, 26, W, '#000000');
-  cv.shadowBox(0, 27, W, 3, 0.5, 0.5);
+  for (let x = 4 + 16 * Math.floor((cv.minX - 4) / 16); x < cv.maxX; x += 16)
+    cv.sprite(x + 1, 18, ['.#.', '###', '.#.'], { '#': GOLD.dark });
+  cv.hline(cv.minX, 1, cv.w, GOLD.dark);
+  cv.hline(cv.minX, 22, cv.w, GOLD.dark);
+  cv.hline(cv.minX, 24, cv.w, GOLD.light);
+  cv.hline(cv.minX, 25, cv.w, GOLD.base);
+  cv.hline(cv.minX, 26, cv.w, '#000000');
+  cv.shadowBox(cv.minX, 27, cv.w, 3, 0.5, 0.5);
 }
 
 function wall(cv: PixelCanvas): void {
   // Black lacquer panels with cool vertical highlights.
-  for (let i = 0, x = 0; x < W; i++, x += 39) {
-    const base = LACQUER[i % 2]!;
+  for (let i = Math.floor(cv.minX / 39), x = i * 39; x < cv.maxX; i++, x += 39) {
+    const base = LACQUER[mod(i, 2)]!;
     cv.rect(x, 27, 39, 291, base);
     cv.vline(x, 27, 291, '#050505');
     cv.vline(x + 1, 27, 291, '#1E1E1E');
@@ -42,9 +45,9 @@ function wall(cv: PixelCanvas): void {
     cv.vline(x + 31, 27, 291, '#181C22');
   }
   // A gold line separating the frieze band from the lower wall.
-  cv.hline(0, 206, W, GOLD.deep);
-  cv.hline(0, 207, W, GOLD.base);
-  cv.hline(0, 208, W, '#050505');
+  cv.hline(cv.minX, 206, cv.w, GOLD.deep);
+  cv.hline(cv.minX, 207, cv.w, GOLD.base);
+  cv.hline(cv.minX, 208, cv.w, '#050505');
 }
 
 function sunburst(cv: PixelCanvas): void {
@@ -116,28 +119,53 @@ function counter(cv: PixelCanvas): void {
   rail(cv, 318, [GOLD.hi, GOLD.light, GOLD.base, GOLD.deep], '#000000');
   // White marble with grey veins, edged in black.
   for (let y = 323; y < 333; y++)
-    for (let x = 0; x < W; x++) cv.px(x, y, dith(x, y, 0.12) ? '#D8D4CA' : (x + y) % 17 === 0 ? '#ECE8E0' : '#E8E6E0');
-  for (let k = 0; k < 12; k++) {
-    const x0 = (k * 41 + 3) % W;
-    cv.line(x0, 323, x0 + 6 + (k % 3) * 3, 332, k % 2 ? '#9A968C' : '#B4B0A6');
-    cv.line(x0 + 6 + (k % 3) * 3, 332, x0 + 10, 327, '#C4C0B6');
-  }
-  cv.hline(0, 333, W, '#1C1C1C');
-  cv.hline(0, 323, W, '#F8F6F0');
-  cv.hline(0, 334, W, '#000000');
-  cv.rect(0, 335, W, H - 335, '#0B0B0B');
-  cv.shadowBox(0, 335, W, 6, 0.6, 0.5);
+    for (let x = cv.minX; x < cv.maxX; x++)
+      cv.px(x, y, dith(x, y, 0.12) ? '#D8D4CA' : mod(x + y, 17) === 0 ? '#ECE8E0' : '#E8E6E0');
+  for (let n = Math.floor(cv.minX / W); n * W < cv.maxX; n++)
+    for (let k = 0; k < 12; k++) {
+      const x0 = n * W + ((k * 41 + 3) % W);
+      cv.line(x0, 323, x0 + 6 + (k % 3) * 3, 332, k % 2 ? '#9A968C' : '#B4B0A6');
+      cv.line(x0 + 6 + (k % 3) * 3, 332, x0 + 10, 327, '#C4C0B6');
+    }
+  cv.hline(cv.minX, 333, cv.w, '#1C1C1C');
+  cv.hline(cv.minX, 323, cv.w, '#F8F6F0');
+  cv.hline(cv.minX, 334, cv.w, '#000000');
+  cv.rect(cv.minX, 335, cv.w, cv.maxY - 335, '#0B0B0B');
+  cv.shadowBox(cv.minX, 335, cv.w, 6, 0.6, 0.5);
   panels(cv, 344, { fill: '#121212', inner: '#0E0E0E', shadow: '#050505', light: '#262626' });
+}
+
+function shelf(cv: PixelCanvas): void {
+  cv.hline(cv.minX, 100, cv.w, GOLD.light);
+  cv.hline(cv.minX, 101, cv.w, GOLD.base);
+  cv.rect(cv.minX, 102, cv.w, 3, '#1A1A1A');
+  cv.hline(cv.minX, 105, cv.w, '#000000');
+  shelfShadow(cv, 106);
+}
+
+function lights(cv: PixelCanvas, phase: number): void {
+  // Gold sconce light, with a cool sheen on the lacquer.
+  glow(cv, 50, 76, 70, '#D4AF37', { phase, strength: 0.05, y1: 318 });
+  glow(cv, 145, 76, 70, '#D4AF37', { phase, strength: 0.05, y1: 318 });
+  glow(cv, 97, 80, 70, '#8A9AB0', { phase, strength: 0.03, y1: 206 });
+}
+
+/** The margins around the stage: lacquer, frieze and marble without the props, a black coffered ceiling. */
+export function newYorkBleed(cv: PixelCanvas, phase = 0): void {
+  cv.rect(cv.minX, cv.minY, cv.w, cv.h, '#0B0B0B');
+  wall(cv);
+  lights(cv, phase);
+  frieze(cv);
+  shelf(cv);
+  counter(cv);
+  ceiling(cv, { base: '#0B0B0B', light: GOLD.deep, seam: '#000000' });
 }
 
 export function newYorkBackdrop(phase = 0): PixelCanvas {
   const cv = new PixelCanvas(W, H, '#0B0B0B');
   wall(cv);
   sunburst(cv);
-  // Gold sconce light, with a cool sheen on the lacquer.
-  glow(cv, 50, 76, 70, '#D4AF37', { phase, strength: 0.05, y1: 318 });
-  glow(cv, 145, 76, 70, '#D4AF37', { phase, strength: 0.05, y1: 318 });
-  glow(cv, 97, 80, 70, '#8A9AB0', { phase, strength: 0.03, y1: 206 });
+  lights(cv, phase);
   frieze(cv);
   const ARROW = [
     '.....#',
@@ -171,11 +199,7 @@ export function newYorkBackdrop(phase = 0): PixelCanvas {
     [168, 30, '#4A1E2A'],
   ] as const)
     bottle(cv, x, h, c);
-  cv.hline(0, 100, W, GOLD.light);
-  cv.hline(0, 101, W, GOLD.base);
-  cv.rect(0, 102, W, 3, '#1A1A1A');
-  cv.hline(0, 105, W, '#000000');
-  shelfShadow(cv, 106);
+  shelf(cv);
   sconce(cv, 50, 66);
   sconce(cv, 145, 66);
   counter(cv);
@@ -298,6 +322,7 @@ function coasters(cv: PixelCanvas, counts: [number, number, number], usable: [bo
 
 export const newYorkArt: CityLevelArt = {
   backdrop: newYorkBackdrop,
+  bleed: newYorkBleed,
   boosters: coasters,
   glass: DECO,
   locked: decoDoor,

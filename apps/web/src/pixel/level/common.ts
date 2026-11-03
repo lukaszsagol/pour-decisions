@@ -15,9 +15,13 @@ export function glow(
   color: string,
   opts: { sx?: number; sy?: number; strength?: number; phase?: number; y0?: number; y1?: number } = {},
 ): void {
-  const { sx = 0.85, sy = 1.1, strength = 0.065, phase = 0, y0 = 0, y1 = cv.h } = opts;
+  const { sx = 0.85, sy = 1.1, strength = 0.065, phase = 0, y0 = cv.minY, y1 = cv.maxY } = opts;
   for (let y = Math.max(y0, Math.floor(cy - radius / sy)); y < Math.min(y1, Math.ceil(cy + radius / sy)); y++) {
-    for (let x = Math.max(0, Math.floor(cx - radius / sx)); x < Math.min(cv.w, Math.ceil(cx + radius / sx)); x++) {
+    for (
+      let x = Math.max(cv.minX, Math.floor(cx - radius / sx));
+      x < Math.min(cv.maxX, Math.ceil(cx + radius / sx));
+      x++
+    ) {
       const d = Math.hypot((x - cx) * sx, (y - cy) * sy);
       if (d >= radius) continue;
       const lvl = (1 - d / radius) ** 1.4 * 4;
@@ -37,24 +41,26 @@ export function boards(
   width = 19,
   knots = true,
 ): void {
-  for (let i = 0, x = 0; x < cv.w; i++, x += width) {
-    const base = tones[i % 2]!;
+  // Boards line up on x = 0 and continue past either edge of the stage.
+  const mod = (v: number, m: number) => ((v % m) + m) % m;
+  for (let i = Math.floor(cv.minX / width), x = i * width; x < cv.maxX; i++, x += width) {
+    const base = tones[mod(i, 2)]!;
     cv.rect(x, y, width, h, base);
     cv.vline(x, y, h, seam);
     cv.vline(x + 1, y, h, mix(base, '#FFFFFF', 0.08));
     cv.vline(x + width - 1, y, h, mix(base, '#000000', 0.35));
     const seed = i * 7 + 3;
     for (let k = 0; k < Math.floor(h / 20); k++) {
-      const gy = y + 7 + ((seed * 37 + k * 53) % Math.max(1, h - 14));
-      const gx = x + 4 + ((seed + k * 5) % Math.max(1, width - 8));
-      const ln = 4 + ((k * 7 + seed) % 9);
+      const gy = y + 7 + mod(seed * 37 + k * 53, Math.max(1, h - 14));
+      const gx = x + 4 + mod(seed + k * 5, Math.max(1, width - 8));
+      const ln = 4 + mod(k * 7 + seed, 9);
       cv.vline(gx, gy, ln, mix(base, '#000000', 0.25));
       cv.vline(gx + 1, gy + 1, Math.max(1, ln - 3), mix(base, '#FFFFFF', 0.06));
     }
     if (knots)
       for (let k = 0; k < Math.floor(h / 90); k++) {
-        const ky = y + 20 + ((seed * 71 + k * 97) % Math.max(1, h - 30));
-        const kx = x + 6 + ((seed * 3 + k * 4) % Math.max(1, width - 12));
+        const ky = y + 20 + mod(seed * 71 + k * 97, Math.max(1, h - 30));
+        const kx = x + 6 + mod(seed * 3 + k * 4, Math.max(1, width - 12));
         cv.sprite(kx, ky, ['.##.', '#..#', '.##.'], { '#': mix(base, '#000000', 0.35) });
       }
   }
@@ -95,32 +101,40 @@ export const GOLD = { hi: '#FFF2B8', light: '#F2D670', base: '#D4AF37', dark: '#
 
 /** A rail of four tones across the screen, with a dark line under it. */
 export function rail(cv: PixelCanvas, y: number, tones: [string, string, string, string], under: string): void {
-  tones.forEach((c, i) => cv.hline(0, y + i, cv.w, c));
-  cv.hline(0, y + 4, cv.w, under);
+  tones.forEach((c, i) => cv.hline(cv.minX, y + i, cv.w, c));
+  cv.hline(cv.minX, y + 4, cv.w, under);
 }
 
-/** Recessed panels across the counter front. */
+/** Recessed panels across the counter front, down to the stage's foot (422); rows repeat below it. */
 export function panels(
   cv: PixelCanvas,
   y: number,
   t: { fill: string; inner: string; shadow: string; light: string; line?: string },
 ): void {
-  for (let px = 0; px < cv.w; px += 39) {
-    const x1 = px + 3;
-    const w1 = 33;
-    const h1 = cv.h - y - 6;
-    cv.rect(x1, y, w1, h1, t.fill);
-    cv.hline(x1, y, w1, t.shadow);
-    cv.vline(x1, y, h1, t.shadow);
-    cv.hline(x1, y + h1 - 1, w1, t.light);
-    cv.vline(x1 + w1 - 1, y, h1, t.light);
-    cv.rect(x1 + 4, y + 4, w1 - 8, h1 - 8, t.inner);
-    if (t.line) {
-      cv.hline(x1 + 6, y + 6, w1 - 12, t.line);
-      cv.hline(x1 + 6, y + h1 - 7, w1 - 12, t.line);
-      cv.vline(x1 + 6, y + 6, h1 - 12, t.line);
-      cv.vline(x1 + w1 - 7, y + 6, h1 - 12, t.line);
-    }
+  const pitch = 422 - y;
+  for (let top = y; top < cv.maxY; top += pitch)
+    for (let px = Math.floor(cv.minX / 39) * 39; px < cv.maxX; px += 39) panel(cv, px + 3, top, pitch - 6, t);
+}
+
+function panel(
+  cv: PixelCanvas,
+  x1: number,
+  y: number,
+  h1: number,
+  t: { fill: string; inner: string; shadow: string; light: string; line?: string },
+): void {
+  const w1 = 33;
+  cv.rect(x1, y, w1, h1, t.fill);
+  cv.hline(x1, y, w1, t.shadow);
+  cv.vline(x1, y, h1, t.shadow);
+  cv.hline(x1, y + h1 - 1, w1, t.light);
+  cv.vline(x1 + w1 - 1, y, h1, t.light);
+  cv.rect(x1 + 4, y + 4, w1 - 8, h1 - 8, t.inner);
+  if (t.line) {
+    cv.hline(x1 + 6, y + 6, w1 - 12, t.line);
+    cv.hline(x1 + 6, y + h1 - 7, w1 - 12, t.line);
+    cv.vline(x1 + 6, y + 6, h1 - 12, t.line);
+    cv.vline(x1 + w1 - 7, y + 6, h1 - 12, t.line);
   }
 }
 
@@ -238,7 +252,7 @@ export function lettersWidth(text: string): number {
 
 /** A dithered drop shadow under a shelf or rail. */
 export function shelfShadow(cv: PixelCanvas, y: number, h = 6): void {
-  cv.shadowBox(0, y, cv.w, h, 0.55, 0.45);
+  cv.shadowBox(cv.minX, y, cv.w, h, 0.55, 0.45);
 }
 
 /** A disc sprite (for lanterns, sconces, dartboards): radius r, shaded from the top left. */

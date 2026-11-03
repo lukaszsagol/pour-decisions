@@ -1,4 +1,5 @@
 import { bigDigits, bigDigitsWidth, dith, mix, PixelCanvas } from '../canvas.js';
+import { ceiling } from './bleed.js';
 import type { Row } from './glass.js';
 
 /**
@@ -8,6 +9,8 @@ import type { Row } from './glass.js';
  */
 
 export const W = 195;
+
+const mod = (v: number, m: number) => ((v % m) + m) % m;
 export const H = 422;
 
 /** The header sign holding the move counter (art px). */
@@ -30,30 +33,30 @@ const STONE = [
 
 function wall(cv: PixelCanvas): void {
   const PW = 19;
-  for (let i = 0, x = 0; x < W; i++, x += PW) {
-    const base = i % 2 ? '#291910' : '#2C1B11';
+  for (let i = Math.floor(cv.minX / PW), x = i * PW; x < cv.maxX; i++, x += PW) {
+    const base = mod(i, 2) ? '#291910' : '#2C1B11';
     cv.rect(x, 27, PW, 292, base);
     cv.vline(x, 27, 292, '#1A0F08');
     cv.vline(x + 1, 27, 292, mix(base, '#5A3A24', 0.35));
     cv.vline(x + PW - 1, 27, 292, mix(base, '#120A05', 0.45));
     const seed = i * 7 + 3;
     for (let k = 0; k < 14; k++) {
-      const gy = 34 + ((seed * 37 + k * 53) % 280);
-      const gx = x + 4 + ((seed + k * 5) % 11);
-      const ln = 4 + ((k * 7 + seed) % 9);
+      const gy = 34 + mod(seed * 37 + k * 53, 280);
+      const gx = x + 4 + mod(seed + k * 5, 11);
+      const ln = 4 + mod(k * 7 + seed, 9);
       cv.vline(gx, gy, ln, mix(base, '#120A05', 0.35));
       cv.vline(gx + 1, gy + 1, Math.max(1, ln - 3), mix(base, '#5A3A24', 0.18));
     }
     for (let k = 0; k < 3; k++) {
-      const ky = 60 + ((seed * 71 + k * 97) % 240);
-      const kx = x + 6 + ((seed * 3 + k * 4) % 7);
+      const ky = 60 + mod(seed * 71 + k * 97, 240);
+      const kx = x + 6 + mod(seed * 3 + k * 4, 7);
       cv.sprite(kx, ky, ['.##.', '#..#', '.##.'], { '#': mix(base, '#120A05', 0.45) });
     }
   }
   for (const y of [150, 255]) {
-    cv.hline(0, y, W, '#1A0F08');
-    cv.hline(0, y + 1, W, '#3A2516');
-    cv.hline(0, y + 2, W, '#24160D');
+    cv.hline(cv.minX, y, cv.w, '#1A0F08');
+    cv.hline(cv.minX, y + 1, cv.w, '#3A2516');
+    cv.hline(cv.minX, y + 2, cv.w, '#24160D');
   }
 }
 
@@ -62,7 +65,7 @@ function lampGlow(cv: PixelCanvas, phase = 0): void {
   const LX = 97;
   const LY = 80;
   for (let y = 27; y < 200; y++) {
-    for (let x = 0; x < W; x++) {
+    for (let x = cv.minX; x < cv.maxX; x++) {
       const d = Math.hypot((x - LX) * 0.85, (y - LY) * 1.1);
       if (d >= 70) continue;
       const t = (1 - d / 70) ** 1.4;
@@ -74,11 +77,11 @@ function lampGlow(cv: PixelCanvas, phase = 0): void {
 }
 
 function tiles(cv: PixelCanvas): void {
-  cv.rect(0, 0, W, 27, '#B9A586');
+  cv.rect(cv.minX, 0, cv.w, 27, '#B9A586');
   const TB = '#2A5BA8';
   const TBD = '#1A3E80';
   const TBL = '#7AA2E6';
-  for (let i = 0; i < 9; i++) {
+  for (let i = Math.floor((cv.minX - 1) / 23); 1 + i * 23 < cv.maxX; i++) {
     const tx = 1 + i * 23;
     cv.rect(tx, 1, 22, 22, '#F3E6CC');
     cv.hline(tx, 1, 22, '#FFF9EC');
@@ -110,10 +113,10 @@ function tiles(cv: PixelCanvas): void {
       cv.px(ax, ay, TBD);
     }
   }
-  cv.hline(0, 24, W, '#8C7A60');
-  cv.hline(0, 25, W, '#5A3A24');
-  cv.hline(0, 26, W, '#3B2416');
-  cv.shadowBox(0, 27, W, 3, 0.5, 0.45);
+  cv.hline(cv.minX, 24, cv.w, '#8C7A60');
+  cv.hline(cv.minX, 25, cv.w, '#5A3A24');
+  cv.hline(cv.minX, 26, cv.w, '#3B2416');
+  cv.shadowBox(cv.minX, 27, cv.w, 3, 0.5, 0.45);
 }
 
 const ARROW = [
@@ -211,23 +214,26 @@ function jug(cv: PixelCanvas, x: number, y: number, h: number): void {
   cv.sprite(x + 3, ly + 1, ['.#..', '###.', '.#.#', '...#'], { '#': '#2A5BA8' });
 }
 
-function shelfAndLamp(cv: PixelCanvas): void {
-  for (const [x, h] of [
-    [10, 19],
-    [26, 15],
-    [42, 21],
-    [130, 16],
-    [146, 21],
-    [162, 15],
-  ] as const)
-    jug(cv, x, 100 - h, h);
-  cv.hline(0, 100, W, '#B4835A');
-  cv.hline(0, 101, W, '#8A5A36');
-  cv.rect(0, 102, W, 4, '#6B4226');
-  cv.hline(0, 106, W, '#3B2416');
-  cv.hline(0, 107, W, '#24160D');
-  for (let x = 4; x < W; x += 13) cv.hline(x, 103 + (Math.floor(x / 13) % 2), 5, '#5A3A24');
-  cv.shadowBox(0, 108, W, 6, 0.55, 0.45);
+function shelfAndLamp(cv: PixelCanvas, plain = false): void {
+  if (!plain)
+    for (const [x, h] of [
+      [10, 19],
+      [26, 15],
+      [42, 21],
+      [130, 16],
+      [146, 21],
+      [162, 15],
+    ] as const)
+      jug(cv, x, 100 - h, h);
+  cv.hline(cv.minX, 100, cv.w, '#B4835A');
+  cv.hline(cv.minX, 101, cv.w, '#8A5A36');
+  cv.rect(cv.minX, 102, cv.w, 4, '#6B4226');
+  cv.hline(cv.minX, 106, cv.w, '#3B2416');
+  cv.hline(cv.minX, 107, cv.w, '#24160D');
+  for (let x = 4 + 13 * Math.floor((cv.minX - 4) / 13); x < cv.maxX; x += 13)
+    cv.hline(x, 103 + mod(Math.floor(x / 13), 2), 5, '#5A3A24');
+  cv.shadowBox(cv.minX, 108, cv.w, 6, 0.55, 0.45);
+  if (plain) return;
   cv.vline(97, 55, 12, '#120A05');
   cv.rect(94, 66, 7, 3, '#C9A24A');
   cv.hline(94, 66, 7, '#F4D58A');
@@ -257,34 +263,51 @@ function shelfAndLamp(cv: PixelCanvas): void {
 }
 
 function counter(cv: PixelCanvas): void {
-  cv.hline(0, 318, W, '#FFE8A8');
-  cv.hline(0, 319, W, '#F4D58A');
-  cv.hline(0, 320, W, '#C9A24A');
-  cv.hline(0, 321, W, '#8A6A1E');
-  cv.hline(0, 322, W, '#120A05');
-  cv.rect(0, 323, W, 12, '#6B4226');
-  cv.hline(0, 323, W, '#B4835A');
-  cv.hline(0, 324, W, '#8A5A36');
-  cv.hline(0, 334, W, '#3B2416');
-  for (let k = 0; k < 22; k++) {
-    const gx = (k * 29 + 7) % W;
-    cv.hline(gx, 326 + (k % 6), 5 + (k % 5), '#5A3A24');
-    cv.hline(gx + 2, 327 + (k % 6), 3, '#7A4A2C');
-  }
-  cv.rect(0, 335, W, H - 335, '#3B2416');
-  cv.shadowBox(0, 335, W, 6, 0.6, 0.45);
-  for (let px = 0; px < W; px += 39) {
-    const x1 = px + 3;
-    const y1 = 344;
-    const w1 = 33;
-    const h1 = H - 350;
-    cv.rect(x1, y1, w1, h1, '#33200F');
-    cv.hline(x1, y1, w1, '#1E120A');
-    cv.vline(x1, y1, h1, '#1E120A');
-    cv.hline(x1, y1 + h1 - 1, w1, '#4E321C');
-    cv.vline(x1 + w1 - 1, y1, h1, '#4E321C');
-    cv.rect(x1 + 4, y1 + 4, w1 - 8, h1 - 8, '#2E1C0E');
-  }
+  cv.hline(cv.minX, 318, cv.w, '#FFE8A8');
+  cv.hline(cv.minX, 319, cv.w, '#F4D58A');
+  cv.hline(cv.minX, 320, cv.w, '#C9A24A');
+  cv.hline(cv.minX, 321, cv.w, '#8A6A1E');
+  cv.hline(cv.minX, 322, cv.w, '#120A05');
+  cv.rect(cv.minX, 323, cv.w, 12, '#6B4226');
+  cv.hline(cv.minX, 323, cv.w, '#B4835A');
+  cv.hline(cv.minX, 324, cv.w, '#8A5A36');
+  cv.hline(cv.minX, 334, cv.w, '#3B2416');
+  for (let n = Math.floor(cv.minX / W); n * W < cv.maxX; n++)
+    for (let k = 0; k < 22; k++) {
+      const gx = n * W + ((k * 29 + 7) % W);
+      cv.hline(gx, 326 + (k % 6), 5 + (k % 5), '#5A3A24');
+      cv.hline(gx + 2, 327 + (k % 6), 3, '#7A4A2C');
+    }
+  cv.rect(cv.minX, 335, cv.w, cv.maxY - 335, '#3B2416');
+  cv.shadowBox(cv.minX, 335, cv.w, 6, 0.6, 0.45);
+  // Cabinet panels; below the stage they repeat in rows.
+  for (let y1 = 344; y1 < cv.maxY; y1 += H - 344)
+    for (let px = 39 * Math.floor(cv.minX / 39); px < cv.maxX; px += 39) {
+      const x1 = px + 3;
+      const w1 = 33;
+      const h1 = H - 350;
+      cv.rect(x1, y1, w1, h1, '#33200F');
+      cv.hline(x1, y1, w1, '#1E120A');
+      cv.vline(x1, y1, h1, '#1E120A');
+      cv.hline(x1, y1 + h1 - 1, w1, '#4E321C');
+      cv.vline(x1 + w1 - 1, y1, h1, '#4E321C');
+      cv.rect(x1 + 4, y1 + 4, w1 - 8, h1 - 8, '#2E1C0E');
+    }
+}
+
+/**
+ * The margins around the stage on screens wider or taller than it: the same
+ * walls, light and counter without the props, a beamed ceiling above the tiles
+ * and more cabinet below. Drawn on a canvas whose origin is the stage's.
+ */
+export function amsterdamBleed(cv: PixelCanvas, phase = 0): void {
+  cv.rect(cv.minX, cv.minY, cv.w, cv.h, '#2A1A10');
+  wall(cv);
+  lampGlow(cv, phase);
+  tiles(cv);
+  shelfAndLamp(cv, true);
+  counter(cv);
+  ceiling(cv, { base: '#24160D', light: '#3B2416', seam: '#120A05' });
 }
 
 /** The whole static backdrop (no glasses, no boosters). `phase` varies the lamp glow dither. */
