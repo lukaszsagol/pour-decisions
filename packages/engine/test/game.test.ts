@@ -109,13 +109,14 @@ describe('Game status and stars', () => {
     expect(new Game(stuck(), { best: 1 }).status).toBe('deadEnd');
   });
 
-  it('applies the star thresholds', () => {
+  it('gives three stars only for the fewest pours', () => {
     expect(starsFor(16, 16)).toBe(3);
-    expect(starsFor(17, 16)).toBe(3);
-    expect(starsFor(18, 16)).toBe(2);
+    expect(starsFor(15, 16)).toBe(3);
+    expect(starsFor(17, 16)).toBe(2);
     expect(starsFor(21, 16)).toBe(2);
     expect(starsFor(22, 16)).toBe(1);
-    expect(starsFor(22, 20)).toBe(3);
+    expect(starsFor(4, 3)).toBe(2);
+    expect(starsFor(5, 3)).toBe(1);
   });
 
   it("plays Tokyo 327's solver solution to a 3-star perfect win", () => {

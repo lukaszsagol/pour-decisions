@@ -1,4 +1,7 @@
 import amsterdam from '../../../themes/recipes/amsterdam.json' with { type: 'json' };
+import london from '../../../themes/recipes/london.json' with { type: 'json' };
+import newyork from '../../../themes/recipes/newyork.json' with { type: 'json' };
+import tokyo from '../../../themes/recipes/tokyo.json' with { type: 'json' };
 import type { CityId } from './types.js';
 
 /** A real recipe, unlocked by finishing a bar. Comes from `themes/recipes/<city>.json`. */
@@ -19,7 +22,12 @@ export interface RecipeFile {
   recipes: Recipe[];
 }
 
-const files: Partial<Record<CityId, RecipeFile>> = { amsterdam: amsterdam as RecipeFile };
+const files: Partial<Record<CityId, RecipeFile>> = {
+  amsterdam: amsterdam as RecipeFile,
+  london: london as RecipeFile,
+  newyork: newyork as RecipeFile,
+  tokyo: tokyo as RecipeFile,
+};
 
 /** Adds a city's recipe file (used for cities added after Amsterdam). */
 export function addRecipes(city: CityId, file: RecipeFile): void {

@@ -7,7 +7,7 @@ The rules engine in `packages/engine` implements this document. If they disagree
 - A level is a set of **bottles** (shown as glasses). Each bottle holds a stack of **units**, bottom to top.
 - Every bottle in a level has the same **capacity**. The default is 4.
 - Each unit is one **drink** (a colour). Every drink in a level appears exactly `capacity` times.
-- A level normally has 1–2 empty bottles at the start.
+- A level has two glasses of spare space. The first 20 levels start with two empty glasses; after that most levels share the space out over part-filled glasses and start with no empty glass, some keep one empty glass, and some Super Hard levels have only one glass of space (see `levels.md`).
 
 ## Pouring
 
@@ -66,12 +66,13 @@ Each level stores `best`: the fewest pours that solve it, found by the solver wh
 
 | Stars | Rule |
 | --- | --- |
-| 3 | moves ≤ max(best + 1, floor(best × 1.1)) |
-| 2 | moves ≤ floor(best × 1.35) |
+| 3 | moves ≤ best: the fewest pours, no pour wasted (a "Perfect pour") |
+| 2 | moves ≤ max(best + 1, floor(best × 1.35)) |
 | 1 | any solve |
 
+- Three stars mean a perfect solve: every pour counts, and undo does not give pours back, so a mistake costs the third star. (Changed by the owner on 2026-11-03; it was best + 10 %.)
 - Using the extra glass caps the result at 2 stars.
-- Matching `best` exactly also earns a "Perfect" badge.
+- Stars already earned are never taken away when the rule or a level changes.
 - On levels generated on the device (daily, endless) `best` may not be optimal; beating it earns a "You beat the computer" badge.
 - Time never affects stars.
 

@@ -61,3 +61,30 @@ describe('dealer', () => {
     expect(() => deal({ drinks, seed: 1, capacity: 2, constraints: { maxRun: 2 } })).toThrow();
   });
 });
+
+describe('spread deals', () => {
+  const drinks = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
+
+  it('shares the spare space out so no glass starts empty', () => {
+    for (let s = 0; s < 30; s++) {
+      const bottles = deal({ drinks, empties: 2, spread: 2, seed: `spread-${s}` });
+      expect(bottles).toHaveLength(9);
+      expect(bottles.every((b) => b.units.length >= 1)).toBe(true);
+      expect(bottles.reduce((n, b) => n + b.units.length, 0)).toBe(28);
+      expect(bottles.some((b) => b.units.length < 4)).toBe(true);
+    }
+  });
+
+  it('can keep one glass empty and spread the other', () => {
+    const bottles = deal({ drinks, empties: 2, spread: 1, seed: 'one-empty' });
+    expect(bottles).toHaveLength(9);
+    expect(bottles.filter((b) => b.units.length === 0)).toHaveLength(1);
+  });
+
+  it('deals exactly as before without spread', () => {
+    const a = deal({ drinks, empties: 2, seed: 'same' });
+    const b = deal({ drinks, empties: 2, spread: 0, seed: 'same' });
+    expect(b).toEqual(a);
+    expect(a.filter((x) => x.units.length === 0)).toHaveLength(2);
+  });
+});

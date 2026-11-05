@@ -257,6 +257,35 @@ export function recipeGlass(recipe: Recipe): PixelCanvas {
       cv.hline(10, 67, 15, ink);
       break;
     }
+    case 'martini': {
+      // A V-shaped bowl on a long stem.
+      for (let j = 0; j < 22; j++) {
+        const half = 15 - Math.round(j * 0.68);
+        if (j > 2 && half > 1) fill(17 - half + 1, 18 + j, half * 2 - 1);
+        cv.px(17 - half, 18 + j, ink);
+        cv.px(17 + half, 18 + j, ink);
+      }
+      cv.hline(2, 18, 31, ink);
+      cv.rect(16, 40, 2, 24, ink);
+      cv.hline(9, 64, 17, ink);
+      cv.hline(10, 65, 15, ink);
+      cv.rect(22, 22, 4, 4, '#6E8A2E');
+      cv.px(23, 23, '#A8C24E');
+      break;
+    }
+    case 'pint': {
+      // A straight pint, a little narrower at the foot, with a head.
+      for (let y = 8; y < 70; y++) {
+        const inset = Math.floor((y - 8) / 22);
+        cv.px(4 + inset, y, ink);
+        cv.px(30 - inset, y, ink);
+        if (y > 9) fill(5 + inset, y, 25 - inset * 2);
+        if (y > 9 && y < 16) cv.hline(5 + inset, y, 25 - inset * 2, y === 10 ? '#FFFDF4' : '#F4ECD8');
+      }
+      cv.hline(6, 70, 23, ink);
+      cv.hline(6, 71, 23, ink);
+      break;
+    }
     default: {
       for (let y = 6; y < 70; y++) {
         cv.px(5, y, ink);

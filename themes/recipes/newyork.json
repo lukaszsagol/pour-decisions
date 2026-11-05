@@ -1,0 +1,69 @@
+{
+  "city": "newyork",
+  "recipes": [
+    {
+      "bar": 1,
+      "name": "Manhattan",
+      "color": "#7A2E1A",
+      "glass": "coupe",
+      "ingredients": [
+        ["50 ml", "Rye whiskey"],
+        ["25 ml", "Sweet vermouth"],
+        ["2 dashes", "Angostura bitters"],
+        ["1", "Cocktail cherry"]
+      ],
+      "method": "Stir the whiskey, vermouth and bitters with ice until very cold. Strain into a chilled coupe and drop in the cherry."
+    },
+    {
+      "bar": 2,
+      "name": "Whiskey sour",
+      "color": "#E6B862",
+      "glass": "rocks",
+      "ingredients": [
+        ["50 ml", "Bourbon"],
+        ["25 ml", "Fresh lemon juice"],
+        ["20 ml", "Sugar syrup"],
+        ["Optional", "Half an egg white"]
+      ],
+      "method": "Shake everything without ice first if you use egg white, then again with ice. Strain over fresh ice in a short glass. A few drops of bitters on the foam."
+    },
+    {
+      "bar": 3,
+      "name": "Dry martini",
+      "color": "#E6EAD6",
+      "glass": "martini",
+      "ingredients": [
+        ["60 ml", "London dry gin"],
+        ["10 ml", "Dry vermouth"],
+        ["1", "Lemon twist or olive"]
+      ],
+      "method": "Stir the gin and vermouth with plenty of ice for thirty seconds. Strain into a frozen martini glass. Twist the lemon peel over it, or add the olive."
+    },
+    {
+      "bar": 4,
+      "name": "Aviation",
+      "color": "#B9B6DE",
+      "glass": "coupe",
+      "ingredients": [
+        ["45 ml", "Gin"],
+        ["15 ml", "Maraschino liqueur"],
+        ["7.5 ml", "Crème de violette"],
+        ["15 ml", "Fresh lemon juice"]
+      ],
+      "method": "Shake everything hard with ice and double strain into a chilled coupe. It should be the pale sky blue the name promises."
+    },
+    {
+      "bar": 5,
+      "name": "Cosmopolitan",
+      "color": "#E2526C",
+      "glass": "martini",
+      "ingredients": [
+        ["40 ml", "Citrus vodka"],
+        ["15 ml", "Cointreau"],
+        ["30 ml", "Cranberry juice"],
+        ["15 ml", "Fresh lime juice"]
+      ],
+      "method": "Shake everything with ice and strain into a chilled martini glass. Flame an orange peel over the top."
+    }
+  ]
+}

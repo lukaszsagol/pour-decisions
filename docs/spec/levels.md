@@ -4,7 +4,8 @@ Levels are generated offline, verified by the solver, scored, then ordered into 
 
 ## Pipeline (`tools/levelgen`)
 
-1. **Deal**: for a target (drinks, capacity, empty bottles, blockers), shuffle units into bottles with a seeded RNG. Constraints: no bottle starts complete; limit same-drink runs; target fragmentation.
+1. **Deal**: for a target (drinks, capacity, spare space, blockers), shuffle units into bottles with a seeded RNG. Constraints: no bottle starts complete; limit same-drink runs; target fragmentation.
+   The spare space (`empties`, in glasses) either starts as empty glasses or is spread as gaps over part-filled glasses (`spread`). The layout is fixed per level (`layoutFor` in `tools/levelgen`): levels 1–20 and blocker lessons keep two empty glasses; later normal levels start with no empty glass about 70 % of the time (half the time up to level 40) and one otherwise; relief levels keep one; Hard and Super Hard start with none, and about 30 % of Super Hard levels with six or more drinks have only one glass of space. If no deal of a layout is solvable, the generator falls back to a roomier one.
 2. **Validate**: `validateLevel`, then `solve` within a node budget. Unsolvable or over budget → discard.
 3. **Score**: record `best` (fewest pours), branching factor, number of distinct first moves that still lead to a win, share of first moves that lead to a dead end, pours that need an empty bottle.
 4. **Simulate**: a bot player (greedy with random mistakes) plays each level 200+ times; its win rate is a proxy for human difficulty.

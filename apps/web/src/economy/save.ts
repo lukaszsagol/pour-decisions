@@ -124,6 +124,11 @@ export class Progress {
     return n;
   }
 
+  /** Levels solved in the fewest pours (three stars). */
+  perfectCount(): number {
+    return Object.values(this.data.levels).filter((r) => r.stars === 3).length;
+  }
+
   isUnlocked(number: number): boolean {
     return number <= this.data.current;
   }
