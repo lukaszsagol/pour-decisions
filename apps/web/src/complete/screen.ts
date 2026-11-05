@@ -36,10 +36,10 @@ const boosterNames = {
   hint: ['Streak hint', 'Daily hint'],
 } as const;
 
-/** Text copied by Share: "Pour Decisions · Level 64 · ★★★ 14 moves (best 13)". */
+/** Text copied by Share: "Pour Decisions · Level 64 · ★★★ 14 pours (par 13)". */
 export function shareText(r: LevelResult): string {
   const stars = '★'.repeat(r.stars) + '☆'.repeat(3 - r.stars);
-  return `Pour Decisions · Level ${r.number} · ${stars} ${r.moves} moves (best ${r.best})`;
+  return `Pour Decisions · Level ${r.number} · ${stars} ${r.moves} pours (par ${r.best})`;
 }
 
 export function verdictFor(r: LevelResult): string {
@@ -120,10 +120,10 @@ export class CompleteScreen {
     const k = theme.colors;
     const star = (i: number) => icons.star(i <= r.stars ? k.starDone : k.starEmpty, 58);
     const sub = r.perfect
-      ? `${r.moves} moves · matched the best solution`
+      ? `${r.moves} pours · right on par`
       : r.moves < r.best
-        ? `${r.moves} moves · ${r.best - r.moves} fewer than the computer`
-        : `${r.moves} moves · ${r.moves - r.best} more than the best (${r.best})`;
+        ? `${r.moves} pours · ${r.best - r.moves} under par`
+        : `${r.moves} pours · ${r.moves - r.best} over par (${r.best})`;
     const earned = rewards?.earned ?? [];
     const third =
       earned.length === 0

@@ -226,7 +226,7 @@ export class MapScreen {
       <div class="map-panel-top">
         <div>
           <h2 class="map-level">Level ${level.number}</h2>
-          <div class="map-level-sub">${esc(pack.name)} · best ${level.best} moves${record ? ` · yours ${record.bestMoves}` : ''}</div>
+          <div class="map-level-sub">${esc(pack.name)} · par ${level.best} pours${record ? ` · yours ${record.bestMoves}` : ''}</div>
         </div>
         <div class="map-chips">
           ${chip(icons.undo(k.starDone, 2), stock.undo, 'undo')}

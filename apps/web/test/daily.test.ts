@@ -25,7 +25,7 @@ describe('daily pour', () => {
   it('formats dates and the share text', () => {
     expect(dateKey(new Date(2026, 10, 3))).toBe('2026-11-03');
     expect(shortDate('2026-11-03')).toBe('3 Nov');
-    expect(dailyShareText('2026-11-03', 3, 14, 13)).toBe('Pour Decisions · 3 Nov · ★★★ 14 moves (best 13)');
+    expect(dailyShareText('2026-11-03', 3, 14, 13)).toBe('Pour Decisions · 3 Nov · ★★★ 14 pours (par 13)');
   });
 });
 

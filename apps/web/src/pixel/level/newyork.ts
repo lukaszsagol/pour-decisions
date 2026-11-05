@@ -183,13 +183,6 @@ export function newYorkBackdrop(phase = 0): PixelCanvas {
   cv.sprite(9, 39, ARROW, { '#': '#000000' });
   cv.sprite(8, 38, ARROW, { '#': '#F1E3C2' });
   frame(cv, SIGN.x, SIGN.y, SIGN.w, SIGN.h, { ...GOLD, panel: '#0B0B0B', panelDark: '#000000' });
-  disc(cv, RESTART.x + 6, RESTART.y + 6, 5, { hi: GOLD.light, base: GOLD.base, dk: GOLD.deep, outline: '#000000' });
-  cv.sprite(
-    RESTART.x + 3,
-    RESTART.y + 3,
-    ['..####.', '.#...##', '#...###', '#......', '#.....#', '.#...#.', '..###..'],
-    { '#': '#0B0B0B' },
-  );
   for (const [x, h, c] of [
     [12, 30, '#2E4A2A'],
     [21, 24, '#5A2A18'],

@@ -25,7 +25,7 @@ test('finishing a bar shows the complete screen with a recipe card, and Share co
   await page.getByRole('button', { name: 'Share result' }).click();
   await expect(page.getByRole('status').filter({ hasText: 'Result copied' })).toBeVisible();
   const text = await page.evaluate(() => navigator.clipboard.readText());
-  expect(text).toBe(`Pour Decisions · Level ${level.number} · ★★★ ${level.best} moves (best ${level.best})`);
+  expect(text).toBe(`Pour Decisions · Level ${level.number} · ★★★ ${level.best} pours (par ${level.best})`);
   await page.getByRole('link', { name: 'Next level' }).click();
   await page.locator('.map-screen[data-ready="true"]').waitFor();
   await expect(page.getByRole('heading', { name: `Level ${level.number + 1}` })).toBeVisible();

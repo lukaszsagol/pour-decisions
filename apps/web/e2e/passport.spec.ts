@@ -61,6 +61,7 @@ test('navigates Passport → Map → Level → Complete → Map, with tabs', asy
 
 test('the level back button returns to its city map', async ({ page }) => {
   await open(page, '#/level/3');
+  await page.getByRole('button', { name: "Let's pour" }).click();
   await page.getByRole('link', { name: 'Back to map' }).click();
   await page.locator('.map-screen[data-ready="true"]').waitFor();
   await expect(page.getByRole('heading', { name: 'Amsterdam' })).toBeVisible();

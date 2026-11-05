@@ -51,6 +51,7 @@ function levelScreen(number: number): Screen {
     stock: { ...progress.data.stock },
     backHref: `#/map/${theme.id}`,
     guide: level.number === 1,
+    parCard: level.number >= 2 && level.number <= 5,
     nextHref: '#/complete',
     nextLabel: 'Collect rewards',
     onStock: (stock) => progress.setStock(stock),
@@ -165,7 +166,7 @@ function trainingScreen(mode: TrainingMode): Screen {
         difficulty: 'normal',
         kicker: `${m.title} training`,
         verdict: `Planning score ${r.score}`,
-        subline: `${result.moves} moves · best ${level.best} · ${(r.msPerPour / 1000).toFixed(1)} s per pour`,
+        subline: `${result.moves} pours · par ${level.best} · ${(r.msPerPour / 1000).toFixed(1)} s per pour`,
         share: `Pour Decisions · ${m.title} training · planning score ${r.score}`,
         nextHref: '#/training',
         nextLabel: r.next > rating ? 'Next: a harder one' : 'Back to training',
@@ -250,7 +251,7 @@ function route(): Screen {
   if (name === '' || name === 'passport') {
     const today = progress.data.daily[dateKey()];
     const dailyLine = today
-      ? `${'★'.repeat(today.stars)}${'☆'.repeat(3 - today.stars)} ${today.moves} moves tonight (best ${today.best})`
+      ? `${'★'.repeat(today.stars)}${'☆'.repeat(3 - today.stars)} ${today.moves} pours tonight (par ${today.best})`
       : 'A new level every night';
     return new PassportScreen(stage, {
       progress,

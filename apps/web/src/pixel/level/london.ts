@@ -224,14 +224,6 @@ export function londonBackdrop(phase = 0): PixelCanvas {
   cv.sprite(9, 39, ARROW, { '#': '#120A05' });
   cv.sprite(8, 38, ARROW, { '#': '#EFE6D2' });
   frame(cv, SIGN.x, SIGN.y, SIGN.w, SIGN.h, { ...BRASS, panel: '#0E2A1F', panelDark: '#071810' });
-  // Restart: a brass disc.
-  disc(cv, RESTART.x + 6, RESTART.y + 6, 5, { hi: BRASS.light, base: BRASS.base, dk: BRASS.deep, outline: '#120A05' });
-  cv.sprite(
-    RESTART.x + 3,
-    RESTART.y + 3,
-    ['..####.', '.#...##', '#...###', '#......', '#.....#', '.#...#.', '..###..'],
-    { '#': '#22140B' },
-  );
   // Back bar: dartboard, beer pumps, the fox picture, a mahogany shelf.
   dartboard(cv, 24, 76);
   pump(cv, 58, '#F1C84B');

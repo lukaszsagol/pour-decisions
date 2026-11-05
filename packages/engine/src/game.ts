@@ -56,8 +56,13 @@ export interface GameSnapshot {
  */
 export function starsFor(moves: number, best: number): 1 | 2 | 3 {
   if (moves <= best) return 3;
-  if (moves <= Math.max(best + 1, Math.floor(best * 1.35))) return 2;
+  if (moves <= twoStarPours(best)) return 2;
   return 1;
+}
+
+/** The most pours that still earn two stars. */
+export function twoStarPours(best: number): number {
+  return Math.max(best + 1, Math.floor(best * 1.35));
 }
 
 /**
