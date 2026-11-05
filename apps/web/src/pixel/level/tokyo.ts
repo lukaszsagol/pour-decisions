@@ -243,13 +243,6 @@ export function tokyoBackdrop(phase = 0): PixelCanvas {
     panelDark: '#060920',
   });
   cv.hline(SIGN.x + 4, SIGN.y + SIGN.h - 4, SIGN.w - 8, NEON.pink);
-  disc(cv, RESTART.x + 6, RESTART.y + 6, 5, { hi: '#FFC2D4', base: NEON.pink, dk: '#A8325A', outline: '#05081A' });
-  cv.sprite(
-    RESTART.x + 3,
-    RESTART.y + 3,
-    ['..####.', '.#...##', '#...###', '#......', '#.....#', '.#...#.', '..###..'],
-    { '#': '#1A0710' },
-  );
   for (const [x, h, c, n] of [
     [10, 26, '#2E4A2A', 1],
     [19, 30, '#4A2A10', 2],

@@ -121,7 +121,7 @@ export class DailyScreen {
       ? `
         <div class="dy-result" aria-label="Tonight: ${result.stars} of 3 stars, ${result.moves} moves">
           <div class="dy-stars">${stars(result.stars)}</div>
-          <div class="dy-moves">${result.moves} moves · best ${result.best}</div>
+          <div class="dy-moves">${result.moves} pours · par ${result.best}</div>
         </div>
         <div class="dy-actions">
           <button class="btn btn-primary dy-share">${icons.share(k.accentText).replace('width="24" height="24"', 'width="18" height="18"')} Share result</button>

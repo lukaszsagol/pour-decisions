@@ -46,7 +46,7 @@ export function dailyLevel(date: string): DailyLevel {
   return pick;
 }
 
-/** "Pour Decisions · 3 Nov · ★★★ 14 moves (best 13)". */
+/** "Pour Decisions · 3 Nov · ★★★ 14 pours (par 13)". */
 export function dailyShareText(date: string, stars: number, moves: number, best: number): string {
-  return `Pour Decisions · ${shortDate(date)} · ${'★'.repeat(stars)}${'☆'.repeat(3 - stars)} ${moves} moves (best ${best})`;
+  return `Pour Decisions · ${shortDate(date)} · ${'★'.repeat(stars)}${'☆'.repeat(3 - stars)} ${moves} pours (par ${best})`;
 }

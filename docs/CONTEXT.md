@@ -25,7 +25,7 @@ Key findings that shaped the design:
 | Style | Pixel art (decided 3 Nov 2026, replacing the first flat style): a 195×422 art grid scaled 2×, rich shading with dithering, Two Dots-style level map, one look per city. See `docs/spec/pixel-art.md`. |
 | Drinks | Plain colours, no shapes or symbols on them (owner's choice). Colours must differ in lightness. |
 | Blockers | Shown visually, never with text: a picture of the blocker plus a round badge in the colour of the drink that releases it. No bikes in Amsterdam. |
-| Stars | Based on pours against the solver's best; undo does not refund moves; the extra glass caps at 2 stars; time never counts. |
+| Stars | Based on pours against the solver's best, shown to players as **par**; undo does not refund moves; the extra glass caps at 2 stars; time never counts. The level header counts down the pours left for the best result still possible, and level 1 and a par card on levels 2–5 teach it (decided 5 Nov 2026, after a new player missed that pours count). |
 | Tabs | Map, Daily, Passport and Recipes (decided 5 Nov 2026). The Recipes tab is the cocktail book: every recipe, unearned ones as silhouettes so players see what there is to collect, and the player's achievements. It replaced the Family tab; family is reached from the passport when that feature is on. |
 | Brain training | Optional modes (planning score, plan-ahead, memory) later; no claims of general brain improvement. |
 | Platform | Web app first (installable PWA), then iOS and Android via Capacitor. TypeScript, PixiJS. |

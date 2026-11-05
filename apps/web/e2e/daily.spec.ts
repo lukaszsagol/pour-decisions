@@ -31,10 +31,10 @@ test("tonight's pour has its own screen, then shows your result", async ({ page,
   await page.getByRole('link', { name: "Back to tonight's pour" }).click();
   await page.locator('.daily-screen[data-ready="true"]').waitFor();
   await expect(page.getByText('1 night in a row')).toBeVisible();
-  await expect(page.getByText(`${moves.length} moves · best ${level.best}`)).toBeVisible();
+  await expect(page.getByText(`${moves.length} pours · par ${level.best}`)).toBeVisible();
   await expect(page.getByText(/Next pour in/)).toBeVisible();
   await shot(page, 'daily-screen-played');
   await page.getByRole('button', { name: 'Share result' }).click();
   const text = await page.evaluate(() => navigator.clipboard.readText());
-  expect(text).toBe(`Pour Decisions · ${shortDate(date)} · ★★★ ${moves.length} moves (best ${level.best})`);
+  expect(text).toBe(`Pour Decisions · ${shortDate(date)} · ★★★ ${moves.length} pours (par ${level.best})`);
 });

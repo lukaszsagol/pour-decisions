@@ -2227,3 +2227,192 @@ input {
   line-height: 1.45;
   color: #3a3546;
 }
+
+/* The pour sign: a countdown to the best result still possible. The big number is the pours
+   left (or, with one star left, the pours so far); the label says for how many stars. */
+.px-level .lv-moves {
+  gap: 8px;
+  padding: 0 10px;
+  font: inherit;
+  cursor: pointer;
+}
+.px-level .lv-moves b {
+  font-size: 26px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.lv-move-label {
+  font-size: 11px;
+  line-height: 13px;
+  text-align: left;
+}
+.lv-move-stars {
+  display: inline-flex;
+  gap: 2px;
+  vertical-align: -1px;
+}
+.lv-moves[data-stars='1'] b {
+  color: #ff8a5c;
+}
+.lv-moves.is-bump {
+  animation: sign-bump 0.24s steps(2);
+}
+.lv-moves.is-drop b {
+  animation: sign-drop 0.8s steps(4);
+}
+.lv-moves.is-taught {
+  animation: sign-taught 1.2s steps(2) infinite;
+}
+@keyframes sign-bump {
+  50% {
+    translate: 0 -2px;
+  }
+}
+@keyframes sign-drop {
+  0%,
+  50% {
+    color: #ff5a3c;
+    scale: 1.2;
+  }
+}
+@keyframes sign-taught {
+  50% {
+    box-shadow: 0 0 0 4px #f0a030;
+  }
+}
+/* "+1" over the glass just poured into. */
+.lv-plus {
+  position: absolute;
+  z-index: 3;
+  width: 40px;
+  text-align: center;
+  pointer-events: none;
+  font-size: 22px;
+  font-weight: 600;
+  color: #fff4c0;
+  text-shadow:
+    2px 0 0 #2a1a10,
+    -2px 0 0 #2a1a10,
+    0 2px 0 #2a1a10,
+    0 -2px 0 #2a1a10;
+  animation: plus-up 0.9s steps(9) forwards;
+}
+@keyframes plus-up {
+  70% {
+    opacity: 1;
+  }
+  to {
+    translate: 0 -28px;
+    opacity: 0;
+  }
+}
+/* Restart: a light pixel button, easy to find on every city's dark header. */
+.lv-restart-face {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  background: #f3e6cc;
+  box-shadow:
+    0 0 0 2px #2a1a10,
+    inset -2px -2px 0 0 #c8b48f,
+    4px 4px 0 0 rgba(0, 0, 0, 0.45);
+}
+.lv-restart:active .lv-restart-face {
+  translate: 2px 2px;
+  box-shadow:
+    0 0 0 2px #2a1a10,
+    inset 2px 2px 0 0 #c8b48f;
+}
+.win-tip {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--c-muted);
+}
+
+/* The par card (levels 2–5, and whenever the sign is tapped) and the restart confirmation. */
+.lv-par,
+.lv-confirm {
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+}
+.lv-par-card {
+  position: relative;
+  width: 330px;
+  padding: 22px 20px 18px;
+  background: #f4ecdd;
+  color: #2a1a10;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow:
+    0 0 0 2px #2a1a10,
+    0 0 0 4px var(--c-accent),
+    0 0 0 6px #2a1a10,
+    6px 6px 0 6px rgba(0, 0, 0, 0.5);
+}
+.par-barkeep {
+  position: absolute;
+  right: 10px;
+  top: -124px;
+}
+.par-kicker {
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8a3a20;
+}
+.par-num {
+  font-size: 64px;
+  line-height: 1;
+  font-weight: 600;
+  margin-top: 8px;
+}
+.par-unit {
+  font-size: 14px;
+}
+.lv-par-card p {
+  margin: 12px 0 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+.par-bands {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 14px;
+  margin-top: 12px;
+  font-size: 12px;
+}
+.par-bands span {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+.par-go {
+  margin-top: 16px;
+  width: 100%;
+}
+.lv-confirm-card {
+  width: 340px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  --px-edge: var(--c-accent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .lv-moves.is-bump,
+  .lv-moves.is-drop b,
+  .lv-moves.is-taught {
+    animation: none;
+  }
+  .lv-moves.is-taught {
+    box-shadow: 0 0 0 4px #f0a030;
+  }
+}

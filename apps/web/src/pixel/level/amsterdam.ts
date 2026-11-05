@@ -15,7 +15,7 @@ export const H = 422;
 
 /** The header sign holding the move counter (art px). */
 export const SIGN = { x: 121, y: 32, w: 70, h: 23 } as const;
-/** The restart button, a small brass disc under the sign. */
+/** Where the restart button (HTML, drawn by the level screen) sits under the sign. */
 export const RESTART = { x: 176, y: 59 } as const;
 
 const STONE = [
@@ -162,32 +162,6 @@ export function brassFrame(cv: PixelCanvas, sx: number, sy: number, sw: number, 
   }
 }
 
-/** A small brass disc with a circular arrow: the restart button. */
-function restartIcon(cv: PixelCanvas): void {
-  const { x, y } = RESTART;
-  const DISC = [
-    '...#####...',
-    '.#########.',
-    '.#########.',
-    '###########',
-    '###########',
-    '###########',
-    '###########',
-    '###########',
-    '.#########.',
-    '.#########.',
-    '...#####...',
-  ];
-  cv.sprite(x + 1, y + 1, DISC, { '#': '#120A05' });
-  cv.sprite(x, y, DISC, { '#': '#C9A24A' });
-  cv.hline(x + 3, y, 5, '#F4D58A');
-  cv.vline(x, y + 3, 5, '#F4D58A');
-  cv.hline(x + 3, y + 10, 5, '#8A6A1E');
-  cv.sprite(x + 2, y + 2, ['..####.', '.#...##', '#...###', '#......', '#.....#', '.#...#.', '..###..'], {
-    '#': '#22140B',
-  });
-}
-
 function jug(cv: PixelCanvas, x: number, y: number, h: number): void {
   STONE.forEach((col, c) => {
     const inset = c === 0 || c === 9 ? 2 : c === 1 || c === 8 ? 1 : 0;
@@ -311,13 +285,12 @@ export function amsterdamBleed(cv: PixelCanvas, phase = 0): void {
 }
 
 /** The whole static backdrop (no glasses, no boosters). `phase` varies the lamp glow dither. */
-export function amsterdamBackdrop(phase = 0, withRestart = true): PixelCanvas {
+export function amsterdamBackdrop(phase = 0): PixelCanvas {
   const cv = new PixelCanvas(W, H, '#2A1A10');
   wall(cv);
   lampGlow(cv, phase);
   tiles(cv);
   header(cv);
-  if (withRestart) restartIcon(cv);
   shelfAndLamp(cv);
   counter(cv);
   return cv;

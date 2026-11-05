@@ -61,6 +61,7 @@ test('navigates Passport → Map → Level → Complete → Map, with tabs', asy
 
 test('the level back button returns to its city map', async ({ page }) => {
   await open(page, '#/level/3');
+  await page.getByRole('button', { name: "Let's pour" }).click();
   await page.getByRole('link', { name: 'Back to map' }).click();
   await page.locator('.map-screen[data-ready="true"]').waitFor();
   await expect(page.getByRole('heading', { name: 'Amsterdam' })).toBeVisible();
@@ -79,7 +80,7 @@ test('after a back arrow, the browser back button does not reopen the screen jus
   await expect(page).toHaveURL(/#\/passport$/);
 
   // Opened straight on a level, the arrow replaces it with the map: back leaves the game.
-  await open(page, '#/level/2');
+  await open(page, '#/level/7');
   await page.getByRole('link', { name: 'Back to map' }).click();
   await page.locator('.map-screen[data-ready="true"]').waitFor();
   await page.goBack();

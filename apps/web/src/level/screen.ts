@@ -1,4 +1,4 @@
-import { Game, type Bottle, type BoosterStock, type Move } from '@pour/engine';
+import { Game, twoStarPours, type Bottle, type BoosterStock, type Move } from '@pour/engine';
 import type { Theme } from '@pour/themes';
 import { easeInOut, easeOut, linear, reducedMotion, tween, wait } from '../anim.js';
 import { esc, icons, pixelSvg } from '../icons.js';
@@ -12,6 +12,7 @@ import { createPixi } from '../pixi-util.js';
 import { sfx } from '../sound.js';
 import { ART, STAGE_H, type Stage } from '../stage.js';
 import { applyTheme } from '../theme-css.js';
+import { pourSign, pourSignLabel } from './pour-sign.js';
 
 export interface LevelResult {
   number: number;
@@ -42,6 +43,8 @@ export interface LevelScreenOptions {
   subtitle?: string;
   /** Show the "tap this glass, then that one" pointer for the first pour. */
   guide?: boolean;
+  /** Show the par card before the first pour (the first levels after level 1). */
+  parCard?: boolean;
   /** Called once when the level is won, before the win overlay shows. */
   onWin?: (result: LevelResult) => void;
   /** Called whenever booster stock changes, so the economy can save it. */
@@ -54,6 +57,9 @@ export interface LevelScreenOptions {
   nextHref: string;
   nextLabel?: string;
 }
+
+/** A small star for the header sign, 5×5 art pixels. */
+const MINI_STAR = ['..#..', '.###.', '#####', '.###.', '.#.#.'];
 
 /** The level 1 pointer: a shaded pixel arrow pointing down. */
 const GUIDE_ARROW = [
@@ -166,6 +172,7 @@ export class LevelScreen {
     this.render();
     this.opts.onEvent?.({ type: 'start', level: this.opts.number });
     if (this.opts.peekMs) this.startPeek(this.opts.peekMs);
+    if (this.opts.parCard) this.showPar();
     this.el.dataset.ready = 'true';
   }
 
@@ -227,6 +234,7 @@ export class LevelScreen {
         break;
       case 'poured':
         this.opts.onEvent?.({ type: 'pour', from: event.from, to: event.to, moves: this.game.moves });
+        this.countPour(event.to);
         sfx.play('pour', event.amount);
         void this.animatePour(event.from, event.to, event.amount, bottlesBefore).then(() => {
           if (event.unlocked.length) sfx.play('unlock');
@@ -538,7 +546,7 @@ export class LevelScreen {
         this.animateLift(i, g.selected === i ? LIFT : 0);
       this.placeButton(i);
     });
-    this.text('.lv-move-count', String(g.moves));
+    this.renderSign();
     this.booster('undo', g.stock.undo, g.canUndo());
     this.booster('glass', g.stock.extraGlass, g.canAddGlass());
     this.booster('hint', g.stock.hint, g.canHint());
@@ -624,16 +632,19 @@ export class LevelScreen {
     // The bartender talks the first pours through, then leaves the player to it.
     const host = this.el.querySelector<HTMLElement>('.lv-host');
     if (host) {
+      const best = this.game.best;
       const say =
-        !this.opts.guide || this.game.status !== 'playing' || this.game.moves > 2
+        !this.opts.guide || this.game.status !== 'playing'
           ? ''
           : this.game.moves > 0
-            ? 'Keep going: one drink per glass.'
+            ? `Every pour counts: sort it in ${best} ${best === 1 ? 'pour' : 'pours'} for three stars. The sign up top counts them down.`
             : this.game.selected === null
               ? 'Tap a glass to pick it up.'
               : 'Now tap the glass to pour into.';
       host.hidden = !say;
       host.querySelector('.lv-host-say')!.textContent = say;
+      // While the bartender talks about the count, the sign lights up.
+      this.el.querySelector('.lv-moves')!.classList.toggle('is-taught', !!say && this.game.moves > 0);
     }
     if (!this.opts.guide || this.game.moves > 0 || this.game.status !== 'playing') {
       pointer.hidden = true;
@@ -647,6 +658,108 @@ export class LevelScreen {
     pointer.style.left = `${(slot.x + SLOT_W / 2) * ART - 22}px`;
     pointer.style.top = `${(slot.y - (this.lifts[target] ?? 0)) * ART - 56}px`;
     pointer.dataset.target = String(target);
+  }
+
+  /** The header sign: a countdown to the best result still possible (see pour-sign.ts). */
+  private renderSign(): void {
+    const g = this.game;
+    const sign = pourSign(g.moves, g.best, g.extraGlassUsed);
+    const el = this.el.querySelector<HTMLElement>('.lv-moves');
+    if (!el) return;
+    const star = pixelSvg(MINI_STAR, { '#': this.theme.colors.starDone }, 2);
+    this.text('.lv-move-count', String(sign.count));
+    el.querySelector('.lv-move-label')!.innerHTML =
+      `${sign.total ? 'pours' : 'pours left'}<br>for <span class="lv-move-stars">${star.repeat(sign.stars)}</span>`;
+    el.dataset.stars = String(sign.stars);
+    const label = pourSignLabel(g.moves, g.best, sign);
+    el.setAttribute('aria-label', `${label}. Show par`);
+    this.text('.lv-moves-status', label);
+    // Losing a star flashes the sign.
+    if (this.signStars !== null && sign.stars < this.signStars) this.flash(el, 'is-drop');
+    this.signStars = sign.stars;
+  }
+
+  private signStars: number | null = null;
+
+  /** Restarts a CSS animation by removing and re-adding its class. */
+  private flash(el: HTMLElement, cls: string): void {
+    el.classList.remove(cls);
+    void el.offsetWidth;
+    el.classList.add(cls);
+  }
+
+  /** Every pour is counted where the player is looking: "+1" over the glass, and the sign pulses. */
+  private countPour(to: number): void {
+    const sign = this.el.querySelector<HTMLElement>('.lv-moves');
+    if (sign) this.flash(sign, 'is-bump');
+    if (reducedMotion()) return;
+    const slot = this.renderer.layout.slots[to];
+    if (!slot) return;
+    const plus = document.createElement('div');
+    plus.className = 'lv-plus';
+    plus.setAttribute('aria-hidden', 'true');
+    plus.textContent = '+1';
+    plus.style.left = `${(slot.x + SLOT_W / 2) * ART - 20}px`;
+    plus.style.top = `${(slot.y - (this.lifts[to] ?? 0)) * ART - 40}px`;
+    this.el.appendChild(plus);
+    setTimeout(() => plus.remove(), 900);
+  }
+
+  /** The par card: this level's par and star bands, with the bartender. Opened by the sign. */
+  private showPar(): void {
+    if (this.el.querySelector('.lv-par') || this.game.status === 'won') return;
+    const best = this.game.best;
+    const two = twoStarPours(best);
+    const star = pixelSvg(MINI_STAR, { '#': '#C08A1A' }, 2);
+    const kicker = this.opts.subtitle ? 'Par' : `Level ${this.opts.number} · par`;
+    const sheet = document.createElement('div');
+    sheet.className = 'sheet-backdrop lv-par';
+    sheet.innerHTML = `
+      <section class="lv-par-card" role="dialog" aria-modal="true" aria-labelledby="par-title">
+        ${bartenderImg(this.theme.id, 'neutral', 'par-barkeep')}
+        <div class="par-kicker">${esc(kicker)}</div>
+        <div class="par-num" id="par-title" aria-label="Par ${best} pours">${best}</div>
+        <div class="par-unit">pours</div>
+        <p>Sort every drink in ${best} pours or fewer for three stars. Every pour counts, and undo doesn't give it back.</p>
+        <div class="par-bands">
+          <span>${star.repeat(3)} ${best} or fewer</span>
+          <span>${star.repeat(2)} up to ${two}</span>
+          <span>${star} more</span>
+        </div>
+        <button class="btn btn-primary par-go">Let's pour</button>
+      </section>`;
+    this.el.appendChild(sheet);
+    const close = () => sheet.remove();
+    sheet.addEventListener('click', (e) => e.target === sheet && close());
+    sheet.querySelector('.par-go')!.addEventListener('click', close);
+    sheet.querySelector<HTMLElement>('.par-go')!.focus();
+  }
+
+  /** The header's restart asks first once there are pours to lose. */
+  private askRestart(): void {
+    const moves = this.game.moves;
+    if (moves === 0 || this.game.status === 'won') return this.restart();
+    if (this.el.querySelector('.lv-confirm')) return;
+    const sheet = document.createElement('div');
+    sheet.className = 'sheet-backdrop lv-confirm';
+    sheet.innerHTML = `
+      <section class="lv-confirm-card px-panel" role="alertdialog" aria-modal="true" aria-labelledby="rs-title" aria-describedby="rs-sub">
+        <h2 class="de-title" id="rs-title">Start this level again?</h2>
+        <p class="de-sub" id="rs-sub">Your ${moves} ${moves === 1 ? 'pour' : 'pours'} so far won't count.</p>
+        <div class="de-actions">
+          <button class="btn btn-outline rs-keep">Keep pouring</button>
+          <button class="btn btn-primary rs-go">Restart</button>
+        </div>
+      </section>`;
+    this.el.appendChild(sheet);
+    const close = () => sheet.remove();
+    sheet.addEventListener('click', (e) => e.target === sheet && close());
+    sheet.querySelector('.rs-keep')!.addEventListener('click', close);
+    sheet.querySelector('.rs-go')!.addEventListener('click', () => {
+      close();
+      this.restart();
+    });
+    sheet.querySelector<HTMLElement>('.rs-keep')!.focus();
   }
 
   private showWin(r: LevelResult): void {
@@ -666,7 +779,8 @@ export class LevelScreen {
         <div class="win-kicker">${esc(this.opts.subtitle ? "Tonight's pour cleared" : `Level ${r.number} cleared`)}</div>
         <div class="win-stars" aria-label="${r.stars} of 3 stars">${stars}</div>
         <div class="win-verdict" id="win-verdict">${verdict}</div>
-        <div class="win-moves">${r.moves} moves · ${r.moves <= r.best ? `best ${r.best}` : `3 stars in ${r.best}`}</div>
+        <div class="win-moves">${r.moves} pours · par ${r.best}</div>
+        ${this.opts.guide ? '<p class="win-tip">The fewer pours, the more stars.</p>' : ''}
         <a class="btn btn-primary win-next" href="${esc(this.opts.nextHref)}">${esc(this.opts.nextLabel ?? 'Next level')}</a>
         <button class="btn btn-ghost win-again">Play again</button>
       </div>`;
@@ -686,7 +800,8 @@ export class LevelScreen {
     on('.booster-undo', () => this.undo());
     on('.booster-glass', () => this.addGlass());
     on('.booster-hint', () => this.useHint());
-    on('.lv-restart', () => this.restart());
+    on('.lv-restart', () => this.askRestart());
+    on('.lv-moves', () => this.showPar());
     on('.de-undo', () => this.undo());
     on('.de-glass', () => this.addGlass());
     on('.de-restart', () => this.restart());
@@ -707,10 +822,11 @@ export class LevelScreen {
         <h1 class="lv-bar">${esc(this.opts.barName)}</h1>
         <div class="lv-sub" style="color:${text.sub}">${esc(this.opts.subtitle ?? `${t.name} · Level ${this.opts.number}`)}</div>
       </div>
-      <div class="lv-moves" role="status" aria-live="polite" style="left:${a(sign.x)}px;top:${a(sign.y)}px;width:${a(sign.w)}px;height:${a(sign.h)}px;color:${text.title}">
-        <b class="lv-move-count">0</b><span style="color:${text.sub}">moves · best ${this.opts.best}</span>
-      </div>
-      <button class="lv-restart" aria-label="Restart level" style="left:${a(restart.x + 6) - 22}px;top:${a(restart.y + 6) - 22}px"></button>
+      <button class="lv-moves" style="left:${a(sign.x)}px;top:${a(sign.y)}px;width:${a(sign.w)}px;height:${a(sign.h)}px;color:${text.title}">
+        <b class="lv-move-count"></b><span class="lv-move-label" style="color:${text.sub}"></span>
+      </button>
+      <span class="sr-only lv-moves-status" role="status" aria-live="polite"></span>
+      <button class="lv-restart" aria-label="Restart level" style="left:${a(restart.x + 6) - 22}px;top:${a(restart.y + 6) - 22}px"><span class="lv-restart-face">${icons.restart('#2A1A10')}</span></button>
       <div class="lv-glasses"></div>
       <div class="lv-host" hidden>${bartenderImg(this.theme.id, 'neutral', 'lv-host-img')}<p class="lv-host-say px-panel" aria-live="polite"></p></div>
       <div class="lv-guide" hidden aria-hidden="true">${pixelSvg(GUIDE_ARROW, { o: '#1A0F08', '#': '#F3E6CC', h: '#FFFFFF', d: '#B8A888' }, 4)}</div>

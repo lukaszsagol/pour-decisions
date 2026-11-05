@@ -17,7 +17,7 @@ async function playSolution(page: Page, bottles: Bottle[]): Promise<number> {
 test('plays Amsterdam level 1 by tapping to a 3-star win', async ({ page }) => {
   await open(page, '#/level/1');
   const n = await playSolution(page, bar1.levels[0]!.bottles as Bottle[]);
-  await expect(page.locator('.lv-move-count')).toHaveText(String(n));
+  await expect(page.locator('.lv-moves-status')).toHaveText(new RegExp(`^${n} pours?,`));
   await expect(page.getByRole('dialog')).toBeVisible();
   await expect(page.getByLabel('3 of 3 stars')).toBeVisible();
   await expect(page.getByText('Perfect pour')).toBeVisible();
@@ -50,7 +50,7 @@ test('wins golden Tokyo level 327 with the Tokyo theme', async ({ page }) => {
   const n = await playSolution(page, bottles);
   expect(n).toBe(16);
   await expect(page.getByLabel('3 of 3 stars')).toBeVisible();
-  await expect(page.getByText('16 moves · best 16')).toBeVisible();
+  await expect(page.getByText('16 pours · par 16')).toBeVisible();
 });
 
 test('selecting lifts a glass, illegal taps are rejected and keep the selection', async ({ page }) => {
@@ -62,7 +62,7 @@ test('selecting lifts a glass, illegal taps are rejected and keep the selection'
   await expect.poll(async () => top0 - (await glass(page, 0).boundingBox())!.y).toBe(14);
   await glass(page, 1).click(); // jenever onto advocaat: illegal
   await expect(glass(page, 0)).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.locator('.lv-move-count')).toHaveText('0');
+  await expect(page.locator('.lv-moves-status')).toHaveText(new RegExp(`^0 pours?,`));
   await glass(page, 0).click();
   await expect(glass(page, 0)).toHaveAttribute('aria-pressed', 'false');
 });
@@ -73,7 +73,7 @@ test('undo, hint and extra glass work and count down', async ({ page }) => {
   await glass(page, 2).click();
   await page.getByRole('button', { name: 'Undo, 5 left' }).click();
   await expect(page.getByRole('button', { name: 'Undo, 4 left' })).toBeVisible();
-  await expect(page.locator('.lv-move-count')).toHaveText('1');
+  await expect(page.locator('.lv-moves-status')).toHaveText(new RegExp(`^1 pours?,`));
   await page.getByRole('button', { name: 'Hint, 3 left' }).click();
   await expect(page.getByRole('button', { name: /hint: pour from here/ })).toHaveCount(1);
   await expect(page.getByRole('button', { name: /hint: pour here/ })).toHaveCount(1);
