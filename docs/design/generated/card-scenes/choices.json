@@ -1,0 +1,6 @@
+{
+  "amsterdam": { "option": "opt-1", "key": true },
+  "london": "opt-0",
+  "newyork": { "option": "opt-1", "key": true },
+  "tokyo": { "option": "opt-1", "key": true }
+}

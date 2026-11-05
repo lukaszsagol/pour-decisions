@@ -28,5 +28,21 @@
   "tokyo-think": {
     "option": "opt-0",
     "key": true
+  },
+  "amsterdam-neutral": {
+    "dir": "amsterdam",
+    "option": "opt-0"
+  },
+  "london-neutral": {
+    "dir": "london",
+    "option": "opt-1"
+  },
+  "newyork-neutral": {
+    "dir": "newyork",
+    "option": "opt-0"
+  },
+  "tokyo-neutral": {
+    "dir": "tokyo",
+    "option": "opt-0"
   }
 }

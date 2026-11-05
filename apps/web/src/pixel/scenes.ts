@@ -172,9 +172,11 @@ const SCENES: Record<string, (cv: PixelCanvas) => void> = {
  * A passport card scene, w×h art px. The text column on the left is a plain
  * plate in the card's colour; a locked city is drawn dim and cold.
  */
-export function cityScene(theme: Theme, w: number, h: number, locked = false): PixelCanvas {
+export function cityScene(theme: Theme, w: number, h: number, locked = false, art?: PixelCanvas): PixelCanvas {
   const cv = new PixelCanvas(w, h);
   (SCENES[theme.id] ?? amsterdamScene)(cv);
+  // A drawn vignette replaces the code-drawn scene on the right of the card.
+  if (art) cv.blit(art, w - art.w, Math.round((h - art.h) * 0.6));
   // A solid plate in the card's colour under the text, dithering into the art.
   const plate = theme.passport?.card ?? theme.colors.surface;
   const edge = Math.round(w * 0.64);

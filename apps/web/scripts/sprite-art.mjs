@@ -2,6 +2,7 @@
 // Turns chosen generated sprites into the game's pictures. Run:
 //   node apps/web/scripts/sprite-art.mjs recipes      recipe-card drinks, 35×75
 //   node apps/web/scripts/sprite-art.mjs bartenders   bartenders, 48×64
+//   node apps/web/scripts/sprite-art.mjs card-scenes  passport card vignettes, 64×80
 //
 // docs/design/generated/<set>/choices.json maps an output name to the option to use
 // ("opt-2" → docs/design/generated/<set>/<name>/opt-2.png), or to an object:
@@ -18,7 +19,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SETS = { recipes: { w: 35, h: 75 }, bartenders: { w: 48, h: 64 } };
+const SETS = { recipes: { w: 35, h: 75 }, bartenders: { w: 48, h: 64 }, 'card-scenes': { w: 64, h: 80 } };
 const set = process.argv[2];
 if (!SETS[set]) {
   console.error(`Usage: node apps/web/scripts/sprite-art.mjs <${Object.keys(SETS).join('|')}>`);

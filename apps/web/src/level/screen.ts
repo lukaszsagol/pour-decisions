@@ -618,6 +618,20 @@ export class LevelScreen {
   private renderGuide(): void {
     const pointer = this.el.querySelector<HTMLElement>('.lv-guide');
     if (!pointer) return;
+    // The bartender talks the first pours through, then leaves the player to it.
+    const host = this.el.querySelector<HTMLElement>('.lv-host');
+    if (host) {
+      const say =
+        !this.opts.guide || this.game.status !== 'playing' || this.game.moves > 2
+          ? ''
+          : this.game.moves > 0
+            ? 'Keep going: one drink per glass.'
+            : this.game.selected === null
+              ? 'Tap a glass to pick it up.'
+              : 'Now tap the glass to pour into.';
+      host.hidden = !say;
+      host.querySelector('.lv-host-say')!.textContent = say;
+    }
     if (!this.opts.guide || this.game.moves > 0 || this.game.status !== 'playing') {
       pointer.hidden = true;
       return;
@@ -695,6 +709,7 @@ export class LevelScreen {
       </div>
       <button class="lv-restart" aria-label="Restart level" style="left:${a(restart.x + 6) - 22}px;top:${a(restart.y + 6) - 22}px"></button>
       <div class="lv-glasses"></div>
+      <div class="lv-host" hidden>${bartenderImg(this.theme.id, 'neutral', 'lv-host-img')}<p class="lv-host-say px-panel" aria-live="polite"></p></div>
       <div class="lv-guide" hidden aria-hidden="true">${pixelSvg(GUIDE_ARROW, { o: '#1A0F08', '#': '#F3E6CC', h: '#FFFFFF', d: '#B8A888' }, 4)}</div>
       <div class="lv-counter" style="color:${text.title}">
         ${booster('undo', 'Undo', 0)}

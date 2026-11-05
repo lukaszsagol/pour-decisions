@@ -2038,3 +2038,28 @@ input {
   right: 14px;
   top: -124px;
 }
+
+/* The first level's host: the city's bartender on the counter, with a speech bubble. */
+.lv-host {
+  position: absolute;
+  left: 10px;
+  top: 508px;
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  pointer-events: none;
+}
+.lv-host[hidden] {
+  display: none;
+}
+.lv-host-say {
+  margin: 30px 0 0;
+  max-width: 230px;
+  padding: 10px 12px;
+  font-size: 14px;
+  line-height: 1.35;
+  background: #f4ecdd;
+  color: #2a1a10;
+  --px-face: #f4ecdd;
+  --px-edge: #2a1a10;
+}
