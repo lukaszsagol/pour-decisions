@@ -1,12 +1,12 @@
 import { expect, test } from '@playwright/test';
 import { solveAuto } from '@pour/engine';
-import { dailyLevel, dateKey, shortDate } from '../src/daily/generate';
-import { open, shot } from './helpers';
+import { dailyLevel, dateKey } from '../src/daily/generate';
+import { open, played, shot } from './helpers';
 
-test("tonight's pour has its own screen, then shows your result", async ({ page, context }) => {
-  await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+test("tonight's pour has its own screen, then shows your result", async ({ page }) => {
   const date = dateKey();
   const level = dailyLevel(date);
+  await played(page, 6);
   await open(page, '');
   await page.getByRole('link', { name: /Tonight's pour/ }).click();
   await page.locator('.daily-screen[data-ready="true"]').waitFor();
@@ -34,7 +34,5 @@ test("tonight's pour has its own screen, then shows your result", async ({ page,
   await expect(page.getByText(`${moves.length} pours · par ${level.best}`)).toBeVisible();
   await expect(page.getByText(/Next pour in/)).toBeVisible();
   await shot(page, 'daily-screen-played');
-  await page.getByRole('button', { name: 'Share result' }).click();
-  const text = await page.evaluate(() => navigator.clipboard.readText());
-  expect(text).toBe(`Pour Decisions · ${shortDate(date)} · ★★★ ${moves.length} pours (par ${level.best})`);
+  await expect(page.getByRole('button', { name: 'Share result' })).toHaveCount(0);
 });

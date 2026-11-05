@@ -19,6 +19,8 @@ import { family } from './family/index.js';
 import { avatar, FamilyScreen } from './family/screen.js';
 import { modes, nextRating, planningScore, trainingLevel, type TrainingMode } from './training/logic.js';
 import { installBackNavigation } from './nav.js';
+import { isOpen, needsWelcome } from './onboarding.js';
+import { WelcomeScreen } from './welcome.js';
 import { session } from './session.js';
 import { createStage } from './stage.js';
 import { playLog, progress } from './state.js';
@@ -211,6 +213,9 @@ async function familyRow(level: number, moves: number): Promise<string | null> {
 function route(): Screen {
   const hash = location.hash.replace(/^#\/?/, '');
   const [name, arg] = hash.split('/');
+  // Visiting a feature's screen clears the NEW badge on its tab.
+  const feature = ({ daily: 'daily', book: 'book', training: 'training' } as const)[name as 'daily'];
+  if (feature && isOpen(progress, feature)) progress.markIntro('opened', feature);
   if (name === 'fixture' && arg && designFixtures[arg]) {
     const f = designFixtures[arg]!;
     const screen = new LevelScreen(stage, {
@@ -248,6 +253,10 @@ function route(): Screen {
     const backend = family();
     const theme = themeForLevel(progress.data.current);
     return backend ? new FamilyScreen(stage, theme, tabs, backend) : new FamilyPlaceholder(stage, theme, tabs);
+  }
+  if ((name === '' || name === 'passport') && needsWelcome(progress)) {
+    const first = getLevel(1)!;
+    return new WelcomeScreen(stage, themeForLevel(1), progress, first.pack.name);
   }
   if (name === '' || name === 'passport') {
     const today = progress.data.daily[dateKey()];

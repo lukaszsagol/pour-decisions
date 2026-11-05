@@ -19,3 +19,11 @@ export function bartenderImg(city: CityId, pose: Pose, className: string): strin
   const src = bartender(city, pose);
   return src ? `<img class="${className} px-img" src="${src}" width="96" height="128" alt="" aria-hidden="true">` : '';
 }
+
+/** Each city's bartender (as in docs/design/asset-prompts.md). */
+export const BARTENDER_NAMES: Record<CityId, string> = {
+  amsterdam: 'Joost',
+  london: 'Maggie',
+  newyork: 'Felix',
+  tokyo: 'Aiko',
+};

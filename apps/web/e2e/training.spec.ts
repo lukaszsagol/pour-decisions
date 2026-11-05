@@ -3,9 +3,10 @@ import { solveAuto } from '@pour/engine';
 import { getTheme } from '@pour/themes';
 import { dateKey } from '../src/daily/generate';
 import { trainingLevel } from '../src/training/logic';
-import { open, shot } from './helpers';
+import { open, played, shot } from './helpers';
 
 test('planning training scores a perfect solve, raises the level and charts it', async ({ page }) => {
+  await played(page, 21);
   await open(page, '#/passport');
   await page.getByRole('link', { name: /^Training/ }).click();
   await expect(page.getByRole('heading', { name: 'Training' })).toBeVisible();

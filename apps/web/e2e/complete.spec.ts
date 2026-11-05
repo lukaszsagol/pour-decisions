@@ -2,11 +2,7 @@ import { expect, test } from '@playwright/test';
 import bar1 from '../../../levels/amsterdam/1.json' with { type: 'json' };
 import { open, shot } from './helpers';
 
-test('finishing a bar shows the complete screen with a recipe card, and Share copies the result', async ({
-  page,
-  context,
-}) => {
-  await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+test('finishing a bar shows the complete screen with a recipe card, and no Share button', async ({ page }) => {
   const level = bar1.levels[19]!;
   await open(page, `#/level/${level.number}`);
   for (const [from, to] of level.solution) {
@@ -22,10 +18,8 @@ test('finishing a bar shows the complete screen with a recipe card, and Share co
   await expect(page.getByRole('article', { name: 'New recipe card: Kopstootje' })).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
   await shot(page, 'T12-amsterdam-complete');
-  await page.getByRole('button', { name: 'Share result' }).click();
-  await expect(page.getByRole('status').filter({ hasText: 'Result copied' })).toBeVisible();
-  const text = await page.evaluate(() => navigator.clipboard.readText());
-  expect(text).toBe(`Pour Decisions · Level ${level.number} · ★★★ ${level.best} pours (par ${level.best})`);
+  // Sharing is off until a better way to share is decided.
+  await expect(page.getByRole('button', { name: 'Share result' })).toHaveCount(0);
   await page.getByRole('link', { name: 'Next level' }).click();
   await page.locator('.map-screen[data-ready="true"]').waitFor();
   await expect(page.getByRole('heading', { name: `Level ${level.number + 1}` })).toBeVisible();
