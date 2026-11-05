@@ -26,6 +26,7 @@ Key findings that shaped the design:
 | Drinks | Plain colours, no shapes or symbols on them (owner's choice). Colours must differ in lightness. |
 | Blockers | Shown visually, never with text: a picture of the blocker plus a round badge in the colour of the drink that releases it. No bikes in Amsterdam. |
 | Stars | Based on pours against the solver's best; undo does not refund moves; the extra glass caps at 2 stars; time never counts. |
+| Tabs | Map, Daily, Passport and Recipes (decided 5 Nov 2026). The Recipes tab is the cocktail book: every recipe, unearned ones as silhouettes so players see what there is to collect, and the player's achievements. It replaced the Family tab; family is reached from the passport when that feature is on. |
 | Brain training | Optional modes (planning score, plan-ahead, memory) later; no claims of general brain improvement. |
 | Platform | Web app first (installable PWA), then iOS and Android via Capacitor. TypeScript, PixiJS. |
 | Who builds it | Coding agents write all the code. The owner reviews, plays, and owns accounts and keys. |

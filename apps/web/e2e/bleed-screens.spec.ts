@@ -80,7 +80,7 @@ for (const vp of viewports) {
       expect(bar.y + bar.height).toBeLessThanOrEqual(vp.height + 0.5);
       await page.getByRole('button', { name: 'Settings' }).click();
       await shot(page, `${dir}/settings`);
-      for (const name of ['daily', 'training', 'family']) {
+      for (const name of ['daily', 'training', 'book']) {
         await open(page, `#/${name}`);
         await shot(page, `${dir}/${name}`);
       }

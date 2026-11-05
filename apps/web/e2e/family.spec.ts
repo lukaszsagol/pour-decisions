@@ -14,6 +14,7 @@ test('family features run against the fake backend behind the flag', async ({ pa
   await shot(page, 'T20-family');
   await page.getByRole('link', { name: 'Passport', exact: true }).click();
   await expect(page.getByText(/of 4 have played/)).toBeVisible();
+  await expect(page.getByRole('link', { name: /^Family/ })).toHaveAttribute('href', '#/family');
   await page.getByRole('link', { name: 'Map', exact: true }).click();
   await page.locator('.map-screen[data-ready="true"]').waitFor();
   await expect(page.getByRole('img', { name: /is here$/ }).first()).toBeAttached();

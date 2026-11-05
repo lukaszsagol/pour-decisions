@@ -18,6 +18,8 @@ export interface PassportOptions {
   dailyLine: string;
   /** Replaces the daily line once family results arrive. */
   dailyFamily?: Promise<string | null>;
+  /** Link to the family screen, when the family feature is on. */
+  familyHref?: string;
 }
 
 const LEVELS_PER_CITY = 100;
@@ -96,6 +98,7 @@ export class PassportScreen {
           <span class="pp-daily-play">Play</span>
         </a>
         <a class="pp-training" href="#/training">Training <span>Planning, plan ahead, memory</span></a>
+        ${this.opts.familyHref ? `<a class="pp-training" href="${esc(this.opts.familyHref)}">Family <span>Group, daily results, weekly board</span></a>` : ''}
       </div>
       ${tabBar('passport', this.opts.tabs)}`;
   }

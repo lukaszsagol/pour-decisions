@@ -134,6 +134,17 @@ export const SPRITES = {
     '##########',
     '##########',
   ],
+  book: [
+    '.###..###.',
+    '#...##...#',
+    '#.##..##.#',
+    '#...##...#',
+    '#.##..##.#',
+    '#...##...#',
+    '#.##..##.#',
+    '####..####',
+    '...####...',
+  ],
   coin: ['..####..', '.#....#.', '#..##..#', '#.#..#.#', '#.#..#.#', '#..##..#', '.#....#.', '..####..'],
 } as const;
 
@@ -149,7 +160,7 @@ export const icons = {
   gear: (c: string) => sprite(SPRITES.gear, c, 2),
   lock: (c: string) => sprite(SPRITES.lock, c, 2),
   coin: (c: string) => sprite(SPRITES.coin, c, 2),
-  tab: (name: 'map' | 'daily' | 'passport' | 'family', c: string) => sprite(SPRITES[name], c, 2),
+  tab: (name: 'map' | 'daily' | 'passport' | 'family' | 'book', c: string) => sprite(SPRITES[name], c, 2),
 };
 
 /** Escapes text for use inside HTML. */
