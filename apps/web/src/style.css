@@ -2558,16 +2558,23 @@ input {
 .welcome-screen {
   color: var(--c-text);
 }
-.wl-scene {
+/* The night sky and the city reach the top and sides of the screen; the scene's street ends at
+   220 px on the stage. */
+.wl-sky {
   position: absolute;
-  left: 0;
-  top: 64px;
+  left: calc(-1 * var(--bleed-l, 0px));
+  top: calc(-1 * var(--bleed-t, 0px));
+  pointer-events: none;
+}
+.wl-sky img {
+  display: block;
+  image-rendering: pixelated;
 }
 .wl-title {
   position: absolute;
-  left: 20px;
-  right: 20px;
-  top: 236px;
+  left: 16px;
+  right: 16px;
+  top: 240px;
   text-align: center;
 }
 .wl-title h1 {
@@ -2575,21 +2582,21 @@ input {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  font-size: 32px;
+  font-size: 36px;
   font-weight: 600;
 }
 .wl-title p {
-  margin-top: 6px;
+  margin-top: 8px;
   font-size: 16px;
   color: var(--c-muted);
 }
 .wl-host {
   position: absolute;
-  left: 20px;
-  right: 20px;
-  top: 340px;
-  min-height: 156px;
-  padding: 16px 16px 16px 118px;
+  left: 16px;
+  right: 16px;
+  top: 344px;
+  min-height: 172px;
+  padding: 18px 16px 18px 118px;
   --px-face: #f4ecdd;
   --px-edge: #2a1a10;
   color: #2a1a10;
@@ -2600,19 +2607,19 @@ input {
   bottom: 0;
 }
 .wl-host h2 {
-  font-size: 17px;
+  font-size: 19px;
   font-weight: 600;
 }
 .wl-host p {
-  margin-top: 4px;
-  font-size: 15px;
+  margin-top: 6px;
+  font-size: 16px;
   line-height: 1.45;
 }
 .wl-route {
   position: absolute;
-  left: 20px;
-  right: 20px;
-  top: 548px;
+  left: 16px;
+  right: 16px;
+  top: 560px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -2621,12 +2628,12 @@ input {
 }
 .wl-stop {
   position: relative;
-  width: 72px;
+  width: 76px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--c-muted);
 }
 /* A dashed road between the stops. */
@@ -2658,19 +2665,20 @@ input {
     0 0 0 2px #2a1a10,
     0 0 0 4px var(--c-text);
 }
+/* The button sits near the bottom of the screen, however tall it is. */
 .wl-go {
   position: absolute;
-  left: 20px;
-  right: 20px;
-  top: 660px;
-  height: 60px;
-  font-size: 18px;
+  left: 16px;
+  right: 16px;
+  bottom: calc(92px - var(--stick-b, 0px));
+  height: 64px;
+  font-size: 20px;
 }
 .wl-note {
   position: absolute;
-  left: 20px;
-  right: 20px;
-  top: 736px;
+  left: 16px;
+  right: 16px;
+  bottom: calc(56px - var(--stick-b, 0px));
   text-align: center;
   font-size: 13px;
   color: var(--c-muted);
@@ -2794,6 +2802,7 @@ input {
   position: absolute;
   left: 20px;
   right: 20px;
+  /* Just above the tab bar (84 px tall, moved down by --stick-b with the screen's bottom). */
   bottom: calc(96px - var(--stick-b, 0px));
   z-index: 4;
   padding: 10px 12px;
@@ -2849,4 +2858,13 @@ input {
 }
 .an-card .btn {
   width: 100%;
+}
+
+/* Reward boxes stay centred when there are fewer than three. */
+.cp-rewards {
+  display: flex;
+  justify-content: center;
+}
+.cp-rewards .cp-card {
+  flex: 0 0 calc((100% - 20px) / 3);
 }
