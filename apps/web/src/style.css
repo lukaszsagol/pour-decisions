@@ -2416,3 +2416,140 @@ input {
     box-shadow: 0 0 0 4px #f0a030;
   }
 }
+
+/* The last three pours of a countdown get louder: warm yellow, then orange, then red and pulsing
+   on the last one; each pour in that stretch pops the number. */
+.lv-moves[data-left] {
+  isolation: isolate;
+}
+/* The sign's dark panel (inside its 3-art-pixel frame) warms up too. */
+.lv-moves[data-left]::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  z-index: -1;
+  background: #3e2c08;
+}
+.lv-moves[data-left='2']::before {
+  background: #4e2408;
+}
+.lv-moves[data-left='1']::before {
+  background: #64160a;
+}
+.lv-moves[data-left='2'] b,
+.lv-moves[data-left='1'] b {
+  font-size: 30px;
+}
+.lv-moves[data-left='3'] b {
+  color: #ffd84a;
+}
+.lv-moves[data-left='2'] b {
+  color: #ffa53c;
+}
+.lv-moves[data-left='1'] b {
+  color: #fff1e0;
+}
+.lv-moves[data-left='1'] {
+  animation: sign-last 0.9s steps(2) infinite;
+}
+.lv-moves[data-left].is-bump b {
+  animation: sign-pop 0.36s steps(3);
+}
+@keyframes sign-pop {
+  40% {
+    scale: 1.45;
+  }
+}
+@keyframes sign-last {
+  50% {
+    box-shadow:
+      0 0 0 4px #ff5a3c,
+      0 0 0 8px rgba(255, 90, 60, 0.35);
+  }
+}
+/* Losing a star: the sign shakes red, and a banner under it names what's left. */
+.lv-moves.is-drop {
+  animation: sign-shake 0.5s steps(6);
+}
+@keyframes sign-shake {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  20%,
+  60% {
+    translate: -4px 0;
+  }
+  40%,
+  80% {
+    translate: 4px 0;
+  }
+}
+.lv-lost {
+  position: absolute;
+  z-index: 3;
+  max-width: 300px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px 8px 8px;
+  background: #ff5a3c;
+  color: #2a0a04;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.25;
+  pointer-events: none;
+  box-shadow:
+    0 0 0 2px #2a0a04,
+    4px 4px 0 2px rgba(0, 0, 0, 0.45);
+  animation: lost-in 3.2s steps(1) forwards;
+}
+.lv-lost-star {
+  flex: none;
+  display: grid;
+  animation: lost-star 1.2s steps(1) forwards;
+}
+@keyframes lost-in {
+  0% {
+    translate: 0 -8px;
+  }
+  6% {
+    translate: 0 0;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+/* The star blinks, then goes dark. */
+@keyframes lost-star {
+  0%,
+  30%,
+  60% {
+    filter: none;
+  }
+  15%,
+  45% {
+    filter: brightness(0.3);
+  }
+  100% {
+    filter: grayscale(1) brightness(0.35);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lv-moves[data-left='1'],
+  .lv-moves[data-left].is-bump b,
+  .lv-moves.is-drop,
+  .lv-lost {
+    animation: none;
+  }
+  .lv-moves[data-left='1'] {
+    box-shadow: 0 0 0 4px #ff5a3c;
+  }
+  .lv-lost-star {
+    animation: none;
+    filter: grayscale(1) brightness(0.35);
+  }
+}
