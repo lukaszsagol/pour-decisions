@@ -66,7 +66,7 @@ export class TrainingScreen {
     this.el.innerHTML = `
       <header class="map-header" style="position:static">
         <div class="map-title">
-          <a class="icon-btn" href="#/passport" aria-label="Back to passport">${icons.back(k.text)}</a>
+          <a data-up class="icon-btn" href="#/passport" aria-label="Back to passport">${icons.back(k.text)}</a>
           <div><h1 class="map-city">Training</h1><div class="map-bar">Level ${t.rating} of 6 · adapts to your results</div></div>
         </div>
       </header>

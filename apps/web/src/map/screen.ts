@@ -287,7 +287,7 @@ export class MapScreen {
       </div>
       <header class="map-header">
         <div class="map-title">
-          <a class="icon-btn" href="${esc(this.opts.backHref)}" aria-label="Back to passport">${icons.back(k.text)}</a>
+          <a data-up class="icon-btn" href="${esc(this.opts.backHref)}" aria-label="Back to passport">${icons.back(k.text)}</a>
           <div>
             <h1 class="map-city">${esc(theme.name)}</h1>
             <div class="map-bar">${capital(theme.passport?.barWord ?? 'bar')} ${here.bar} · ${esc(here.name)}</div>

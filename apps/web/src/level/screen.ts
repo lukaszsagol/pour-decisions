@@ -702,7 +702,7 @@ export class LevelScreen {
         <span class="booster-label">${label}</span>
       </button>`;
     return `
-      <a class="lv-back" href="${esc(this.opts.backHref)}" aria-label="Back to map"></a>
+      <a data-up class="lv-back" href="${esc(this.opts.backHref)}" aria-label="Back to map"></a>
       <div class="lv-title" style="color:${text.title}">
         <h1 class="lv-bar">${esc(this.opts.barName)}</h1>
         <div class="lv-sub" style="color:${text.sub}">${esc(this.opts.subtitle ?? `${t.name} · Level ${this.opts.number}`)}</div>
