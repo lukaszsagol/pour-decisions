@@ -18,6 +18,7 @@ import { DailyScreen } from './daily/screen.js';
 import { family } from './family/index.js';
 import { avatar, FamilyScreen } from './family/screen.js';
 import { modes, nextRating, planningScore, trainingLevel, type TrainingMode } from './training/logic.js';
+import { installBackNavigation } from './nav.js';
 import { session } from './session.js';
 import { createStage } from './stage.js';
 import { playLog, progress } from './state.js';
@@ -271,6 +272,11 @@ async function show(): Promise<void> {
 }
 
 window.addEventListener('hashchange', () => void show());
+installBackNavigation(() => ({
+  mapOfLevel: (n) => `#/map/${themeForLevel(n).id}`,
+  currentLevel: progress.data.current,
+  completeNext: session.complete?.nextHref ?? null,
+}));
 void show();
 
 // Offline play: the service worker exists only in production web builds. The Android app
