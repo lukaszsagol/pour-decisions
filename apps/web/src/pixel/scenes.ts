@@ -176,7 +176,14 @@ export function cityScene(theme: Theme, w: number, h: number, locked = false, ar
   const cv = new PixelCanvas(w, h);
   (SCENES[theme.id] ?? amsterdamScene)(cv);
   // A drawn vignette replaces the code-drawn scene on the right of the card.
-  if (art) cv.blit(art, w - art.w, Math.round((h - art.h) * 0.6));
+  if (art) {
+    // Behind it, the vignette's own sky: some are shorter than the card, and the code-drawn
+    // scene (its moon, its roofs) would show through above them.
+    let sky: string | null = null;
+    for (let y = 0; y < art.h && !sky; y++) for (let x = 0; x < art.w && !sky; x++) sky = art.get(x, y);
+    if (sky) cv.rect(w - art.w, 0, art.w, h, sky);
+    cv.blit(art, w - art.w, Math.round((h - art.h) * 0.6));
+  }
   // A solid plate in the card's colour under the text, dithering into the art.
   const plate = theme.passport?.card ?? theme.colors.surface;
   const edge = Math.round(w * 0.64);

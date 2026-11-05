@@ -1,8 +1,9 @@
 import fs from 'node:fs';
 import { expect, test } from '@playwright/test';
-import { open } from './helpers';
+import { open, welcomed } from './helpers';
 
 test('the hidden debug menu exports the play log', async ({ page }) => {
+  await welcomed(page);
   await open(page, '#/level/1');
   await page.locator('.lv-glass[data-index="0"]').click();
   await page.locator('.lv-glass[data-index="2"]').click();

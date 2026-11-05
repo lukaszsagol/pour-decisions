@@ -9,6 +9,7 @@ import type { LevelResult } from '../level/screen.js';
 import { createPixi } from '../pixi-util.js';
 import { ART, type Stage } from '../stage.js';
 import { applyTheme } from '../theme-css.js';
+import { isOn } from '../flags.js';
 
 export interface CompleteData {
   theme: Theme;
@@ -90,7 +91,7 @@ export class CompleteScreen {
         html &&
         this.el.querySelector('.cp-rewards')?.insertAdjacentHTML('afterend', `<div class="cp-family">${html}</div>`),
     );
-    this.el.querySelector('.cp-share')!.addEventListener('click', () => void this.share());
+    this.el.querySelector('.cp-share')?.addEventListener('click', () => void this.share());
     this.el.querySelector<HTMLElement>('.cp-next')!.focus();
     this.el.dataset.ready = 'true';
   }
@@ -155,7 +156,7 @@ export class CompleteScreen {
       }
       ${recipe ? recipeCard(theme, recipe.recipe, recipe.index, recipe.total, 'New recipe card') : ''}
       <div class="cp-actions">
-        <button class="cp-share" aria-label="Share result">${icons.share(k.text)}</button>
+        ${isOn('share') ? `<button class="cp-share" aria-label="Share result">${icons.share(k.text)}</button>` : ''}
         <a class="btn btn-primary cp-next" href="${esc(this.data.nextHref)}">${esc(this.data.nextLabel)}</a>
       </div>
       <div class="toast" role="status" hidden></div>`;

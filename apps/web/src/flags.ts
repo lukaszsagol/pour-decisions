@@ -1,8 +1,9 @@
 /**
  * Feature flags, off by default. Turn on with `?flags=family,lives` in the
  * address (remembered on the device) or in the hidden debug menu.
+ * `share`: the Share buttons, off until a better way to share is decided (owner, 2026-11-05).
  */
-export type Flag = 'family' | 'lives';
+export type Flag = 'family' | 'lives' | 'share';
 const KEY = 'pour-decisions:flags';
 
 function read(): Set<Flag> {

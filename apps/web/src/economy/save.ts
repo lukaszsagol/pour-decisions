@@ -2,6 +2,7 @@ import type { BoosterStock } from '@pour/engine';
 import { economy } from './config.js';
 import { rewardsFor, type Rewards } from './rewards.js';
 import type { TrainingSession } from '../training/logic.js';
+import { FEATURES, OPENS_AFTER } from '../onboarding.js';
 
 export const SAVE_KEY = 'pour-decisions:save';
 export const SAVE_VERSION = 2;
@@ -26,6 +27,11 @@ export interface SaveData {
   daily: Record<string, { stars: number; moves: number; best: number }>;
   /** Brain-training: adaptive rating and past sessions (newest last, 200 kept). */
   training: { rating: number; sessions: TrainingSession[] };
+  /**
+   * First-run: the welcome screen was seen; features already announced when they opened; and
+   * features opened at least once (their tab shows NEW until then). See `src/onboarding.ts`.
+   */
+  intro: { welcomed: boolean; announced: string[]; opened: string[] };
 }
 
 /** Minimal storage interface so tests can use memory instead of localStorage. */
@@ -46,6 +52,7 @@ export function freshSave(): SaveData {
     settings: { muted: false },
     daily: {},
     training: { rating: 2, sessions: [] },
+    intro: { welcomed: false, announced: [], opened: [] },
   };
 }
 
@@ -61,6 +68,14 @@ export function migrate(raw: unknown): SaveData {
     // Version 2 drops coins: there is no currency any more (owner, 2026-11-03).
     const { coins: _coins, ...rest } = data;
     data = { ...rest, version: 2 };
+  }
+  // Saves from before the first-run screens: anyone who has played already knows the game, so
+  // they skip the welcome and every feature open to them counts as announced and opened.
+  if (!data.intro) {
+    const played = Object.keys((data.levels as Record<string, unknown> | undefined) ?? {}).length > 0;
+    const current = typeof data.current === 'number' ? data.current : 1;
+    const open = played ? FEATURES.filter((f) => current > OPENS_AFTER[f]) : [];
+    data = { ...data, intro: { welcomed: played, announced: open, opened: open } };
   }
   // A save from a newer build is kept as it is rather than wiping progress.
   return { ...freshSave(), ...data } as unknown as SaveData;
@@ -181,6 +196,19 @@ export class Progress {
   recordFail(): void {
     if (this.data.streak === 0) return;
     this.data.streak = 0;
+    this.commit();
+  }
+
+  /** First-run bookkeeping: the welcome was seen, a feature was announced, or opened. */
+  markIntro(kind: 'welcomed' | 'announced' | 'opened', feature?: string): void {
+    const intro = this.data.intro;
+    if (kind === 'welcomed') {
+      if (intro.welcomed) return;
+      intro.welcomed = true;
+    } else {
+      if (!feature || intro[kind].includes(feature)) return;
+      intro[kind].push(feature);
+    }
     this.commit();
   }
 

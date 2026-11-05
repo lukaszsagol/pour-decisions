@@ -12,9 +12,7 @@ test('renders the Amsterdam level screen like the design', async ({ page }) => {
 
 test('a new player starts on Amsterdam level 1', async ({ page }) => {
   await open(page, '');
-  await page.getByRole('link', { name: 'Continue' }).click();
-  await page.locator('.map-screen[data-ready="true"]').waitFor();
-  await page.getByRole('link', { name: 'Play level 1' }).click();
+  await page.getByRole('button', { name: 'Pour your first drink' }).click();
   await page.locator('.level-screen[data-ready="true"]').waitFor();
   await expect(page.getByText('Amsterdam · Level 1')).toBeVisible();
   await expect(page.getByRole('button', { name: /^Glass \d/ })).toHaveCount(3);
