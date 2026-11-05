@@ -1,0 +1,43 @@
+{
+  "amsterdam-1": "opt-2",
+  "amsterdam-2": "opt-0",
+  "amsterdam-3": "opt-0",
+  "amsterdam-4": "opt-1",
+  "amsterdam-5": "opt-1",
+  "london-1": "opt-0",
+  "london-2": {
+    "option": "opt-0",
+    "outline": true
+  },
+  "london-3": {
+    "option": "opt-1",
+    "outline": true
+  },
+  "london-4": "opt-0",
+  "london-5": "opt-1",
+  "newyork-1": "opt-0",
+  "newyork-2": {
+    "option": "opt-1",
+    "outline": true
+  },
+  "newyork-3": "opt-0",
+  "newyork-4": {
+    "option": "opt-1",
+    "outline": true
+  },
+  "newyork-5": "opt-1",
+  "tokyo-1": "opt-1",
+  "tokyo-2": {
+    "option": "key-0",
+    "key": true
+  },
+  "tokyo-3": {
+    "option": "opt-1",
+    "outline": true
+  },
+  "tokyo-4": {
+    "option": "key-0",
+    "key": true
+  },
+  "tokyo-5": "opt-1"
+}

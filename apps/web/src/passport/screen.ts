@@ -1,4 +1,4 @@
-import { themes, type Theme } from '@pour/themes';
+import { themes, type CityId, type Theme } from '@pour/themes';
 import type { Progress } from '../economy/save.js';
 import { esc, icons } from '../icons.js';
 import type { Stage } from '../stage.js';
@@ -6,6 +6,9 @@ import { tabBar, type Tab } from '../tabbar.js';
 import { applyTheme } from '../theme-css.js';
 import { openSettings } from './settings.js';
 import { cityScene, dataUrl } from '../pixel/scenes.js';
+import { stampFor } from '../pixel/stamps.js';
+import { cardScenes } from '../pixel/card-scenes.js';
+import type { PixelCanvas } from '../pixel/canvas.js';
 
 export interface PassportOptions {
   progress: Progress;
@@ -15,6 +18,8 @@ export interface PassportOptions {
   dailyLine: string;
   /** Replaces the daily line once family results arrive. */
   dailyFamily?: Promise<string | null>;
+  /** Link to the family screen, when the family feature is on. */
+  familyHref?: string;
 }
 
 const LEVELS_PER_CITY = 100;
@@ -25,6 +30,8 @@ type CityStatus = 'current' | 'done' | 'locked';
 /** Home: city cards (current highlighted, finished stamped, later ones locked), tonight's pour, tab bar. */
 export class PassportScreen {
   readonly el = document.createElement('div');
+
+  private scenes: Partial<Record<CityId, PixelCanvas>> = {};
 
   constructor(
     private readonly stage: Stage,
@@ -46,6 +53,7 @@ export class PassportScreen {
   }
 
   async mount(): Promise<void> {
+    this.scenes = await cardScenes();
     const theme = this.currentTheme();
     applyTheme(this.stage.el, theme);
     this.stage.el.replaceChildren(this.el);
@@ -90,6 +98,7 @@ export class PassportScreen {
           <span class="pp-daily-play">Play</span>
         </a>
         <a class="pp-training" href="#/training">Training <span>Planning, plan ahead, memory</span></a>
+        ${this.opts.familyHref ? `<a class="pp-training" href="${esc(this.opts.familyHref)}">Family <span>Group, daily results, weekly board</span></a>` : ''}
       </div>
       ${tabBar('passport', this.opts.tabs)}`;
   }
@@ -106,7 +115,7 @@ export class PassportScreen {
       const bar = Math.ceil(at / 20);
       const k = t.colors;
       return `
-        <section class="pp-current px-scene" style="--scene:url(${dataUrl(cityScene(t, 175, 78))});--px-edge:${k.accent};background-color:${pp.card};color:${k.text}" aria-label="Now visiting ${esc(t.name)}">
+        <section class="pp-current px-scene" style="--scene:url(${dataUrl(cityScene(t, 175, 78, false, this.scenes[t.id]))});--px-edge:${k.accent};background-color:${pp.card};color:${k.text}" aria-label="Now visiting ${esc(t.name)}">
           <div>
             <div class="pp-kicker" style="color:${k.accent}">Now visiting</div>
             <h2 class="pp-city" style="${display}">${esc(t.name)}</h2>
@@ -127,12 +136,14 @@ export class PassportScreen {
         : `${esc(t.setting)} · after ${esc(themes[t.order - 2]?.name ?? '')}`;
     const side =
       status === 'done'
-        ? `<div class="pp-stamp" style="border-color:${pp.stamp};color:${pp.stamp};rotate:${t.order % 2 ? -8 : 8}deg" aria-label="Stamped, ${stars} stars"><b>${pp.code}</b><span>★ ${stars}</span></div>`
+        ? stampFor(t.id)
+          ? `<div class="pp-stamp has-art" style="background-image:url(${stampFor(t.id)});color:${pp.stamp}" aria-label="Stamped, ${stars} stars"><b>${pp.code} ★${stars}</b></div>`
+          : `<div class="pp-stamp" style="border-color:${pp.stamp};color:${pp.stamp};rotate:${t.order % 2 ? -8 : 8}deg" aria-label="Stamped, ${stars} stars"><b>${pp.code}</b><span>★ ${stars}</span></div>`
         : `<div class="pp-lock" aria-label="Locked">${icons.lock(pp.sub)}</div>`;
     const tag = status === 'done' ? 'a' : 'div';
     const href = status === 'done' ? ` href="#/map/${t.id}"` : '';
     return `
-      <${tag}${href} class="pp-city-card px-scene is-${status}" style="--scene:url(${dataUrl(cityScene(t, 175, 44, status === 'locked'))});--px-edge:${pp.cardBorder};background-color:${pp.card};color:${pp.title}">
+      <${tag}${href} class="pp-city-card px-scene is-${status}" style="--scene:url(${dataUrl(cityScene(t, 175, 44, status === 'locked', this.scenes[t.id]))});--px-edge:${pp.cardBorder};background-color:${pp.card};color:${pp.title}">
         <div>
           <h2 class="pp-city-name" style="${display}">${esc(t.name)}</h2>
           <div class="pp-city-sub" style="color:${pp.sub}">${sub}</div>

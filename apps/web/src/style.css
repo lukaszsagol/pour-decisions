@@ -2004,3 +2004,226 @@ input {
 .fam-body {
   bottom: calc(84px - var(--stick-b, 0px));
 }
+
+/* Drawn passport stamps: the 32×32 art at 2× pressed onto a cream paper tag, so it reads over
+   the card's scene; the code and stars sit in its lower band. */
+.pp-stamp.has-art {
+  width: 68px;
+  height: 68px;
+  border: none !important;
+  background: #f4ecdd center / 64px 64px no-repeat;
+  box-shadow:
+    0 0 0 2px #2a1a10,
+    4px 4px 0 2px rgba(0, 0, 0, 0.45);
+  image-rendering: pixelated;
+  justify-content: flex-end;
+  padding-bottom: 12px;
+  font-size: 9px;
+  line-height: 1;
+}
+.pp-stamp.has-art b {
+  letter-spacing: 0;
+  color: #2a1a10;
+  background: #f4ecdd;
+  padding: 1px 2px;
+}
+
+/* The city's bartender: cheering on top of the win card, thinking over the dead-end panel. */
+.win-card {
+  position: relative;
+}
+.win-barkeep {
+  position: absolute;
+  top: -122px;
+  left: 50%;
+  translate: -48px 0;
+}
+.de-barkeep {
+  position: absolute;
+  right: 14px;
+  top: -124px;
+}
+
+/* A dead end stops play, so it shows mid-screen over a light dim (the stuck glasses stay
+   visible), where the player is looking, rather than down on the counter. */
+.lv-deadend {
+  top: 330px;
+  z-index: 3;
+  animation: de-pop 0.18s steps(3) both;
+}
+.lv-dim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+.lv-dim::before {
+  content: '';
+  position: absolute;
+  inset: -2048px;
+  background: color-mix(in srgb, var(--c-ground) 55%, transparent);
+}
+.lv-dim[hidden] {
+  display: none;
+}
+@keyframes de-pop {
+  from {
+    translate: 0 16px;
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lv-deadend {
+    animation: none;
+  }
+}
+
+/* The first level's host: the city's bartender on the counter, with a speech bubble. */
+.lv-host {
+  position: absolute;
+  left: 10px;
+  top: 508px;
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  pointer-events: none;
+}
+.lv-host[hidden] {
+  display: none;
+}
+.lv-host-say {
+  margin: 30px 0 0;
+  max-width: 230px;
+  padding: 10px 12px;
+  font-size: 14px;
+  line-height: 1.35;
+  background: #f4ecdd;
+  color: #2a1a10;
+  --px-face: #f4ecdd;
+  --px-edge: #2a1a10;
+}
+
+/* Cocktail book: achievements, then each city's five drinks; unearned ones are silhouettes. */
+.bk-body {
+  position: absolute;
+  inset: 0 0 calc(84px - var(--stick-b, 0px));
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  padding: 44px 0 24px;
+}
+.bk-body::-webkit-scrollbar {
+  display: none;
+}
+.bk-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 16px 20px 0;
+}
+.bk-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 10px 8px;
+}
+.bk-stat b {
+  font-size: 20px;
+  color: var(--c-text);
+}
+.bk-stat span {
+  font-size: 11px;
+  color: var(--c-muted);
+}
+.bk-city {
+  margin: 18px 20px 0;
+  padding: 12px 8px 8px;
+}
+.bk-city-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0 4px 8px;
+  font-size: 13px;
+}
+.bk-city-top h2 {
+  font-size: 22px;
+  font-weight: 400;
+}
+.bk-drinks {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 2px;
+}
+.bk-drink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 0 6px;
+  background: color-mix(in srgb, var(--px-face), #000 25%);
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  min-height: 132px;
+}
+.bk-drink img {
+  flex: none;
+}
+.bk-drink.is-locked img {
+  filter: brightness(0) invert(1) opacity(0.22);
+}
+.bk-name {
+  font-size: 10px;
+  letter-spacing: -0.04em;
+  line-height: 1.2;
+  text-align: center;
+  max-width: 100%;
+  hyphens: manual;
+  overflow-wrap: break-word;
+}
+.bk-stars {
+  font-size: 10px;
+  margin-top: auto;
+}
+.bk-stat,
+.bk-city {
+  --px-edge: var(--c-line);
+  --px-face: var(--c-surface);
+  background-color: var(--px-face);
+  box-shadow:
+    0 -2px 0 0 var(--px-edge),
+    0 2px 0 0 var(--px-edge),
+    -2px 0 0 0 var(--px-edge),
+    2px 0 0 0 var(--px-edge),
+    inset 2px 2px 0 0 color-mix(in srgb, var(--px-face), #fff 10%),
+    inset -2px -2px 0 0 color-mix(in srgb, var(--px-face), #000 30%),
+    4px 4px 0 0 color-mix(in srgb, var(--c-ground), #000 45%);
+}
+.bk-city {
+  --px-face: var(--bk-face);
+}
+.bk-sheet {
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+}
+.bk-sheet-inner {
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.bk-sheet .cp-recipe {
+  position: static;
+  width: auto;
+}
+.bk-locked-card .cp-recipe-glass img {
+  filter: brightness(0) opacity(0.35);
+}
+.bk-hint {
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #3a3546;
+}

@@ -54,8 +54,9 @@ test('navigates Passport → Map → Level → Complete → Map, with tabs', asy
   await expect(page.getByRole('button', { name: 'Level 1, 3 stars' })).toBeVisible();
   await page.getByRole('link', { name: 'Back to passport' }).click();
   await expect(page.getByRole('heading', { name: 'Your passport' })).toBeVisible();
-  await page.getByRole('link', { name: 'Family' }).click();
-  await expect(page.getByRole('heading', { name: 'Family' })).toBeVisible();
+  await page.getByRole('link', { name: 'Recipes' }).click();
+  await expect(page.getByRole('heading', { name: 'Cocktail book' })).toBeVisible();
+  await expect(page.getByText('Finish a bar to add its drink to your book.')).toBeVisible();
 });
 
 test('the level back button returns to its city map', async ({ page }) => {

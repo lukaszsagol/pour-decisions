@@ -23,7 +23,7 @@ export class FamilyPlaceholder {
         <div class="fam-soon-art" aria-hidden="true">${icons.tab('family', this.theme.colors.accent).replace(/width="(\d+)" height="(\d+)"/, (_m, w, h) => `width="${Number(w) * 3}" height="${Number(h) * 3}"`)}</div>
         <p>Join your family with an invite code to share stars, daily results and a weekly board. This arrives once the family server is set up.</p>
       </section>
-      ${tabBar('family', this.tabs)}`;
+      ${tabBar('passport', this.tabs)}`;
     this.el.dataset.ready = 'true';
   }
   destroy(): void {

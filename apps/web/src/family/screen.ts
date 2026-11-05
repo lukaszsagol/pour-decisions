@@ -36,7 +36,7 @@ export class FamilyScreen {
 
   private async render(): Promise<void> {
     const group = await this.backend.group();
-    this.el.innerHTML = `<div class="fam-body">${group ? await this.groupHtml(group) : this.joinHtml()}</div>${tabBar('family', this.tabs)}`;
+    this.el.innerHTML = `<div class="fam-body">${group ? await this.groupHtml(group) : this.joinHtml()}</div>${tabBar('passport', this.tabs)}`;
     if (!group) this.bindJoin();
     else
       this.el

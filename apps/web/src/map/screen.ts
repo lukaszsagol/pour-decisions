@@ -8,6 +8,7 @@ import { reducedMotion } from '../anim.js';
 import { PixelCanvas } from '../pixel/canvas.js';
 import { PixelLayer } from '../pixel/layer.js';
 import { coinRadius, drawMap, pulseRing, type MapNode, type MapScene } from '../pixel/map.js';
+import { landmarkFor } from '../pixel/landmarks.js';
 import { createPixi, invalidate } from '../pixi-util.js';
 import { ART, STAGE_H, type Stage } from '../stage.js';
 import { applyTheme, color } from '../theme-css.js';
@@ -69,6 +70,8 @@ export class MapScreen {
     if (this.destroyed) return dispose();
     this.disposePixi = dispose;
     const scene = this.scene();
+    const landmark = await landmarkFor(theme.id);
+    if (this.destroyed) return;
     const world = new Container();
     world.scale.set(ART);
     // The world is drawn wider than the stage on wide screens: more city either side.
@@ -81,7 +84,7 @@ export class MapScreen {
         .removeChildren()
         .filter((c) => c !== pulse?.sprite)
         .forEach((c) => c.destroy({ texture: true, textureSource: true }));
-      const art = drawMap(theme, scene, { l, r });
+      const art = drawMap(theme, scene, { l, r }, landmark);
       // Chunks keep each texture within every GPU's size limit.
       const CHUNK = 1024;
       for (let y0 = 0; y0 < art.h; y0 += CHUNK) {

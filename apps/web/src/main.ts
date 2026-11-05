@@ -8,6 +8,7 @@ import { designFixtures } from './fixtures.js';
 import { LevelScreen, type LevelResult } from './level/screen.js';
 import { getLevel, levelsInCity } from './levels.js';
 import { MapScreen } from './map/screen.js';
+import { BookScreen } from './book/screen.js';
 import { FamilyPlaceholder } from './family/placeholder.js';
 import { PassportScreen } from './passport/screen.js';
 import { tabBar, type Tab } from './tabbar.js';
@@ -28,7 +29,7 @@ interface Screen {
   destroy(): void;
 }
 
-const tabs: Record<Tab, string> = { map: '#/map', daily: '#/daily', passport: '#/passport', family: '#/family' };
+const tabs: Record<Tab, string> = { map: '#/map', daily: '#/daily', passport: '#/passport', book: '#/book' };
 
 sfx.setMuted(progress.data.settings.muted);
 progress.onChange(() => sfx.setMuted(progress.data.settings.muted));
@@ -240,6 +241,7 @@ function route(): Screen {
   if (name === 'daily') return new DailyScreen(stage, dailyLevel(dateKey()), progress, tabs);
   if (name === 'training') return new TrainingScreen(stage, themeForLevel(progress.data.current), progress);
   if (name === 'train' && arg && arg in modes) return trainingScreen(arg as TrainingMode);
+  if (name === 'book') return new BookScreen(stage, themeForLevel(progress.data.current), progress, tabs);
   if (name === 'family') {
     const backend = family();
     const theme = themeForLevel(progress.data.current);
@@ -255,7 +257,7 @@ function route(): Screen {
       tabs,
       dailyHref: '#/daily',
       dailyLine,
-      ...(family() ? { dailyFamily: familyDailyLine() } : {}),
+      ...(family() ? { dailyFamily: familyDailyLine(), familyHref: '#/family' } : {}),
     });
   }
   return levelScreen(name === 'level' ? Number(arg) : progress.data.current);

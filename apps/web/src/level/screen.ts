@@ -7,6 +7,7 @@ import { GLASS_H, SLOT_W } from '../pixel/level/layout.js';
 import { PixelLevelRenderer, TILTS, type GlassFrame, type Mark, type PourFrame } from '../pixel/level/renderer.js';
 import { UNIT } from '../pixel/level/glass.js';
 import { PixelLayer } from '../pixel/layer.js';
+import { bartenderImg } from '../pixel/bartenders.js';
 import { createPixi } from '../pixi-util.js';
 import { sfx } from '../sound.js';
 import { ART, STAGE_H, type Stage } from '../stage.js';
@@ -606,17 +607,34 @@ export class LevelScreen {
   private renderDeadEnd(): void {
     const panel = this.el.querySelector<HTMLElement>('.lv-deadend')!;
     const show = this.game.status === 'deadEnd';
+    const wasShown = !panel.hidden;
     panel.hidden = !show;
+    this.el.querySelector<HTMLElement>('.lv-dim')!.hidden = !show;
     if (!show) return;
     panel.querySelector<HTMLButtonElement>('.de-undo')!.disabled = !this.game.canUndo() || this.opts.boosters === false;
     const glass = panel.querySelector<HTMLButtonElement>('.de-glass')!;
     glass.disabled = !this.game.canAddGlass() || this.opts.boosters === false;
+    if (!wasShown) panel.querySelector<HTMLButtonElement>('.de-actions button:not(:disabled)')?.focus();
   }
 
   /** Level 1 pointer: points at the source glass, then at the target, until the first pour. */
   private renderGuide(): void {
     const pointer = this.el.querySelector<HTMLElement>('.lv-guide');
     if (!pointer) return;
+    // The bartender talks the first pours through, then leaves the player to it.
+    const host = this.el.querySelector<HTMLElement>('.lv-host');
+    if (host) {
+      const say =
+        !this.opts.guide || this.game.status !== 'playing' || this.game.moves > 2
+          ? ''
+          : this.game.moves > 0
+            ? 'Keep going: one drink per glass.'
+            : this.game.selected === null
+              ? 'Tap a glass to pick it up.'
+              : 'Now tap the glass to pour into.';
+      host.hidden = !say;
+      host.querySelector('.lv-host-say')!.textContent = say;
+    }
     if (!this.opts.guide || this.game.moves > 0 || this.game.status !== 'playing') {
       pointer.hidden = true;
       return;
@@ -644,6 +662,7 @@ export class LevelScreen {
     const overlay = this.el.querySelector<HTMLElement>('.lv-overlay')!;
     overlay.innerHTML = `
       <div class="win-card px-panel" role="dialog" aria-modal="true" aria-labelledby="win-verdict">
+        ${bartenderImg(this.theme.id, 'cheer', 'win-barkeep')}
         <div class="win-kicker">${esc(this.opts.subtitle ? "Tonight's pour cleared" : `Level ${r.number} cleared`)}</div>
         <div class="win-stars" aria-label="${r.stars} of 3 stars">${stars}</div>
         <div class="win-verdict" id="win-verdict">${verdict}</div>
@@ -693,13 +712,16 @@ export class LevelScreen {
       </div>
       <button class="lv-restart" aria-label="Restart level" style="left:${a(restart.x + 6) - 22}px;top:${a(restart.y + 6) - 22}px"></button>
       <div class="lv-glasses"></div>
+      <div class="lv-host" hidden>${bartenderImg(this.theme.id, 'neutral', 'lv-host-img')}<p class="lv-host-say px-panel" aria-live="polite"></p></div>
       <div class="lv-guide" hidden aria-hidden="true">${pixelSvg(GUIDE_ARROW, { o: '#1A0F08', '#': '#F3E6CC', h: '#FFFFFF', d: '#B8A888' }, 4)}</div>
       <div class="lv-counter" style="color:${text.title}">
         ${booster('undo', 'Undo', 0)}
         ${booster('glass', 'Extra glass', 1)}
         ${booster('hint', 'Hint', 2)}
       </div>
+      <div class="lv-dim" hidden></div>
       <section class="lv-deadend px-panel" hidden aria-labelledby="de-title" role="alertdialog">
+        ${bartenderImg(this.theme.id, 'think', 'de-barkeep')}
         <div>
           <h2 class="de-title" id="de-title">No pours left</h2>
           <p class="de-sub">Undo a move, add a glass, or start the round again.</p>

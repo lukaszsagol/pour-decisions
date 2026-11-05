@@ -75,6 +75,10 @@ test('menus', async ({ page }) => {
   await shot(page, `${dir}/training`);
   await open(page, '#/family');
   await shot(page, `${dir}/family`);
+  await open(page, '#/book');
+  await shot(page, `${dir}/book`);
+  await page.locator('.bk-drink').first().click();
+  await shot(page, `${dir}/book-recipe`);
   await open(page, '#/fixture/dead-end');
   await shot(page, `${dir}/dead-end`);
 });
@@ -82,6 +86,13 @@ test('menus', async ({ page }) => {
 test('new player', async ({ page }) => {
   await open(page, '#/passport');
   await shot(page, `${dir}/passport-new-player`);
+  await open(page, '#/book');
+  await shot(page, `${dir}/book-new-player`);
+  await page
+    .getByRole('button', { name: /^Locked recipe/ })
+    .first()
+    .click();
+  await shot(page, `${dir}/book-locked`);
   await open(page, '#/level/1');
   await shot(page, `${dir}/level-1-guide`);
 });

@@ -1,8 +1,9 @@
 import type { Difficulty } from '@pour/engine';
 import type { Recipe, Theme } from '@pour/themes';
+import { recipeCard } from '../recipe-card.js';
 import type { Rewards } from '../economy/rewards.js';
 import { esc, icons } from '../icons.js';
-import { cityBand, dataUrl, recipeGlass } from '../pixel/scenes.js';
+import { cityBand } from '../pixel/scenes.js';
 import { PixelLayer } from '../pixel/layer.js';
 import type { LevelResult } from '../level/screen.js';
 import { createPixi } from '../pixi-util.js';
@@ -152,7 +153,7 @@ export class CompleteScreen {
       </div>`
           : ''
       }
-      ${recipe ? this.recipeHtml(recipe.recipe, recipe.index, recipe.total) : ''}
+      ${recipe ? recipeCard(theme, recipe.recipe, recipe.index, recipe.total, 'New recipe card') : ''}
       <div class="cp-actions">
         <button class="cp-share" aria-label="Share result">${icons.share(k.text)}</button>
         <a class="btn btn-primary cp-next" href="${esc(this.data.nextHref)}">${esc(this.data.nextLabel)}</a>
@@ -164,24 +165,5 @@ export class CompleteScreen {
     const c = this.data.theme.colors.hint;
     const svg = kind === 'undo' ? icons.undo(c) : kind === 'extraGlass' ? icons.glass(c) : icons.hint(c);
     return svg.replace('width="26" height="26"', 'width="18" height="18"');
-  }
-
-  private recipeHtml(recipe: Recipe, index: number, total: number): string {
-    const ingredients = recipe.ingredients
-      .map(([amount, item]) => `<li><span class="cp-amount">${esc(amount)}</span><span>${esc(item)}</span></li>`)
-      .join('');
-    return `
-      <article class="cp-recipe" aria-label="New recipe card: ${esc(recipe.name)}">
-        <div class="cp-recipe-top"><span class="cp-pill">New recipe card</span><span class="cp-count">${esc(this.data.theme.name)} · ${index} of ${total}</span></div>
-        <div class="cp-recipe-body">
-          <div class="cp-recipe-text">
-            <h2 class="cp-recipe-name">${esc(recipe.name)}</h2>
-            ${recipe.local && recipe.local !== recipe.name ? `<div class="cp-recipe-local">${esc(recipe.local)}</div>` : ''}
-            <ul class="cp-ingredients">${ingredients}</ul>
-          </div>
-          <div class="cp-recipe-glass"><img class="px-img" alt="" src="${dataUrl(recipeGlass(recipe))}" width="70" height="150"></div>
-        </div>
-        <p class="cp-method">${esc(recipe.method)}</p>
-      </article>`;
   }
 }
