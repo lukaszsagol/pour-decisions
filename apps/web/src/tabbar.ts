@@ -45,12 +45,13 @@ function explainLockedTabs(): void {
 function onLockedTab(e: MouseEvent): void {
   const tab = (e.target as Element | null)?.closest<HTMLElement>('.tab.is-locked');
   if (!tab) return;
-  const bar = tab.closest('.tabbar');
-  bar?.parentElement?.querySelector('.tab-note')?.remove();
+  // On the screen itself, not inside the bar's panel (the map's), so it sits above the bar.
+  const host = tab.closest('.screen') ?? document.body;
+  host.querySelector('.tab-note')?.remove();
   const note = document.createElement('div');
   note.className = 'tab-note';
   note.setAttribute('role', 'status');
   note.textContent = `${tab.querySelector('span:not(.tab-icon):not(.tab-lock)')?.textContent ?? ''} opens ${tab.dataset.opens}.`;
-  bar?.insertAdjacentElement('beforebegin', note);
+  host.appendChild(note);
   setTimeout(() => note.remove(), 2600);
 }

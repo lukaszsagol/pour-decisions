@@ -87,6 +87,10 @@ export function createStage(root: HTMLElement): Stage {
     const below =
       window.innerHeight - f.top - STAGE_H * f.scale - (parseFloat(getComputedStyle(safe).paddingBottom) || 0);
     el.style.setProperty('--stick-b', `${Math.max(0, Math.floor(below / f.scale / ART)) * ART}px`);
+    // The screen beyond the stage's top and sides, in stage px, for layouts that reach the edges.
+    el.style.setProperty('--bleed-t', `${f.bleed.t * ART}px`);
+    el.style.setProperty('--bleed-l', `${f.bleed.l * ART}px`);
+    el.style.setProperty('--bleed-r', `${f.bleed.r * ART}px`);
     listeners.forEach((fn) => fn());
   };
   window.addEventListener('resize', fit);
