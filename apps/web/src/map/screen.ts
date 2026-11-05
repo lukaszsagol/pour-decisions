@@ -1,5 +1,6 @@
 import type { PackLevel } from '@pour/engine';
 import type { Theme } from '@pour/themes';
+import { announceNext } from '../announce.js';
 import type { Progress } from '../economy/save.js';
 import { esc, icons } from '../icons.js';
 import type { LevelEntry } from '../levels.js';
@@ -141,6 +142,7 @@ export class MapScreen {
     const i = this.indexOf(this.selected);
     scroller.scrollTop = scrollFor(this.layout.nodes[i]!.y, STAGE_H, this.layout.height, this.opts.footer ? 280 : 196);
     sync();
+    announceNext(this.el, this.opts.progress, theme);
     this.el.dataset.ready = 'true';
   }
 

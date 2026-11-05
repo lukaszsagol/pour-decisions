@@ -14,3 +14,8 @@ export async function landmarkFor(city: CityId): Promise<PixelCanvas | undefined
   const url = art[`./landmarks/${city}.png`];
   return url ? loadSprite(url) : undefined;
 }
+
+/** The scene's bundled picture, for use in an <img> (195×80; show it at 2×). */
+export function landmarkUrl(city: CityId): string | undefined {
+  return art[`./landmarks/${city}.png`];
+}

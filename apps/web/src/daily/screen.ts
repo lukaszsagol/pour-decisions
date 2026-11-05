@@ -8,6 +8,7 @@ import { applyTheme } from '../theme-css.js';
 import { mix, PixelCanvas } from '../pixel/canvas.js';
 import { dataUrl } from '../pixel/scenes.js';
 import { liquidTones } from '../pixel/tones.js';
+import { isOn } from '../flags.js';
 import { dailyShareText, dateKey, type DailyLevel } from './generate.js';
 
 /** Consecutive nights played, counting back from today (or from yesterday if tonight is not played yet). */
@@ -124,8 +125,8 @@ export class DailyScreen {
           <div class="dy-moves">${result.moves} pours · par ${result.best}</div>
         </div>
         <div class="dy-actions">
-          <button class="btn btn-primary dy-share">${icons.share(k.accentText).replace('width="24" height="24"', 'width="18" height="18"')} Share result</button>
-          <a class="btn btn-ghost" href="#/daily/play">Play again</a>
+          ${isOn('share') ? `<button class="btn btn-primary dy-share">${icons.share(k.accentText).replace('width="24" height="24"', 'width="18" height="18"')} Share result</button>` : ''}
+          <a class="btn ${isOn('share') ? 'btn-ghost' : 'btn-primary'}" href="#/daily/play">Play again</a>
         </div>
         <p class="dy-next" role="status">Next pour in ${untilMidnight()}</p>`
       : `<a class="btn btn-primary dy-play" href="#/daily/play">Play tonight's pour</a>

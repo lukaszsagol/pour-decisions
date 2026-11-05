@@ -1,7 +1,8 @@
 import { expect, test } from '@playwright/test';
-import { shot } from './helpers';
+import { played, shot } from './helpers';
 
 test('family features run against the fake backend behind the flag', async ({ page }) => {
+  await played(page, 6);
   await page.goto('/?flags=family#/family');
   await page.locator('.screen[data-ready="true"]').waitFor();
   const create = page.locator('.fam-create');
