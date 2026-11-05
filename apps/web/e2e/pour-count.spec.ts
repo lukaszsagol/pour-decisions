@@ -64,3 +64,41 @@ test('restart asks first once there are pours to lose', async ({ page }) => {
   await page.getByRole('alertdialog').getByRole('button', { name: 'Restart' }).click();
   await expect(page.locator('.lv-moves-status')).toHaveText(/^0 pours,/);
 });
+
+test('the last pours get louder, and losing a star is announced', async ({ page }) => {
+  // Level 6: par 12, glasses 4 and 5 start empty, so pours can go back and forth between them.
+  await open(page, '#/level/6');
+  const pour = async (from: number, to: number, moves: number) => {
+    await page.locator(glass(from)).click();
+    await page.locator(glass(to)).click();
+    await expect(page.locator('.lv-moves-status')).toContainText(`${moves} pour`);
+  };
+  await pour(0, 4, 1);
+  let at = 4;
+  for (let moves = 2; moves <= 9; moves++) {
+    await pour(at, at === 4 ? 5 : 4, moves);
+    at = at === 4 ? 5 : 4;
+  }
+  const sign = page.locator('.lv-moves');
+  await expect(sign).toHaveAttribute('data-left', '3');
+  await page.waitForTimeout(500);
+  await shot(page, 'pour-count/three-left');
+  await pour(at, at === 4 ? 5 : 4, 10);
+  at = at === 4 ? 5 : 4;
+  await expect(sign).toHaveAttribute('data-left', '2');
+  await page.waitForTimeout(500);
+  await shot(page, 'pour-count/two-left');
+  await pour(at, at === 4 ? 5 : 4, 11);
+  at = at === 4 ? 5 : 4;
+  await expect(sign).toHaveAttribute('data-left', '1');
+  await expect(page.locator('.lv-move-label')).toContainText('pour left');
+  await page.waitForTimeout(500);
+  await shot(page, 'pour-count/last-pour');
+  await pour(at, at === 4 ? 5 : 4, 12);
+  await expect(page.locator('.lv-lost')).toHaveText('Three stars gone: 4 pours left for two');
+  await expect(page.locator('.lv-moves-status')).toHaveText(
+    'Three stars gone: 4 pours left for two. 12 pours, par 12: 4 left for two stars',
+  );
+  await page.waitForTimeout(700);
+  await shot(page, 'pour-count/star-lost');
+});

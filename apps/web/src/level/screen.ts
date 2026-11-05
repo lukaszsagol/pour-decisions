@@ -10,9 +10,9 @@ import { PixelLayer } from '../pixel/layer.js';
 import { bartenderImg } from '../pixel/bartenders.js';
 import { createPixi } from '../pixi-util.js';
 import { sfx } from '../sound.js';
-import { ART, STAGE_H, type Stage } from '../stage.js';
+import { ART, STAGE_H, STAGE_W, type Stage } from '../stage.js';
 import { applyTheme } from '../theme-css.js';
-import { pourSign, pourSignLabel } from './pour-sign.js';
+import { pourSign, pourSignLabel, starLossMessage, urgency, type PourSign } from './pour-sign.js';
 
 export interface LevelResult {
   number: number;
@@ -334,6 +334,7 @@ export class LevelScreen {
     if (this.pouring) return;
     this.game.restart();
     this.restarts++;
+    this.el.querySelector('.lv-lost')?.remove();
     this.hint = null;
     this.marks.clear();
     this.wonReported = false;
@@ -663,23 +664,49 @@ export class LevelScreen {
   /** The header sign: a countdown to the best result still possible (see pour-sign.ts). */
   private renderSign(): void {
     const g = this.game;
-    const sign = pourSign(g.moves, g.best, g.extraGlassUsed);
+    const sign = pourSign(g.moves, g.best, g.extraGlassUsed, g.status === 'won');
     const el = this.el.querySelector<HTMLElement>('.lv-moves');
     if (!el) return;
     const star = pixelSvg(MINI_STAR, { '#': this.theme.colors.starDone }, 2);
     this.text('.lv-move-count', String(sign.count));
+    const unit = sign.total ? 'pours' : sign.count === 1 ? 'pour left' : 'pours left';
     el.querySelector('.lv-move-label')!.innerHTML =
-      `${sign.total ? 'pours' : 'pours left'}<br>for <span class="lv-move-stars">${star.repeat(sign.stars)}</span>`;
+      `${unit}<br>for <span class="lv-move-stars">${star.repeat(sign.stars)}</span>`;
     el.dataset.stars = String(sign.stars);
-    const label = pourSignLabel(g.moves, g.best, sign);
+    // The last three pours of a countdown get louder (see the CSS for [data-left]).
+    const left = urgency(sign);
+    if (left) el.dataset.left = String(left);
+    else delete el.dataset.left;
+    let label = pourSignLabel(g.moves, g.best, sign);
+    const before = this.lastSign;
+    this.lastSign = sign;
+    if (before && sign.stars < before.stars) {
+      this.lossNote = { moves: g.moves, text: starLossMessage(before, sign, g.extraGlassUsed) };
+      this.starLost(el, this.lossNote.text);
+    }
+    // The sign is redrawn after the pour animation too; keep the news for the pour that lost it.
+    if (this.lossNote?.moves === g.moves) label = `${this.lossNote.text}. ${label}`;
     el.setAttribute('aria-label', `${label}. Show par`);
     this.text('.lv-moves-status', label);
-    // Losing a star flashes the sign.
-    if (this.signStars !== null && sign.stars < this.signStars) this.flash(el, 'is-drop');
-    this.signStars = sign.stars;
   }
 
-  private signStars: number | null = null;
+  private lastSign: PourSign | null = null;
+  private lossNote: { moves: number; text: string } | null = null;
+
+  /** Losing a star is a moment: the sign shakes red and a banner under it says what's left. */
+  private starLost(sign: HTMLElement, message: string): void {
+    this.flash(sign, 'is-drop');
+    this.el.querySelector('.lv-lost')?.remove();
+    const { sign: at } = this.art;
+    const banner = document.createElement('div');
+    banner.className = 'lv-lost';
+    banner.setAttribute('aria-hidden', 'true');
+    banner.style.right = `${STAGE_W - (at.x + at.w) * ART}px`;
+    banner.style.top = `${(at.y + at.h) * ART + 8}px`;
+    banner.innerHTML = `<span class="lv-lost-star">${icons.star(this.theme.colors.starDone, 26)}</span><span>${esc(message)}</span>`;
+    this.el.appendChild(banner);
+    setTimeout(() => banner.remove(), 3200);
+  }
 
   /** Restarts a CSS animation by removing and re-adding its class. */
   private flash(el: HTMLElement, cls: string): void {
