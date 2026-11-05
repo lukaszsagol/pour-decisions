@@ -2,7 +2,8 @@ import type { Difficulty } from '@pour/engine';
 import type { Recipe, Theme } from '@pour/themes';
 import type { Rewards } from '../economy/rewards.js';
 import { esc, icons } from '../icons.js';
-import { cityBand, dataUrl, recipeGlass } from '../pixel/scenes.js';
+import { cityBand } from '../pixel/scenes.js';
+import { recipeImage } from '../pixel/recipe-art.js';
 import { PixelLayer } from '../pixel/layer.js';
 import type { LevelResult } from '../level/screen.js';
 import { createPixi } from '../pixi-util.js';
@@ -179,7 +180,7 @@ export class CompleteScreen {
             ${recipe.local && recipe.local !== recipe.name ? `<div class="cp-recipe-local">${esc(recipe.local)}</div>` : ''}
             <ul class="cp-ingredients">${ingredients}</ul>
           </div>
-          <div class="cp-recipe-glass"><img class="px-img" alt="" src="${dataUrl(recipeGlass(recipe))}" width="70" height="150"></div>
+          <div class="cp-recipe-glass"><img class="px-img" alt="" src="${recipeImage(this.data.theme.id, recipe)}" width="70" height="150"></div>
         </div>
         <p class="cp-method">${esc(recipe.method)}</p>
       </article>`;
