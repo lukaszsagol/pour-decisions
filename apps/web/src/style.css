@@ -2005,21 +2005,26 @@ input {
   bottom: calc(84px - var(--stick-b, 0px));
 }
 
-/* Drawn passport stamps: the 32×32 art at 2×, the code and stars in its lower band. */
+/* Drawn passport stamps: the 32×32 art at 2× pressed onto a cream paper tag, so it reads over
+   the card's scene; the code and stars sit in its lower band. */
 .pp-stamp.has-art {
-  width: 64px;
-  height: 64px;
+  width: 68px;
+  height: 68px;
   border: none !important;
-  background: center / 64px 64px no-repeat;
+  background: #f4ecdd center / 64px 64px no-repeat;
+  box-shadow:
+    0 0 0 2px #2a1a10,
+    4px 4px 0 2px rgba(0, 0, 0, 0.45);
   image-rendering: pixelated;
   justify-content: flex-end;
-  padding-bottom: 10px;
+  padding-bottom: 12px;
   font-size: 9px;
   line-height: 1;
 }
 .pp-stamp.has-art b {
   letter-spacing: 0;
-  background: color-mix(in srgb, #f4ecdd, transparent 15%);
+  color: #2a1a10;
+  background: #f4ecdd;
   padding: 1px 2px;
 }
 
