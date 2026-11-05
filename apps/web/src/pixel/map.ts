@@ -543,10 +543,34 @@ export function drawCoin(cv: PixelCanvas, n: MapNode, theme: Theme): void {
 }
 
 /**
- * The whole map world for a city, at art resolution, with `l`/`r` extra art
- * pixels of city either side for screens wider than the stage.
+ * A drawn night scene of the city across the top of the map, just under the
+ * header (art row 40), so it shows whole when the map is scrolled to the top;
+ * the path runs in under it. Past the stage's sides (wide screens) it
+ * continues mirrored.
  */
-export function drawMap(theme: Theme, scene: MapScene, bleed: { l: number; r: number } = { l: 0, r: 0 }): PixelCanvas {
+function landmarkBand(cv: PixelCanvas, scene: PixelCanvas): void {
+  const top = 40;
+  const x0 = Math.floor((MAP_W - scene.w) / 2);
+  for (let x = cv.minX; x < cv.maxX; x++) {
+    let sx = x - x0;
+    if (sx < 0) sx = -sx - 1;
+    if (sx >= scene.w) sx = 2 * scene.w - sx - 1;
+    sx = Math.max(0, Math.min(scene.w - 1, sx));
+    for (let y = 0; y < scene.h; y++) cv.setPacked(x, top + y, scene.data[y * scene.w + sx]!);
+  }
+}
+
+/**
+ * The whole map world for a city, at art resolution, with `l`/`r` extra art
+ * pixels of city either side for screens wider than the stage, and the city's
+ * drawn landmark skyline across the top when there is one.
+ */
+export function drawMap(
+  theme: Theme,
+  scene: MapScene,
+  bleed: { l: number; r: number } = { l: 0, r: 0 },
+  landmark?: PixelCanvas,
+): PixelCanvas {
   const m = maps[theme.id] ?? amsterdam;
   const cv = new PixelCanvas(MAP_W + bleed.l + bleed.r, scene.height, m.ground, bleed.l, 0);
   if (m.texture) openGround(cv, scene, m.texture);
@@ -556,6 +580,7 @@ export function drawMap(theme: Theme, scene: MapScene, bleed: { l: number; r: nu
   for (const y of scene.gates) m.gate(cv, y, scene, theme);
   m.details(cv, scene, theme);
   if (bleed.l || bleed.r) moreBuildings(cv, m.sideW ?? 32);
+  if (landmark) landmarkBand(cv, landmark);
   for (const n of scene.nodes) drawCoin(cv, n, theme);
   return cv;
 }

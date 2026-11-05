@@ -54,13 +54,15 @@ npm run e2e -w apps/web     # builds, then Playwright tests (dev + preview serve
 npx playwright test e2e/pixel-screens.spec.ts   # (in apps/web) every screen in every city → agent-logs/assets/pixel/screens/
 npx playwright test e2e/bleed-screens.spec.ts    # (in apps/web) screens on phones, a tablet and a laptop, art filling the margins → agent-logs/assets/pixel/bleed/
 node apps/web/scripts/icons.mjs   # every app icon size (web, iPhone, Android) from the 48×48 pixel source apps/web/public/icons/icon-48.png
-node apps/web/scripts/recipe-art.mjs   # recipe-card drinks from the picks in docs/design/generated/recipes/choices.json
+node apps/web/scripts/sprite-art.mjs recipes      # recipe-card drinks from the picks in docs/design/generated/recipes/choices.json
+node apps/web/scripts/sprite-art.mjs bartenders   # bartender poses from docs/design/generated/bartenders/choices.json
+node apps/web/scripts/stamp-art.mjs   # passport stamps from docs/design/generated/stamps/choices.json
 npm run levels -- --city tokyo --bar 2   # regenerate one bar (or --city amsterdam, or --all)
 ```
 
 Playwright needs a browser once: `npx playwright install chromium`.
 
-Generated art (Retro Diffusion) keeps its raw options in `docs/design/generated/`, and the prompts in `docs/design/asset-prompts.md`. The game uses processed copies: the icon in `apps/web/public/icons/icon-48.png` and the recipe drinks in `apps/web/src/pixel/recipes/`.
+Generated art (Retro Diffusion) keeps its raw options in `docs/design/generated/`, and the prompts in `docs/design/asset-prompts.md`. The game uses processed copies: the icon (`apps/web/public/icons/icon-48.png`), recipe drinks, bartenders, passport stamps and map scenes (`apps/web/src/pixel/{recipes,bartenders,stamps,landmarks}/`; map scenes are copied as they come).
 
 Android app: `apps/web/android/` is a Capacitor project that wraps the web build (no browser UI, works offline, fullscreen, portrait, Back steps back through screens). The **Android app** workflow builds the APK on every pull request and push; pushes to main publish it as the `android` release (`releases/latest/download/pour-decisions.apk`). It is signed with the key in the `ANDROID_KEYSTORE_BASE64` / `ANDROID_KEYSTORE_PASSWORD` secrets, or as a debug build when they are missing. Locally (JDK 21 and the Android SDK needed):
 

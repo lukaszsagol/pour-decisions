@@ -7,6 +7,7 @@ import { GLASS_H, SLOT_W } from '../pixel/level/layout.js';
 import { PixelLevelRenderer, TILTS, type GlassFrame, type Mark, type PourFrame } from '../pixel/level/renderer.js';
 import { UNIT } from '../pixel/level/glass.js';
 import { PixelLayer } from '../pixel/layer.js';
+import { bartenderImg } from '../pixel/bartenders.js';
 import { createPixi } from '../pixi-util.js';
 import { sfx } from '../sound.js';
 import { ART, STAGE_H, type Stage } from '../stage.js';
@@ -644,6 +645,7 @@ export class LevelScreen {
     const overlay = this.el.querySelector<HTMLElement>('.lv-overlay')!;
     overlay.innerHTML = `
       <div class="win-card px-panel" role="dialog" aria-modal="true" aria-labelledby="win-verdict">
+        ${bartenderImg(this.theme.id, 'cheer', 'win-barkeep')}
         <div class="win-kicker">${esc(this.opts.subtitle ? "Tonight's pour cleared" : `Level ${r.number} cleared`)}</div>
         <div class="win-stars" aria-label="${r.stars} of 3 stars">${stars}</div>
         <div class="win-verdict" id="win-verdict">${verdict}</div>
@@ -700,6 +702,7 @@ export class LevelScreen {
         ${booster('hint', 'Hint', 2)}
       </div>
       <section class="lv-deadend px-panel" hidden aria-labelledby="de-title" role="alertdialog">
+        ${bartenderImg(this.theme.id, 'think', 'de-barkeep')}
         <div>
           <h2 class="de-title" id="de-title">No pours left</h2>
           <p class="de-sub">Undo a move, add a glass, or start the round again.</p>

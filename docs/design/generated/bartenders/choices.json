@@ -1,0 +1,32 @@
+{
+  "amsterdam-cheer": {
+    "option": "opt-0",
+    "key": true
+  },
+  "amsterdam-think": {
+    "option": "opt-0",
+    "key": true
+  },
+  "london-cheer": {
+    "option": "opt-1"
+  },
+  "london-think": {
+    "option": "opt-0",
+    "key": true
+  },
+  "newyork-cheer": {
+    "option": "opt-0"
+  },
+  "newyork-think": {
+    "option": "opt-0",
+    "key": true
+  },
+  "tokyo-cheer": {
+    "option": "opt-0",
+    "key": true
+  },
+  "tokyo-think": {
+    "option": "opt-0",
+    "key": true
+  }
+}

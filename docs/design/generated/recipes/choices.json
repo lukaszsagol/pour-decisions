@@ -36,8 +36,8 @@
     "outline": true
   },
   "tokyo-4": {
-    "option": "opt-1",
-    "outline": true
+    "option": "key-0",
+    "key": true
   },
   "tokyo-5": "opt-1"
 }

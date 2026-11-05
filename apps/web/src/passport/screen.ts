@@ -6,6 +6,7 @@ import { tabBar, type Tab } from '../tabbar.js';
 import { applyTheme } from '../theme-css.js';
 import { openSettings } from './settings.js';
 import { cityScene, dataUrl } from '../pixel/scenes.js';
+import { stampFor } from '../pixel/stamps.js';
 
 export interface PassportOptions {
   progress: Progress;
@@ -127,7 +128,9 @@ export class PassportScreen {
         : `${esc(t.setting)} · after ${esc(themes[t.order - 2]?.name ?? '')}`;
     const side =
       status === 'done'
-        ? `<div class="pp-stamp" style="border-color:${pp.stamp};color:${pp.stamp};rotate:${t.order % 2 ? -8 : 8}deg" aria-label="Stamped, ${stars} stars"><b>${pp.code}</b><span>★ ${stars}</span></div>`
+        ? stampFor(t.id)
+          ? `<div class="pp-stamp has-art" style="background-image:url(${stampFor(t.id)});color:${pp.stamp}" aria-label="Stamped, ${stars} stars"><b>${pp.code} ★${stars}</b></div>`
+          : `<div class="pp-stamp" style="border-color:${pp.stamp};color:${pp.stamp};rotate:${t.order % 2 ? -8 : 8}deg" aria-label="Stamped, ${stars} stars"><b>${pp.code}</b><span>★ ${stars}</span></div>`
         : `<div class="pp-lock" aria-label="Locked">${icons.lock(pp.sub)}</div>`;
     const tag = status === 'done' ? 'a' : 'div';
     const href = status === 'done' ? ` href="#/map/${t.id}"` : '';

@@ -2004,3 +2004,37 @@ input {
 .fam-body {
   bottom: calc(84px - var(--stick-b, 0px));
 }
+
+/* Drawn passport stamps: the 32×32 art at 2×, the code and stars in its lower band. */
+.pp-stamp.has-art {
+  width: 64px;
+  height: 64px;
+  border: none !important;
+  background: center / 64px 64px no-repeat;
+  image-rendering: pixelated;
+  justify-content: flex-end;
+  padding-bottom: 10px;
+  font-size: 9px;
+  line-height: 1;
+}
+.pp-stamp.has-art b {
+  letter-spacing: 0;
+  background: color-mix(in srgb, #f4ecdd, transparent 15%);
+  padding: 1px 2px;
+}
+
+/* The city's bartender: cheering on top of the win card, thinking over the dead-end panel. */
+.win-card {
+  position: relative;
+}
+.win-barkeep {
+  position: absolute;
+  top: -122px;
+  left: 50%;
+  translate: -48px 0;
+}
+.de-barkeep {
+  position: absolute;
+  right: 14px;
+  top: -124px;
+}

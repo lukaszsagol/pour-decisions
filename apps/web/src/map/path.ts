@@ -1,8 +1,8 @@
 /** Geometry of a city map: a winding path running up the screen, level 1 at the bottom. */
 
 export const MAP_SPACING = 112;
-/** Space above the last level (skyline, header). */
-export const MAP_TOP = 250;
+/** Space above the last level: the header, then the city's night scene (art rows 40–120). */
+export const MAP_TOP = 330;
 /** Space below the first level (bottom panel). */
 export const MAP_BOTTOM = 330;
 const AMPLITUDE = 64;
