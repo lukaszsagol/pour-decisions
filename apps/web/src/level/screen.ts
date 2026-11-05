@@ -607,11 +607,14 @@ export class LevelScreen {
   private renderDeadEnd(): void {
     const panel = this.el.querySelector<HTMLElement>('.lv-deadend')!;
     const show = this.game.status === 'deadEnd';
+    const wasShown = !panel.hidden;
     panel.hidden = !show;
+    this.el.querySelector<HTMLElement>('.lv-dim')!.hidden = !show;
     if (!show) return;
     panel.querySelector<HTMLButtonElement>('.de-undo')!.disabled = !this.game.canUndo() || this.opts.boosters === false;
     const glass = panel.querySelector<HTMLButtonElement>('.de-glass')!;
     glass.disabled = !this.game.canAddGlass() || this.opts.boosters === false;
+    if (!wasShown) panel.querySelector<HTMLButtonElement>('.de-actions button:not(:disabled)')?.focus();
   }
 
   /** Level 1 pointer: points at the source glass, then at the target, until the first pour. */
@@ -716,6 +719,7 @@ export class LevelScreen {
         ${booster('glass', 'Extra glass', 1)}
         ${booster('hint', 'Hint', 2)}
       </div>
+      <div class="lv-dim" hidden></div>
       <section class="lv-deadend px-panel" hidden aria-labelledby="de-title" role="alertdialog">
         ${bartenderImg(this.theme.id, 'think', 'de-barkeep')}
         <div>

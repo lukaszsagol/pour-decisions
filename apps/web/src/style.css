@@ -2044,6 +2044,39 @@ input {
   top: -124px;
 }
 
+/* A dead end stops play, so it shows mid-screen over a light dim (the stuck glasses stay
+   visible), where the player is looking, rather than down on the counter. */
+.lv-deadend {
+  top: 330px;
+  z-index: 3;
+  animation: de-pop 0.18s steps(3) both;
+}
+.lv-dim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+.lv-dim::before {
+  content: '';
+  position: absolute;
+  inset: -2048px;
+  background: color-mix(in srgb, var(--c-ground) 55%, transparent);
+}
+.lv-dim[hidden] {
+  display: none;
+}
+@keyframes de-pop {
+  from {
+    translate: 0 16px;
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lv-deadend {
+    animation: none;
+  }
+}
+
 /* The first level's host: the city's bartender on the counter, with a speech bubble. */
 .lv-host {
   position: absolute;
