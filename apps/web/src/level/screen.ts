@@ -837,7 +837,7 @@ export class LevelScreen {
   /** HTML over the art. Positions are art pixels × 2 (logical px). */
   private chromeHtml(): string {
     const t = this.theme;
-    const { sign, restart, mats, text } = this.art;
+    const { sign, mats, text } = this.art;
     const a = (v: number) => v * ART;
     const booster = (kind: string, label: string, i: number) => `
       <button class="booster booster-${kind}" style="left:${a(mats.centres[i]! - 22)}px;top:${a(mats.y - 8)}px;width:${a(44)}px">
@@ -853,7 +853,7 @@ export class LevelScreen {
         <b class="lv-move-count"></b><span class="lv-move-label" style="color:${text.sub}"></span>
       </button>
       <span class="sr-only lv-moves-status" role="status" aria-live="polite"></span>
-      <button class="lv-restart" aria-label="Restart level" style="left:${a(restart.x + 6) - 22}px;top:${a(restart.y + 6) - 22}px"><span class="lv-restart-face">${icons.restart('#2A1A10')}</span></button>
+      <button class="lv-restart" aria-label="Restart level" style="right:${STAGE_W - a(sign.x + sign.w)}px;top:${a(sign.y + sign.h) + 8}px">${icons.restart('#2A1A10')}</button>
       <div class="lv-glasses"></div>
       <div class="lv-host" hidden>${bartenderImg(this.theme.id, 'neutral', 'lv-host-img')}<p class="lv-host-say px-panel" aria-live="polite"></p></div>
       <div class="lv-guide" hidden aria-hidden="true">${pixelSvg(GUIDE_ARROW, { o: '#1A0F08', '#': '#F3E6CC', h: '#FFFFFF', d: '#B8A888' }, 4)}</div>
