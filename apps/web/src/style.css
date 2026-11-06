@@ -2326,15 +2326,14 @@ input {
     opacity: 0;
   }
 }
-/* Restart: a light pixel button with its name, under the sign, easy to find on every city's
-   dark header. Its tap area reaches 44 px tall. */
+/* Restart: a light pixel button with the arrow, under the sign, easy to find on every city's
+   dark header. Its tap area reaches 44 px square. */
 .px-level .lv-restart {
-  width: auto;
+  width: 34px;
   height: 32px;
-  padding: 0 10px 0 6px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  padding: 0;
+  display: grid;
+  place-items: center;
   background: #f3e6cc;
   color: #2a1a10;
   font: inherit;
@@ -2347,7 +2346,7 @@ input {
 .px-level .lv-restart::after {
   content: '';
   position: absolute;
-  inset: -6px 0;
+  inset: -6px -5px;
 }
 .px-level .lv-restart:active {
   translate: 2px 2px;

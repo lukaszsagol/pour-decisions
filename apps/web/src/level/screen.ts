@@ -853,7 +853,7 @@ export class LevelScreen {
         <b class="lv-move-count"></b><span class="lv-move-label" style="color:${text.sub}"></span>
       </button>
       <span class="sr-only lv-moves-status" role="status" aria-live="polite"></span>
-      <button class="lv-restart" aria-label="Restart level" style="right:${STAGE_W - a(sign.x + sign.w)}px;top:${a(sign.y + sign.h) + 8}px">${icons.restart('#2A1A10')}<span>Restart</span></button>
+      <button class="lv-restart" aria-label="Restart level" style="right:${STAGE_W - a(sign.x + sign.w)}px;top:${a(sign.y + sign.h) + 8}px">${icons.restart('#2A1A10')}</button>
       <div class="lv-glasses"></div>
       <div class="lv-host" hidden>${bartenderImg(this.theme.id, 'neutral', 'lv-host-img')}<p class="lv-host-say px-panel" aria-live="polite"></p></div>
       <div class="lv-guide" hidden aria-hidden="true">${pixelSvg(GUIDE_ARROW, { o: '#1A0F08', '#': '#F3E6CC', h: '#FFFFFF', d: '#B8A888' }, 4)}</div>
