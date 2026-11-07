@@ -1,5 +1,5 @@
 {
-  "appId": "pl.sagol.pourdecisions",
+  "appId": "dev.lvly.pourdecisions",
   "appName": "Pour Decisions",
   "webDir": "dist",
   "android": { "backgroundColor": "#2A1A10" },
