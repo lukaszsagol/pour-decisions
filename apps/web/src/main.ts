@@ -20,6 +20,7 @@ import { avatar, FamilyScreen } from './family/screen.js';
 import { modes, nextRating, planningScore, trainingLevel, type TrainingMode } from './training/logic.js';
 import { installBackNavigation } from './nav.js';
 import { isOpen, needsWelcome } from './onboarding.js';
+import { rulesToIntroduce } from './rules-intro.js';
 import { WelcomeScreen } from './welcome.js';
 import { session } from './session.js';
 import { createStage } from './stage.js';
@@ -55,6 +56,8 @@ function levelScreen(number: number): Screen {
     backHref: `#/map/${theme.id}`,
     guide: level.number === 1,
     parCard: level.number >= 2 && level.number <= 5,
+    rules: rulesToIntroduce(progress, theme, level.bottles),
+    onRuleSeen: (key) => progress.markIntro('announced', key),
     nextHref: '#/complete',
     nextLabel: 'Collect rewards',
     onStock: (stock) => progress.setStock(stock),
@@ -99,6 +102,8 @@ function dailyScreen(): Screen {
     best: d.best,
     stock: { ...progress.data.stock },
     backHref: '#/daily',
+    rules: rulesToIntroduce(progress, d.theme, d.bottles),
+    onRuleSeen: (key) => progress.markIntro('announced', key),
     nextHref: '#/complete',
     nextLabel: 'See your result',
     onStock: (stock) => progress.setStock(stock),
