@@ -1,4 +1,4 @@
-package pl.sagol.pourdecisions;
+package dev.lvly.pourdecisions;
 
 import android.os.Bundle;
 import android.webkit.WebView;

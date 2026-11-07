@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace = "pl.sagol.pourdecisions"
+    namespace = "dev.lvly.pourdecisions"
     compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "pl.sagol.pourdecisions"
+        applicationId "dev.lvly.pourdecisions"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         // -Ppreview builds a side-by-side copy ("Pour Preview") that installs next to the real app.
