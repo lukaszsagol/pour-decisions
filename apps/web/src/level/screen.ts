@@ -740,21 +740,17 @@ export class LevelScreen {
 
   /**
    * The bartender explains a special glass the player hasn't met (rules-intro.ts), one card at a
-   * time, at the bottom of the screen while the glasses it's about are marked on the bar.
+   * time, at the bottom of the screen so the glasses stay in view.
    */
   private showRules(queue: RuleIntro[]): void {
     const [intro, ...rest] = queue;
     if (!intro || this.game.status === 'won') return;
-    const marked = intro.glasses
-      .map((i) => this.el.querySelector<HTMLElement>(`.lv-glass[data-index="${i}"]`))
-      .filter((g) => g !== null);
-    marked.forEach((g) => g.classList.add('is-taught'));
     const sheet = document.createElement('div');
     sheet.className = 'sheet-backdrop lv-rule';
     sheet.innerHTML = `
       <section class="lv-rule-card px-panel" role="dialog" aria-modal="true" aria-labelledby="rule-title" aria-describedby="rule-text">
         ${bartenderImg(this.theme.id, 'neutral', 'rule-barkeep')}
-        <div class="rule-kicker">New at the bar</div>
+        <div class="rule-kicker">${esc(intro.kicker)}</div>
         <h2 class="rule-title" id="rule-title">${esc(intro.title)}</h2>
         <p class="rule-text" id="rule-text">${esc(intro.text)}</p>
         <button class="btn btn-primary rule-ok">Got it</button>
@@ -762,7 +758,6 @@ export class LevelScreen {
     this.el.appendChild(sheet);
     sheet.querySelector('.rule-ok')!.addEventListener('click', () => {
       sheet.remove();
-      marked.forEach((g) => g.classList.remove('is-taught'));
       this.opts.onRuleSeen?.(intro.key);
       this.showRules(rest);
     });
