@@ -2,7 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { open } from './helpers';
+import { dismissRules, open } from './helpers';
 
 /**
  * Play Store phone screenshots, 1080×1920 (9:16), to docs/design/store/screenshots/.
@@ -41,6 +41,7 @@ test.describe('store screenshots', () => {
     const lv = pack.levels[index];
     await seed(page, lv.number);
     await open(page, `#/level/${lv.number}`);
+    await dismissRules(page);
     for (const [from, to] of lv.solution) {
       await page.locator(`.lv-glass[data-index="${from}"]`).click();
       await page.locator(`.lv-glass[data-index="${to}"]`).click();

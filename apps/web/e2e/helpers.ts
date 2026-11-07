@@ -43,3 +43,9 @@ export async function played(page: Page, current: number): Promise<void> {
     { version: 2, levels, current, stock: { undo: 5, extraGlass: 2, hint: 3 } },
   );
 }
+
+/** Closes the bartender's cards about special glasses the player hasn't met yet, if any. */
+export async function dismissRules(page: Page): Promise<void> {
+  const ok = page.getByRole('button', { name: 'Got it' });
+  while ((await ok.count()) > 0) await ok.first().click();
+}

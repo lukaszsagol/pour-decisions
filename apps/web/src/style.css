@@ -2895,3 +2895,70 @@ input {
 .cp-rewards .cp-card {
   flex: 0 0 calc((100% - 20px) / 3);
 }
+
+/* A special glass the player hasn't met: the bartender explains it in a card at the bottom
+   (over the boosters), with no dim, while the glasses it's about are marked on the bar. */
+.lv-rule {
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0 16px calc(20px - var(--stick-b, 0px));
+  /* Above the marked glasses (5), so the card is never drawn over. */
+  z-index: 6;
+}
+.lv-rule::before {
+  background: none !important;
+}
+.lv-rule-card {
+  position: relative;
+  width: 100%;
+  min-height: 140px;
+  padding: 14px 14px 14px 112px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  --px-face: #f4ecdd;
+  --px-edge: #2a1a10;
+  color: #2a1a10;
+}
+.rule-barkeep {
+  position: absolute;
+  left: 12px;
+  bottom: 0;
+}
+.rule-kicker {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8a3a20;
+}
+.rule-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+.rule-text {
+  font-size: 15px;
+  line-height: 1.35;
+}
+.rule-ok {
+  margin-top: 6px;
+  align-self: flex-end;
+  min-width: 110px;
+  height: 40px;
+}
+.lv-glass.is-taught {
+  z-index: 5;
+  pointer-events: none;
+  outline: 4px dashed #f0c040;
+  outline-offset: 6px;
+  animation: rule-blink 1s steps(2) infinite;
+}
+@keyframes rule-blink {
+  50% {
+    outline-color: #fff4c0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lv-glass.is-taught {
+    animation: none;
+  }
+}

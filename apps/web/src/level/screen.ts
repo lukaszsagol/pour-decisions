@@ -12,6 +12,7 @@ import { createPixi } from '../pixi-util.js';
 import { sfx } from '../sound.js';
 import { ART, STAGE_H, STAGE_W, type Stage } from '../stage.js';
 import { applyTheme } from '../theme-css.js';
+import type { RuleIntro } from '../rules-intro.js';
 import { pourSign, pourSignLabel, starLossMessage, urgency, type PourSign } from './pour-sign.js';
 
 export interface LevelResult {
@@ -45,6 +46,10 @@ export interface LevelScreenOptions {
   guide?: boolean;
   /** Show the par card before the first pour (the first levels after level 1). */
   parCard?: boolean;
+  /** Special glasses new to the player: the bartender explains each before the first pour. */
+  rules?: RuleIntro[];
+  /** Called when a rule's card is closed, so it isn't shown again. */
+  onRuleSeen?: (key: string) => void;
   /** Called once when the level is won, before the win overlay shows. */
   onWin?: (result: LevelResult) => void;
   /** Called whenever booster stock changes, so the economy can save it. */
@@ -172,7 +177,8 @@ export class LevelScreen {
     this.render();
     this.opts.onEvent?.({ type: 'start', level: this.opts.number });
     if (this.opts.peekMs) this.startPeek(this.opts.peekMs);
-    if (this.opts.parCard) this.showPar();
+    if (this.opts.rules?.length) this.showRules(this.opts.rules);
+    else if (this.opts.parCard) this.showPar();
     this.el.dataset.ready = 'true';
   }
 
@@ -730,6 +736,37 @@ export class LevelScreen {
     plus.style.top = `${(slot.y - (this.lifts[to] ?? 0)) * ART - 40}px`;
     this.el.appendChild(plus);
     setTimeout(() => plus.remove(), 900);
+  }
+
+  /**
+   * The bartender explains a special glass the player hasn't met (rules-intro.ts), one card at a
+   * time, at the bottom of the screen while the glasses it's about are marked on the bar.
+   */
+  private showRules(queue: RuleIntro[]): void {
+    const [intro, ...rest] = queue;
+    if (!intro || this.game.status === 'won') return;
+    const marked = intro.glasses
+      .map((i) => this.el.querySelector<HTMLElement>(`.lv-glass[data-index="${i}"]`))
+      .filter((g) => g !== null);
+    marked.forEach((g) => g.classList.add('is-taught'));
+    const sheet = document.createElement('div');
+    sheet.className = 'sheet-backdrop lv-rule';
+    sheet.innerHTML = `
+      <section class="lv-rule-card px-panel" role="dialog" aria-modal="true" aria-labelledby="rule-title" aria-describedby="rule-text">
+        ${bartenderImg(this.theme.id, 'neutral', 'rule-barkeep')}
+        <div class="rule-kicker">New at the bar</div>
+        <h2 class="rule-title" id="rule-title">${esc(intro.title)}</h2>
+        <p class="rule-text" id="rule-text">${esc(intro.text)}</p>
+        <button class="btn btn-primary rule-ok">Got it</button>
+      </section>`;
+    this.el.appendChild(sheet);
+    sheet.querySelector('.rule-ok')!.addEventListener('click', () => {
+      sheet.remove();
+      marked.forEach((g) => g.classList.remove('is-taught'));
+      this.opts.onRuleSeen?.(intro.key);
+      this.showRules(rest);
+    });
+    sheet.querySelector<HTMLElement>('.rule-ok')!.focus();
   }
 
   /** The par card: this level's par and star bands, with the bartender. Opened by the sign. */
