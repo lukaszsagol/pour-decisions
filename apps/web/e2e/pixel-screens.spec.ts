@@ -4,7 +4,7 @@ import ams from '../../../levels/amsterdam/1.json' with { type: 'json' };
 import ldn from '../../../levels/london/1.json' with { type: 'json' };
 import ny from '../../../levels/newyork/1.json' with { type: 'json' };
 import tk from '../../../levels/tokyo/1.json' with { type: 'json' };
-import { open, shot } from './helpers';
+import { dismissRules, open, shot } from './helpers';
 
 /** Every screen in every city, saved to agent-logs/assets/pixel/screens/ for review (T30). */
 
@@ -51,6 +51,7 @@ for (const [city, pack, fixture] of cities) {
   test(`${city}: win overlay and level complete`, async ({ page }) => {
     await seed(page, first.number);
     await open(page, `#/level/${first.number}`);
+    await dismissRules(page);
     for (const [from, to] of first.solution!) {
       await page.locator(`.lv-glass[data-index="${from}"]`).click();
       await page.locator(`.lv-glass[data-index="${to}"]`).click();

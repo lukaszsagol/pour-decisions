@@ -2895,3 +2895,52 @@ input {
 .cp-rewards .cp-card {
   flex: 0 0 calc((100% - 20px) / 3);
 }
+
+/* A special glass the player hasn't met: the bartender explains it in a card at the bottom
+   (over the boosters), with no dim, so the glasses stay in view. */
+.lv-rule {
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0 16px calc(20px - var(--stick-b, 0px));
+  z-index: 4;
+}
+.lv-rule::before {
+  background: none !important;
+}
+.lv-rule-card {
+  position: relative;
+  width: 100%;
+  min-height: 140px;
+  padding: 14px 14px 14px 112px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  --px-face: #f4ecdd;
+  --px-edge: #2a1a10;
+  color: #2a1a10;
+}
+.rule-barkeep {
+  position: absolute;
+  left: 12px;
+  bottom: 0;
+}
+.rule-kicker {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8a3a20;
+}
+.rule-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+.rule-text {
+  font-size: 15px;
+  line-height: 1.35;
+}
+.rule-ok {
+  margin-top: 6px;
+  align-self: flex-end;
+  min-width: 110px;
+  height: 40px;
+}
